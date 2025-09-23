@@ -23,6 +23,21 @@ try {
 $userService = new UserService($pdo);
 $userController = new UserController($userService);
 
+// Handle form submission for adding a user
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $email = $_POST['email'];
+    $motDePasse = $_POST['mot_de_passe'];
+
+    if ($userController->createUser($nom, $prenom, $email, $motDePasse)) {
+        header('Location: index.php');
+        exit;
+    } else {
+        $error = "Failed to add user.";
+    }
+}
+
 // Fetch users
 $users = $userService->getAllUsers();
 
@@ -63,6 +78,26 @@ $users = $userService->getAllUsers();
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+        <h2>Ajouter un utilisateur</h2>
+        <?php if (isset($error)): ?>
+            <p style="color: red;"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
+        <form method="POST" action="index.php">
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required>
+
+            <label for="prenom">Prénom :</label>
+            <input type="text" id="prenom" name="prenom" required>
+
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="mot_de_passe">Mot de passe :</label>
+            <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+
+            <button type="submit" name="add_user">Ajouter</button>
+        </form>
     </div>
 </body>
 </html>
