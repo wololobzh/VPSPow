@@ -13,59 +13,47 @@ class UserController
         $this->userService = $userService;
     }
 
-    public function createUser(string $nom, string $prenom, string $email, string $motDePasse): void
+    public function createUser(string $nom, string $prenom, string $email, string $motDePasse): bool
     {
-        if ($this->userService->createUser($nom, $prenom, $email, $motDePasse)) {
-            echo "User created successfully.";
-        } else {
-            echo "Failed to create user.";
-        }
+        return $this->userService->createUser($nom, $prenom, $email, $motDePasse);
     }
 
-    public function getUser(int $id): void
+    public function getUser(int $id): ?array
     {
         $user = $this->userService->getUserById($id);
 
         if ($user) {
-            echo json_encode([
-                'id' => $user->getId(),
-                'nom' => $user->getNom(),
-                'prenom' => $user->getPrenom(),
-                'email' => $user->getEmail()
-            ]);
-        } else {
-            echo "User not found.";
-        }
-    }
-
-    public function updateUser(int $id, string $nom, string $prenom, string $email, string $motDePasse): void
-    {
-        if ($this->userService->updateUser($id, $nom, $prenom, $email, $motDePasse)) {
-            echo "User updated successfully.";
-        } else {
-            echo "Failed to update user.";
-        }
-    }
-
-    public function deleteUser(int $id): void
-    {
-        if ($this->userService->deleteUser($id)) {
-            echo "User deleted successfully.";
-        } else {
-            echo "Failed to delete user.";
-        }
-    }
-
-    public function listUsers(): void
-    {
-        $users = $this->userService->getAllUsers();
-        echo json_encode(array_map(function ($user) {
             return [
                 'id' => $user->getId(),
                 'nom' => $user->getNom(),
                 'prenom' => $user->getPrenom(),
                 'email' => $user->getEmail()
             ];
-        }, $users));
+        }
+
+        return null;
+    }
+
+    public function updateUser(int $id, string $nom, string $prenom, string $email, string $motDePasse): bool
+    {
+        return $this->userService->updateUser($id, $nom, $prenom, $email, $motDePasse);
+    }
+
+    public function deleteUser(int $id): bool
+    {
+        return $this->userService->deleteUser($id);
+    }
+
+    public function listUsers(): array
+    {
+        $users = $this->userService->getAllUsers();
+        return array_map(function ($user) {
+            return [
+                'id' => $user->getId(),
+                'nom' => $user->getNom(),
+                'prenom' => $user->getPrenom(),
+                'email' => $user->getEmail()
+            ];
+        }, $users);
     }
 }
