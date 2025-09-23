@@ -8,9 +8,9 @@ use App\Controllers\UserController;
 use App\Services\UserService;
 
 // Database connection setup
-$dsn = 'mysql:host=localhost;dbname=your_database;charset=utf8';
-$username = 'your_username';
-$password = 'your_password';
+$dsn = 'mysql:host=db;dbname=monsite;charset=utf8';
+$username = 'monsiteuser';
+$password = 'exempleUser123';
 
 try {
     $pdo = new PDO($dsn, $username, $password);
