@@ -6,3 +6,31 @@ services:
       - "80:80"
     volumes:
       - ./src:/var/www/html
+
+  
+  db:
+    image: mysql:8.0
+    container_name: mon-site-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: exempleRoot123   # mot de passe root
+      MYSQL_DATABASE: monsite               # nom de la base
+      MYSQL_USER: monsiteuser               # utilisateur non-root
+      MYSQL_PASSWORD: exempleUser123        # mot de passe utilisateur
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: mon-site-phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: monsiteuser
+      PMA_PASSWORD: exempleUser123
+    ports:
+      - "8080:80"
