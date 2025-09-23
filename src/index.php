@@ -23,5 +23,41 @@ try {
 $userService = new UserService($pdo);
 $userController = new UserController($userService);
 
-// Display the list of users
-$userController->listUsers();
+// Fetch users
+$users = $userService->getAllUsers();
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des utilisateurs</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Liste des utilisateurs</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($users as $user): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($user->getId()) ?></td>
+                        <td><?= htmlspecialchars($user->getNom()) ?></td>
+                        <td><?= htmlspecialchars($user->getPrenom()) ?></td>
+                        <td><?= htmlspecialchars($user->getEmail()) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
