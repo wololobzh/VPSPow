@@ -1,0 +1,8 @@
+services:
+  web:
+    build: .
+    container_name: mon-site
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
