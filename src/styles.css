@@ -42,6 +42,29 @@ h1 {
     background-color: #f9f9f9;
 }
 
+/* Add styles for buttons */
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 4px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.btn-edit {
+    background-color: #007BFF;
+}
+
+.btn-delete {
+    background-color: #DC3545;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .table {

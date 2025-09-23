@@ -45,6 +45,7 @@ $users = $userService->getAllUsers();
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Email</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,6 +55,10 @@ $users = $userService->getAllUsers();
                         <td><?= htmlspecialchars($user->getNom()) ?></td>
                         <td><?= htmlspecialchars($user->getPrenom()) ?></td>
                         <td><?= htmlspecialchars($user->getEmail()) ?></td>
+                        <td>
+                            <a href="edit_user.php?id=<?= htmlspecialchars($user->getId()) ?>" class="btn btn-edit">Modifier</a>
+                            <a href="delete_user.php?id=<?= htmlspecialchars($user->getId()) ?>" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
