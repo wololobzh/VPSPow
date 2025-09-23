@@ -24,6 +24,7 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql   # <- ici on utilise le volume défini plus bas
+      - ./db-init:/docker-entrypoint-initdb.d   # <- scripts d'initialisation SQL
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
