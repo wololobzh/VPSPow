@@ -1,0 +1,38 @@
+name: SonarCloud
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Analyse SonarCloud
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # important pour SonarCloud
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: xdebug
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHPUnit with coverage
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.projectKey=ton-org_hello-php
+            -Dsonar.organization=ton-org
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
