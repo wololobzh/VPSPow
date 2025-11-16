@@ -73,7 +73,7 @@ jobs:
       # 4️⃣ Déployer le code sur le VPS avec rsync
       - name: Deploy files
         run: |
-          rsync -avz --delete ./ ubuntu@51.254.205.63:/home/ubuntu/mon-site
+          rsync -avz --delete ./build/ ubuntu@51.254.205.63:/home/ubuntu/mon-site/build/
 
       # 5️⃣ Redémarrer le conteneur Docker sur le VPS
       - name: Restart Docker
