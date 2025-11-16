@@ -1,0 +1,36 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+  "name": "Formations",
+  "dockerComposeFile": [
+    "../compose.yml"
+  ],
+  "service": "devcontainer",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  
+  "forwardPorts": [
+    8282
+  ],
+
+  // Configure tool-specific properties.
+  "customizations": {
+    "vscode": {
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "redhat.vscode-yaml",
+        "asciidoctor.asciidoctor-vscode",
+        "flobilosaurus.vscode-asciidoc-slides",
+        "emeraldwalk.RunOnSave",
+        "hediet.vscode-drawio",
+        "github.vscode-github-actions",
+        "adamvoss.vscode-languagetool",
+        "vstirbu.vscode-mermaid-preview",
+        "jebbs.plantuml"
+      ]
+    }
+  },
+
+  "postCreateCommand": "git config --global --add safe.directory /workspace; ./build.sh -d"
+}
