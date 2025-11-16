@@ -1,0 +1,207 @@
+:titre: Gérer vos clusters Kubernetes avec Rancher
+:module: Gestion de Clusters
+:duree: --
+:description: Découvrez comment Rancher de SUSE simplifie la gestion des clusters Kubernetes avec une interface intuitive et des fonctionnalités avancées.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* l'évolution de Rancher et son intégration avec SUSE.
+* *Gérer* plusieurs clusters Kubernetes via Rancher.
+* *Installer et configurer* Rancher sur Docker et K3s.
+* *Sécuriser* les clusters avec les fonctionnalités offertes par Rancher.
+* *Appliquer* l'intégration d'Harvester et NeuVector pour une gestion optimisée.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+
+**Rancher** de SUSE révolutionne la gestion des clusters Kubernetes en simplifiant et sécurisant les opérations. 
+
+[NOTE.speaker]
+--
+Pour les connaisseurs de Kubernetes, Rancher facilite la gestion complexe des clusters par une plateforme intuitive et robuste, sous l'égide de SUSE.
+--
+
+=== Historique
+
+**Rancher** a été fondé en 2014 pour simplifier la gestion des conteneurs. En 2020, il a été acquis par **SUSE**, renforçant leur portfolio cloud.
+
+[NOTE.speaker]
+--
+Rancher Labs, fondé en 2014, est vite devenu populaire pour sa simplicité d'utilisation. Sa capacité à rendre Kubernetes accessible a accéléré son adoption. L'acquisition par SUSE en 2020 a marqué une avancée stratégique, intégrant Rancher dans leurs solutions d'entreprise.
+--
+
+== Fonctionnalités Principales
+
+[NOTE.speaker]
+--
+Rancher se distingue par un ensemble de fonctionnalités conçues pour répondre aux besoins des entreprises dans la gestion de leurs environnements Kubernetes.
+--
+
+* **Gestion Multi-Clusters :** Centralisation de la gestion des clusters sur site et cloud, simpliﬁcation des déploiements.
+* **Sécurité et Conformité :** Intègre des contrôles avancés pour protéger les clusters, incluant la gestion des politiques de sécurité.
+* **Catalogue d’Applications :** Déploiement simplifié d'applications pré-configurées via un catalogue intégré.
+* **Support Cloud :** Flexibilité entre environnements hybrides et multicloud. Prise en charge de multiples clouds publics pour l'exécution d'applications.
+* **Monitoring :** Outils complets de surveillance et d'observabilité pour détecter et résoudre rapidement les problèmes.
+* **Intégration Outils :** S'intègre facilement avec d'autres outils DevOps et de sécurité pour utilisation continue des outils préférés.
+
+== Installation
+
+=== Installation avec Docker
+
+Pour tirer pleinement parti des fonctionnalités de Rancher, exécutez la commande Docker suivante pour télécharger et lancer Rancher dans un conteneur :
+
+```shell
+docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --name rancher --privileged rancher/rancher:latest
+```
+
+[NOTE.speaker]
+--
+Assurez-vous d'avoir un serveur Linux avec Docker installé et suffisamment d'espace disque. Accédez ensuite à l'interface web via l'ip du serveur.
+
+--
+
+=== Accès à l’Interface Rancher
+
+[NOTE.speaker]
+--
+Configurez un mot de passe administrateur et l’URL du serveur Rancher à partir de l'interface web. Récupérez le mot de passe via la commande Docker adéquate.
+--
+
+=== Installation sur un cluster K3s
+
+=== Prérequis
+
+Pour ceux qui ont un cluster K3s existant, utilisez le guide suivant en exploitant l'environnement vagrant K3sSandbox.
+
+[NOTE.speaker]
+--
+Chaque étape, de la création des namespaces à l'importation du chart Helm pour Rancher, est cruciale pour une installation sans faille.
+--
+
+=== Instructions
+
+Déployez Rancher en instaurant d'abord un namespace :
+
+```shell
+kubectl create namespace cattle-system
+kubectl config set-context --current --namespace=cattle-system
+```
+
+Utilisez mkcert pour générer un certificat :
+
+```shell
+mkcert -cert-file tls.crt -key-file tls.key rancher.robert.local
+kubectl create secret tls tls-rancher-ingress --cert=tls.crt --key=tls.key
+```
+
+Ajoutez le chart Helm :
+
+```shell
+helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+helm install rancher rancher-latest/rancher --namespace cattle-system --set hostname=rancher.robert.local --set ingress.tls.source=secret
+```
+
+Suivez le processus de déploiement :
+
+```shell
+kubectl get pods -l app=rancher | grep '1/1' | head -1 | awk '{ print $1 }'
+kubectl logs -f rancher-7484b7b4c5-22kdm
+```
+
+=== Accès à l’Interface Rancher
+
+Associez une IP d'ingress pour un accès via URL :
+
+```shell
+NAME      CLASS     HOSTS                  ADDRESS                                         PORTS     AGE
+rancher   traefik   rancher.robert.local   192.168.121.145,192.168.121.216,192.168.121.9   80, 443   94m
+```
+
+Mettez à jour `/etc/hosts` :
+
+```shell
+192.168.121.145 rancher.robert.local
+```
+
+Accédez à Rancher via le navigateur : `https://rancher.robert.local`.
+
+**Récupérez le mot de passe temporaire :**
+
+```shell
+kubectl get secret -n cattle-system bootstrap-secret -o go-template='{{.data.bootstrapPassword|base64decode}}{{ "\n" }}'
+```
+
+== Utilisation de Rancher
+
+=== Création de Clusters
+
+Naviguez vers le menu "Clusters" et choisissez "Ajouter un cluster". Rancher propose diverses options, incluant l'intégration de clusters existants et la création via plusieurs fournisseurs cloud.
+
+![Clusters Rancher](/_astro/rancher-2.Bu9z27Ru_ZdER4I.webp)
+
+=== Intégration d’Harvester
+
+Intégrez **Harvester**, une solution open-source de virtualisation HCI, pour une gestion unifiée des ressources physiques et virtuelles.
+
+![Clusters Rancher](/_astro/rancher-4.ltjs684r_Z20CReE.webp)
+
+=== Déploiement des Applications
+
+Utilisez le catalogue intégré pour déployer des applications standardisées. Dirigez-vous vers "Catalogues d'applications" et sélectionnez une application à déployer.
+
+![Clusters Rancher](/_astro/rancher-3.DkNyPD0I_1p6RnQ.webp)
+
+[NOTE.speaker]
+--
+Le processus simplifie le déploiement d'applications et réduit le temps de mise sur le marché.
+--
+
+=== Sécurité et Compliance
+
+**Rancher** intègre des outils pour assurer sécurité et conformité des clusters, aidant à répondre aux normes comme GDPR, HIPAA, et PCI-DSS.
+
+[NOTE.speaker]
+--
+Avec des fonctionnalités comme les contrôles RBAC et les politiques PSP, Rancher offre une gestion sécurisée et conforme aux standards de l'industrie.
+--
+
+=== Sécurité Renforcée des Conteneurs avec NeuVector
+
+[NeuVector](/docs/securiser/conteneurs/neuvector/) offre une sécurité en temps réel contre les menaces pour les applications et données dans les clusters Kubernetes.
+
+== Surveillance et Gestion
+
+**Rancher** intègre des outils de surveillance pour suivre la santé des clusters et applications. Configurez les alertes et surveillez les ressources via l’interface Rancher.
+
+[NOTE.speaker]
+--
+Les outils inclus facilitent la détection de failles potentielles et garantissent une performance optimale.
+--
+
+== Conclusion
+
+**Rancher** s'impose comme solution de choix pour la gestion des clusters Kubernetes. Avec ses capacités avancées, il simplifie l'administration tout en assurant sécurité et performance.
+
+[NOTE.speaker]
+--
+Rancher fournit une solution complète et accessible pour les entreprises de toutes tailles cherchant à optimiser leurs opérations Kubernetes avec sécurité et performance.
+--   
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Rancher simplifie et sécurise la gestion Kubernetes.
+* Features robustes pour des environnements complexes.
+* Intégration fluide avec outils existants pour une performance optimisée.
+* Observabilité renforcée pour maintenir des performances élevées.
+// end::conclusion[]

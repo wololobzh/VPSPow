@@ -1,7 +1,7 @@
 :titre: Exécution et modification de configuration Terraform
 :module: Virtualisation
 :duree: 120
-:description: Ce module aborde l'exécution des configurations Terraform avec la commande `terraform apply` et la mise à jour des ressources existantes.
+:description: 
 include::../../../../adoc/libs/header-module.adoc[]
 
 ifeval::["{visible-on-html}" !=  "yes"]
@@ -28,20 +28,18 @@ endif::[]
 
 === Exemple
 
-[cols="1,1"]
-|===
-| Configuration | Résultat de la commande `apply`
-
-a|
-```hcl
+.Configuration Terraform
+[source,hcl]
+----
 resource "aws_instance" "example" {
   ami           = "ami-0c55b159cbfafe1f0"
   instance_type = "t2.micro"
 }
-```
+----
 
-a|
-```shell
+.Résultat de la commande `terraform apply`
+[source,shell]
+----
 $ terraform apply
 Terraform will perform the following actions:
 
@@ -87,12 +85,11 @@ Terraform will perform the following actions:
 Plan: 1 to add, 0 to change, 0 to destroy.
 
 Do you want to perform these actions?
-  Terraform will perform the actions described above.
   Only 'yes' will be accepted to approve.
 
-  Enter a value: 
-```
-|===
+  Enter a value:
+----
+
 
 include::../../../../adoc/libs/slide-notitle.adoc[]
 
