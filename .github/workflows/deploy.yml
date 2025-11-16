@@ -53,6 +53,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+      deployment: github-pages
     steps:
       - name: Deploy GitHub Pages site
         id: deployment
