@@ -61,7 +61,7 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           name: wololo-artifact
-          path: /home/ubuntu/mon-site
+          path: le-build
 
       # 2️⃣ Charger la clé SSH privée
       - name: Setup SSH
