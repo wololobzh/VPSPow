@@ -1,0 +1,83 @@
+:icons: font
+:source-highlighter: highlight.js
+:highlightjs-theme: rainbow
+:highlightjs-languages: yaml, scilab, javascript, typescript, rainbow, plantuml, html, php, css, asciidoc, bash, c, cpp, csharp, coffeescript, diff, dockerfile, go, ini, json, kotlin, less, lua, makefile, markdown, objectivec, perl, python, r, ruby, rust, scala, sql, swift, xml, apache, nginx, http, git, properties, puppet, scss, smalltalk, tex, toml, twig, vbnet, vbscript, x86asm, java, tsx
+
+:page-background-image: image:/workspace/adoc/libs/images/logo-pdf.png[]
+:toc: left
+:toc-title: 
+:sectanchors: true
+:sectlinks: true
+
+ifeval::["{visible-on-html}" ==  "yes"]
+
+++++
+include::scroll_highlight.html[]
+++++
+
+
+include::*{docdir}[opts=breadcrumb]
+{module} : {titre}
+
+++++
+include::breadcrumb.html[]
+++++
+
+endif::[]
+
+[]
+= {titre} ^{module}^ ^{duree}min^
+
+ifeval::["{visible-on-html}" !=  "yes"]
+
+[.tips]
+--
+++++
+<style>
+.tips .content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 1.25rem;
+    align-items: center;
+    margin-top: 4rem;
+    color: black;
+
+    p {
+        margin: 0;
+    }
+}
+</style>
+++++
+
+💡 Appuyer sur la touche "*s*" pour le mode speaker et "*d*" pour le mode dessin.
+--
+
+endif::[]
+
+ifeval::["{visible-on-html}" ==  "yes"]
+
+[.slidesBtn]
+link:./{docname}-slides.html[🎬 Slides]
+++++
+<button class="pdfBtn" onclick="window.print();">📄 PDF</button>
+
+<style>
+.edit-btn {
+    margin-top: 1rem;
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const edit = document.querySelector('.edit-btn > p');
+    let path = "https://github.com/O-clock-Teach/Formations/edit/main" + edit.textContent.replace('/workspace', '').replace('__w/Formations/Formations/', '')
+    edit.innerHTML = `<a href="${path}" target="_blank">✏️ Éditer</a>`;
+});
+</script>
+++++
+
+[.edit-btn]
+{docfile}
+
+---
+endif::[]

@@ -1,0 +1,133 @@
+:titre: Comprendre un projet Svelte
+:module: Svelte
+:duree: 30
+:description: Comprendre un projet Svelte (sans coder)
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Comprendre la structure d'un projet Svelte
+* Identifier les fichiers principaux d'une application Svelte
+* Analyser le rôle de chaque composant dans l'architecture Svelte
+// end::objectifs[]
+
+== Structure d'un projet Svelte
+
+Un projet Svelte est organisé de manière à séparer clairement les différentes parties de l'application. La structure typique comprend :
+
+* Un dossier `public/` pour les fichiers statiques
+* Un dossier `src/` pour le code source de l'application
+* Un fichier `App.svelte` qui est le composant racine de l'application
+* Des fichiers de configuration comme `package.json` et `svelte.config.js`
+
+Cette organisation permet une meilleure maintenabilité et une séparation claire des responsabilités au sein du projet.
+
+=== Partie pratique
+
+Exemple de structure de base d'un projet Svelte :
+
+```
+my-svelte-project/
+├── public/
+│   └── index.html
+├── src/
+│   ├── App.svelte
+│   └── main.js
+├── package.json
+└── svelte.config.js
+```
+
+== Le fichier App.svelte
+
+`App.svelte` est le composant racine de l'application Svelte. Il sert de point d'entrée pour l'interface utilisateur et contient généralement la structure de base de l'application. Ce fichier peut inclure :
+
+* La structure HTML principale
+* Les styles globaux
+* La logique de haut niveau de l'application
+* L'importation et l'utilisation d'autres composants
+
+=== Partie pratique
+
+Exemple simplifié d'un fichier `App.svelte` :
+
+```html
+<script>
+  let name = 'world';
+</script>
+
+<main>
+  <h1>Hello {name}!</h1>
+</main>
+
+<style>
+  main {
+    text-align: center;
+    padding: 1em;
+    max-width: 240px;
+    margin: 0 auto;
+  }
+</style>
+```
+
+== Le dossier public/
+
+Le dossier `public/` contient tous les fichiers statiques de l'application qui seront servis directement par le serveur web. Cela inclut généralement :
+
+* Le fichier `index.html` qui est la page HTML de base
+* Les fichiers CSS globaux
+* Les images, polices et autres ressources statiques
+* Les fichiers de manifeste pour les PWA (Progressive Web Apps)
+
+Ces fichiers sont accessibles publiquement et ne sont pas traités par le compilateur Svelte.
+
+== Le dossier src/
+
+Le dossier `src/` contient le code source de l'application Svelte. C'est ici que se trouve la majorité du code de l'application, y compris :
+
+* Les composants Svelte (fichiers `.svelte`)
+* Les fichiers JavaScript pour la logique de l'application
+* Les modules réutilisables
+* Les fichiers de configuration spécifiques à l'application
+
+Le contenu de ce dossier est traité par le compilateur Svelte lors de la construction de l'application.
+
+== Démonstration
+
+[NOTE.speaker]
+--
+Exploration d'un projet Svelte existant :
+
+1. Ouvrez un terminal et clonez un projet Svelte d'exemple :
++
+```bash
+git clone https://github.com/sveltejs/template my-svelte-project
+```
+
+2. Naviguez dans le répertoire du projet :
++
+```bash
+cd my-svelte-project
+```
+
+3. Installez les dépendances :
++
+```bash
+npm install
+```
+
+4. Ouvrez le projet dans votre éditeur de code préféré.
+
+5. Explorez la structure du projet, en notant les dossiers `public/` et `src/`, ainsi que le fichier `App.svelte`.
+--
+
+== Conclusion
+
+* Compréhension de la structure de base d'un projet Svelte
+* Capacité à identifier et expliquer le rôle des fichiers principaux (App.svelte, public/, src/)
+* Aptitude à analyser la composition d'un composant Svelte
+* Familiarisation avec l'organisation du code dans un projet Svelte

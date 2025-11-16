@@ -1,0 +1,47 @@
+:title: Hello Docker
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Débuter pour de vrai avec Docker et comprendre ce qu'il se passe dans les devcontainers.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** les devcontainers
+- **Appliquer** les conteneurs dans un environnement de développement
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+- Avoir docker d'installé sur sa machine.
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+WARNING: *Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook]*
+include::../../../../modules/docker/introduction.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/docker/manipulation.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/docker/devcontainer.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S05-Challenge
+:description: Utiliser les devcontainers
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s05e01]
+--
+// end::deroulement[]

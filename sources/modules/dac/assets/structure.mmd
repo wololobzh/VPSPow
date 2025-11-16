@@ -1,0 +1,10 @@
+flowchart LR;
+    f((Formation))-->s1(Saison 1);
+    f-.->s2(Saison 2);
+    f-.->s(Saison ...);
+    s1-->e1([Episode 01]);
+    s1-.->e2([Episode 02]);
+    s1-.->e([Episode ...]);
+    e1-->ModuleX;
+    e1-->ModuleY;
+    e1-->ModuleZ;

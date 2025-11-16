@@ -1,0 +1,25 @@
+:icons: font
+
+:toc: left
+:toc-title: 
+:sectanchors: true
+:sectlinks: true
+
+ifeval::["{visible-on-html}" ==  "yes"]
+
+++++
+include::scroll_highlight.html[]
+++++
+
+include::*{docdir}[opts=breadcrumb]
+{doctitle}
+
+++++
+include::breadcrumb.html[]
+++++
+
+endif::[]
+
+= {title}
+
+---

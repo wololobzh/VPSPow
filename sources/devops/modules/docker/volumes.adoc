@@ -1,0 +1,178 @@
+:titre: Volumes
+:module: Docker
+:duree: 60
+:description: On plonge dans les détails des volumes Docker appliqués avec Docker Compose.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+// Sous forme de liste à puce, en utilisant la taxonomie de Bloom
+* *Appliquer* les volumes Docker
+* *Analyser* les différentes options de configuration
+// end::objectifs[]
+
+// tag::deroulement[]
+== Volumes 
+
+Les volumes sont :
+
+* utilisés pour faire persister les données générées et utilisées par les conteneurs. 
+* gérés par Docker et peuvent être montés dans plusieurs conteneurs.
+
+> Dans le cas d'une base de données, c'est extrêmement pratique.
+
+[NOTE.speaker]
+--
+Dans notre configuration actuelle, nous n'avons pas défini de volume pour le service `db`. Cela signifie que les données de la base de données ne sont pas persistées. Si le conteneur est supprimé, les données sont perdues.
+
+```yml
+db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+```
+--
+
+== Configuration
+
+Il existe plusieurs options pour configurer un volume :
+
+* `source:target` : monte un dossier local dans le conteneur
+* `source:target:ro` : monte un dossier local en lecture seule
+* `volume_name:target` : monte un volume nommé dans le conteneur sans lien avec le système de fichiers local
+
+=== Dossier local
+
+C'est ce que nous avons fait pour le service `front`. Le dossier `front` de notre machine hôte est monté dans le conteneur Nginx.
+
+```yaml
+services:
+  front:
+    image: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./front:/usr/share/nginx/html
+```
+
+[NOTE.speaker]
+--
+Cette instruction permet de monter un volume entre le dossier `front` de notre machine hôte et le dossier `/usr/share/nginx/html` du conteneur Nginx.
+
+Si l'on modifie le fichier `index.html` sur notre machine hôte, les modifications seront automatiquement prises en compte dans le conteneur (et inversement).
+--
+
+=== Dossier local en lecture seule
+
+Pour monter un dossier en lecture seule, il suffit d'ajouter `:ro` à la fin de la configuration.
+
+```yaml
+services:
+  front:
+    image: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./front:/usr/share/nginx/html:ro
+```
+
+[NOTE.speaker]
+--
+Dans ce cas, le dossier `front` de notre machine hôte est monté en lecture seule dans le conteneur Nginx.
+
+C'est à dire que l'on ne pourra pas modifier le contenu du dossier `/usr/share/nginx/html` depuis le conteneur Nginx.
+--
+
+=== Volume nommé
+
+Pour monter un volume nommé, il suffit de spécifier le nom du volume à la place du chemin local.
+
+```yaml
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
+```
+
+Le volume n'est pas mappé sur le système hôte. Les données sont persistées dans un volume Docker.
+
+[NOTE.speaker]
+--
+Dans ce cas, le volume `db-data` est monté dans le conteneur `db` sans lien avec le système de fichiers local.
+
+Cela permet de séparer les données de la base de données du système de fichiers local.
+--
+
+== Gestion des volumes
+
+Grace aux volumes, on peut conserver des données entre les redémarrages des conteneurs.
+
+On peut cependant les gérer de manière plus fine :
+
+* `docker volume ls` : lister les volumes
+* `docker volume inspect volume_name` : inspecter un volume
+* `docker volume rm volume_name` : supprimer un volume
+
+`docker compose down -v` permet de supprimer les volumes associés aux services.
+
+[NOTE.speaker]
+--
+Il est important de bien gérer les volumes pour éviter de saturer l'espace disque et aussi de ne pas perdre de données importantes.
+--
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration 1
+
+[NOTE.speaker]
+--
+* Ajouter un volume nommé pour le service `db`
+* Lancer les services
+* Modifier les données de la base de données
+* Arrêter les services
+* Relancer les services
+* Vérifier que les données sont toujours présentes
+* Arrêter les services et supprimer les volumes
+* Relancer les services
+* Vérifier que les données ont été perdues
+--
+
+== Démonstration 2
+
+[NOTE.speaker]
+--
+* Monter le volume front en lecture seule
+* Lancer les services
+* Modifier le fichier `index.html` depuis le conteneur
+* Vérifier que les modifications ne sont pas prises en compte
+--
+// end::demo[]
+
+
+
+
+== Conclusion
+
+// tag::conclusion[]
+* On peut conserver des données pour nos applications
+* On peut gérer les volumes pour éviter de saturer l'espace disque
+// end::conclusion[]

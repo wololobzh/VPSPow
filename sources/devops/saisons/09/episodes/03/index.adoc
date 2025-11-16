@@ -1,0 +1,47 @@
+:title: Intégration continue avec GitHub Actions
+:number: 03
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Approfondissement de l'utilisation des GitHub Actions pour l'intégration continue. Comment configurer des workflows avancés, utiliser des runners locaux pour des tests plus rapides, et développer des actions personnalisées pour répondre à des besoins spécifiques.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Appliquer* un runner Github Action local
+* *Analyser* des workflows avancés
+* *Comprendre* l'intérêt des actions personnalisées
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Expérience approfondie avec GitHub Actions et la création d'actions personnalisées.
+* Connaissance des runners auto-hébergés et de leur configuration.
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/cicd/local-runner.adoc[options=modules]
+
+include::../../../../modules/cicd/gh-actions-advanced.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/cicd/custom-actions.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S09-Challenge/tree/correction
+:description: Configurer un runner local et adapter un workflow existant
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

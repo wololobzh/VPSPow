@@ -1,0 +1,33 @@
+:icons: font
+:imagesdir: {docdir}
+:source-highlighter: highlight.js
+:highlightjs-theme: rainbow
+:highlightjs-languages: yaml, scilab, javascript, typescript, rainbow, plantuml, html, php, css, asciidoc, bash, c, cpp, csharp, coffeescript, diff, dockerfile, go, ini, json, kotlin, less, lua, makefile, markdown, objectivec, perl, python, r, ruby, rust, scala, sql, swift, xml, apache, nginx, http, git, properties, puppet, scss, smalltalk, tex, toml, twig, vbnet, vbscript, x86asm, java, tsx
+
+:toc: left
+:toc-title: 
+:sectanchors: true
+:sectlinks: true
+
+
+ifeval::["{visible-on-html}" ==  "yes"]
+
+
+++++
+include::scroll_highlight.html[]
+++++
+
+include::*{docdir}[opts=breadcrumb]
+{number}
+
+++++
+include::breadcrumb.html[]
+++++
+
+endif::[]
+
+= {number} {title}
+
+📖 link:./pdf.html[Ebook O'clock]
+
+---

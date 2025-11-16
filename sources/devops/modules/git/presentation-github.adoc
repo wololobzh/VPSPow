@@ -1,0 +1,66 @@
+:titre: Présentation de Github
+:module: Git
+:duree: 30
+:description: Comprendre l'intérêt de github
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Comprendre l'intérêt de GitHub
+* S'inscrire sur GitHub
+// end::objectifs[]
+
+// tag::deroulement[]
+== GitHub, c'est quoi ?
+
+* outil incontournable du développeur
+* service en ligne d'hébergement et de gestion de projets de développement
+* utilise le logiciel de versioning Git
+* alternatives : GitLab, Bitbucket
+
+[NOTE.speaker]
+--
+C'est aussi un moyen de présenter son travail pour d'éventuels recruteurs et on retrouve très souvent une description un peu plus "technique" des profils des développeurs.
+--
+
+== Git ? Une petite parenthèse
+
+[NOTE.speaker]
+--
+Nous reviendrons plus tard plus longuement sur git, mais c'est important de comprendre de manière générale ce que c'est.
+--
+
+* logiciel open source de gestion de versions décentralisé
+* permet de traquer tous les fichiers du projet : chaque modification est détectée par git et versionnée dans un instantané
+* un historique de modification sera disponible sur le projet : possibilité de le consulter et revenir en arrière
+* permet de savoir qui a touché à quel fichier, quand et comment
+* chaque développeur peut travailler en isolation sur une branche, et on peut mettre en commun le travail en les fusionnant
+
+== A quoi sert GitHub dans la formation ?
+
+* coller au plus proche du milieu professionnel
+* partage de ressources (exercices, énoncés, documentation...)
+* utilisé pour les projets individuels ou collectifs
+
+[NOTE.speaker]
+--
+Vous allez très vite devoir prendre en main Git et Github et pratiquer un maximum pour vous permettre d'avoir déjà de très bonnes bases à votre sortie de formation.
+--
+
+== Inscription à GitHub
+
+https://github.com
+
+image::https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnNzbjAwZXd0Znk1djNpM3hsamZwY29ydWJ1ZWgzcHE0ZDFkcW1zNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/toz7qXlLyHy9n8KfKO/giphy.webp[]
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Compréhension l'intérêt de GitHub
+* Inscription faite sur GitHub
+// end::conclusion[]

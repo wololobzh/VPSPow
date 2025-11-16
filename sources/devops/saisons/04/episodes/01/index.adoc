@@ -1,0 +1,51 @@
+:title: 🚀 Introduction à la gestion de projet avec GitHub
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode couvre les bases de la gestion de projet et de la collaboration sur GitHub. Nous explorerons GitHub Projects pour la gestion de projet avec Kanban, puis nous approfondirons les fonctionnalités de collaboration avancées avec les Issues et les Pull Requests.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** les principes de la méthodologie Kanban
+- **Utiliser** GitHub Projects pour créer et gérer un tableau Kanban
+- **Maîtriser** la création et la gestion des Issues sur GitHub
+- **Appliquer** le workflow des Pull Requests pour la collaboration
+- **Intégrer** les Issues et les Pull Requests avec GitHub Projects
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+- Compte GitHub actif
+- Connaissance de base de Git
+- Familiarité avec le développement logiciel collaboratif
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+WARNING: *Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook]*
+include::../../../../modules/git/github-project.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/git/utilisation-github.adoc[options=modules]
+
+TIP: Commencer les modules et intercaler la 🍕 Pause déjeuner
+
+:challenge: https://github.com/O-clock-Devops-Peda/S04-Python-Challenge
+:description: 
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s04e01]
+--
+
+// end::deroulement[]

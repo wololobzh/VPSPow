@@ -1,0 +1,47 @@
+:title: Hello Compose
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Découvrir Docker Compose pour orchestrer des applications multi-conteneurs en local et démultiplier les possibilités de Docker.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Analyser** des environnements multi-conteneurs
+- **Appliquer** compose pour une application complète
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/docker/compose.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/docker/compose-front.adoc[options=modules]
+
+include::../../../../modules/docker/compose-back.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/docker/compose-db.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S05-Challenge
+:description: Créer un docker compose pour une application complète.
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

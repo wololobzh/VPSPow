@@ -1,0 +1,228 @@
+:titre: Worker Nodes K8S
+:module: Orchestratiion
+:duree: --
+:description: Découvrez les composants clés des Worker Nodes dans un cluster Kubernetes et leur administration.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" != "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre le rôle des Worker Nodes dans un cluster Kubernetes.
+* Appliquer les bonnes pratiques d'administration des Worker Nodes.
+* Analyser les composants kubelet et kube-proxy.
+* Évaluer les solutions runtime pour conteneurs.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction aux Worker Nodes
+
+Les Worker Nodes exécutent les Pods dans un cluster Kubernetes. Ils comprennent des composants critiques comme le kubelet, le kube-proxy et un runtime de conteneurs qui collaborent avec le Control Plane. Comment fonctionnent-ils concrètement ?
+
+[NOTE.speaker]
+--
+Les Worker Nodes jouent un rôle clé : ils exécutent les Pods et les applications conteneurisées. Ils incluent des composants essentiels comme le kubelet, le kube-proxy et un runtime de conteneurs (ex. Docker, Containerd), qui gèrent les ressources et garantissent la connectivité réseau.
+--
+
+=== Architecture d’un Worker Node
+
+**Principaux composants** :
+
+1. **kubelet** : Agent principal qui gère les Pods en se synchronisant avec le Control Plane.
+2. **kube-proxy** : Gère le réseau et établit des règles de routage pour les Pods.
+3. **Runtime des conteneurs** : Exécute les conteneurs et gère les images.
+4. **CNI (Container Network Interface)** : Gère la connectivité réseau entre les Pods.
+
+Le Worker Node communique avec le Control Plane via l’API server, sécurisé par des certificats d’authentification.
+
+[NOTE.speaker]
+--
+Un Worker Node est une machine (physique ou virtuelle) qui exécute les Pods de Kubernetes. Les composants collaborent pour la gestion des conteneurs et la communication avec le Control Plane.
+--
+
+== Rôle du kubelet
+
+1. **Communication avec le Control Plane** : Signale l'état du nœud (charge CPU, mémoire, disponibilité) et la santé des Pods.
+2. **Gestion des Pods** : Crée, met à jour et supprime les Pods conformément aux instructions du Control Plane.
+3. **Gestion de la configuration locale** : Supporte les manifests de Pods locaux, permettant de démarrer des Pods sans dépendre uniquement du Control Plane.
+4. **Gestion des volumes et des secrets** : S'assure que les volumes et les secrets nécessaires aux Pods sont montés et accessibles.
+5. **Surveillance de la santé des conteneurs** : Intègre des probes de liveness et readiness pour vérifier l'activité et la disponibilité des conteneurs.
+
+[NOTE.speaker]
+--
+Le kubelet agit comme un superviseur des Pods, assurant leur conformité avec le Control Plane. Il est crucial pour la gestion de la santé des conteneurs, la gestion des volumes, et le traitement des secrets.
+--
+
+== Rôle du kube-proxy
+
+Le kube-proxy gère la connectivité entre les services, Pods et utilisateurs externes, jouant un rôle de proxy et de routeur intelligent.
+
+* Si un utilisateur envoie une requête à un service exposé, le kube-proxy dirige cette requête vers l’un des Pods associés.
+* Utilise des load balancers pour équilibrer la charge entre les Pods.
+
+**Modes de fonctionnement** :
+* **iptables** : Configure des règles réseau pour rediriger le trafic via la table réseau du noyau Linux.
+* **IPVS** : Optimise le routage pour les charges importantes, reposant sur le module IP Virtual Server de Linux.
+
+[NOTE.speaker]
+--
+Le kube-proxy agit comme un chef d’orchestre réseau, assurant des connexions fluides entre utilisateurs et Pods. Il utilise différentes règles de routage réseau et des balancers de charge.
+--
+
+== Gestion des conteneurs sur un Worker Node
+
+Les *conteneurs* sont gérés par le *runtime des conteneurs*, interagissant avec le kubelet pour la gestion d'images et l'exécution des conteneurs.
+
+*Exemples de runtimes* :
+* Docker
+* Containerd
+* Podman
+
+Chaque conteneur s'appuie sur une image contenant système de fichiers, bibliothèques et dépendances nécessaires.
+
+[NOTE.speaker]
+--
+Le runtime (Docker, Containerd, Podman) exécute et gère les conteneurs. Les étapes incluent le téléchargement d'images depuis des registres pre-existants et la gestion des volumes nécessaires aux Pods.
+--
+
+== Administration des Worker Nodes
+
+L’administration des **Worker Nodes** est cruciale pour maintenir un cluster **Kubernetes** stable et performant. Cela comprend l’ajout de nouveaux nœuds, la surveillance des composants (comme le **kubelet** et le runtime des conteneurs), et la gestion des ressources. Voici un guide pratique pour administrer efficacement vos **Worker Nodes**, avec des commandes utiles et des liens vers des guides spécifiques.
+
+=== Ajouter un Worker Node
+
+* Générer un jeton sur le Control Plane pour l'enregistrement.
+* Exécuter le jeton sur le nouveau Worker Node.
+* Vérifier l’intégration avec kubectl get nodes.
+
+```shell
+kubeadm token create --print-join-command
+```
+
+La commande affichera une instruction du type :
+
+```shell
+kubeadm join <adresse-control-plane>:6443 --token <jeton> --discovery-token-ca-cert-hash sha256:<hash>
+```
+
+```shell
+kubectl get nodes
+```
+
+=== Surveillance du kubelet
+
+* Vérifier si le service **kubelet** est actif :
+
+```shell
+systemctl status kubelet
+```
+
+* Afficher les journaux pour diagnostiquer des problèmes :
+
+```shell
+journalctl -u kubelet -f
+```
+
+* Si **kubelet** ne démarre pas correctement, vérifie la configuration dans ce fichier :
+
+```shell
+/var/lib/kubelet/config.yaml
+```
+
+=== Surveillance du runtime
+
+* Docker : docker ps pour lister les conteneurs.
+* Containerd : crictl ps pour lister les conteneurs.
+* Redémarrer le service si nécessaire.
+
+```shell
+systemctl restart docker
+```
+
+== Diagnostiquer les nodes
+
+Utilisation de kubectl pour lister les nœuds, les Pods, et voir les événements.
+
+=== Lister tous les nœuds
+
+```shell
+kubectl get nodes
+```
+
+Si le nœud a un statut **NotReady**, il peut y avoir un problème.
+
+=== Afficher les détails d’un nœud spécifique** :
+
+```shell
+kubectl describe node <nom-du-node>
+```
+
+=== Lister les Pods en cours d’exécution sur un Worker Node** :
+
+```shell
+kubectl get pods --all-namespaces --field-selector spec.nodeName=<nom-du-node>
+```
+
+=== Surveiller les événements sur le nœud
+
+Utile pour voir si des erreurs sont remontées
+
+```shell
+kubectl get events --field-selector involvedObject.kind=Node,involvedObject.name=<nom-du-node>
+```
+
+== Retirer un Worker Node
+
+=== Marque le nœud comme non planifiable
+
+Pour qu’aucun nouveau **Pod** ne soit programmé dessus :
+
+```shell
+kubectl cordon <nom-du-node>
+```
+
+=== Évacue les Pods existants
+
+Pour qu’ils soient déplacés sur d’autres nœuds :
+
+```shell
+kubectl drain <nom-du-node> --ignore-daemonsets --delete-emptydir-data
+```
+
+=== Supprime le nœud du cluster
+
+```shell
+kubectl delete node <nom-du-node>
+```
+
+=== Réinitialise la configuration locale du nœud
+
+```shell
+kubeadm reset
+```
+
+[NOTE.speaker]
+--
+Administrer les Worker Nodes implique l'ajout de nœuds, la surveillance et le diagnostic des composants, et la gestion des ressources pour maintenir un cluster stable et performant.
+--
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+Les Worker Nodes se composent de kubelet, kube-proxy et le runtime, essentielles pour Kubernetes. L'administration requiert rigueur et anticipation pour éviter des interruptions.
+
+Pour aller plus loin :
+1. Surveiller les ressources pour éviter les saturations.
+2. Automatiser les tâches répétitives avec Ansible.
+3. Se former aux commandes kubectl et aux méthodes de débogage.
+
+[NOTE.speaker]
+--
+Il est essentiel de maîtriser les commandes kubectl et les méthodes de débogage pour garantir la performance du cluster. Automatiser les tâches répétitives avec des outils comme Ansible est fortement recommandé.
+--
+// end::conclusion[]

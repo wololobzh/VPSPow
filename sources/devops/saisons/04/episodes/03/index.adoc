@@ -1,0 +1,47 @@
+:title: SQL et psql pour DevOps
+:number: 03
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode couvre les fondamentaux des bases de données pour les professionnels DevOps. Il se concentre sur SQL et PostgreSQL, deux technologies essentielles dans la gestion des données en environnement DevOps.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** les concepts de base de SQL et son importance dans le DevOps
+- **Appliquer** les commandes SQL fondamentales pour la manipulation des données
+- **Maîtriser** l'utilisation de psql, l'interface en ligne de commande de PostgreSQL
+- **Analyser** les besoins en gestion de bases de données dans un contexte DevOps
+// end::objectifs[]
+
+== Prérquis formateur
+
+// tag::prerequis[]
+- Connaissance pratique de SQL
+- Expérience avec PostgreSQL et psql
+- Compréhension des principes DevOps
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/sql/intro-sql.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/sql/psql.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S04-Python-Challenge
+:description: 
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

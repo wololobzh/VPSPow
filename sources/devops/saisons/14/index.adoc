@@ -1,0 +1,46 @@
+:title: Orchestration
+:number: 14
+:duration: 70
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Orchestrer et superviser des applications distribuées.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** l'orchestration
+- **Appliquer** des outils d'orchestration
+- **Analyser** des architectures distribuées
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+- Docker swarm
+- MiniKube
+- Kubernetes
+- Helm
+- K9s
+- Rancher
+// end::notions[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+
+- Penser à fournir le ebook O'clock
+// end::prerequis[]
+
+// tag::resume[]
+
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue kanban]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

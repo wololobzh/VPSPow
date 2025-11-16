@@ -1,0 +1,274 @@
+:titre: Flask avec SQLAlchemy : Des requêtes SQL aux ORM
+:module: Backend
+:duree: 120
+:description: Découvrez les ORM et apprenez à utiliser SQLAlchemy avec Flask pour interagir avec une base de données PostgreSQL et effectuer des opérations CRUD.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* *Comprendre* le concept d'ORM et ses avantages par rapport aux requêtes SQL brutes
+* *Faire le lien* entre les opérations SQL vues précédemment et leur équivalent en ORM
+* *Configurer* SQLAlchemy dans une application Flask pour travailler avec PostgreSQL
+* *Définir* des modèles de données avec SQLAlchemy
+* *Implémenter* des opérations CRUD en utilisant SQLAlchemy
+* *Comparer* les approches SQL et ORM pour les opérations courantes
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction aux ORM
+
+=== Qu'est-ce qu'un ORM ?
+
+Un ORM (Object-Relational Mapping) est une technique de programmation qui permet de convertir des données entre des systèmes de types incompatibles en utilisant des langages de programmation orientés objet. Dans le contexte des bases de données, un ORM permet d'interagir avec une base de données relationnelle en utilisant des objets plutôt que des requêtes SQL directes.
+
+=== Avantages des ORM
+
+1. *Abstraction de la base de données* : Vous pouvez changer de système de base de données avec un minimum de modifications dans votre code.
+2. *Sécurité* : Protection contre les injections SQL.
+3. *Productivité* : Écriture de moins de code pour effectuer des opérations de base de données.
+4. *Maintenabilité* : Le code est plus facile à lire et à maintenir.
+5. *Portabilité* : Le même code peut fonctionner avec différents systèmes de gestion de base de données.
+
+=== ORM vs SQL brut
+
+[cols="1,1"]
+|===
+| SQL brut | ORM (SQLAlchemy)
+
+| `SELECT * FROM users WHERE id = 1;`
+| `User.query.get(1)`
+
+| `INSERT INTO users (username, email) VALUES ('john', 'john@example.com');`
+| `db.session.add(User(username='john', email='john@example.com'))`
+|===
+
+== SQLAlchemy : Un pont entre Flask et PostgreSQL
+
+SQLAlchemy est un ORM puissant qui peut être utilisé avec Flask pour interagir avec PostgreSQL (et d'autres bases de données). Il offre une couche d'abstraction au-dessus des opérations SQL que nous avons vues précédemment.
+
+=== Configuration pour PostgreSQL
+
+[source,python]
+----
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/dbname'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+----
+
+== Définition des modèles
+
+Les modèles SQLAlchemy sont l'équivalent des tables PostgreSQL que nous avons créées manuellement auparavant.
+
+=== Exemple : De la table SQL au modèle SQLAlchemy
+
+Table SQL :
+[source,sql]
+----
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(80) UNIQUE NOT NULL,
+    email VARCHAR(120) UNIQUE NOT NULL
+);
+----
+
+Modèle SQLAlchemy équivalent :
+[source,python]
+----
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<User {self.username}>'
+----
+
+== Opérations CRUD avec SQLAlchemy
+
+=== Create (Créer)
+
+SQL :
+[source,sql]
+----
+INSERT INTO users (username, email) VALUES ('john', 'john@example.com');
+----
+
+SQLAlchemy :
+[source,python]
+----
+@app.route('/user/create', methods=['POST'])
+def create_user():
+    data = request.json
+    new_user = User(username=data['username'], email=data['email'])
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({'message': 'User created successfully'}), 201
+----
+
+=== Read (Lire)
+
+SQL :
+[source,sql]
+----
+SELECT * FROM users;
+SELECT * FROM users WHERE id = 1;
+----
+
+SQLAlchemy :
+[source,python]
+----
+@app.route('/users', methods=['GET'])
+def get_users():
+    users = User.query.all()
+    return jsonify([{'id': user.id, 'username': user.username, 'email': user.email} for user in users])
+
+@app.route('/user/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = User.query.get_or_404(user_id)
+    return jsonify({'id': user.id, 'username': user.username, 'email': user.email})
+----
+
+=== Update (Mettre à jour)
+
+SQL :
+[source,sql]
+----
+UPDATE users SET email = 'new@example.com' WHERE id = 1;
+----
+
+SQLAlchemy :
+[source,python]
+----
+@app.route('/user/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    user = User.query.get_or_404(user_id)
+    data = request.json
+    user.username = data.get('username', user.username)
+    user.email = data.get('email', user.email)
+    db.session.commit()
+    return jsonify({'message': 'User updated successfully'})
+----
+
+=== Delete (Supprimer)
+
+SQL :
+[source,sql]
+----
+DELETE FROM users WHERE id = 1;
+----
+
+SQLAlchemy :
+[source,python]
+----
+@app.route('/user/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({'message': 'User deleted successfully'})
+----
+
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration : Application de gestion de tâches
+
+[NOTE.speaker]
+--
+Créez une application Flask qui utilise SQLAlchemy pour interagir avec une base de données PostgreSQL.
+
+. Configurez la connexion à PostgreSQL :
++
+[source,python]
+----
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/taskdb'
+----
+
+. Définissez le modèle Task :
++
+[source,python]
+----
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text)
+    done = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'<Task {self.title}>'
+----
+
+. Implémentez les routes CRUD pour Task, en montrant l'équivalent SQL pour chaque opération.
+
+. Démontrez comment SQLAlchemy gère automatiquement les connexions et les transactions, contrairement à l'approche manuelle avec psycopg2.
+
+. Montrez comment effectuer des requêtes plus complexes, comme la recherche de tâches par titre ou la pagination des résultats.
+
+Expliquez les avantages de l'approche ORM tout en faisant le lien avec les connaissances SQL acquises précédemment.
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice pratique : Système de gestion de bibliothèque
+
+=== Objectif
+Créez une API Flask avec SQLAlchemy pour gérer une petite bibliothèque, en vous basant sur le schéma PostgreSQL vu précédemment.
+
+[NOTE.speaker]
+--
+* Étapes
+
+1. Définissez les modèles suivants, en vous assurant qu'ils correspondent aux tables PostgreSQL que vous avez créées manuellement dans le cours précédent :
+   - `Book` (id, title, author, isbn, published_year)
+   - `Member` (id, name, email, join_date)
+   - `Loan` (id, book_id, member_id, loan_date, return_date)
+
+2. Implémentez les routes CRUD pour chaque modèle, en commentant l'équivalent SQL pour chaque opération.
+
+3. Ajoutez une route pour emprunter un livre, en utilisant une transaction SQLAlchemy pour garantir l'intégrité des données.
+
+4. Créez une route pour obtenir tous les livres actuellement empruntés, en utilisant une jointure SQLAlchemy.
+
+5. Implémentez une recherche de livres par titre ou auteur, en montrant comment cela se traduit en SQL.
+--
+
+=== Exemple de modèle Book avec relation
+
+[source,python]
+----
+class Book(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    author = db.Column(db.String(100), nullable=False)
+    isbn = db.Column(db.String(13), unique=True, nullable=False)
+    published_year = db.Column(db.Integer)
+    loans = db.relationship('Loan', backref='book', lazy=True)
+
+    def __repr__(self):
+        return f'<Book {self.title}>'
+----
+
+=== Questions de réflexion
+
+1. Comment les relations entre les tables sont-elles gérées différemment avec SQLAlchemy par rapport aux requêtes SQL brutes ?
+2. Quels sont les avantages et les inconvénients d'utiliser un ORM par rapport à l'écriture directe de requêtes SQL dans le contexte de cette application ?
+3. Comment pourriez-vous optimiser les performances des requêtes SQLAlchemy pour de grands ensembles de données ?
+
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Vous avez découvert le concept d'ORM et ses avantages par rapport aux requêtes SQL directes
+* Vous avez appris à configurer SQLAlchemy pour travailler avec une base de données PostgreSQL dans Flask
+* Vous savez maintenant traduire des opérations SQL en leurs équivalents SQLAlchemy
+// end::conclusion[]

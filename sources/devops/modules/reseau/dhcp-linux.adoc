@@ -1,0 +1,219 @@
+:titre: Service DHCP Linux
+:module: Réseau
+:duree: 90
+:description: Mettre en place un serveur DHCP sur Linux
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Installer et configurer un serveur DHCP dans un environnement Linux
+* Configurer des réservations d’adresses IP
+* Mettre en place un relais DHCP
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Postulat de départ
+
+Pour mettre en place le service DHCP sur linux nous respecterons ces prérequis de départ
+
+* une machine Debian avec une IP fixe.
+* Aucun autre serveur DHCP actif afin d’éviter les conflits.
+* Une machine cliente configurer en DHCP afin de tester.
+* Une connexion Internet.
+
+== Installation du serveur
+
+On commence par une mise à jour des paquets du système :
+
+```sh
+apt-get update
+```
+
+Nous allons maintenant installer le paquet suivant :
+
+```sh
+apt-get install dhcp3-server
+```
+
+=== Configuration du serveur DHCP
+
+Installer le paquet ne suffit pas à faire fonctionner DHCP, il y a des configurations à faire. 
+
+dans le fichier suivant :
+
+```sh
+nano /etc/default/isc-dhcp-server
+```
+
+Dans ce fichier on va renseigner le champ “Interface” pour indiquer quelle interface réseau nous utiliserons, 
+
+```sh
+INTERFACES="eth0"
+```
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+dans le fichier suivant on va saisir les configurations IP à fournir :
+
+```sh
+nano /etc/dhcp/dhcpd.conf
+```
+
+```sh
+# Notre configuration pour le réseau 192.168.0.0
+subnet 192.168.0.0 netmask 255.255.0.0 {
+range 192.168.0.20 192.168.0.30;
+option domain-name-servers 8.8.8.8;
+option domain-name "Oclock.lan";
+option routers 192.168.0.1;
+option broadcast-address 192.168.255.255;
+default-lease-time 600;
+max-lease-time 7200;
+}
+```
+
+On sauvegarde et on quitte puis on redémarre le service serveur DHCP 
+
+[NOTE.speaker]
+--
+Explications :
+
+* Ligne 2, on indique le réseau ainsi que le masque de réseau.
+* Ligne 3, on indique la plage d’adresses IP.
+* Ligne 4, on indique le DNS. 
+* Ligne 5, on indique le nom de notre domaine.
+* Ligne 6, on indique l’adresse de notre passerelle.
+* Ligne 7, on indique l’adresse broadcast du réseau.
+* Lignes 8 et 9 , sont pour le bail exprimé en secondes.
+--
+
+== Réservation d'adresses IP
+
+Pour réaliser cela, il suffit juste d’aller dans le fichier de configuration du serveur DHCP :
+
+```sh
+nano /etc/dhcp/dhcpd.conf
+```
+
+A la fin du fichier on ajoute notre réservation :
+
+```sh
+host client1 {
+hardware ethernet 08:00:27:bb:40:6b;
+fixed-address 192.168.0.26;
+}
+```
+
+On sauvegarde ce fichier et on le quitte puis on redémarre le service serveur DHCP :
+
+```sh
+service isc-dhcp-server restart
+```
+
+[NOTE.speaker]
+--
+Les explications:
+
+* Ligne 1 : on indique le nom de la machine cliente.
+* Ligne 2 :  on indique son adresse mac.
+* Ligne 3 : l’adresse IP réservée.
+--
+
+== Relais DHCP
+
+Le Relais DHCP permet de fournir des configurations IP à des machines situées dans un réseau différent du sien.
+
+=== Prérequis :
+
+* un serveur DHCP fonctionnel.
+* Un routeur afin de lier les réseaux.
+* Minimum 2 réseaux : un pour le serveur DHCP, un pour la machine cliente.
+* Une connexion Internet.
+* 2 machines clientes.
+
+=== Installation du relais DHCP 
+
+Sur le routeur on installe le paquet suivant :
+
+```sh
+apt-get install dhcp3-relay
+```
+
+Lors de l’installation, on indique l’adresse IP du serveur DHCP :
+
+```sh
+122.168.0.2
+```
+
+On indique l’interface où le relais DHCP écoutera :
+
+```sh
+10.0.0.1
+```
+
+Pour les options supplémentaires on laisse vide.
+
+=== Configuration du relais DHCP
+
+edition du  fichier de configuration sur le serveur DHCP.
+
+```sh
+nano /etc/dhcp/dhcpd.conf
+```
+
+À la fin du fichier , on ajoute les lignes suivantes :
+
+```sh
+# Notre configuration pour le réseau 10.0.0.0
+subnet 10.0.0.0 netmask 255.0.0.0 {
+range 10.0.0.40 10.0.0.60;
+option domain-name-servers 8.8.8.8;
+option domain-name "Oclock.lan";
+option routers 10.0.0.1;
+option broadcast-address 10.255.255.255;
+default-lease-time 600;
+max-lease-time 7200; 
+}
+```
+
+On enregistre et on quitte. Puis pour finir, on relance le service de serveur DHCP :
+
+```sh
+service isc-dhcp-server restart
+```
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+Sur le routeur, on relance le service de DHCP relais :
+
+```sh
+service isc-dhcp-relay restart
+```
+
+On test le relais avec un poste client
+
+// tag::demo[]
+
+== Démonstration
+
+Montrer la mise en place et la configuration d’un serveur DHCP
+
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Un serveur DHCP sert à fournir une configuration IP à une machine qui se connecte sur le réseau.
+* La configuration IP fonctionne avec un système de bail.
+* on peut effectuer une réservation d’adresse IP pour une machine grâce à son adresse mac.
+* Un serveur DHCP peut fournir des configurations IP à des machines qui sont dans des réseaux différents du serveur avec la mise en place de relais DHCP
+// end::conclusion[]

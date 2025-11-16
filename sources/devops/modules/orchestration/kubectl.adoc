@@ -1,0 +1,484 @@
+:titre: Kubectl de A à Z
+:module: Kubernetes Management
+:duree: --
+:description: Découvrez comment administrer des clusters Kubernetes avec kubectl, l'outil CLI essentiel pour gérer, déboguer et surveiller vos déploiements efficacement.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* les concepts de base de Kubernetes.
+* *Savoir* installer et configurer kubectl.
+* *Appliquer* les commandes de base de kubectl pour la gestion de clusters.
+* *Analyser* les besoins impératifs vs déclaratifs.
+* *Surveiller* la performance et les journaux des applications avec kubectl.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction à kubectl
+
+Kubectl est l'interface CLI pour interagir avec les clusters Kubernetes. Ce guide fournit des connaissances essentielles pour administrer efficacement vos clusters.
+
+[NOTE.speaker]
+--
+Ce document couvre l'installation de kubectl, connexion aux clusters, gestion des ressources Kubernetes et bien plus.
+--
+
+=== Concepts de base
+
+Avant de plonger dans les commandes et les fonctionnalités avancées, il est essentiel de comprendre les concepts de base de Kubernetes. Ces concepts sont cruciaux pour administrer efficacement vos clusters.
+
+[NOTE.speaker]
+--
+* Cluster : Ensemble de nœuds, distinction entre Master et nœuds de travail.
+* Pod : Unités de déploiement de conteneurs.
+* Service : Gestion de la découverte des Pods.
+* Namespace, Deployment, ConfigMap/Secret : Organisation et gestion de ressources.
+* Persistent Volume (PV) et Persistent Volume Claim (PVC) : Gestion du stockage persistant.
+--
+
+== Installation de kubectl
+
+Kubectl vous permet de déployer, inspecter et gérer les ressources Kubernetes directement depuis votre terminal.
+
+=== Prérequis
+
+Pré-requis avant installation : terminal ou ligne de commande et privilèges d'installation.
+
+[NOTE.speaker]
+--
+Kubectl nécessite des privilèges admin pour l'installation, vérifiez vos droits systèmes.
+--
+
+=== Sur Linux
+
+```bash
+# Téléchargez la dernière version de kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+# Rendez le fichier exécutable
+chmod +x kubectl
+# Déplacez le binaire dans votre PATH
+sudo mv kubectl /usr/local/bin/
+# Vérifiez l'installation
+kubectl version --client
+```
+
+[NOTE.speaker]
+--
+Vous pouvez ajuster le chemin cible pour le binaire si nécessaire.
+--
+
+=== Sur macOS
+
+```bash
+# Installez kubectl avec Homebrew
+brew install kubectl
+# Vérifiez l'installation
+kubectl version --client
+```
+
+=== Sur Windows
+
+```bash
+# Installez kubectl avec Chocolatey
+choco install kubernetes-cli
+# Vérifiez l'installation
+kubectl version --client
+```
+
+=== Installation avec asdf
+
+Pour installer kubectl on peut aussi utiliser [asdf](/docs/outils/systeme/asdf-vm/) qui permet d’installer une très grande partie des outils permettant de gérer des clusters **kubernetes**.
+
+```bash
+asdf plugin add kubectl
+asdf install kubectl latest
+asdf global kubectl latest
+```
+
+== Mise à jour de kubectl
+
+Suivez les mêmes étapes que pour l'installation afin de mettre à jour kubectl pour bénéficier des dernières fonctionnalités et correctifs.
+
+== Syntaxe de kubectl et Configuration
+
+=== Syntaxe
+
+Sa syntaxe est la suivante :
+
+```bash
+kubectl [commande] [TYPE] [NOM] [flags]
+```
+
+[NOTE.speaker]
+--
+Commande : opération souhaitée (create, get, etc.).
+Type : type de ressource (pod, service, etc.).
+Nom : nom spécifique de la ressource (sensible à la casse).
+Flags : flags optionnels.
+--
+
+=== Configuration
+
+Configurer kubectl pour le répertoire `.kube` et la gestion des contextes.
+
+== Autocompletion pour différentes shells
+
+L’activation de l’autocomplétion permet une utilisation plus fluide et rapide de kubectl en vous suggérant automatiquement des commandes et des arguments.
+
+[NOTE.speaker]
+--
+Activez l'autocomplétion pour Bash, Zsh, ou Fish pour optimiser les commandes via tabulation.
+--
+
+=== Bash
+
+Pour activer l’autocomplétion dans **Bash**, exécutez les commandes suivantes :
+
+```bash
+# Ajouter l'autocomplétion à votre profil Bash
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+```
+
+=== Zsh
+
+Pour activer l’autocomplétion dans **Zsh**, suivez ces étapes :
+
+```bash
+# Ajouter l'autocomplétion à votre profil Zsh
+echo "source <(kubectl completion zsh)" >> ~/.zshrc
+```
+
+=== Fish
+
+Pour activer l’autocomplétion dans **Fish**, utilisez la commande suivante :
+
+```bash
+# Ajouter l'autocomplétion à votre profil Fish
+kubectl completion fish > ~/.config/fish/completions/kubectl.fish
+```
+
+=== Les fichiers de configuration
+
+Le répertoire `.kube` situé dans votre répertoire personnel contient les fichiers de configuration utilisés par **kubectl**. Le fichier principal est `config`, qui stocke les informations nécessaires pour se connecter à un ou plusieurs clusters.
+
+Voici un exemple de fichier `config` typique :
+
+```yaml
+apiVersion: v1
+clusters:
+- cluster:
+    server: https://my-cluster-api-server
+    certificate-authority: /path/to/ca.crt
+  name: my-cluster
+contexts:
+- context:
+    cluster: my-cluster
+    user: my-user
+    namespace: default
+  name: my-context
+current-context: my-context
+kind: Config
+preferences: {}
+users:
+- name: my-user
+  user:
+    token: MY_ACCESS_TOKEN
+```
+
+=== Utilisation de la variable KUBECONFIG
+
+Lorsque vous travaillez avec plusieurs clusters ou environnements, il est pratique de séparer les configurations dans plusieurs fichiers. **kubectl** permet d’utiliser plusieurs fichiers de configuration grâce à la variable d’environnement `KUBECONFIG`.
+
+```bash
+# Sous Linux/macOS
+export KUBECONFIG=~/.kube/config-cluster2
+# Sous Windows
+set KUBECONFIG=%USERPROFILE%\.kube\config-cluster2
+```
+
+Utilisez des séparateurs pour intégrer plusieurs fichiers de configuration, comme deux-points (:) sous Linux/macOS ou point-virgule (;) sous Windows.
+
+```bash
+# Sous Linux/macOS
+export KUBECONFIG=~/.kube/config:~/.kube/config-cluster2
+# Sous Windows
+set KUBECONFIG=%USERPROFILE%\.kube\config;%USERPROFILE%\.kube\config-cluster2
+```
+
+=== Fusionner les configurations
+
+Pour vérifier et fusionner les configurations :
+
+```bash
+kubectl config view --merge --flatten > ~/.kube/merged-config
+export KUBECONFIG=~/.kube/merged-config
+```
+
+== Gestion des contextes
+
+Changer de contexte avec `kubectl config use-context my-context` pour un usage multi-clusters efficace.
+
+=== Afficher les contextes
+
+Pour afficher la liste des contextes disponibles :
+
+```bash
+kubectl config get-contexts
+```
+
+=== Utiliser un contexte
+
+Pour changer de contexte et utiliser un autre cluster ou utilisateur :
+
+```bash
+kubectl config use-context my-context
+```
+
+=== Ajouter un contexte
+
+Pour ajouter un nouveau contexte :
+
+```bash
+kubectl config set-context new-context --cluster=my-cluster --user=my-user --namespace=my-namespace
+```
+
+=== Supprimer un contexte
+
+Pour supprimer un contexte :
+
+```bash
+kubectl config delete-context old-context
+```
+
+== Bonnes pratiques configuration
+
+Pour éviter les erreurs et faciliter la gestion des configurations, il est recommandé de suivre quelques bonnes pratiques :
+
+* Séparer les environnements par fichiers configurés.
+* Vérifier le contexte courant avant d'exécuter des commandes critiques avec kubectl.
+* Nommer les fichiers de configuration de manière explicite pour une identification rapide.
+* Utiliser des répertoires spécifiques pour une organisation claire.
+
+== Utilisation des commandes kubectl
+
+=== Obtenir la liste des ressources : `api-resources`
+
+La commande `kubectl api-resources` est un outil essentiel pour obtenir des informations sur les types de ressources disponibles dans l’API Kubernetes. Elle permet de lister toutes les ressources accessibles via l’API, ainsi que leurs groupes, versions et si elles sont nommées ou non.
+
+```bash
+kubectl api-resources
+```
+
+Liste toutes ressources disponibles. Utilisez `--api-group` pour filtrer par groupe. Par exemple, pour filtrer par le groupe `apps` :
+
+```bash
+kubectl api-resources --api-group=apps
+```
+
+=== Commande `explain`
+
+Affiche la structure et les propriétés des ressources Kubernetes.
+
+```bash
+kubectl explain [RESOURCE_TYPE] [FIELD_PATH]
+```
+
+* **RESOURCE_TYPE** : Le type de ressource que vous souhaitez expliquer (par exemple, pods, services).
+* **FIELD_PATH** (optionnel) : Le chemin vers le champ spécifique de la ressource que vous souhaitez expliquer.
+
+Exemples :
+
+```bash
+kubectl explain pod
+kubectl explain pod.spec
+kubectl explain pod.spec.containers
+```
+
+== Gestion des ressources Kubernetes
+
+=== Approches Déclarative vs Impérative
+
+Lors de l’administration de clusters Kubernetes avec **kubectl**, il existe deux approches principales pour gérer les ressources : le mode déclaratif et le mode impératif.
+
+| Aspect              | Mode impératif             | Mode déclaratif       |
+|---------------------|----------------------------|------------------------|
+| **Approche**        | Commandes en ligne         | Fichiers de configuration |
+| **Rapidité**        | Rapide pour les tâches simples | Lent initialement |
+| **Reproductibilité** | Faible                  | Élevée                   |
+| **Gestion des versions** | Difficile           | Facile avec Git          |
+| **Traçabilité**    | Difficile                  | Facile |
+
+=== Mode impératif (create)
+
+Le mode impératif consiste à exécuter des commandes **kubectl** directement depuis la ligne de commande pour créer, mettre à jour ou supprimer des ressources. 
+
+Exemple :
+
+```bash
+kubectl create deployment nginx-deployment --image=nginx
+```
+
+=== Mode déclaratif (apply)
+
+Le mode déclaratif utilise des fichiers de configuration YAML ou JSON pour définir l’état souhaité des ressources Kubernetes.
+
+Exemple de fichier YAML :
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+```
+
+Pour appliquer ce fichier :
+
+```bash
+kubectl apply -f deployment.yaml
+```
+
+== Utilisation de `get`, `describe`, et `logs`
+
+Ces commandes sont cruciales pour interagir avec les ressources du cluster et diagnostiquer les problèmes.
+
+=== Utilisation de la commande `get`
+
+La commande `kubectl get` permet de récupérer et d’afficher des informations sur les ressources d’un cluster Kubernetes.
+
+```bash
+kubectl get [RESOURCE_TYPE] [NAME] [flags]
+```
+
+Exemples :
+
+Pour afficher tous les Pods dans le namespace par défaut :
+
+```bash
+kubectl get pods
+```
+
+Pour afficher les Pods dans un namespace spécifique :
+
+```bash
+kubectl get pods -n my-namespace
+```
+
+Produire une sortie détaillée avec `-o wide` :
+
+```bash
+kubectl get pods -o wide
+```
+
+=== Utilisation de la commande `describe`
+
+Fournit des informations détaillées sur les ressources Kubernetes, y compris les événements récents.
+
+```bash
+kubectl describe [RESOURCE_TYPE] [NAME] [flags]
+```
+
+Exemples :
+
+Pour obtenir une description détaillée d’un Pod spécifique nommé `nginx-pod` :
+
+```bash
+kubectl describe pod nginx-pod
+```
+
+Également disponible pour d’autres ressources telles que Services et Déploiements :
+
+```bash
+kubectl describe service my-service
+kubectl describe deployment my-deployment
+```
+
+=== Surveiller vos applications avec `logs`
+
+Affiche les journaux des conteneurs, offrant ainsi une visibilité sur le fonctionnement interne de vos applications.
+
+```bash
+kubectl logs [POD_NAME] [-c CONTAINER_NAME] [flags]
+```
+
+Exemples :
+
+Pour afficher les journaux d’un Pod nommé `nginx-pod` :
+
+```bash
+kubectl logs nginx-pod
+```
+
+Pour suivre les journaux en temps réel :
+
+```bash
+kubectl logs -f nginx-pod
+```
+
+=== Surveiller vos ressources avec `top`
+
+La commande `kubectl top` fournit des informations en temps réel sur l’utilisation des ressources CPU et mémoire.
+
+Pour afficher l’utilisation des ressources par les nœuds :
+
+```bash
+kubectl top nodes
+```
+
+Pour afficher l’utilisation des ressources par les pods :
+
+```bash
+kubectl top pods -n my-namespace
+```
+
+// tag::exercice[]
+=== Exercice
+
+Suivez un cycle complet : configurez un cluster contexte, déployez une application, et utilisez les commandes d’observation et de dépannage.
+
+Dans cet exercice, vous devrez :
+
+* Créer un nouveau contexte pour votre cluster.
+* Déployer une application à l’aide d’un fichier de configuration YAML.
+* Utiliser `kubectl get`, `describe` et `logs` pour surveiller et déboguer votre déploiement.
+* Utiliser `kubectl top` pour surveiller les ressources utilisées par votre application.
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+Maîtriser kubectl, c'est avoir le contrôle sur vos clusters Kubernetes. Explorer les nombreuses fonctionnalités de cet outil vous permettra d'interagir plus efficacement avec vos déploiements et d'assurer une gestion optimale des ressources.
+
+* Les commandes fondamentales (apply, get, describe) pour une gestion efficace.
+* Surveillance proactive par `top` et journaux.
+* Importance de l'organisation des configurations avec `KUBECONFIG` et contextes multiples.
+
+[NOTE.speaker]
+--
+Pour approfondir, explorez la documentation officielle et utilisez kubectl quotidiennement pour affiner votre maîtrise. Attendez-vous à un guide supplémentaire sur des scénarios avancés et la sécurité des clusters.
+
+En somme, la maîtrise de `kubectl` est non seulement nécessaire, mais aussi bénéfique pour administrer, déboguer et surveiller efficacement les clusters Kubernetes. En utilisant pleinement les capacités de cette CLI, vous pouvez gérer vos environnements Kubernetes avec plus de confiance et d’efficacité, assurant ainsi une infrastructure robuste et résiliente.
+--
+// end::conclusion[]

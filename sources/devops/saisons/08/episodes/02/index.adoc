@@ -1,0 +1,42 @@
+:title: Envirronement d'apprentissage
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Les apprenants mettront en place un environnement de tests avec Docker pour simuler des déploiements automatisés. Ils apprendront à utiliser des modules Ansible et appliqueront des playbooks pour gérer des services web sur des conteneurs.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Compréhension* : Décrire et expliquer le fonctionnement des modules Ansible
+* *Application* : Mettre en place un environnement de tests avec Docker
+* *Application* : Appliquer des playbooks pour configurer des serveurs web sur des conteneurs
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Avoir docker installé sur sa machine
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+Le module "Environnement de test sert" de correction pour le link:https://github.com/O-clock-Devops-Peda/S08-Challenge[Challenge S08]. Prendre le temps de voir qui a réussi et de quelle manière. Ont-ils trouvé les prérequis de chaque machine ? Ont-ils utilisé des images DockerHub ?...
+
+include::../../../../modules/ansible/test-env.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/ansible/playbook.adoc[options=modules]
+
+include::../../../../modules/ansible/playbook-webserver.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S08-Challenge
+:description: Finaliser le playbook pour installer les machines alpine
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

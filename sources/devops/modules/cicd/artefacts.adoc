@@ -1,0 +1,85 @@
+:titre: Artefacts
+:module: CICD
+:duree: 90
+:description: Gestion des artefacts dans les workflows CI/CD
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* **Comprendre** le rôle des artefacts dans les workflows CI/CD
+* **Appliquer** des techniques pour stocker et récupérer des artefacts
+* **Utiliser** des outils pour gérer les artefacts efficacement
+// end::objectifs[]
+
+// tag::deroulement[]
+== Types d'artefacts
+
+* Binaires
+* Libraries
+* Rapports de tests
+* Fichiers de configuration
+
+[NOTE.speaker]
+--
+Les types d'artefacts incluent les binaires, les libraries, les rapports de tests, et les fichiers de configuration. Chaque type a un rôle spécifique dans le cycle de développement et de déploiement.
+--
+
+== Stockage et récupération
+
+* Utilisation via :
+** directement dans Github Actions
+** des serveurs de stockage dédiés
+** des registres d'artefacts
+*** JFrog Artifactory
+*** Sonatype Nexus
+*** GitLab Container Registry
+
+[NOTE.speaker]
+--
+Pour assurer une gestion efficace, les artefacts doivent être stockés de manière sécurisée et récupérables à tout moment. Les serveurs de stockage dédiés sont souvent utilisés pour cette tâche.
+
+Chaque solution a des avantages et des inconvénients, et il est important de choisir celle qui convient le mieux à votre workflow.
+--
+
+== Bonnes pratiques pour la gestion des artefacts
+
+* Versionnement
+* Nettoyage régulier
+* Accès sécurisé
+
+[NOTE.speaker]
+--
+Adoptez des bonnes pratiques comme le versionnement des artefacts pour suivre les modifications, effectuez un nettoyage régulier pour gérer l'espace de stockage, et assurez un accès sécurisé pour protéger vos données.
+--
+
+// tag::demo[]
+== Démonstration
+
+Utilisation de l'API REST de GitHub Actions récupérer la liste des artefacts d'un repo.
+
+https://docs.github.com/fr/rest/actions/artifacts?apiVersion=2022-11-28[Documentation de l'API REST de GitHub Actions]
+// end::demo[]
+
+// tag::exercice[]
+== Exercice
+
+A partir d'un template NestJS, générer un artefact contenant le rapport de courverture des tests.
+
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Les artefacts sont cruciaux dans les workflows CI/CD pour le stockage et la récupération.
+* Importance de produire des artefacts utiles pour le suivi et la maintenance.
+* Utilisation d'outils adaptés pour gérer ces éléments efficacement.
+* Adoptez des bonnes pratiques comme le versionnement et l'automatisation de la gestion.
+// end::conclusion[]

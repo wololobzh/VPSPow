@@ -1,0 +1,47 @@
+:title: 🐹 Structures de données et concepts avancés en Go
+:number: 07
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode approfondit les connaissances en Go en explorant les structures de données, les pointeurs, la gestion mémoire et introduit le concept de concurrence avec les goroutines.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** les structures de données spécifiques à Go
+- **Appliquer** les concepts de pointeurs et de gestion mémoire
+- **Découvrir** les bases de la concurrence avec les goroutines
+- **Comparer** ces concepts avec leurs équivalents ou absences en Python
+// end::objectifs[]
+
+== Prérquis formateur
+
+// tag::prerequis[]
+- Maîtrise des structures de données en Go et en Python
+- Expérience pratique avec les pointeurs et la gestion mémoire en langages de bas niveau
+- Connaissance des principes de concurrence en programmation
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/go/structures-donnees-go.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/go/pointeurs-goroutine.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S04-Go-Challenge
+:description: 
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

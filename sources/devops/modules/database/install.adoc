@@ -1,0 +1,210 @@
+:titre: Installation
+:module: BDD
+:duree: 120
+:description: Détailler la procédure d'installation de PostgreSQL sur Debian et créer un utilisateur.
+
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Se rappeler** des étapes d'installation d'une base de données PostgreSQL sur Debian
+* **Appliquer** la configuration initiale de PostgreSQL
+* **Comprendre** la création et gestion d'utilisateurs dans PostgreSQL
+// end::objectifs[]
+
+// tag::deroulement[]
+== Prérequis pour l'installation
+
+* Mettre à jour le système
+* Installer les dépendances requises
+
+```bash
+sudo apt update
+sudo apt install wget ca-certificates
+```
+
+[NOTE.speaker]
+--
+Avant d'installer PostgreSQL, il est important de s'assurer que le système est à jour. L'installation de quelques dépendances de base est nécessaire pour le bon fonctionnement du service PostgreSQL.
+--
+
+== Installation de PostgreSQL
+
+* Utiliser les dépôts officiels de PostgreSQL pour installer la dernière version
+* Vérifier l'installation avec la commande `psql`
+
+```bash
+# Ajouter le dépôt PostgreSQL
+echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+
+# Importer la clé de signature du dépôt
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+# Installer PostgreSQL
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+
+# Vérifier l'installation
+psql --version
+```
+
+[NOTE.speaker]
+--
+Pour installer PostgreSQL, il est recommandé d'utiliser les dépôts officiels de PostgreSQL afin d'obtenir la version la plus récente et des mises à jour régulières. Une fois l'installation terminée, on peut vérifier la version installée en utilisant `psql --version`.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Installation de PostgreSQL
+// end::demo[]
+
+== Configuration initiale
+
+* Localiser et modifier les fichiers de configuration : `postgresql.conf` et `pg_hba.conf`
+* Utiliser `systemctl` pour gérer le service PostgreSQL
+
+```bash
+cd /etc/postgresql/16/main/
+
+# Modifier les fichiers de configuration
+sudo nano postgresql.conf
+sudo nano pg_hba.conf
+
+# Redémarrer PostgreSQL après modification de la configuration
+sudo systemctl enable postgresql --now
+sudo systemctl status postgresql
+```
+
+[NOTE.speaker]
+--
+Après l'installation, il est important de vérifier et ajuster la configuration de base de PostgreSQL dans les fichiers `postgresql.conf` et `pg_hba.conf`. Ces fichiers définissent des paramètres tels que les connexions réseau autorisées et les configurations spécifiques au serveur.
+--
+
+=== Création d'un utilisateur PostgreSQL
+
+* Se connecter à PostgreSQL en tant qu'utilisateur `postgres`
+* Créer une base de données
+* Créer un nouvel utilisateur
+* Assigner des privilèges à l'utilisateur sur une base de données spécifique
+
+.Shell
+```bash
+# Passer à l'utilisateur postgres
+sudo -i -u postgres
+psql
+```
+
+.SQL
+```sql
+CREATE DATABASE ma_base;
+CREATE USER new_user WITH PASSWORD 'secure_password';
+GRANT ALL PRIVILEGES ON DATABASE ma_base TO new_user;
+```
+
+[NOTE.speaker]
+--
+Pour créer un nouvel utilisateur dans PostgreSQL, il est recommandé de se connecter en tant qu'utilisateur `postgres` et d'utiliser le client `psql`. Les commandes SQL pour créer un utilisateur, une base de données et attribuer des privilèges sont essentielles pour la gestion des utilisateurs dans PostgreSQL.
+--
+
+=== Connexion
+
+.Se connecter avec l'utilisateur nouvellement créé
+```bash
+psql -U new_user -d ma_base -h localhost
+```
+
+[NOTE.speaker]
+--
+Il est essentiel de tester la connexion de l'utilisateur nouvellement créé à la base de données, ainsi que l'exécution de quelques requêtes simples pour vérifier que tout fonctionne correctement.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Création d'un utilisateur PostgreSQL
+// end::demo[]
+
+== Les privilèges des utilisateurs
+
+Le système de gestion des privilèges de PostgreSQL est basé sur des rôles et des permissions.
+
+* Les rôles peuvent être des utilisateurs ou des groupes
+* Les permissions peuvent être attribuées sur des objets spécifiques
+* Les permissions peuvent être de type `SELECT`, `INSERT`, `UPDATE`, `DELETE`, etc.
+
+https://docs.postgresql.fr/17/sql-grant.html[Documentation PostgreSQL]
+
+=== Vérifier les privilèges de l'utilisateur
+
+* `\du` : liste les rôles/utilisateurs existant
+* `\l` : liste les bases de données et leurs propriétaires, ainsi que les privilèges
+* `\dp` : liste les tables et vues avec les privilèges associés
+
+[NOTE.speaker]
+--
+Il est important de vérifier les privilèges des utilisateurs dans PostgreSQL pour s'assurer qu'ils ont les autorisations appropriées pour accéder aux bases de données et aux objets. Les commandes SQL telles que `\du`, `\l` et `\dp` sont utiles pour afficher les rôles, les bases de données et les permissions.
+--
+
+// tag::demo[]
+== Démonstration
+
+Modification de la structure de la base de données
+
+[NOTE.speaker]
+--
+* Se connecter à PostgreSQL : `psql`
+* Regarde la liste des utilisateurs : `\du`
+* Regarde la liste des bases de données : `\l`
+* Se connecter à une base de données : `\c ma_base`
+* Regarde la liste des tables : `\dt`
+* Créer une table :
+
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100)
+);
+```
+
+* Insérer des données :
+
+```sql
+INSERT INTO users (name, email) VALUES ('Alice', 'alice@bob.fr');
+```
+
+* Vérifier les données :
+
+```sql
+SELECT * FROM users;
+```
+
+* Quitter PostgreSQL : `\q`
+--
+
+// end::deroulement[]
+
+// tag::exercice[]
+== Exercice
+
+* Créer une base de données nommée `saison6`
+* Créer un utilisateur `oclock` avec des droits spécifiques de lecture et écriture
+* Vérifier les privilèges avec des commandes SQL
+* Se connecter avec l'utilisateur `oclock` à la base de données `saison6`
+* Créer une table `episodes` avec les colonnes `id`, `titre`, `numero`, `duree`
+* Insérer une ligne dans la table `episodes`
+* Vérifier les données insérées
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* PostgreSQL est un SGBD puissant et facile à installer sur Debian.
+* Les étapes clés incluent l'installation, la configuration initiale et la gestion des utilisateurs.
+* Il est essentiel de vérifier les connexions et les privilèges des utilisateurs après leur création.
+// end::conclusion[]

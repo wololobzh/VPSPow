@@ -1,0 +1,14 @@
+[.formateur]
+.🛠 Création d'un RETEX formateur
+--
+Réalisez un RETEX dans le cadre de l'amélioration continue.
+
+- Évaluation de la compréhension des apprenants
+- Identification des blocages
+- Feedback sur les méthodes pédagogiques
+- Suivi de la cohésion de groupe
+- Anticipation des besoins en soutien
+- Amélioration continue des supports de cours
+- Analyse des retours sur les exercices et évaluations
+- Visibilité sur la charge de travail
+--

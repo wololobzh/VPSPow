@@ -1,0 +1,8 @@
+build
+*.log
+.DS_Store
+prompt.md
+*_completed
+*__TEST
+slides_completed
+md_completed_with_note_speaker

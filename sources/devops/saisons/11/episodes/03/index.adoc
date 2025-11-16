@@ -1,0 +1,36 @@
+:title: Cours AWS Academy Cloud Foundations
+:number: 03
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Continuer le cours AWS Academy Cloud Foundations
+// end::intro[]
+
+// tag::objectifs[]
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Avoir pris connaissance du cours AWS Academy Cloud Foundations
+// end::prerequis[]
+
+== Déroulement
+
+WARNING: **Le déroulé ici est donné à titre indicatif, adaptez-le au rythme des apprenants**
+
+// tag::deroulement[]
+
+:correction: 
+:temps: 30 minutes
+:description: Corriger l'activité ou le lab de la veille
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+* Module 4 : sécurité dans le cloud (4h)
+
+:challenge: https://github.com/O-clock-Devops-Peda/S11-challenge
+:description: Repo contenant tous les challenges créés pour la saison 11, Attention, pour certaines journées ce repo propose des mini-challenges pour le matin.
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

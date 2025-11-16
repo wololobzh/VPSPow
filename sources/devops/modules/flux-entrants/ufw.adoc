@@ -1,0 +1,127 @@
+:titre: ufw
+:module: Flux entrants
+:duree: 60
+:description: Savoir utiliser ufw pour configurer un pare-feu simple
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Comprendre l'intérêt d'ufw
+* Savoir configurer ufw
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+
+**Uncomplicated FireWall (ufw)** est un outil simple pour configurer un pare-feu sur Linux. Il est basé sur iptables et permet de gérer les règles de pare-feu de manière plus simple.
+
+=== Rôle du pare-feu 
+
+* **Contrôle d’accès :** 
+** définition de règles strictes pour autoriser ou bloquer le trafic réseau, 
+** critères tels que l’adresse IP, le port, le protocole, etc.
+* **Protège contre les attaques de type :** 
+** tentatives d’intrusion (force brute, scans de ports), 
+** attaques par déni de service (DDoS),
+** tentatives d’exploitation de vulnérabilités.
+* **Sépare les zones de confiance :**
+** segmentation en zones de sécurité différentes
+** exemple : séparation entre le réseau interne et le réseau externe via des zones DMZ
+
+=== Avantages & inconvénients d'ufw
+
+[cols="1,1"]
+|===
+
+| Avantages
+| Inconvénients
+
+a| 
+* Simple à configurer
+* Peut suffire dans des cas d'utilisation simples
+* Syntaxe plus lisible que iptables/nftables
+a|
+* Limité en fonctionnalités
+* Moins de contrôle que iptables/nftables
+* Peut entrer en conflit avec d'autres outils qui manipulent les règles iptables (ex: docker)
+
+|===
+
+== Utilisation d'ufw
+
+* **Installation :** `sudo apt install ufw`
+* **Vérification** : `sudo ufw status`
+
+=== Activer/désactiver ufw
+
+```shell
+sudo ufw enable
+sudo ufw disable
+```
+
+=== Gestion des règles ufw
+
+```shell
+# Autoriser le trafic entrant sur le port 22 (SSH)
+sudo ufw allow 22
+
+# Bloquer le trafic entrant sur le port 80 (HTTP)
+sudo ufw deny 80
+
+# Autoriser le trafic entrant sur une plage de ports
+sudo ufw allow 1000:2000/tcp
+
+# Supprimer une règle
+sudo ufw delete allow 22
+
+# Réinitialiser les règles
+sudo ufw reset
+```
+
+=== Autres commandes utiles
+
+```shell
+# Afficher les règles
+sudo ufw status
+
+# Activer le logging
+sudo ufw logging on
+```
+
+// tag::demo[]
+
+== Démonstration
+
+Manipulation d'ufw sur une VM Debian
+
+[NOTE.speaker]
+--
+**Utiliser une VM Debian pour effectuer cette manipulation :**
+
+* Se connecter en SSH à la VM pour montrer le bon fonctionnement du SSH
+
+* Installer `ufw` : `sudo apt install ufw`
+
+* Activer ufw : `sudo ufw enable`
+
+* Montrer que le SSH ne fonctionne plus : ufw bloque tout le trafic entrant par défaut
+
+* Autoriser le trafic entrant sur le port 22 (SSH) : `sudo ufw allow 22`
+
+* La connexion SSH fonctionne de nouveau
+--
+
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Compréhension de l'intérêt d'ufw
+* Capacité à configurer ufw
+// end::conclusion[]

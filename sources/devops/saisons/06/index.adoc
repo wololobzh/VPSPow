@@ -1,0 +1,47 @@
+:title: Système
+:number: 06
+:duration: 70
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Manipulation avancée de Linux et installation de différents services tels qu'un serveur HTTP ou des bases de données pour mettre en place une application web.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Se rappeler** des différents OS
+- *Comprendre* les règles de sécurisation Linux
+- **Appliquer** l'administration de systèmes Linux
+- **Appliquer** les procédures d'installation de services
+- **Analyser** l'activité d'un serveur
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+- Shell
+- Script
+- Linux
+// end::notions[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+
+- Penser à fournir le ebook O'clock
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+Cette saison parcours toutes les étapes nécessaires à un apprenant pour créer, sécuriser et maintenir un serveur web. Ils manipuleront une VM sous Débian qu'il configureront pour héberger une application web.
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue kanban]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

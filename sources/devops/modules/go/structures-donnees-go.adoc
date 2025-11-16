@@ -1,0 +1,221 @@
+:titre: Structures de données en Go
+:module: Go
+:duree: 120
+:description: Découverte des principales structures de données en Go et comparaison avec leurs équivalents en Python.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* *Comprendre* les différences entre tableaux et slices en Go
+* *Utiliser* les maps pour stocker des paires clé-valeur
+* *Appliquer* le concept de structs pour créer des types de données personnalisés
+* *Comparer* les structures de données Go avec leurs équivalents Python
+// end::objectifs[]
+
+// tag::deroulement[]
+== Les tableaux et slices
+
+=== Tableaux
+
+Les tableaux en Go ont une taille fixe et sont déclarés avec le type et la taille.
+
+[source,go]
+----
+var numbers [5]int
+numbers = [5]int{1, 2, 3, 4, 5}
+----
+
+=== Slices
+
+Les slices sont des tableaux dynamiques, plus flexibles et couramment utilisés.
+
+[source,go]
+----
+numbers := []int{1, 2, 3, 4, 5}
+numbers = append(numbers, 6)
+----
+
+=== Comparaison avec Python
+
+[cols="1,1,1"]
+|===
+|Aspect |Go |Python
+
+|Tableau fixe
+|`[5]int`
+|N/A (utilise des listes)
+
+|Tableau dynamique
+|Slice `[]int`
+|Liste `list`
+
+|Ajout d'élément
+|`append(slice, element)`
+|`list.append(element)`
+|===
+
+== Les maps
+
+Les maps en Go sont similaires aux dictionnaires Python.
+
+[source,go]
+----
+ages := make(map[string]int)
+ages["Alice"] = 30
+ages["Bob"] = 25
+
+// Vérification d'existence
+age, exists := ages["Charlie"]
+if exists {
+    fmt.Println("L'âge de Charlie est", age)
+} else {
+    fmt.Println("Charlie n'est pas dans la map")
+}
+
+// Suppression
+delete(ages, "Bob")
+----
+
+=== Comparaison avec Python
+
+[cols="1,1"]
+|===
+|Go |Python
+
+|`map[string]int`
+|`dict`
+
+|`make(map[string]int)`
+|`{}`
+
+|`delete(map, key)`
+|`del dict[key]`
+|===
+
+== Les structs en Go
+
+Les structs permettent de créer des types de données personnalisés.
+
+[source,go]
+----
+type Person struct {
+    Name string
+    Age  int
+}
+
+p := Person{Name: "Alice", Age: 30}
+fmt.Println(p.Name, p.Age)
+----
+
+=== Comparaison avec les classes Python
+
+[cols="1,1"]
+|===
+|Go |Python
+
+|`struct`
+|`class`
+
+|Pas de méthodes directement dans la struct
+|Méthodes définies dans la classe
+
+|Pas d'héritage, utilise la composition
+|Supporte l'héritage
+|===
+
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration
+
+Utilisation des slices et maps
+
+[NOTE.speaker]
+--
+Nous allons créer un programme qui gère une liste de courses en utilisant une slice pour les articles et une map pour les quantités.
+
+1. Créer un fichier `shopping_list.go`
+2. Implémenter des fonctions pour ajouter, supprimer et afficher des articles
+3. Utiliser une map pour stocker les quantités associées à chaque article
+
+.shopping_list.go
+```go
+package main
+
+import "fmt"
+
+func main() {
+    items := []string{}
+    quantities := make(map[string]int)
+
+    // Ajouter des articles
+    items = append(items, "Pommes")
+    quantities["Pommes"] = 5
+
+    items = append(items, "Bananes")
+    quantities["Bananes"] = 3
+
+    // Afficher la liste
+    for _, item := range items {
+        fmt.Printf("%s: %d\n", item, quantities[item])
+    }
+
+    // Supprimer un article
+    deleteItem := "Pommes"
+    for i, item := range items {
+        if item == deleteItem {
+            items = append(items[:i], items[i+1:]...)
+            delete(quantities, deleteItem)
+            break
+        }
+    }
+
+    fmt.Println("\nAprès suppression:")
+    for _, item := range items {
+        fmt.Printf("%s: %d\n", item, quantities[item])
+    }
+}
+```
+
+Les slices et les maps sont utilisées ensemble pour gérer la liste de courses et les quantités associées.
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice : Création d'une structure Task
+
+Objectif : Créer une structure `Task` avec des champs pour le titre, la description et un booléen pour indiquer si la tâche est terminée.
+
+1. Créez un fichier `task_manager.go`
+2. Définissez une structure `Task` avec les champs suivants :
+   - `Title` (string)
+   - `Description` (string)
+   - `Done` (bool)
+3. Créez une slice de `Task`
+4. Implémentez des fonctions pour :
+   - Ajouter une nouvelle tâche
+   - Marquer une tâche comme terminée
+   - Afficher toutes les tâches
+5. Dans la fonction `main()`, démontrez l'utilisation de ces fonctions
+
+[TIP]
+Utilisez une boucle `for` avec `range` pour parcourir la slice de tâches lors de l'affichage.
+
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Vous avez découvert les principales structures de données en Go : tableaux, slices, maps et structs.
+* Vous comprenez les différences et similitudes entre ces structures et leurs équivalents en Python.
+* Vous êtes capable d'utiliser ces structures pour organiser et manipuler des données dans vos programmes Go.
+// end::conclusion[]
+
+[NOTE.speaker]
+--
+Suggestion : Expérimentez avec ces structures de données dans vos propres projets. Recréez en Go des programmes Python que vous connaissez bien, en utilisant ces nouvelles structures.
+--

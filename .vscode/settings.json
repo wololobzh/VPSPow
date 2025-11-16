@@ -1,0 +1,22 @@
+{
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "\\.adoc$",
+                "cmd": "./build.sh -p \"${relativeFile}\" -o html; ./build.sh -p \"${relativeFile}\" -o slides",
+            },
+            {
+                "match": "\\.mmd$",
+                "cmd": "mmdc -i \"${relativeFile}\" -p /workspace/adoc/puppeteer-config.json -e png"
+            },
+            {
+                "match": "\\.puml$",
+                "cmd": "cat \"${relativeFile}\" | docker run --rm -i aplr/plantuml -tpng > \"${relativeFile}\".png "
+            }
+        ]
+    },
+    "plantuml.exportFormat": "png",
+    "plantuml.exportOutDir": "/",
+    "plantuml.exportSubFolder": false,
+    "plantuml.lintDiagramNoName": false
+}

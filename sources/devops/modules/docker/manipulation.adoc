@@ -1,0 +1,181 @@
+:titre: Manipulation de conteneurs
+:module: Docker
+:duree: 120
+:description: Découverte des commandes de bases de Docker pour lancer des conteneurs.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+// Sous forme de liste à puce, en utilisant la taxonomie de Bloom
+* *Appliquer* les commandes de base de Docker
+* *Appliquer* l'utilisation de conteneurs pour lancer des commandes
+// end::objectifs[]
+
+// tag::deroulement[]
+== Démarrer un conteneur
+
+Nous allons utiliser la commande `docker run` pour démarrer un conteneur.
+
+https://docs.docker.com/reference/cli/docker/container/run/[Documentation officielle]
+
+.Exemple
+```bash
+docker run node:20-alpine
+```
+
+[NOTE.speaker]
+--
+Alpine est une distribution minimale, si on ne lui donne pas de commande à exécuter, le conteneur s'arrête immédiatement.
+
+On peut lui donner une commande à exécuter en ajoutant un argument à la commande `docker run` : `docker run node:20-alpine node -v`
+--
+
+=== Mini serveur web
+
+Pour démarrer un serveur web minimaliste, on peut utiliser le conteneur `nginx` :
+
+https://hub.docker.com/_/nginx
+
+.Exemple
+```bash
+docker run nginx
+```
+
+[NOTE.speaker]
+--
+Cette commande lance le serveur web Nginx en mode classique, c'est-à-dire en mode interactif.
+
+L'option `-d` permet de lancer le conteneur en arrière-plan.
+--
+
+=== Les ports
+
+Afin de rendre le serveur web accessible depuis l'extérieur (la machine hôte), on peut utiliser l'option `-p` pour mapper un port du conteneur sur un port de la machine hôte.
+
+.Exemple
+```bash
+# PORT_HOTE:PORT_CONTENEUR
+docker run -d -p 8080:80 nginx
+```
+
+En se rendant sur `http://localhost:8080`, nous devrions voir la page d'accueil de Nginx.
+
+[NOTE.speaker]
+--
+Le port 80 du conteneur est mappé sur le port 8080 de la machine hôte.
+--
+
+== Lister les conteneurs
+
+La commande `docker ps` permet de lister les conteneurs *en cours d'exécution*.
+
+https://docs.docker.com/reference/cli/docker/container/ls/[Documentation officielle]
+
+.Exemple
+```bash
+docker ps
+```
+
+.Résultat
+```
+CONTAINER ID   IMAGE                                                                                COMMAND                  CREATED         STATUS         PORTS                                     NAMES
+7140e1990cf2   nginx                                                                                "/docker-entrypoint.…"   3 seconds ago   Up 2 seconds   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   eloquent_kepler
+```
+
+[NOTE.speaker]
+--
+Ici, le nom du conteneur est généré aléatoirement : `eloquent_kepler`. 
+
+Lors de la création d'un conteneur, on peut lui donner un nom avec l'option `--name` : `docker run -d -p 8080:80 --name serveur-web nginx`.
+--
+
+=== Options
+
+Il existe plusieurs options pour la commande `docker ps`, notamment :
+
+- `docker ps -q` : liste les ID des conteneurs en cours d'exécution
+- `docker ps -a` : liste tous les conteneurs
+- `docker ps -aq` : liste les ID de tous les conteneurs
+
+== Gérer l'état des conteneurs
+
+- `docker start [container_id]`: Démarre un conteneur arrêté.
+- `docker stop [container_id]`: Arrête un conteneur en cours d'exécution.
+- `docker rm [container_id]`: Supprime un conteneur arrêté.
+- `docker exec -it [container_id] /bin/sh`: Exécute une commande dans un conteneur en cours d'exécution.
+
+[NOTE.speaker]
+--
+La commande magique pour arrêter tous les conteneurs en cours d'exécution est : `docker stop $(docker ps -q)`.
+--
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration 1
+
+[NOTE.speaker]
+--
+Nous allons lancer un conteneur PHP (version 7.4) en arrière-plan nommé `my-php`, puis nous allons exécuter une commande dans ce conteneur. Enfin nous trouverons son id pour le stopper.
+
+. Lancer un conteneur PHP en arrière-plan : `docker run -d -p 8334:8080 --name my-php php:7.4-cli php -S 0.0.0.0:8080`
+** `-p 8334:8080` : le port 8080 du conteneur est mappé sur le port 8334 de l'hôte
+** `php -S  0.0.0.0:8080` : lance un serveur PHP sur le port 8080 du conteneur
+** (nécessaire pour le conteneur de n'arrête pas de suite…)
+. Exécuter une commande dans le conteneur : `docker exec -it my-php php -v`
+. Trouver l'ID du conteneur : `docker ps`
+. Arrêter le conteneur : `docker stop [container_id]` ou `docker stop my-php`
+--
+
+== Démonstration 2
+
+[NOTE.speaker]
+--
+Nous allons lancer un conteneur nginx en arrière-plan en mappant le port, puis nous allons entrer dans le conteneur pour modifier le fichier index.html. Enfin nous allons stopper tous les conteneurs en cours d'exécution et supprimerons le conteneur nginx.
+
+. Lancer un conteneur nginx en arrière-plan : `docker run -d -p 8080:80 --name serveur-web nginx`
+. Entrer dans le conteneur : `docker exec -it serveur-web /bin/sh`
+. Modifier le fichier index.html : `echo "Hello World" > /usr/share/nginx/html/index.html`
+. Sortir du conteneur : `CTRL + D`
+. Ouvrir le serveur : `http://localohst:8080` → « Hello World » (vider le cache si nécessaire)
+. Arrêter tous les conteneurs : `docker stop $(docker ps -q)`
+. Supprimer le conteneur nginx : `docker rm serveur-web`
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice 1
+
+Vous devez lancer un serveur PlantUML en arrière-plan et le rendre accessible depuis votre navigateur.
+
+https://plantuml.com/fr/starting[Documentation officielle]
+
+Testez la génération de diagramme en live.
+
+== Exercice 2
+
+Vous devez générer un PDF à partir d'un fichier Markdown.
+
+https://hub.docker.com/r/yjpictures/mdpdfinator[Documentation]
+
+== Exercice 3
+
+. Stoppez tous les conteneurs en cours d'exécution.
+. Supprimez tous les conteneurs arrêtés.
+. Voir toutes les images Docker sur la machine.
+. Supprimez toutes les images Docker sur la machine.
+
+TIP: une recherche sur internet s'impose 😄
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Vous avez les bases pour manipuler des conteneurs Docker.
+* Vous pouvez utilisez des conteneurs pour faire des actions.
+// end::conclusion[]

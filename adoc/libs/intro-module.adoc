@@ -1,0 +1,51 @@
+[.module]
+.{title} ^{folder}^
+****
+NOTE: {duration} minutes
+
+{description}
+
+include::{filename}.adoc[tags=objectifs]
+
+// Condition sur l'affichage des démos et exercices
+ifeval::[{demo} == 1]
+*{demo} démonstration*
+endif::[]
+ifeval::[{demo} > 1]
+*{demo} démonstrations*
+endif::[]
+ifeval::[{exercice} > 0]
+ifeval::[{demo} > 0]
+*et*
+endif::[]
+endif::[]
+ifeval::[{exercice} == 1]
+*{exercice} exercice*
+endif::[]
+ifeval::[{exercice} > 1]
+*{exercice} exercices*
+endif::[]
+
+++++
+<style>
+.links button {
+    border: none;
+    border-radius: 5px;
+    padding: 0.25rem .5rem;
+    background: #d4f4ee;
+}
+</style>
+<div class="links" style="display: flex; justify-content: space-around; align-items: baseline;">
+++++
+
+link:/{path}.html[🔗 Contenu]
+
+link:/{path}-slides.html[🔗 Slides]
+
+[subs="attributes"]
+++++
+<button onclick="preview(`/{path}.html`)">👀 Preview</button>
+<button onclick="preview(`/{path}-slides.html`)">👀 Slides</button>
+</div>
+++++
+****

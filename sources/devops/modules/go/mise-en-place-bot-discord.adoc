@@ -1,0 +1,215 @@
+:titre: Mise en place d'un bot Discord avec DiscordGo
+:module: Go
+:duree: 120
+:description: Découverte de la création de bots Discord en Go avec la bibliothèque DiscordGo.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* *Comprendre* le fonctionnement de DiscordGo et son interaction avec l'API Discord
+* *Appliquer* les méthodes pour créer un bot Discord simple en Go
+* *Comparer* la création de bots Discord en Go et en Python
+* *Créer* un bot Discord fonctionnel répondant à des commandes de base
+// end::objectifs[]
+
+// tag::deroulement[]
+== Installation de DiscordGo
+
+=== Configuration de l'environnement
+
+1. Assurez-vous d'avoir Go installé sur votre système.
+2. Installez DiscordGo en utilisant la commande suivante :
+
+[source,bash]
+----
+go get github.com/bwmarrin/discordgo
+----
+
+=== Configuration du bot Discord
+
+1. Créez une application Discord sur le https://discord.com/developers/applications[portail développeur Discord].
+2. Dans l'onglet "Bot", créez un bot et copiez son token.
+3. Invitez le bot sur votre serveur Discord de test.
+
+== Écrire un bot simple
+
+=== Structure de base d'un bot DiscordGo
+
+[source,go]
+----
+package main
+
+import (
+    "fmt"
+    "os"
+    "os/signal"
+    "syscall"
+
+    "github.com/bwmarrin/discordgo"
+)
+
+func main() {
+    // Créez une nouvelle session Discord en utilisant le token du bot
+    dg, err := discordgo.New("Bot " + "VOTRE_TOKEN_ICI")
+    if err != nil {
+        fmt.Println("Erreur lors de la création de la session Discord,", err)
+        return
+    }
+
+    // Enregistrez la fonction messageCreate comme un callback pour les événements MessageCreate
+    dg.AddHandler(messageCreate)
+
+    // Ouvrez une connexion websocket à Discord et commencez à écouter
+    err = dg.Open()
+    if err != nil {
+        fmt.Println("Erreur lors de l'ouverture de la connexion,", err)
+        return
+    }
+
+    // Attendez que le programme soit interrompu
+    fmt.Println("Bot est maintenant en cours d'exécution. Appuyez sur CTRL-C pour quitter.")
+    sc := make(chan os.Signal, 1)
+    signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
+    <-sc
+
+    // Fermez proprement la session Discord
+    dg.Close()
+}
+
+func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
+    // Ignorez les messages du bot lui-même
+    if m.Author.ID == s.State.User.ID {
+        return
+    }
+
+    // Répondez à la commande !ping
+    if m.Content == "!ping" {
+        s.ChannelMessageSend(m.ChannelID, "Pong!")
+    }
+}
+----
+
+=== Comparaison avec des bots Python (discord.py)
+
+[cols="1,1"]
+|===
+|DiscordGo (Go) |discord.py (Python)
+
+|`discordgo.New("Bot " + token)`
+|`discord.Client()`
+
+|`dg.AddHandler(messageCreate)`
+|`@client.event`
+
+|`dg.Open()`
+|`client.run(token)`
+
+|Gestion explicite des erreurs
+|Utilisation d'exceptions
+|===
+
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration : Création d'un bot simple
+
+[NOTE.speaker]
+--
+Nous allons créer un bot Discord simple qui répond à la commande !hello.
+
+1. Créer un fichier `discord_bot.go`
+2. Implémenter la structure de base du bot
+3. Ajouter une fonction pour répondre à la commande !hello
+4. Tester le bot sur un serveur Discord
+
+.discord_bot.go
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+    "os/signal"
+    "syscall"
+
+    "github.com/bwmarrin/discordgo"
+)
+
+func main() {
+    dg, err := discordgo.New("Bot " + "VOTRE_TOKEN_ICI")
+    if err != nil {
+        fmt.Println("Erreur lors de la création de la session Discord,", err)
+        return
+    }
+
+    dg.AddHandler(messageCreate)
+
+    err = dg.Open()
+    if err != nil {
+        fmt.Println("Erreur lors de l'ouverture de la connexion,", err)
+        return
+    }
+
+    fmt.Println("Bot est en cours d'exécution. Appuyez sur CTRL-C pour quitter.")
+    sc := make(chan os.Signal, 1)
+    signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
+    <-sc
+
+    dg.Close()
+}
+
+func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
+    if m.Author.ID == s.State.User.ID {
+        return
+    }
+
+    if m.Content == "!hello" {
+        s.ChannelMessageSend(m.ChannelID, "Hello, World!")
+    }
+}
+```
+Expliquez chaque partie du code, en particulier :
+
+- La création de la session Discord
+- L'ajout du gestionnaire de messages
+- La gestion de la commande !hello
+- La gestion propre de l'arrêt du bot
+--
+
+// end::demo[]
+
+// tag::exercice[]
+== Exercice : Création d'un bot Discord étendu
+
+Objectif : Créer un bot Discord qui répond à plusieurs commandes et utilise des embeds.
+
+1. Créez un fichier `advanced_bot.go`
+2. Implémentez les commandes suivantes :
+   - `!hello` : Répond avec un message de salutation personnalisé incluant le nom de l'utilisateur
+   - `!info` : Affiche des informations sur le serveur dans un embed
+   - `!roll` : Simule un lancer de dé et affiche le résultat
+3. Utilisez des embeds Discord pour formater les réponses de manière attrayante
+4. Ajoutez une gestion d'erreurs pour les commandes invalides
+
+[TIP]
+Utilisez `s.ChannelMessageSendEmbed()` pour envoyer des messages avec des embeds. Consultez la documentation de DiscordGo pour plus de détails sur la création d'embeds.
+
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Vous avez appris à configurer et utiliser DiscordGo pour créer un bot Discord.
+* Vous savez maintenant comment répondre à des commandes simples dans un bot Discord en Go.
+* Vous êtes capable de comparer la création de bots Discord en Go et en Python.
+* Vous pouvez étendre les fonctionnalités de votre bot pour inclure des commandes plus complexes et des réponses formatées.
+// end::conclusion[]
+
+[NOTE.speaker]
+--
+Suggestions : Explorer d'autres fonctionnalités de DiscordGo, comme la gestion des réactions, l'envoi de fichiers, ou l'utilisation de l'API vocale.Réfléchir à des cas d'utilisation pratiques pour les bots Discord dans leurs projets ou leur environnement de travail.
+--

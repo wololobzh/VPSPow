@@ -1,0 +1,302 @@
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+= Cours DevOps : Projet Svelte - Structure, Build et Qualité du Code
+:toc: left
+:toclevels: 3
+:sectnums:
+
+== 1. Structure d'un projet Svelte
+
+=== 1.1 Fichiers et dossiers importants
+
+La structure typique d'un projet Svelte utilisant Vite ressemble à ceci :
+
+[source]
+----
+mon-projet-svelte/
+├── node_modules/
+├── public/
+│   └── favicon.ico
+├── src/
+│   ├── lib/
+│   │   └── Component.svelte
+│   ├── routes/
+│   │   └── index.svelte
+│   ├── App.svelte
+│   └── main.js
+├── tests/
+│   └── test.js
+├── .gitignore
+├── index.html
+├── package.json
+├── svelte.config.js
+└── vite.config.js
+----
+
+=== Explication des éléments clés
+
+node_modules/:: Contient toutes les dépendances du projet.
+
+public/:: Fichiers statiques qui seront copiés tels quels dans le build final.
+
+src/:: Contient le code source de l'application.
+* `lib/`: Composants et utilitaires réutilisables.
+* `routes/`: Pages de l'application (si utilisation de SvelteKit).
+* `App.svelte`: Composant racine de l'application.
+* `main.js`: Point d'entrée JavaScript.
+
+tests/:: Contient les fichiers de tests.
+
+index.html:: Page HTML principale qui charge l'application Svelte.
+
+package.json:: Définit les dépendances et scripts du projet.
+
+svelte.config.js:: Configuration spécifique à Svelte.
+
+vite.config.js:: Configuration de Vite pour le build et le développement.
+
+== 2. Process de build
+
+=== 2.1 Comprendre les étapes du build
+
+Le processus de build d'une application Svelte avec Vite comprend plusieurs étapes :
+
+. *Résolution des dépendances* : Vite analyse le graphe de dépendances.
+. *Compilation Svelte* : Les fichiers `.svelte` sont compilés en JavaScript vanilla.
+. *Transpilation* : Le code est transpilé pour assurer la compatibilité avec les navigateurs cibles.
+. *Bundling* : Les modules sont regroupés en chunks optimisés.
+. *Minification* : Le code JavaScript et CSS est minifié pour réduire la taille.
+. *Génération des assets* : Les fichiers statiques sont copiés et optimisés.
+. *Création des fichiers de sortie* : Les fichiers finaux sont générés dans le dossier de build.
+
+=== 2.2 Optimisation pour la production
+
+Pour optimiser le build pour la production :
+
+. Utilisez le mode production de Vite :
+
+[source,bash]
+----
+npm run build
+----
+
+. Configurez la compression des assets dans `vite.config.js` :
+
+[source,javascript]
+----
+import { defineConfig } from 'vite'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
+
+export default defineConfig({
+  plugins: [svelte()],
+  build: {
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+      },
+    },
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+      },
+    },
+  },
+})
+----
+
+. Utilisez le lazy loading pour les composants lourds :
+
+[source,svelte]
+----
+<script>
+  import { onMount } from 'svelte';
+  let HeavyComponent;
+
+  onMount(async () => {
+    const module = await import('./HeavyComponent.svelte');
+    HeavyComponent = module.default;
+  });
+</script>
+
+{#if HeavyComponent}
+  <svelte:component this={HeavyComponent} />
+{/if}
+----
+
+. Optimisez les images et autres assets statiques.
+
+== 3. Tests et qualité du code
+
+=== 3.1 Linting et formatage
+
+Le linting et le formatage sont essentiels pour maintenir un code propre et cohérent.
+
+=== ESLint pour le linting
+
+. Installez ESLint et les plugins nécessaires :
+
+[source,bash]
+----
+npm install --save-dev eslint eslint-plugin-svelte3
+----
+
+. Créez un fichier `.eslintrc.js` à la racine du projet :
+
+[source,javascript]
+----
+module.exports = {
+  extends: ['eslint:recommended'],
+  plugins: ['svelte3'],
+  overrides: [
+    {
+      files: ['*.svelte'],
+      processor: 'svelte3/svelte3'
+    }
+  ],
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module'
+  },
+  env: {
+    browser: true,
+    es2017: true,
+    node: true
+  }
+};
+----
+
+. Ajoutez un script dans `package.json` :
+
+[source,json]
+----
+{
+  "scripts": {
+    "lint": "eslint src/**/*.{js,svelte}"
+  }
+}
+----
+
+=== Prettier pour le formatage
+
+. Installez Prettier et les plugins nécessaires :
+
+[source,bash]
+----
+npm install --save-dev prettier prettier-plugin-svelte
+----
+
+. Créez un fichier `.prettierrc` à la racine du projet :
+
+[source,json]
+----
+{
+  "svelteSortOrder": "options-scripts-markup-styles",
+  "svelteStrictMode": false,
+  "svelteBracketNewLine": true,
+  "svelteAllowShorthand": true,
+  "svelteIndentScriptAndStyle": true
+}
+----
+
+. Ajoutez un script dans `package.json` :
+
+[source,json]
+----
+{
+  "scripts": {
+    "format": "prettier --write src/**/*.{js,svelte}"
+  }
+}
+----
+
+=== 3.2 Tests unitaires (aperçu)
+
+Les tests unitaires sont cruciaux pour assurer la fiabilité du code. Voici un aperçu rapide de la mise en place des tests avec Jest et Testing Library.
+
+. Installez les dépendances nécessaires :
+
+[source,bash]
+----
+npm install --save-dev jest @testing-library/svelte @babel/preset-env babel-jest svelte-jester
+----
+
+. Configurez Jest dans `package.json` :
+
+[source,json]
+----
+{
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.svelte$": "svelte-jester"
+    },
+    "moduleFileExtensions": ["js", "svelte"]
+  }
+}
+----
+
+. Créez un fichier de test `src/Component.spec.js` :
+
+[source,javascript]
+----
+import { render } from '@testing-library/svelte'
+import Component from './Component.svelte'
+
+test('it renders', () => {
+  const { getByText } = render(Component, { props: { name: 'world' } })
+  expect(getByText('Hello world!')).toBeInTheDocument()
+})
+----
+
+. Ajoutez un script de test dans `package.json` :
+
+[source,json]
+----
+{
+  "scripts": {
+    "test": "jest src"
+  }
+}
+----
+
+== Objectifs pédagogiques
+
+. Connaître (Se rappeler)
+* Énumérer les fichiers et dossiers clés d'un projet Svelte
+* Identifier les étapes principales du processus de build
+
+. Comprendre
+* Expliquer le rôle de chaque fichier important dans la structure du projet
+* Décrire les optimisations possibles pour un build de production
+
+. Appliquer
+* Configurer ESLint et Prettier pour un projet Svelte
+* Mettre en place des tests unitaires de base avec Jest
+
+. Analyser
+* Examiner le résultat d'un build de production et identifier les optimisations appliquées
+* Comparer les différentes stratégies de lazy loading et leur impact sur les performances
+
+. Évaluer
+* Évaluer l'efficacité des règles de linting et de formatage pour la qualité du code
+* Juger de la couverture et de la pertinence des tests unitaires dans un projet
+
+. Créer
+* Développer une stratégie d'optimisation personnalisée pour un projet Svelte complexe
+* Concevoir un pipeline de CI/CD intégrant le linting, les tests et le build optimisé
+
+== Conclusion
+
+* La structure d'un projet Svelte est conçue pour une organisation claire et efficace du code
+* Le processus de build avec Vite offre des performances excellentes et des optimisations puissantes
+* L'utilisation d'outils de linting et de formatage est cruciale pour maintenir un code de qualité
+* Les tests unitaires sont essentiels pour assurer la fiabilité et la maintenabilité du code
+* Une compréhension approfondie de ces aspects permet aux DevOps d'optimiser le développement et le déploiement des applications Svelte

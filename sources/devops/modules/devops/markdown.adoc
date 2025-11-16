@@ -1,0 +1,138 @@
+:titre: Intro au Markdown
+:module: DevOps
+:duree: 45
+:description: Savoir utiliser le markdown
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Comprendre l'utilité du markdown
+* Savoir écrire au format markdown
+// end::objectifs[]
+
+// tag::deroulement[]
+== Markdown : késako ?
+
+* _langage de balisage léger_
+* permet de structurer la mise en forme d'un texte
+* facile à lire et comprendre par les humains
+
+== Fondamentaux du markdown
+
+* extension de fichier `.md`, peut être ouvert dans n'importe quel éditeur de texte
+* format reconnu par de nombreux programmes
+* permet d'avoir un standard dans le formatage de texte, à la différence des éditeurs traditionnels (Word, LibreOffice)
+
+=== Les titres
+
+Pour créer des titres et sous-titres hiérarchisés, utilisez le croisillon `#` suivi d'un espace.
+Ajoutez des dièses supplémentaires pour créer des niveaux inférieurs (jusqu'à 6).
+
+```markdown
+# Titre de niveau 1
+## Titre de niveau 2
+...
+###### Titre de niveau 6
+
+```
+
+=== Les sauts de lignes
+Pour créer un saut de ligne ou une nouvelle ligne, terminez une ligne avec deux espaces au moins et appuyez sur la touche Entrée :
+
+```markdown
+Une première ligne.
+Une seconde ligne.
+
+```
+
+=== Les paragraphes
+Pour créer des paragraphes, sautez une ligne avec la touche Entrée :
+
+```markdown
+Mon premier paragraphe.
+Mon second paragraphe.
+
+```
+
+=== Mettre en forme du texte
+Pour mettre le texte en italique, en gras ou en barré :
+
+```markdown
+*texte en italique*
+**texte en gras**
+~~texte barré~~
+
+```
+
+=== Mettre en forme du code
+
+**En ligne**
+Pour insérer un extrait de code dans une ligne de texte, on utilise des *backticks* (`) pour encadrer le bout de `code`.
+
+**En blocks**
+Pour créer un bloc de code, placer le code entre deux séquences de trois *backticks*
+
+```
+// mon code
+
+```
+
+=== Les listes à cocher
+
+```markdown
+[ ] case A (case vide)
+[ ] case B (case vide)
+[X] case C (coché par défaut)
+
+```
+
+=== Les listes ordonnées**
+
+```markdown
+1. élément 1
+2. élément 2
+3. élément 3
+
+```
+
+=== Les listes non ordonnées**
+
+```markdown
+- élément 1
+- élément 2
+- élément 3
+
+```
+
+=== Les liens
+
+```markdown
+[texte du lien](adresse-du-lien)
+
+```
+
+=== Les images
+
+```markdown
+![Texte alternatif](/chemin/de/l’image)
+![Texte alternatif](<https://www.adresse.com/de/limage>)
+
+```
+
+== Ressources
+
+- https://www.markdownguide.org/basic-syntax/[La syntaxe de base du Markdown]
+- https://www.markdownguide.org/extended-syntax/[La syntaxe étendue du Markdown]
+- https://www.markdownguide.org/cheat-sheet/[Cheat Sheet Markdown]
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Compréhension de l'utilité du markdown
+* Capacité à écrire au format markdown
+// end::conclusion[]

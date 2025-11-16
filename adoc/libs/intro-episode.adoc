@@ -1,0 +1,7 @@
+=== {number} : {title}
+
+include::index.adoc[tags=intro]
+
+include::index.adoc[tags=objectifs]
+
+link:./episodes/{number}/[Détails de l'épisode]

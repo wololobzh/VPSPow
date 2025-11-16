@@ -1,0 +1,199 @@
+:titre: L'IA au service du DevOps
+:module: DevOps
+:duree: 60
+:description: Comprendre comment l'IA peut être utilisée pour améliorer les processus DevOps
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Comprendre les bases de l'Intelligence Artificielle (IA) et ses principes
+* Explorer les applications de l'IA dans un contexte DevOps
+* Identifier les avantages et les limites de l'IA pour l'automatisation, la gestion des infrastructures, et l'optimisation des processus CI/CD
+// end::objectifs[]
+
+//tag::deroulement[]
+== Introduction à l'IA
+
+* IA = simulation des processus d'intelligence humaine par des machines
+** cela inclut l'apprentissage, le raisonnement et l'auto-correction
+
+image::https://media1.tenor.com/m/CYh3fnAc9LcAAAAd/ai-robot.gif[]
+
+=== Types d'intelligences
+
+* **IA** : englobe toutes les méthodes qui permettent à une machine de simuler l'intelligence humaine
+
+* **Machine Learning (ML)** : Sous-ensemble de l'IA où les machines apprennent à partir de données pour améliorer leurs performances sans être explicitement programmées
+
+* **Deep Learning** : Sous-ensemble du ML, utilisant des réseaux de neurones artificiels à plusieurs couches pour modéliser des abstractions complètes
+
+=== L'IA dans le contexte du DevOps
+
+* de plus en plus présente des les processus DevOps
+* permet d'automatiser les tâches complexes
+* peut optimiser les opérations continues
+* facilite la détection des anomalies
+
+En résumé, l'IA est utile pour :
+
+* la surveillance des systèmes
+* la prédiction des pannes
+* la gestion de la charge des serveurs
+
+== Historique et évolution de l'IA
+
+* l'IA a vu le jour dans les années 1950 avec des pionniers comme Alan Turing et John McCarthy
+
+* le terme "Intelligence Artificielle" a été utilisé pour la première fois en 1956
+
+=== L'IA aujourd'hui : pourquoi un tel essor ?
+
+* **Big Data** : l'accès à des quantités massives de données a permis aux algorithmes de s'entraîner plus efficacement
+
+* **Puissance de calcul** : les progrès dans les processeurs (notamment les GPU) ont permis de traiter de grande quantités de données plus rapidement
+
+* **Algorithmes** : des améliorations dans les algorithmes d'apprentissage automatique et les réseaux de neurones ont permis de développer des modèles plus performants
+
+== Exemples concrets d'application en DevOps
+
+* 🔁 Automatisation des tâches répétitives
+* 🔧 Optimisation des pipelines CI/CD
+* 👁️ Surveillance proactive et gestion des incidents
+* 🤔 Prévision et optimisation des capacités
+* 🔒 Amélioration de la sécurité
+
+== 🔁 Automatisation des tâches répétitives
+
+* **Versioning intelligent**
+** analyse des modifications du code sur des versions antérieures
+** propositions d'incréments de version adaptés (semver)
+** identification des dépendances critiques
+** recommandations d'ajustements automatiques des fichiers de version
+
+* **Réduction des erreurs humaines**
+** réduit les risques d'erreurs en suivant des modèles préétablis
+** détecte les incohérences dans le code
+
+=== Exemples d'outils d'automatisation
+
+* https://www.mabl.com/[Mabl]
+
+* https://www.testim.io/[Testim.io]
+
+[NOTE.speaker]
+--
+Ces outils utilisent des algorithmes d'apprentissage automatique pour observer les interactions des utilisateurs ou l'exécution de l'application et générer des scénarios de test intelligents. Ils ajustent les tests en fonction des changements apportés au code, améliorant ainsi la couverture et réduisant les faux positifs.
+--
+
+
+== 🔧 Optimisation des pipelines CI/CD
+
+* **Prédiction des échecs de build**
+** analyse de l'historique des builds
+** prédiction des échecs futurs
+** recommandation de correctifs avant même que les tests ne soient lancés
+
+* **Orchestration intelligente des déploiements**
+** surveille la performance des différentes branches de développement
+** déclenche des déploiements en fonction de la capacité système et des besoins métier
+
+=== Exemples d'outils d'optimisation
+
+* https://github.com/features/copilot[GitHub Copilot]
+
+* https://snyk.io/fr/[Snyk]
+
+* https://jenkins-x.io/[Jenkins X]
+
+[NOTE.speaker]
+--
+GitHub Copilot : Peut réduire les erreurs de code et améliorer la qualité du code dès la phase de développement, influençant ainsi positivement les builds et les déploiements.
+
+Snyk : Analyse les projets pour identifier les failles de sécurité potentielles avant que le code ne soit déployé en production.
+
+Jenkins X : Utilise des techniques d'IA pour recommander des optimisations de pipelines et gérer les environnements Kubernetes.
+--
+
+== 👁️ Surveillance proactive et gestion des incidents
+
+* **Détection d'anomalies**
+** vérification des logs
+** surveillance de la performance des applications ou métriques système
+** identification des incidents en amont
+
+* **Auto-résolution des problèmes**
+** identification de la cause racine d'un problème
+** correction automatique ou proposition d'une solution
+
+=== Exemples d'outils IA de surveillance
+
+* https://www.datadoghq.com/[Datadog]
+
+* https://www.splunk.com/fr_fr[Splunk]
+
+* https://www.bigpanda.io/[BigPanda]
+
+[NOTE.speaker]
+--
+Datadog et Splunk utilisent l'IA pour détecter des anomalies dans les logs, la performance des applications ou les métriques système, permettant d’identifier les incidents avant qu'ils n'impactent les utilisateurs finaux.
+
+BigPanda est capable d’identifier la cause racine d’un problème, de le corriger automatiquement ou de proposer des solutions aux équipes DevOps pour une intervention rapide.
+--
+
+== 🤔 Prévision et optimisation des capacités
+
+* **Prédiction de la demande**
+** analyse des tendances d'utilisation des services pour prédire la demande future
+** ajustement automatique de la capacité des serveurs
+
+* **Gestion dynamique des ressources**
+** répartition des ressources en fonction des besoins
+** optimisation de la gestion des conteneurs
+
+=== Exemples d'outils IA de prévision
+
+* https://aws.amazon.com/fr/autoscaling/[AWS Auto Scaling]
+
+* https://kubernetes.io/fr/[Kubernetes]
+
+[NOTE.speaker]
+--
+AWS Auto Scaling permet d'ajuster automatiquement la capacité des serveurs et permet d'éviter les surcharges
+
+Kubernetes intègre des algorithmes IA pour optimiser la gestion des pods et des conteneurs
+--
+
+== 🔒 Amélioration de la sécurité
+
+* **Détection de menaces et réponse automatique**
+** analyse des comportements réseau en temps réel
+** détection des comportements anormaux (cybermenaces)
+** lancement de mesures de protection automatiques
+
+* **Analyse des logs**
+** repérage de comportements malveillants
+** évite les faux positifs pour accélérer les interventions en cas de menace réelle
+
+=== Exemples d'outils IA de sécurité
+
+* https://darktrace.com/[Darktrace]
+
+* https://www.crowdstrike.com/fr-fr/[Crowdstrike]
+
+[NOTE.speaker]
+--
+Darktrace et Crowdstrike analysent les comportements réseau en temps réel, détectent les comportements anormaux et déclenchent des mesures de protection automatique
+--
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Compréhension des bases de l'Intelligence Artificielle (IA) et ses principes
+* Connaissance des applications de l'IA dans un contexte DevOps
+* Connaissance des avantages de l'IA pour l'automatisation, la gestion des infrastructures, et l'optimisation des processus CI/CD
+// end::conclusion[]

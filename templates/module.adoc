@@ -1,0 +1,85 @@
+:titre: ModuleName
+// TIP : Définit la famille de modules
+:module: GroupName
+:duree: 30
+// TIP : Description en deux phrases maximum pour avoir un aperçu depuis la trame
+:description: Lorem ipsum dolor sit amet.
+// A décommenter
+// include::../../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+// Permet à l'apprenant d'identifier clairement ce qu'il va voir et savoir faire
+// TIP : Sous forme de liste à puce, en utilisant la taxonomie de Bloom (Se rappeler, Comprendre, Appliquer, Analyser, Évaluer, Créer)
+// TIP : Exemple : *Comprendre* les concepts de base de la POO
+* 
+// end::objectifs[]
+
+// tag::deroulement[]
+// TIP : Titre court, ne répétant pas le titre du module
+== Slide de niveau 1
+
+// TIP : Le contenu doit être synthétique, avec des phrases courtes ou des liste à puces, et contenir des mots-clés
+
+[NOTE.speaker]
+--
+// TIP : Les notes du speaker servent au discours et sont affichées dans le ebook. Elles donnent plus de détails sur le contenu des slides volontairement succinctes pour ne pas distraire l'auditoire.
+--
+
+// TIP : Les parties nécessitant complément de ce qui est dit dans le slide de niveau 1. Elles peuvent inclure une démonstration et/ou un exercice.
+=== Slide de niveau 1.1
+
+// TIP : Exemple, les syntaxes des différentes boucles for en JS (for...in, for...of, forEach...)
+
+```javascript
+// TIP : Inclusion d'exemple de code
+```
+
+[NOTE.speaker]
+--
+// TIP : Accompagné d'un détail ligne par ligne du code présenté
+--
+
+// tag::demo[]
+// Moment moins théorique et plus participatif
+// ==(=) Démonstration
+
+Titre de la démonstration
+
+[NOTE.speaker]
+--
+Etapes à réaliser pour la démonstration en restant synthétique.
+
+// TIP : des snippets de code peuvent être nécessaires ici, mais sont logiquement présentés dans les slides précédentes. Le cas échéant, les réduires au strict minimum.
+--
+// end::demo[]
+
+// tag::exercice[]
+// Diggestion de l'information
+// TIP : L'exercice sert de tampon pour rendre le contenu plus interactif. S'il y a du retard, ils peuvent être fait en mode démo par le formateur, ou carrement passé en incitant les apprenants à le faire le soir.
+// ==(=) Exercice
+
+Titre de l'exercice avec description rapide de l'objectif.
+
+// TIP : Facultatif, les étapes pour aider à la réalisation
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// TIP : la conclusion sert à reparler de l'essentiel réimprimer les points à retenir. Eviter les phrases bateau au profit de définition, concepts, cas d'usage...
+// tag::conclusion[]
+* ...
+
+[NOTE.speaker]
+--
+TIP : Ajouter une note si le récapitulatif est long ou contient des snippet utiles
+--
+// end::conclusion[]

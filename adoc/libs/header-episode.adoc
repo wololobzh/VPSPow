@@ -1,0 +1,93 @@
+:icons: font
+:imagesdir: {docdir}
+:source-highlighter: highlight.js
+:highlightjs-theme: rainbow
+:highlightjs-languages: yaml, scilab, javascript, typescript, rainbow, plantuml, html, php, css, asciidoc, bash, c, cpp, csharp, coffeescript, diff, dockerfile, go, ini, json, kotlin, less, lua, makefile, markdown, objectivec, perl, python, r, ruby, rust, scala, sql, swift, xml, apache, nginx, http, git, properties, puppet, scss, smalltalk, tex, toml, twig, vbnet, vbscript, x86asm, java, tsx
+
+:toc: left
+:toc-title: 
+:sectanchors: true
+:sectlinks: true
+
+ifeval::["{visible-on-html}" ==  "yes"]
+
+++++
+include::scroll_highlight.html[]
+++++
+
+include::*{docdir}[opts=breadcrumb]
+{number}
+
+++++
+include::breadcrumb.html[]
+++++
+
+++++
+<style>
+#preview {
+  width: 50vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 50vw;
+  border: none;
+  margin: 0;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+
+  button {
+    border: none;
+    border-radius: 5px;
+    padding: 0.25rem .5rem;
+    background: #d4f4ee;
+    margin: 0 auto 0 0;
+  }
+
+  iframe {
+    height: inherit;
+    width: 100%;
+  }
+}
+
+</style>
+
+<dialog id="preview">
+  <div>
+    <button onclick="document.querySelector('#preview').close()">Fermer</button>
+    <iframe src="about:blank"></iframe>
+  </div>
+</dialog>
+
+<script>
+window.addEventListener('beforeprint',() => {
+  const allDetails = document.body.querySelectorAll('details');
+  allDetails.forEach((detail) => {
+    detail.setAttribute('open', '');
+  });
+});
+
+function preview(link) {
+  iframe.src = link;
+  document.querySelector('#preview').showModal();
+
+}
+const iframe = document.querySelector('#preview iframe');
+iframe.addEventListener("load", ev => {
+  const new_style_element = document.createElement("style");
+  new_style_element.textContent = "body {padding-left: 0!important;} #header, #footer {display: none;} #content {margin-top: 0;}"
+  ev.target.contentDocument.head.appendChild(new_style_element);
+});
+
+</script>
+++++
+
+endif::[]
+
+= {number} : {title}
+
+---

@@ -1,0 +1,35 @@
+<style>
+    .active {
+        font-weight: bold;
+    }
+</style>
+<script type="text/javascript">
+    window.addEventListener('scroll', adjustTOC);
+    window.addEventListener('click', adjustTOC);
+
+    document.addEventListener('DOMContentLoaded', adjustTOC);
+
+    function adjustTOC() {
+        var highestIndex = 0;
+
+        const anchors = document.querySelectorAll('#content a.anchor');
+        const tocAnchors = document.querySelectorAll('#toc a');
+
+        for (const index in anchors) {
+            if (anchors[index].parentNode != undefined) {
+                const count = (anchors[index].parentNode.innerText.match() || []).length;
+                if (count > 0 && count < 3) {
+                    highestIndex = anchors[index].offsetTop < window.scrollY + 80 ? index : highestIndex;
+                }
+            }
+        }
+
+        for (const tocAnchor of tocAnchors) {
+            if (tocAnchor.getAttribute("href") == anchors[highestIndex].getAttribute("href")) {
+                tocAnchor.classList.add("active");
+            } else {
+                tocAnchor.classList.remove("active");
+            }
+        }
+    }
+</script>

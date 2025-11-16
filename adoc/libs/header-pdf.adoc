@@ -1,0 +1,28 @@
+:icons: font
+:toc: 
+:toc-title: 
+:page-background-image: image:../../../../adoc/libs/images/logo-pdf.png[]
+
+= Saison {number} : {title}
+
+++++
+<style>
+.saveBtn {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    background-color: #c23131;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+</style>
+<button class="saveBtn" onclick="window.print();">Télécharger PDF</button>
+++++
+
+WARNING: Contenu O'clock, reproduction et partage interdits.

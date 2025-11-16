@@ -1,0 +1,38 @@
+:title: Déploiement de Machines Virtuelles avec Terraform
+:number: 03
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Modification des ressources Terraform déjà déployées.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre le processus de déploiement des ressources Terraform
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Terraform installé et fonctionnel
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 90 minutes
+:description: En profiter pour faire un grand récap si besoin.
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/iac/terraform-execution.adoc[options=modules]
+
+include::../../../../modules/iac/terraform-variables.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S12-Challenge
+:description: 
+:correction: https://github.com/O-clock-Devops-Peda/S12-Challenge/tree/correction
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

@@ -1,0 +1,17 @@
+services:
+  devcontainer:
+    build:
+      context: ./.devcontainer
+    volumes:
+      - .:/workspace
+      # Copy ssh keys to the container
+      - ~/.ssh:/root/.ssh:ro
+      # Copy docker socket to the container
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  webserver:
+    image: nginx:latest
+    ports:
+      - 8282:80
+    volumes:
+      - ./build:/usr/share/nginx/html:ro

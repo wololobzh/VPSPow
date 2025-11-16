@@ -1,0 +1,31 @@
+sequenceDiagram
+    participant Client1
+    participant Client2
+    participant LoadBalancer
+    participant Server1
+    participant Server2
+    participant Server3
+
+    Client1->>LoadBalancer: Envoi de requête
+    LoadBalancer->>LoadBalancer: Applique hachage sur IP de Client1
+    alt Hash correspond à Server1
+        LoadBalancer->>Server1: Redirige vers Server1
+    else Hash correspond à Server2
+        LoadBalancer->>Server2: Redirige vers Server2
+    else Hash correspond à Server3
+        LoadBalancer->>Server3: Redirige vers Server3
+    end
+    Server1-->>LoadBalancer: Réponse
+    LoadBalancer-->>Client1: Réponse
+
+    Client2->>LoadBalancer: Envoi de requête
+    LoadBalancer->>LoadBalancer: Applique hachage sur IP de Client2
+    alt Hash correspond à Server1
+        LoadBalancer->>Server1: Redirige vers Server1
+    else Hash correspond à Server2
+        LoadBalancer->>Server2: Redirige vers Server2
+    else Hash correspond à Server3
+        LoadBalancer->>Server3: Redirige vers Server3
+    end
+    Server2-->>LoadBalancer: Réponse
+    LoadBalancer-->>Client2: Réponse

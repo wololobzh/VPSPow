@@ -1,0 +1,19 @@
+// tag::correction[]
+.🏆 Correction 
+[.correction]
+[sidebar]
+--
+NOTE: {temps}
+
+ifeval::["{description}" != ""]
+{description}
+endif::[]
+ifeval::["{description}" == ""]
+Correction du challenge de la veille
+endif::[]
+
+ifeval::["{correction}" != ""]
+Lien de la {correction}[correction,window=_blank]
+endif::[]
+--
+// end::correction[]

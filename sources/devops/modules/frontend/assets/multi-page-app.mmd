@@ -1,0 +1,8 @@
+sequenceDiagram
+    participant User as Utilisateur
+    participant Browser as Navigateur
+    participant Server as Serveur
+    User->>Browser: Clique sur un lien
+    Browser->>Server: Demande une nouvelle page
+    Server->>Browser: Envoie la nouvelle page HTML complète
+    Browser->>User: Affiche la nouvelle page (rechargement)

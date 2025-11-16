@@ -1,0 +1,56 @@
+:title: Maîtriser le terminal
+:number: 04
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Découverte des commandes avancées du terminal Linux et des capacités du bash.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Analyser** des commandes complexes
+- **Appliquer** le scripting bash
+- **Analyser** les besoins du système
+// end::objectifs[]
+
+// tag::prerequis[]
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+⬇️ Si pas fait la veille.
+
+include::../../../../modules/bash/functions.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/systeme/terminal-advanced.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/bash/automation.adoc[options=modules]
+
+WARNING: Journée async demain, programmer les activités.
+
+:challenge: https://github.com/O-clock-Devops-Peda/S06-Challenge
+:description: Mettre en place un mécanisme de sauvegarde automatique des répertoires des utilisateurs et créer un script pour analyser les logs système. Ces deux tâches sont essentielles pour assurer la sécurité des données et le bon fonctionnement de l'infrastructure en surveillant les événements critiques.
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s06e04]
+--
+
+
+// end::deroulement[]

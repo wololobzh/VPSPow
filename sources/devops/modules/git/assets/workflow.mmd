@@ -1,0 +1,7 @@
+graph TD;
+    A[Développeur] -->|Initialise| B[Dépot Local]
+    B -->|Ajoute des fichiers| C[Fichiers suivis]
+    C -->|Effectue un commit| D[Historique des Commits]
+    D -->|Pousse vers| E[Dépôt Distant]
+    E -->|Récupère des modifications| F[Dépot Local]
+    F -->|Fusionne les modifications| C

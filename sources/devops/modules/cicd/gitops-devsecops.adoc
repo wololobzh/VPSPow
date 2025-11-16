@@ -1,0 +1,172 @@
+:titre: Tendances émergentes
+:module: CICD
+:duree: 60
+:description: Exploration des tendances émergentes : GitOps et DevSecOps.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* **Comprendre** les concepts clés de GitOps et DevSecOps.
+* **Analyser** les avantages de l'adoption de GitOps
+* **Évaluer** l'importance du DevSecOps.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction aux tendances émergentes
+
+* Définition de GitOps et DevSecOps
+* Importance de suivre les tendances en CICD
+
+[NOTE.speaker]
+--
+GitOps et DevSecOps sont deux approches modernes qui transforment la façon dont les équipes gèrent les déploiements et intègrent la sécurité dans le développement logiciel. Comprendre ces concepts est crucial pour rester compétitif et assurer la qualité des livraisons.
+--
+
+== GitOps
+
+=== Git comme source unique de vérité
+
+Toutes les configurations d'infrastructure et d'applications sont versionnées dans un dépôt Git. 
+
+Cela inclut :
+
+* le code de l'application 
+* les fichiers de configuration
+* les manifestes Kubernetes
+* les scripts d'automatisation
+* etc.
+
+=== Automatisation par les pipelines ci/cd
+
+Les pipelines d'intégration continue et de déploiement continu (CI/CD) sont utilisés pour automatiser l'application des changements de configuration. 
+
+Lorsqu'une modification est apportée dans Git, un pipeline CI/CD est déclenché pour appliquer ce changement à l'environnement cible.
+
+=== Déploiements déclaratifs
+
+Les configurations d'infrastructure et d'application sont décrites de manière déclarative. 
+
+Par exemple, dans Kubernetes, des fichiers YAML sont utilisés pour décrire l'état désiré du système.
+
+=== Reconciliation automatique
+
+Des opérateurs ou des contrôleurs surveillent en continu l'état réel de l'infrastructure et le comparent à l'état désiré défini dans Git. Exemple :
+
+* FluxCD
+* ArgoCD
+
+Si des divergences sont détectées, ces outils prennent des mesures correctives pour aligner l'état réel sur l'état désiré.
+
+=== Avantages
+
+* Audit et Traçabilité
+
+* Conformité et Sécurité
+* Collaboration Améliorée
+* Réduction des Risques
+* Facilité de Reproduction et de Récupération
+
+[NOTE.speaker]
+--
+Chaque modification apportée à l'infrastructure ou aux applications est enregistrée dans l'historique Git, ce qui offre une traçabilité complète. Cela simplifie l'audit et permet de revenir facilement à un état antérieur en cas de problème.
+
+Étant donné que toutes les configurations sont stockées dans Git, il est plus facile de garantir la conformité aux politiques de sécurité et de gouvernance. Les approbations et les revues de code peuvent être intégrées dans le processus de gestion des modifications.
+
+GitOps permet aux équipes de développement et d'exploitation de collaborer de manière plus étroite en utilisant des outils et des pratiques communes. Les développeurs peuvent proposer des modifications d'infrastructure de la même manière qu'ils proposent des modifications de code.
+
+Grâce à l'automatisation et à la gestion déclarative des configurations, GitOps réduit le risque d'erreurs humaines. Les déploiements deviennent plus prévisibles et fiables.
+
+La définition déclarative de l'infrastructure permet de reproduire facilement les environnements et de récupérer rapidement après une défaillance.
+--
+
+=== Cas d'utilisation
+
+* Gestion des Infrastructures Kubernetes
+* Multi-Cloud et Environnements Hybrides
+* Déploiement d'Applications
+
+[NOTE.speaker]
+--
+GitOps est particulièrement populaire pour gérer les clusters Kubernetes, en utilisant des outils comme Flux ou Argo CD pour automatiser le déploiement des applications et la gestion de la configuration.
+
+GitOps facilite la gestion des environnements complexes répartis sur plusieurs clouds ou centres de données.
+
+Les principes GitOps peuvent également être appliqués au déploiement d'applications pour assurer la cohérence entre les environnements de développement, de test et de production.
+--
+
+== DevSecOps
+
+=== Intégration de la sécurité dans le cycle de vie du développement
+
+La sécurité est intégrée à chaque étape du cycle de développement, de la conception à la production. Incluant :
+
+* l'analyse de la sécurité du code
+* la gestion des vulnérabilités
+* la conformité aux normes de sécurité
+
+=== Automatisation de la sécurité
+
+L'automatisation des processus de sécurité est essentielle pour détecter et corriger rapidement les vulnérabilités. Incluant l'utilisation :
+
+* d'outils d'analyse statique et dynamique
+* de tests de pénétration automatisés
+* de scanners de vulnérabilités
+
+=== Culture de sécurité collaborative
+
+DevSecOps encourage une culture où la sécurité est la responsabilité de tous, pas seulement de l'équipe de sécurité. 
+
+> Cela implique des formations régulières et une sensibilisation accrue à la sécurité pour tous les membres de l'équipe.
+
+=== Surveillance et réponse en temps réel
+
+Les systèmes et applications sont surveillés en continu pour détecter les menaces et réagir rapidement aux incidents de sécurité.
+
+=== Infrastructure sécurisée
+
+L'utilisation d'infrastructures déclaratives et d'infrastructure-as-code (IaC) permet de gérer la sécurité de l'infrastructure de manière cohérente et reproductible.
+
+=== Avantages
+
+* Détection Précoce des Vulnérabilités
+* Réduction des Risques
+* Conformité Accrue
+* Amélioration de la Confiance
+* Agilité Maintenue
+
+[NOTE.speaker]
+--
+En intégrant la sécurité dès le début, les vulnérabilités peuvent être détectées et corrigées plus tôt dans le cycle de développement, réduisant ainsi les coûts de correction.
+
+L'automatisation et la surveillance proactive permettent de réduire les risques liés à la sécurité en identifiant rapidement les menaces potentielles.
+
+DevSecOps facilite le respect des normes de sécurité et de conformité en automatisant les audits et les rapports de sécurité.
+
+En plaçant la sécurité au cœur du développement, les organisations peuvent renforcer la confiance des clients et des parties prenantes dans la sécurité de leurs produits.
+
+Contrairement aux approches traditionnelles de la sécurité qui peuvent ralentir le développement, DevSecOps permet de maintenir l'agilité tout en intégrant la sécurité.
+--
+
+=== Outils et pratiques associés
+
+* Analyse de Code Statique (SAST)
+* Analyse de Code Dynamique (DAST)
+* Gestion des Secrets
+* Infrastructure as Code (IaC) Sécurisée
+* Gestion des Dépendances
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+**GitOps** est une approche moderne pour gérer les déploiements et les configurations d'infrastructure en utilisant Git comme source unique de vérité. Les avantages incluent une meilleure traçabilité, une collaboration améliorée et une réduction des risques.
+
+**DevSecOps** intègre la sécurité dans le cycle de développement, en automatisant les processus de sécurité et en encourageant une culture de sécurité collaborative. Les avantages incluent une détection précoce des vulnérabilités, une réduction des risques et une conformité accrue.
+// end::conclusion[]

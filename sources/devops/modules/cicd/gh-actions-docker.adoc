@@ -1,0 +1,252 @@
+:titre: Github Actions meets Docker
+:module: CICD
+:duree: 120
+:description: Docker comme environnement d'exécution pour les actions, création et utilisation d'actions Docker personnalisées.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* **Comprendre** l'importance de Docker pour l'isolation des environnements d'exécution
+* **Utiliser** des images Docker pour exécuter des jobs
+* **Créer** une action Docker personnalisée pour un workflow
+* **Analyser** les avantages des actions Docker dans les pipelines
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+
+* Docker permet une isolation efficace des environnements d'exécution
+* Les actions Docker enrichissent les workflows CI/CD en offrant flexibilité et portabilité
+
+[NOTE.speaker]
+--
+Docker est un outil essentiel pour assurer que le code s'exécute de manière cohérente, indépendamment de l'environnement. Les actions Docker permettent de créer des environnements d'exécution isolés, ce qui est particulièrement utile dans les workflows CI/CD.
+--
+
+== Exécuter des jobs avec Docker
+
+* Choisir une image Docker existante pour un job
+* Configurer le job pour utiliser l'image Docker
+
+```yaml
+build:
+    environment: production
+    runs-on: ubuntu-latest
+    container:
+        image: asciidoctor/docker-asciidoctor
+        volumes:
+            - .:/workspace
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+        - name: Build
+          run: |
+            chmod +x build.sh
+            ./build.sh -d
+```
+
+[NOTE.speaker]
+--
+Vous pouvez utiliser des images Docker publiques pour exécuter des jobs dans vos workflows. Cela vous permet de bénéficier d'un environnement préconfiguré sans avoir à créer une image de zéro.
+--
+
+// tag::demo[]
+== Démonstration
+
+Utilisation d'une image Docker pour exécuter un job de test Node.js
+
+[NOTE.speaker]
+--
+Nous allons configurer un job dans GitHub Actions pour utiliser une image Docker Node.js :
+
+1. Créez un fichier `.github/workflows/docker-job.yml`.
+2. Définissez un job qui utilise l'image `node:14`.
+3. Configurez le job pour exécuter une commande de test.
+
+Exemple de fichier YAML :
+
+```yaml
+name: Docker Job
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: node:14
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+    - name: Install dependencies
+      run: npm install
+    - name: Run tests
+      run: npm test
+```
+--
+// end::demo[]
+
+== Custom action Docker
+
+https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-docker-container-action[Créer une action Docker]
+
+=== Concepts clés
+
+* **Structure d'une action Docker** : Utilisation de `Dockerfile` et `action.yml`
+* **Images Docker** : Base des environnements d'exécution pour les jobs
+
+[NOTE.speaker]
+--
+Une action Docker est définie par un `Dockerfile` qui spécifie comment construire l'image Docker, et un fichier `action.yml` qui configure l'action. Les images Docker sont utilisées pour fournir un environnement d'exécution cohérent pour les jobs.
+--
+
+=== Avantages
+
+* **Isolation** : Empêche les conflits d'environnement
+* **Portabilité** : Facilite le partage et l'exécution sur différents systèmes
+
+[NOTE.speaker]
+--
+Les actions Docker offrent un environnement isolé, réduisant les risques de conflits entre différentes dépendances. Elles sont également portables, ce qui signifie qu'elles peuvent s'exécuter de manière cohérente sur n'importe quel système supportant Docker.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Création d'une action Docker qui exécute un script Python.
+
+[NOTE.speaker]
+--
+
+Nous allons créer une action Docker qui exécute un script Python simple :
+
+. Créez un répertoire pour l'action Docker dans le dossier `.github/actions`.
+. Ajoutez un fichier `Dockerfile` pour construire l'image avec Python.
+. Créez un fichier `action.yml` pour configurer l'action.
+. Écrivez un script Python à exécuter dans l'image.
+
+Exemple de `Dockerfile` :
+
+```Dockerfile
+FROM python:3.8-slim
+
+COPY script.py /script.py
+
+ENTRYPOINT ["python", "/script.py"]
+```
+
+Exemple de `action.yml` :
+
+```yaml
+name: 'Python Script Action'
+description: 'Runs a Python script'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+```
+
+Exemple de `script.py` :
+
+```python
+print("Hello, world!")
+```
+--
+
+// end::demo[]
+
+=== Intégration dans des workflows
+
+* Utilisation de plusieurs actions Docker dans un workflow
+* Gestion des dépendances et partage de données entre actions
+
+```yaml
+name: Docker Workflow
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Unit Test
+              uses: ./.github/actions/unit-test
+
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Build
+              uses: ./.github/actions/build
+```
+
+[NOTE.speaker]
+--
+Les workflows peuvent inclure plusieurs actions Docker, chacune accomplissant une tâche spécifique. Assurez-vous de gérer correctement les dépendances et de partager les données entre les actions si nécessaire.
+--
+
+=== Bonnes pratiques
+
+* Optimiser les images Docker pour réduire les temps d'exécution
+* Documenter et versionner les actions Docker pour faciliter leur utilisation
+
+[NOTE.speaker]
+--
+Optimisez vos images Docker en réduisant leur taille et en supprimant les dépendances inutiles. Documentez clairement les actions pour que d'autres développeurs puissent les utiliser efficacement. Utilisez le versionnage pour gérer les mises à jour et les changements.
+--
+
+// tag::exercice[]
+== Exercice
+
+Créer une action Docker pour exécuter des tests unitaires dans un environnement isolé :
+
+. Créer un projet https://docs.nestjs.com/first-steps[Nestjs]. Il contient déjà des tests unitaires à exécuter.
+. Créez un répertoire pour l'action Docker.
+. Ajoutez un fichier `Dockerfile` pour construire l'image avec les outils de test nécessaires.
+. Créez un fichier `action.yml` pour configurer l'action.
+
+[NOTE.speaker]
+--
+Exemple de `Dockerfile` :
+
+```Dockerfile
+FROM node:lts-alpine
+
+CMD npm install; npm run test
+```
+
+Exemple de `action.yml` :
+
+```yaml
+name: 'Unit Test Action'
+description: 'Runs unit tests in an isolated environment'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+```
+--
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Docker enrichit les workflows CI/CD en offrant des environnements d'exécution isolés et portables
+* Les actions Docker nécessitent une compréhension des bonnes pratiques pour maximiser leur efficacité
+* L'intégration des actions Docker dans les workflows CI/CD améliore la flexibilité et la portabilité des pipelines
+// end::conclusion[]

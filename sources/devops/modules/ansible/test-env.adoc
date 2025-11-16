@@ -1,0 +1,443 @@
+:titre: Environnement de test
+:module: Ansible
+:duree: 120
+:description: Mise en place d'un environnement de test avec Docker pour faciliter l'apprentissage d'Ansible et l'exécution de playbook sur une multitude de machines.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* **Comprendre** les avantages d'un environnement de test pour Ansible
+* **Configurer** un environnement Docker avec des conteneurs pour simuler des machines cibles
+* **Appliquer** les concepts de base d'Ansible pour gérer plusieurs conteneurs via SSH
+* **Créer** des fichiers Docker et un fichier de composition Docker pour automatiser la configuration
+// end::objectifs[]
+
+// tag::deroulement[]
+== Pourquoi mettre en place un environnement de test avec Docker
+
+* **Facilité d'itération** : tester rapidement les playbooks dans un environnement simulé
+* **Évolutivité** : simuler un réseau complexe avec plusieurs types de machines
+* **Portabilité** : exécuter les mêmes configurations sur différentes machines
+* **Gratuité** 
+
+[NOTE.speaker]
+--
+Un environnement de test avec Docker permet de simuler facilement un réseau de machines sur lesquelles on peut déployer des playbooks Ansible. Cela offre la possibilité de tester des configurations complexes sans avoir besoin de matériel supplémentaire. C'est rapide à mettre en place et à réinitialiser.
+--
+
+=== Prérequis de la machine hôte
+
+* **Docker** : nécessaire pour exécuter les conteneurs
+* **Docker Compose** : pour gérer les conteneurs et les réseaux
+
+=== Prérequis des conteneurs
+
+* **Python** : nécessaire pour exécuter Ansible et les modules sur les machines cibles
+* **SSH** : communication entre Ansible (conteneur principal) et les conteneurs cibles
+
+[NOTE.speaker]
+--
+Les conteneurs doivent être configurés avec Python et SSH pour permettre à Ansible de se connecter et de gérer les conteneurs comme s'il s'agissait de machines séparées. L'utilisation de Docker Compose simplifie la gestion de ces conteneurs.
+--
+
+// tag::demo[]
+=== Demonstration Dockerfile
+
+Création des Dockerfile pour les différents types de machines
+
+[NOTE.speaker]
+--
+Créer les Dockerfile pour chaque type de machine :
+
+- *Debian* : Installer Python et SSH.
+- *Alpine* : Installer Python et SSH.
+- *Ansible* : Installer Ansible, SSH et les dépendances nécessaires pour la connexion aux conteneurs.
+
+.ansible.Dockerfile
+```Dockerfile
+FROM alpine/ansible:latest
+
+# Utile pour récupérer des infos sur le port 80 des autres machines
+RUN apk add curl
+
+# Ajoute sshpass pour se connecter en ssh avec un mot de passe
+RUN apk add sshpass
+```
+
+D'après la documentation : https://wiki.debian.org/SSH#Installation
+
+.debian.Dockerfile
+```Dockerfile
+FROM debian:latest
+
+RUN apt-get update -y && apt-get upgrade -y
+
+# Ajouter le ssh
+RUN apt-get install -y openssh-server python3
+
+# Modifie le mot de passe de root
+RUN echo 'root:root' | chpasswd
+
+# Crée les dossiers qui vont bien pour openssh et openrc démarre correctement
+RUN mkdir /var/run/sshd
+
+# Modifie la configuration de sshd pour autoriser la connexion root avec mot de passe
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PermitUserEnvironment no/PermitUserEnvironment yes/' /etc/ssh/sshd_config
+
+# Démarre le service sshd 
+CMD ["/usr/sbin/sshd", "-D"]
+```
+
+D'après la documentation : https://wiki.alpinelinux.org/wiki/Setting_up_a_SSH_server?ref=angelsanchez.me
+
+.alpine.Dockerfile
+```Dockerfile
+FROM alpine:latest
+
+# Ajoute le ssh et le gestionnaire de service openrc
+RUN apk add openrc openssh python3
+
+# Modifie le mot de passe de root
+RUN echo "root:root" | chpasswd
+
+# Crée les dossiers qui vont bien pour openssh et openrc démarre correctement
+RUN mkdir /run/openrc
+RUN touch /run/openrc/softlevel
+
+# Modifie la configuration de sshd pour autoriser la connexion root avec mot de passe
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PermitUserEnvironment no/PermitUserEnvironment yes/' /etc/ssh/sshd_config
+
+# Ajoute le service sshd à openrc
+RUN rc-update add sshd
+
+# Nécessaire pour que openrc fonctionne correctement
+RUN rc-status
+
+# Démarre le service sshd et attend indéfiniment
+# Le démarrage ne peut pas être fait dans une ligne RUN car alpine ne le permet pas de démarrer
+CMD rc-service sshd start; sleep infinity
+```
+
+--
+// end::demo[]
+
+== Composition
+
+Nous aurons seulement 3 services, 1 par type de conteneur :
+
+* **Conteneur principal** : contient Ansible et les playbooks
+* **Conteneurs cibles alpine**
+* **Conteneurs cibles debian**
+
+// tag::demo[]
+=== Demonstration compose
+
+Création du fichier compose.yml
+
+[NOTE.speaker]
+--
+1. Créer un fichier `compose.yml` pour définir les services pour chaque type de conteneur.
+2. Utiliser `docker compose up` pour démarrer l'environnement.
+
+```yaml
+services:
+  main:
+    build:
+      context: .
+      dockerfile: ansible.Dockerfile
+    hostname: main
+    container_name: main
+    working_dir: /root/ansible
+    volumes:
+      - ./ansible:/root/ansible
+    command: sleep infinity
+
+  alpine:
+    build:
+      context: .
+      dockerfile: alpine.Dockerfile
+    hostname: alpine
+
+  debian:
+    build:
+      context: .
+      dockerfile: debian.Dockerfile
+    hostname: debian
+```
+--
+// end::demo[]
+
+=== Test de connexion SSH depuis le conteneur Ansible
+
+* Vérifier la connexion SSH entre le conteneur Ansible et les autres conteneurs
+* Utiliser `ansible -m ping` pour valider la configuration
+
+[NOTE.speaker]
+--
+Après avoir lancé les conteneurs, vérifiez que le conteneur Ansible peut se connecter aux conteneurs Debian et Alpine via SSH. Utilisez la commande `ansible -m ping` pour tester la connexion et vous assurer que les communications sont établies.
+--
+
+// tag::demo[]
+=== Demonstration : scacling
+
+Duplication des instances
+
+[NOTE.speaker]
+--
+* Pour simuler un environnement plus complexe, vous pouvez facilement dupliquer les conteneurs en utilisant l'option `--scale` avec Docker Compose. Cela évite d'allourdir le fichier de composition avec des répétitions inutiles.
+* Cette fonctionnalité est pratique pour tester les playbooks Ansible sur plusieurs machines simultanément.
+
+```bash
+docker compose up -d --scale alpine=3 --scale debian=3
+```
+
+--
+// end::demo[]
+
+== Commandes principales
+
+```bash
+# Lancer les conteneurs
+docker compose up -d --scale alpine=3 --scale debian=3
+
+# Se connecter au conteneur principal
+docker exec -it main bash
+
+# Remettre à zéro les conteneurs
+docker compose down -v
+
+# Build des images sans cache
+docker compose build --no-cache
+```
+
+Dans le conteneur principal :
+
+```bash
+# Tester la connexion SSH
+ansible -i inventory.yml all -m ping
+
+# Se connecter en SSH
+ssh ansible-alpine-1
+
+# Lancer un playbook
+ansible-playbook -i inventory.yml playbooks/touch.yml
+```
+
+// tag::exercice[]
+== Exercice 1
+
+Créer un fichier inventory.yml avec les différentes machines
+
+* **Tâche** : Créer un fichier `inventory.yml` répertoriant les conteneurs Debian et Alpine.
+* **Objectif** : Configurer correctement les hôtes pour qu'Ansible puisse interagir avec eux via SSH.
+
+[NOTE.speaker]
+--
+L'exercice consiste à écrire un fichier d'inventaire pour Ansible en listant les conteneurs comme des hôtes distincts. Assurez-vous de spécifier correctement les adresses ou noms de conteneurs afin qu'Ansible puisse établir les connexions SSH. Vous pouvez vous référer à l'exemple fourni pour la structure.
+
+* Créez un fichier `inventory.yml` dans le dossier `ansible` du repo.
+
+```yaml
+alpine:
+  hosts:
+    alpine1:
+      ansible_host: ansible-alpine-1
+      ansible_user: root
+      ansible_password: root
+    alpine2:
+      ansible_host: ansible-alpine-2
+      ansible_user: root
+      ansible_password: root
+    alpine3:
+      ansible_host: ansible-alpine-3
+      ansible_user: root
+      ansible_password: root
+
+debian:
+  hosts:
+    debian1:
+      ansible_host: ansible-debian-1
+      ansible_user: root
+      ansible_password: root
+    debian2:
+      ansible_host: ansible-debian-2
+      ansible_user: root
+      ansible_password: root
+    debian3:
+      ansible_host: ansible-debian-3
+      ansible_user: root
+      ansible_password: root
+```
+
+--
+// end::exercice[]
+
+// tag::exercice[]
+== Exercice 2
+
+Exécuter le playbook de la veille sur les conteneurs
+
+* **Tâche** : Utiliser le playbook que vous avez créé précédemment pour le tester sur les conteneurs nouvellement créés.
+* **Objectif** : S'assurer que la configuration fonctionne sur plusieurs conteneurs en simultané.
+
+[NOTE.speaker]
+--
+* Insérer le playbook dans le dossier `ansible/playbooks` du repo
+* Spécifier `hosts: all` dans le playbook pour qu'il s'applique à tous les conteneurs
+* Utiliser la commande `ansible-playbook -i inventory.yml playbooks/touch.yml` pour lancer le playbook sur les conteneurs
+--
+// end::exercice[]
+
+== Evolution clé ssh
+
+* **Gestion des clés SSH** : évite de spécifier les mots de passe dans le fichier d'inventaire
+* **Sécurité** : bonne pratique pour les connexions distantes
+
+[NOTE.speaker]
+--
+Les clés SSH sont une méthode plus sécurisée pour se connecter aux machines distantes. Vous pouvez générer des paires de clés pour chaque conteneur et les ajouter à l'agent SSH pour une connexion sans mot de passe. Cela simplifie la gestion des connexions et améliore la sécurité.
+
+De façon générale, il est recommandé de ne pas activer la connexion par mot de passe en ssh, surtout en production et encore moins avec le compte root.
+--
+
+=== Parties obsolètes
+
+Ce qui devient obsolète dans notre repo :
+
+- sshpass dans le conteneur `main`
+- `ansible_password` dans le fichier `inventory.yml`
+
+=== A ajouter
+
+Actions à réaliser dans le repo :
+
+- Générer une paire de clés ssh sur le conteneur `main` en mode non interractif : `ssh-keygen -t rsa -b 2048 -f /root/.ssh/id_rsa -q -N ""`
+- Mapper un volume pour le répertoire `~/.ssh` du conteneur `main` dans le répertoire `./ssh` du projet
+- Copier la clé publique dans les conteneurs `alpine` et `debian` en mapant un volume `./ssh/id_rsa.pub:/root/.ssh/authorized_keys`
+- Ajouter la clé dans `inventory.yml` pour chaque hôte : `ansible_ssh_private_key_file: /root/.ssh/id_rsa`
+
+// tag::demo[]
+=== Démonstration
+
+Configuration des clés SSH pour se connecter sans mot de passe
+
+[NOTE.speaker]
+--
+.ansible.Dockerfile
+```Dockerfile
+FROM alpine/ansible:latest
+
+RUN apk add curl
+
+# Ajoute sshpass pour se connecter en ssh avec un mot de passe
+# RUN apk add sshpass
+
+RUN ssh-keygen -t rsa -b 2048 -f /root/.ssh/id_rsa -q -N ""
+```
+
+.compose.yml
+```yml
+services:
+  main:
+    build:
+      context: .
+      dockerfile: ansible.Dockerfile
+    hostname: main
+    container_name: main
+    working_dir: /root/ansible
+    volumes:
+      - ./ansible:/root/ansible
+      - ./ssh:/root/.ssh
+    command: sleep infinity
+
+  alpine:
+    build:
+      context: .
+      dockerfile: alpine.Dockerfile
+    hostname: alpine
+    volumes:
+      - ./ssh/id_rsa.pub:/root/.ssh/authorized_keys
+
+  debian:
+    build:
+      context: .
+      dockerfile: debian.Dockerfile
+    hostname: debian
+    volumes:
+      - ./ssh/id_rsa.pub:/root/.ssh/authorized_keys
+```
+
+.inventory.yml
+```yml
+alpine:
+  hosts:
+    alpine1:
+      ansible_host: ansible-alpine-1
+      ansible_user: root
+      ansible_ssh_private_key_file: /root/.ssh/id_rsa
+      # ansible_password: root
+    alpine2:
+      ansible_host: ansible-alpine-2
+      ansible_user: root
+      ansible_ssh_private_key_file: /root/.ssh/id_rsa
+      # ansible_password: root
+    alpine3:
+      ansible_host: ansible-alpine-3
+      ansible_user: root
+      ansible_ssh_private_key_file: /root/.ssh/id_rsa
+      # ansible_password: root
+    
+debian:
+  hosts:
+    debian1:
+      ansible_host: ansible-debian-1
+      ansible_user: root
+      ansible_ssh_private_key_file: /root/.ssh/id_rsa
+      # ansible_password: root
+    debian2:
+      ansible_host: ansible-debian-2
+      ansible_user: root
+      ansible_ssh_private_key_file: /root/.ssh/id_rsa
+      # ansible_password: root
+    debian3:
+      ansible_host: ansible-debian-3
+      ansible_user: root
+      ansible_ssh_private_key_file: /root/.ssh/id_rsa
+      # ansible_password: root
+```
+
+--
+// end::demo[]
+
+=== Test
+
+On peut tester la connexion d'ansible vers les servers avec la commande suivante :
+
+```bash
+ansible -i inventory.yml all -m ping
+```
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Configuration d'un environnement de test Docker pour Ansible
+* Démonstration de la gestion multi-conteneurs via Ansible
+* Reprise des concepts clés : création d'images Docker, scaling de conteneurs, configuration SSH, exécution de playbooks
+
+[NOTE.speaker]
+--
+Cet environnement de test offre une manière simple et efficace de pratiquer et de tester Ansible sans nécessiter un ensemble complexe de machines physiques. En utilisant Docker, vous pouvez facilement configurer, tester et réinitialiser votre environnement.
+--
+// end::conclusion[]

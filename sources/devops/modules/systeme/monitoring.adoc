@@ -1,0 +1,144 @@
+:titre: Monitoring
+:module: Système
+:duree: 60
+:description: Analyser les points critiques d'un système et mettre en place la surveillance de CPU, RAM, Disque, Réseau, Services et processus, ainsi que la gestion des mises à jour à l'aide des outils Nagios, Prometheus et Grafana.
+
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** les concepts fondamentaux de la surveillance système.
+* **Appliquer** un système de surveillance.
+* **Analyser** la criticité des ressources d'un système.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction à la surveillance système
+
+* La surveillance système permet d'analyser les performances en temps réel des ressources.
+* Elle identifie les points critiques (CPU, RAM, Réseau, etc.) pour garantir une performance optimale.
+
+[NOTE.speaker]
+--
+La surveillance proactive permet d'éviter les pannes système, d'optimiser les ressources et d'améliorer la disponibilité des services.
+--
+
+=== Surveillance du CPU, RAM, et Disque
+
+* CPU : Mesurer l'utilisation des processeurs, identifier les processus gourmands.
+* RAM : Analyser la consommation mémoire, éviter le swapping excessif.
+* Disque : Vérifier l'espace disponible et l'intégrité des disques.
+
+[NOTE.speaker]
+--
+Surveiller les pics d'utilisation de CPU et de RAM permet de diagnostiquer rapidement des ralentissements dus à des processus mal optimisés ou à des fuites de mémoire.
+--
+
+=== Surveillance du réseau
+
+* Vérifier la bande passante utilisée et la latence.
+* Détecter les anomalies dans les connexions réseau (ex. paquets perdus).
+* Analyser les ports et services réseaux ouverts.
+
+[NOTE.speaker]
+--
+Une surveillance réseau adéquate permet d'éviter les goulots d'étranglement et d'assurer la qualité du service (QoS).
+--
+
+=== Surveillance des services et processus
+
+* Assurer que les services critiques sont opérationnels.
+* Utiliser des outils comme `ps`, `top` pour vérifier l'état des processus.
+* Configuration des alertes en cas de dysfonctionnement.
+
+[NOTE.speaker]
+--
+Les services critiques incluent les bases de données, les serveurs web et les applications métiers. Leur disponibilité doit être surveillée en continu.
+--
+
+=== Surveillance des mises à jour
+
+* Vérifier régulièrement les mises à jour de sécurité.
+* Utiliser des outils de gestion de paquets pour automatiser les mises à jour.
+* Planifier des maintenances régulières pour appliquer les correctifs.
+
+[NOTE.speaker]
+--
+Les mises à jour de sécurité sont essentielles pour protéger le système contre les failles de sécurité connues. Les outils de gestion de paquets facilitent la gestion des mises à jour.
+--
+
+.Exemple du paquet `unattended-upgrades`
+```bash
+# Installer le paquet
+sudo apt install unattended-upgrades
+# Activer les mises à jour automatiques
+sudo dpkg-reconfigure --priority=low unattended-upgrades
+# Vérifier les logs
+cat /var/log/unattended-upgrades/unattended-upgrades.log
+```
+
+
+== Outils de surveillance
+
+=== Présentation de Nagios
+
+* Outil open-source de surveillance d'infrastructure.
+* Surveillance active des services, processus et ressources.
+* Notification d'alertes en cas de dépassement de seuils.
+
+[NOTE.speaker]
+--
+Nagios est très utilisé pour la surveillance traditionnelle des serveurs et services, avec une interface web permettant d'avoir une vue d'ensemble de l'état du système.
+--
+
+=== Présentation de Prometheus et Grafana
+
+* Prometheus : Outil open-source de monitoring des métriques basé sur un modèle de collecte par scraping.
+* Grafana : Tableau de bord pour visualiser les métriques de Prometheus.
+
+[NOTE.speaker]
+--
+Prometheus est souvent utilisé pour collecter des métriques système et d'application. Grafana permet de créer des graphiques personnalisés pour visualiser les performances et les tendances.
+--
+
+=== Démarrage avec Prometheus et Grafana
+
+* Installation de Prometheus sur Linux avec `apt`.
+* Installation de Grafana et connexion à Prometheus pour visualisation des métriques.
+
+```bash
+# Installer Prometheus
+sudo apt update
+sudo apt install prometheus
+
+# Installer Grafana
+sudo apt install grafana
+```
+
+[NOTE.speaker]
+--
+L'installation de Prometheus et Grafana se fait facilement via les gestionnaires de paquets standards. Après l'installation, Prometheus commence à scraper les métriques système, et Grafana permet de les visualiser sous forme de graphiques.
+--
+// end::deroulement[]
+
+// tag::exercice[]
+== Exercice
+
+. Installer Nagios sur votre machine locale.
+. Configurer Nagios pour surveiller l'utilisation du CPU, de la RAM et de l'espace disque.
+. Configurer des alertes en cas de dépassement de seuils définis pour ces ressources.
+
+https://assets.nagios.com/downloads/nagioscore/docs/nagioscore/4/en/quickstart.html[Guide d'installation rapide de Nagios]
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Importance de la surveillance proactive pour éviter les pannes.
+* Capacité à installer et configurer des outils de surveillance comme Nagios, Prometheus, et Grafana.
+* Surveillance des ressources critiques pour une gestion optimale du système.
+// end::conclusion[]

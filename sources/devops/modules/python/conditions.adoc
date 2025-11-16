@@ -1,0 +1,314 @@
+:titre: Conditions
+:module: Python
+:duree: 120
+:description: Les structures conditionnelles permettent d"exécuter du code en fonction de conditions spécifiques.
+// A décommenter
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+// Sous forme de liste à puce, en utilisant la taxonomie de Bloom
+* Comprendre l'importance des structures conditionnelles dans la programmation
+* Identifier les différentes structures conditionnelles en Python (if, elif, else)
+* Écrire des instructions conditionnelles simples
+* Utiliser des opérateurs de comparaison pour formuler des conditions
+* Appliquer des opérateurs logiques (and, or, not) dans des conditions
+// end::objectifs[]
+
+// tag::deroulement[]
+== Structure IF
+
+La structure `if` va tester des valeurs grâce à un ou plusieurs opérateurs de comparaison que nous verrons après.
+
+```python
+if condition:
+	# bloc de code exécuté si la condition est vraie
+```
+
+*condition* : Il s'agit d'une expression qui est évaluée comme étant `True` (vraie) ou `False` (fausse).
+
+*bloc de code* : Le code indenté sous l'instruction `if` est exécuté uniquement si la condition est vraie.
+    
+[NOTE.speaker]
+--
+Algo :
+SI condition vrai
+ALORS “instruction”
+--
+
+=== Exemple
+
+```python
+temperature = 30
+if temperature > 25:
+    print("Il fait chaud.")
+```
+
+[NOTE.speaker]
+--
+Dans cet exemple, le message "Il fait chaud." sera affiché si la température est supérieure à 25.
+--
+
+== Structure IF...ELSE
+
+Il est également possible de fournir une alternative en utilisant `else`. Le bloc de code associé à `else` s'exécutera si la condition de l'instruction `if` est fausse.
+
+```python
+temperature = 20
+
+if temperature > 25:
+    print("Il fait chaud.")
+else:
+    print("Il fait frais.")
+```
+
+[NOTE.speaker]
+--
+Dans ce cas, le message "Il fait frais." sera affiché car la condition `temperature > 25` est fausse.
+
+Algo :
+SI condition vrai
+ALORS “instruction”
+SINON “instruction”
+--
+
+== Structure IF...ELIF...ELSE
+
+Pour gérer plusieurs conditions, on peut utiliser `elif` (qui signifie "else if"). Cela permet d'évaluer d'autres conditions si la première condition est fausse.
+
+```python
+temperature = 15
+
+if temperature > 25:
+    print("Il fait chaud.")
+elif temperature > 15:
+    print("Il fait doux.")
+else:
+    print("Il fait frais.")
+```
+
+[NOTE.speaker]
+--
+Ici, le programme affichera "Il fait frais." car aucune des conditions précédentes n'est vraie.
+
+Algo :
+SI condition vrai
+ALORS “instruction”
+SINON SI condition2 vrai
+ALORS “instruction”
+SINON “instruction”
+--
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration
+
+[NOTE.speaker]
+--
+Voici un exemple complet qui illustre l'utilisation de `if`, `elif`, et `else` :
+
+```python
+age = int(input("Entrez votre âge : "))
+if age < 13:
+    print("Vous êtes un enfant.")
+elif age < 18:
+    print("Vous êtes un adolescent.")
+elif age < 65:
+    print("Vous êtes un adulte.")
+else:
+    print("Vous êtes un senior.")
+```
+
+Dans cet exemple :
+
+1. L'utilisateur est invité à entrer son âge.
+2. Le programme évalue l'âge et affiche un message approprié en fonction de la tranche d'âge.
+--
+// end::demo[]
+
+
+// tag::deroulement[]
+== Opérateurs de comparaison
+
+Les opérateurs de comparaison permettent de comparer des valeurs et de retourner un résultat booléen (True ou False). Les principaux opérateurs de comparaison sont :
+
+* `==` : égal à
+* `!=` : différent de
+* `<` : inférieur à
+* `>` : supérieur à
+* `<=` : inférieur ou égal à
+* `>=` : supérieur ou égal à
+
+Ces opérateurs sont souvent utilisés dans les conditions des instructions `if`.
+
+```python
+x = 10
+y = 5
+print(x > y)   # Affiche : True
+print(x == y)  # Affiche : False
+```
+
+== Opérateurs booléens
+
+Les opérateurs booléens permettent de combiner plusieurs conditions.
+
+Les principaux opérateurs booléens en Python sont :
+
+* ET `and`
+** Retourne `True` si les deux conditions sont vraies.
+** `condition1 and condition2`
+** Utilisé pour vérifier que plusieurs conditions sont toutes vraies.
+* OU `or`
+** Retourne `True` si au moins une des conditions est vraie.
+** `condition1 or condition2`
+** Utilisé pour vérifier si l'une des conditions est vraie.
+* NON `not`
+** Inverse la valeur de vérité d'une condition.
+** `not condition`
+** Utilisé pour vérifier si une condition est fausse.
+
+=== Table de vérité
+
+Voici la table de vérité des opérateurs booléens :
+
+|===
+| Condition 1 | Condition 2 | `and` | `or` | `not`
+
+| True        | True        | True  | True | False
+| True        | False       | False | True | False
+| False       | True        | False | True | True 
+| False       | False       | False | False| True 
+|===
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration
+
+[NOTE.speaker]
+--
+*Utilisation des opérateurs booléens*
+
+Les opérateurs booléens sont souvent utilisés dans des structures conditionnelles pour créer des conditions complexes. Voici quelques exemples :
+
+*Exemple 1* : Utilisation de `and`
+
+```python
+age = 25
+permis = True
+if age >= 18 and permis:
+    print("Vous pouvez conduire.")
+else:
+    print("Vous ne pouvez pas conduire.")
+```
+
+*Exemple 2* : Utilisation de `or`
+
+```python
+jour = "samedi"
+if jour == "samedi" or jour == "dimanche":
+    print("C'est le week-end !")
+else:
+    print("C'est un jour de semaine.")
+```
+
+*Exemple 3* : Utilisation de `not`
+
+```python
+est_admin = False
+if not est_admin:
+    print("Accès refusé. Vous n'êtes pas administrateur.")
+else:
+    print("Accès accordé.")
+```
+
+*Exemple 4* : Combinaison des opérateurs
+
+Il est possible de combiner des opérateurs de comparaison et des opérateurs booléens pour créer des conditions plus complexes :
+
+```python
+age = 30
+permis = True
+est_etudiant = False
+if (age >= 18 and permis) or est_etudiant:
+    print("Accès autorisé.")
+else:
+    print("Accès refusé.")
+```
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice
+
+*Vérification des conditions d'accès*
+
+Vous devez créer un script Python qui :
+
+* Demande à l'utilisateur de saisir son âge.
+* Demande à l'utilisateur s'il est étudiant (oui ou non).
+* Utilise des structures conditionnelles pour déterminer s'il peut accéder à une salle de formation.
+    ** Il faut avoir plus de 18 ans et être étudiant pour accéder à la salle
+    ** Afficher des `print` avec du texte pour savoir si il a l’autorisation ou non
+* Affiche un message approprié en fonction des résultats.
+
+Exécution du script :
+
+* Sauvegarder et exécuter le script.
+* Vérifier les résultats et corriger les éventuelles erreurs.
+
+[NOTE.speaker]
+--
+Corrections possibles :
+[source,python]
+----
+# Demande de l'âge avec conversion en entier
+age = int(input("Quel est votre âge ? "))
+
+# Demande du statut étudiant
+statut = input("Êtes-vous étudiant ? (oui/non) ").lower()
+
+# Vérification des conditions d'accès
+if age >= 18 and statut == "oui":
+    print("Accès autorisé à la salle de formation.")
+else:
+    print("Accès refusé à la salle de formation.")
+    
+    # Explications détaillées du refus
+    if age < 18:
+        print("Motif : Vous devez avoir au moins 18 ans.")
+    if statut != "oui":
+        print("Motif : Vous devez être étudiant.")
+----
+
+Explications du code :
+
+* Saisie des données
+** La fonction `input()` est utilisée pour obtenir les informations de l'utilisateur
+** `int()` convertit la saisie de l'âge en nombre entier
+** `.lower()` convertit la réponse du statut étudiant en minuscules pour faciliter la comparaison
+
+* Structure conditionnelle
+** Utilisation de `if/else` pour vérifier les conditions
+** L'opérateur `and` assure que les deux conditions sont vraies
+** Des messages explicatifs sont affichés selon les cas
+
+Points d'attention :
+
+* Le script ne gère pas les erreurs de saisie (par exemple, si l'utilisateur entre du texte pour l'âge)
+* La réponse pour le statut étudiant doit être exactement "oui" ou "non"
+
+--
+
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Les conditions peuvent inclure des opérateurs de comparaison (`==`, `!=`, `<`, `>`, `<=`, `>=`) et des opérateurs logiques (`and`, `or`, `not`).
+* Le bloc de code qui suit `if`, `elif` ou `else` doit être indenté pour indiquer qu'il fait partie de cette structure.
+* La structure `if` peut être imbriquée, ce qui signifie que vous pouvez avoir des instructions `if` à l'intérieur d'autres instructions `if`.
+// end::conclusion[]

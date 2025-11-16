@@ -1,0 +1,19 @@
+=== {number} : {title}
+
+[.resume]
+--
+include::index.adoc[tags=intro]
+
+include::index.adoc[tags=objectifs]
+--
+
+.Prérequis formateur
+--
+include::index.adoc[tags=prerequis]
+--
+
+---
+
+==== Déroulement
+
+include::index.adoc[tags=deroulement,leveloffset=+2]

@@ -1,0 +1,108 @@
+:titre: Trivy
+:module: IAC
+:duree: 60
+:description: Présentation de Trivy.dev et mise en place avec l'extension VSCode et dans un pipeline Github action.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* *Comprendre* les fonctionnalités de Trivy
+* *Appliquer* Trivy dans un environnement de développement avec VSCode
+* *Intégrer* Trivy dans un pipeline CI/CD avec GitHub Actions
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+
+Trivy est un outil de sécurité qui permet de scanner des vulnérabilités dans des conteneurs et autres artefacts.
+
+https://trivy.dev/latest/[Site officiel de Trivy]
+
+- Détecte les vulnérabilités connues
+- Prend en charge les images Docker, fichiers système, etc.
+
+[NOTE.speaker]
+--
+Trivy est souvent utilisé pour sécuriser les applications et les environnements de développement. Il est rapide à configurer et facile à intégrer dans les workflows existants.
+--
+
+== Installation et configuration
+
+Pour commencer à utiliser Trivy, il faut l'installer sur votre machine ou le lancer via Docker.
+
+https://trivy.dev/latest/getting-started/installation/[Guide d'installation de Trivy]
+
+https://trivy.dev/latest/getting-started/[Guide d'utilisation rapide]
+
+[NOTE.speaker]
+--
+L'installation de Trivy est simple et dépend du système d'exploitation. Une fois installé, il peut être configuré pour scanner différents types de ressources.
+--
+
+== Utilisation dans VSCode
+
+Pour intégrer Trivy dans VSCode, il est nécessaire d'installer l'extension dédiée.
+
+https://marketplace.visualstudio.com/items?itemName=Trunk.io[Extension Trivy pour VSCode]
+
+- Rechercher et installer l'extension Trivy dans le marketplace de VSCode
+- Configurer l'extension pour analyser les vulnérabilités dans le code
+
+[NOTE.speaker]
+--
+L'extension VSCode permet une intégration directe dans l'IDE, offrant un retour immédiat sur les vulnérabilités pendant le développement.
+--
+
+=== Démonstration
+
+[NOTE.speaker]
+--
+1. Ouvrir VSCode et accéder au marketplace.
+2. Rechercher "Trivy" et installer l'extension.
+3. Ouvrir un projet et exécuter une analyse de vulnérabilités.
+4. Examiner les résultats et corriger les vulnérabilités détectées.
+--
+// end::demo[]
+
+== Intégration dans un pipeline GitHub Actions
+
+Trivy peut être intégré dans les workflows CI/CD pour automatiser les analyses de sécurité.
+
+https://trivy.dev/latest/tutorials/integrations/github-actions/[Guide d'intégration de Trivy dans GitHub Actions]
+
+- Configurer un fichier YAML pour GitHub Actions
+- Inclure Trivy dans le pipeline pour scanner les images Docker
+
+[NOTE.speaker]
+--
+L'intégration dans GitHub Actions permet de s'assurer que chaque build est analysé pour des vulnérabilités, renforçant ainsi la sécurité continue.
+--
+
+=== Démonstration
+
+[NOTE.speaker]
+--
+1. Créer un fichier `.github/workflows/trivy.yml`.
+2. Ajouter des étapes pour installer Trivy et exécuter une analyse sur une image Docker.
+3. Valider le workflow et examiner les résultats après l'exécution.
+--
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Trivy est un outil essentiel pour la sécurité des conteneurs et des applications.
+* Son intégration dans VSCode et GitHub Actions améliore la détection et la gestion des vulnérabilités.
+* Adopter des pratiques de sécurité continue est crucial pour la robustesse des applications.
+
+[NOTE.speaker]
+--
+L'utilisation de Trivy dans les environnements de développement et les pipelines CI/CD offre une sécurité proactive et aide à maintenir un haut niveau de qualité du code.
+--
+// end::conclusion[]

@@ -1,0 +1,316 @@
+:icons: font
+:imagesdir: {docdir}
+:source-highlighter: highlight.js
+:highlightjs-theme: rainbow
+:highlightjs-languages: yaml, scilab, javascript, typescript, rainbow, plantuml, html, php, css, asciidoc, bash, c, cpp, csharp, coffeescript, diff, dockerfile, go, ini, json, kotlin, less, lua, makefile, markdown, objectivec, perl, python, r, ruby, rust, scala, sql, swift, xml, apache, nginx, http, git, properties, puppet, scss, smalltalk, tex, toml, twig, vbnet, vbscript, x86asm, java, tsx
+
+ifeval::["{visible-on-html}" ==  "yes"]
+
+include::*{docdir}[opts=breadcrumb]
+{number} - Vue kanban
+
+++++
+include::breadcrumb.html[]
+++++
+
+++++
+<style>
+#content {
+  --color-resume: #81a5ec2b;
+  --color-correction: #a2ec9c66;
+  --color-suivi: #ec9c9c66;
+  --color-challenge: #ffc13b42;
+  --color-module: #fff;
+  
+  max-width: unset;
+  max-height: calc(100vh - 200px);
+  padding: 0;
+
+  h1, h2 {
+    display: none;
+  }
+  h5 {
+    font-weight: bold;
+    padding-top: 0;
+  }
+
+  .sectionbody {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0 1rem;
+  }
+
+  .sect2, 
+  .sectionbody > .resume {
+    min-width: 500px;
+    max-width: 500px;
+    height: 100%;
+    max-height: calc(100vh - 108px - 2rem);
+    overflow: auto;
+    overflow-y: auto
+    padding-right: 1rem;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    padding: .5rem;
+    margin: 1rem 0;
+  }
+
+  .resume ul {
+    margin-bottom: 0;
+  }
+
+  .resume {
+    margin-bottom: 0.5rem;
+  }
+
+  .sect2 hr {
+    display: none;
+  }
+
+  .sect2 details {
+    margin-bottom:0;
+  }
+
+  .sidebarblock {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 0.5rem;
+  }
+}
+
+
+
+.sect2 {
+  padding: 0 .5rem .5rem .5rem!important;
+  gap: 1rem;
+
+  .overview-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0px;
+    padding: .5rem .5rem;
+    background: var(--color-oclock-blue);
+    border-radius: 0 0 10px 10px;
+    z-index: 100;
+
+    h3 {
+      padding-top: 0;
+      margin-bottom: 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--color-oclock-creme)!important;
+    }
+
+    a {
+      background: var(--color-oclock-creme);
+      padding: 0.25rem .5rem;
+      color: var(--color-oclock-blue);
+      border-radius: 5px;
+      text-decoration: none;
+      width: 100px;
+      display: block;
+    }
+
+  }
+
+  *:not(h3, h4) {
+    font-size: 1rem;
+  }
+  
+  summary.title {
+    justify-content: unset;  
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    sup {
+      margin: auto 0;
+      top: 0!important;
+      font-size: 1.25!important;
+      padding: .75rem!important;
+    }
+  }
+  h4 {
+    display: none;
+  }
+}
+
+.sect3 {
+  > h4 {
+    margin: 0 0 .5rem 0;
+    padding: 0;
+    font-size: 2.5em;
+    font-weight: bold;
+  }
+  *:not(pre) > code {
+    font-size: 1rem;
+    font-weight: bold;
+    background: #eee;
+    padding: 0 .5rem;
+    border-radius: 5px;
+    color: lightcoral;
+  }
+}
+
+
+.resume {
+  background: var(--color-resume)!important;
+  border-radius: 10px;
+  padding: .5rem;
+  font-size: 1rem;
+
+  h3 {
+    font-size: 1.5em;
+    padding-top: 2rem;
+  }
+}
+
+.challenge {
+  background-color: var(--color-challenge)!important;
+}
+
+.correction {
+  background-color: var(--color-correction)!important;
+  padding: .5rem;
+}
+
+.suivi {
+  background-color: var(--color-suivi) !important;
+}
+
+.module {
+  background-color: var(--color-module) !important;
+}
+
+
+
+
+#preview {
+  width: 75vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 25vw;
+  border: none;
+  margin: 0;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    height: 100%;
+  }
+
+  button {
+    border: none;
+    border-radius: 5px;
+    padding: 0.25rem .5rem;
+    background: #d4f4ee;
+    margin: 0 auto 0 0;
+  }
+
+  iframe {
+    height: inherit;
+    width: 100%;
+  }
+}
+</style>
+
+<dialog id="preview">
+  <div>
+    <button onclick="document.querySelector('#preview').close()">Fermer</button>
+    <iframe src="about:blank"></iframe>
+  </div>
+</dialog>
+
+<script>
+window.addEventListener('beforeprint',() => {
+  const allDetails = document.body.querySelectorAll('details');
+  allDetails.forEach((detail) => {
+    detail.setAttribute('open', '');
+  });
+});
+
+
+
+function preview(link) {
+  iframe.src = link;
+  document.querySelector('#preview').showModal();
+
+}
+const iframe = document.querySelector('#preview iframe');
+iframe.addEventListener("load", ev => {
+  const new_style_element = document.createElement("style");
+  new_style_element.textContent = "body {padding-left: 0!important;} #header, #footer {display: none;} #content {margin-top: 0;}"
+  ev.target.contentDocument.head.appendChild(new_style_element);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  const sections2 = document.querySelectorAll('.sect2');
+
+  sections2.forEach((section) => {
+      const div = document.createElement('div');
+      div.setAttribute('class', 'overview-title');
+      const leftDiv = document.createElement('div');
+      const episodeTitle = section.querySelector('h3');
+      leftDiv.appendChild(episodeTitle);
+      div.insertAdjacentElement('afterbegin', leftDiv);
+      const rightDiv = document.createElement('div');
+      const button = document.createElement('a');
+      button.textContent = 'Vue linéaire';
+      const episodeNum = episodeTitle.textContent.slice(0,2);
+      const currentPath = window.location.href;
+      const newLink = currentPath.replace("overview.html", "episodes/" + episodeNum + "/");
+      button.setAttribute("href", newLink)
+      rightDiv.insertAdjacentElement('afterbegin', button);
+      div.insertAdjacentElement('beforeend', rightDiv);
+      section.insertBefore(div, section.firstChild);
+  });
+})
+
+</script>
+++++
+
+endif::[]
+
+= {title}
+
+== Overview
+
+.Informations de la saison
+[.resume]
+[sidebar]
+--
+include::{docdir}/index.adoc[tag=intro]
+
+[discrete]
+=== 🎯 Objectifs pédagogiques
+
+include::{docdir}/index.adoc[tag=objectifs]
+
+[discrete]
+=== 🌟 Notions
+
+include::{docdir}/index.adoc[tag=notions]
+
+[discrete]
+=== 📋 Prérequis formateur
+
+include::{docdir}/index.adoc[tag=prerequis]
+
+[discrete]
+=== 🖹 Résumé
+
+include::{docdir}/index.adoc[tag=resume]
+--

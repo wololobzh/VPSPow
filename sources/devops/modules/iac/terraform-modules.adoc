@@ -1,0 +1,249 @@
+:titre: Modules Terraform
+:module: Virtualisation
+:duree: 60
+:description: Ce module couvre les concepts de base des modules Terraform, leur structure et leur utilisation.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre le concept de module Terraform
+* Savoir structurer un module Terraform
+* Savoir utiliser des modules locaux et distants
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Concept de module
+
+* bloc de configuration réutilisable
+* encapsule des ressources, variables et outputs
+* permet de structurer et d'organiser le code
+* facilite la réutilisation et la maintenance
+
+=== Avantages des modules
+
+* **Réutilisabilité** :
+** permet de définir des ressources et des configurations une seule fois
+** peut être utilisé dans plusieurs projets
+
+* **Organisation** :
+** structure le code en blocs logiques
+** facilite la lecture et la maintenance du code
+
+* **Abstraction** :
+** permet de cacher des détails d'implémentation
+** facilite la collaboration et le partage de code
+
+== Structure d'un module
+
+3 fichiers principaux
+
+* **main.tf** : définit les ressources et les configurations
+* **variables.tf** : définit les variables d'entrée
+* **outputs.tf** : définit les sorties du module
+
+[source,tree]
+----
+.
+└── modules
+    └── vpc
+        ├── main.tf
+        ├── variables.tf
+        └── outputs.tf
+----
+
+// tag::demo[]
+
+=== Démonstration
+
+Création d'un module simple
+
+[NOTE.speaker]
+--
+
+**Structure prévue du projet**
+
+```sh
+/my-terraform-project
+├── main.tf
+├── variables.tf (si nécessaire)
+├── terraform.tfvars (si nécessaire)
+└── my-vm-module/
+    ├── main.tf
+    ├── variables.tf
+    └── outputs.tf
+```
+
+**Étape 1** : Créer un répertoire pour le module, par exemple `my-vm-module`.
+
+```sh
+mkdir my-vm-module
+cd my-vm-module
+```
+
+**Étape 2** : Créer un fichier `main.tf` avec une ressource simple, par exemple une instance AWS EC2.
+
+```hcl
+resource "aws_instance" "example" {
+  ami           = var.ami
+  instance_type = var.instance_type
+}
+```
+
+**Étape 3** : Créer un fichier `variables.tf` pour définir les variables d'entrée.
+
+```hcl
+variable "ami" {
+  description = "The AMI to use for the instance"
+  type        = string
+}
+
+variable "instance_type" {
+  description = "The type of instance to create"
+  type        = string
+  default     = "t2.micro"
+}
+```
+
+**Étape 4** : Créer un fichier `outputs.tf` pour spécifier les sorties du module.
+
+```hcl
+output "instance_id" {
+  description = "The ID of the instance"
+  value       = aws_instance.example.id
+}
+```
+--
+
+// end::demo[]
+
+== Utilisation des modules
+
+* il faut déclarer un bloc module dans le fichier `main.tf` à la racine du projet
+* le bloc `module` nécessite un nom unique et un attribut `source` pour indiquer le chemin du module (local ou distant)
+* les variables du module peuvent être définies dans le bloc `module`
+* les outputs du module peuvent être utilisés dans le fichier principal
+
+```hcl
+module "network" {
+  source = "./network-module"
+
+  # Passer les variables nécessaires
+  vpc_cidr = "10.0.0.0/16"
+  subnet_cidr = "10.0.1.0/24"
+}
+
+# Utiliser les outputs du module
+output "vpc_id" {
+  value = module.network.vpc_id
+}
+```
+
+=== Modules locaux ou distants
+
+* **Modules locaux** : stockés dans le même répertoire que le projet
+** pratique pour les modules spécifiques à un projet
+
+* **Modules distants** : stockés dans un dépôt Git ou un registre Terraform
+** pratique pour les modules partagés entre plusieurs projets
+** exemples de modules utiles : VPC, S3, IAM
+
+// tag::demo[]
+
+=== Démonstration
+
+Utilisation d'un module local
+
+[NOTE.speaker]
+--
+**Reprendre la démo précédente**
+
+**Étape 1** : Créer un fichier `main.tf` à la racine du projet.
+
+```hcl
+module "my-vm" {
+  source = "./my-vm-module"
+
+  ami           = "ami-123456"
+  instance_type = "t2.micro"
+}
+```
+
+**Étape 2** : Exécuter `terraform init` pour initialiser le module.
+
+```sh
+terraform init
+```
+
+**Étape 3** : Exécuter `terraform apply` pour déployer le module.
+
+```sh
+terraform apply
+```
+
+**Étape 4** : Vérifier les sorties du module.
+
+```sh
+terraform output
+```
+--
+
+// end::demo[]
+
+== Bonnes pratiques 
+
+**Structurer les modules pour maximiser la réutilisabilité**
+
+* Utiliser les fichiers `main.tf`, `variables.tf` et `outputs.tf` pour bien séparer les logiques
+* Utiliser les variables pour rendre le module générique et applicable à différents contextes
+
+**Utiliser les conventions de nommage et documenter**
+
+* Choisir des noms explicites pour les ressources, variables et outputs
+* Inclure un fichier `README.md` pour documenter l'utilisation du module, les prérequis et dépendances
+
+== Gestion des versions
+
+* versionner les modules permet de s'assurer que les changements n'affecteront pas les configurations existantes
+* cela facilite également la gestion des mises à jour et des correctifs
+
+* utiliser `version` dans les blocs `module` pour spécifier la version du module à utiliser
+
+```hcl
+module "example" {
+  source  = "hashicorp/example"
+  version = "1.2.3"
+}
+```
+
+== Publication 
+
+* organiser un dépôt GitHub en suivant la convention de nommage `terraform-<PROVIDER>-<NAME>`
+* connecter le dépôt au registre Terraform pour publier le module
+
+=== Dépôts privés
+
+* les modules peuvent être stockés dans des dépôts privés, il s'agit de registres Terraform privés
+* les registres privés permettent de partager des modules internes sans les rendre publics
+* il peut également s'agir de dépôts Git privés ou de registres Terraform Enterprise
+
+=== Stratégies de gestion des modules partagés
+
+* centraliser les modules dans un registre ou dépôt commun pour faciliter la réutilisation
+* mettre en place des processus de révision et de validation pour les modifications de modules
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Les modules Terraform permettent de structurer et d'organiser le code
+* Ils facilitent la réutilisation, la maintenance et la collaboration
+* Les modules locaux ou distants peuvent être utilisés en fonction des besoins
+// end::conclusion[]

@@ -1,0 +1,24 @@
+// tag::challenge[]
+.🎯 Challenge
+[.challenge]
+[sidebar]
+--
+ifeval::["{challenge}" != ""]
+link:{challenge}[Lien du challenge,window=_blank]
+endif::[]
+
+{description}
+
+ifeval::["{challenge}" != ""]
+
+ifeval::["{correction}" != ""]
+WARNING: Heure/infos correction : {correction}.
+endif::[]
+
+ifeval::["{correction}" == ""]
+Ne pas fournir la correction ce jour.
+endif::[]
+
+endif::[]
+--
+// end::challenge[]

@@ -1,0 +1,49 @@
+:title: Haute disponibilité
+:number: 06
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode est consacré à la haute disponibilité des services informatiques. Nous aborderons les différents types de NAT, les avantages et inconvénients de chacun, ainsi que les bonnes pratiques pour garantir la continuité de service.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Identifier les différents types de NAT
+* Maîtriser le concept de NAT Statique
+* Comprendre le fonctionnement du NAT Dynamique
+* Appliquer le NAT Overload (PAT) et ses spécificités
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Connaissance du logiciel Packet TRACER
+* Savoir configurer Nat sur des routeur 
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 90 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/reseau/nat.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/reseau/redondance.adoc[options=modules]
+
+include::../../../../modules/reseau/tcp-udp.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1kE66hCRX6-dYgdaLzn-WxNojA0bryP5Z/view?usp=drive_link
+:description: NAT +
+fournir le fichier https://drive.google.com/file/d/11Xhmyynw_vnD5m-tSvej8pz7aioekb52/view
+:correction: https://drive.google.com/file/d/11Xhmyynw_vnD5m-tSvej8pz7aioekb52/view?usp=drive_link
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

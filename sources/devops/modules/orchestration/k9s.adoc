@@ -1,0 +1,167 @@
+:titre: Maîtriser K9s
+:module: Kubernetes
+:duree: --
+:description: Découvrez l'outil K9s pour gérer vos clusters Kubernetes de manière fluide avec une interface terminal intuitive.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* l'utilisation de K9s dans la gestion de clusters Kubernetes.
+* *Installer* K9s sur différents systèmes d'exploitation.
+* *Naviguer* et *interagir* efficacement avec K9s.
+* *Personnaliser* K9s pour l'adapter à vos besoins spécifiques.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Pourquoi utiliser K9s ?
+
+K9s est un outil terminal puissant pour les administrateurs système et développeurs utilisant Kubernetes. Il permet de visualiser l'état d'un cluster Kubernetes de manière rapide et efficace, surtout avec de grands clusters.
+
+[NOTE.speaker]
+--
+K9s offre une interface utilisateur en mode texte qui permet de naviguer facilement à travers les ressources Kubernetes telles que les pods, les déploiements et les services. Cette interface est particulièrement appréciée pour sa rapidité et sa simplicité.
+--
+
+=== Installation
+
+L'installation de K9s diffère selon les systèmes d'exploitation.
+
+[NOTE.speaker]
+--
+Pour Linux et MacOS, K9s peut être installé via des gestionnaires de paquets comme Homebrew ou asdf-vm. Sous Windows, utilisez Choco ou Scoop.
+--
+
+```shell
+// TIP : Exemple de code pour installation sur différents OS
+// Linux
+asdf plugin add k9s
+asdf install k9s latest
+asdf global k9s latest
+
+// Windows
+scoop install k9s
+choco install k9s
+
+// MacOS
+brew install derailed/k9s/k9s
+```
+
+== Utilisation
+
+Lancez K9s depuis votre terminal avec `k9s`. Utilisez `--kubeconfig` pour sélectionner un fichier de configuration spécifique.
+
+```shell
+k9s
+```
+
+[NOTE.speaker]
+--
+En sortie, stocke les dernières infos utilisées pour réaffichage ultérieur. K9s offre plusieurs options pour ajuster l'affichage, comme `--refresh`, `--namespace`, et `--readonly`.
+--
+
+K9s possède plusieurs options pour naviguer rapidement entre les différents éléments :
+
+- `--refresh=n` pour modifier la fréquence de rafraîchissement (par défaut 2s).
+- `--namespace=<namespace>` ou `-n <namespace>` pour accéder directement à un namespace particulier.
+- `-c <vue>` : accède directement à une vue. Par exemple, `po` pour les pods, `ns` pour les namespaces, `ctx` pour les contextes, `pu` pour les pulsations et `pop` pour Popeye.
+- `--readonly` pour un accès en lecture seule.
+- `--all-namespaces` pour afficher tous les namespaces.
+
+`k9s info` : fournit des infos sur la version et la localisation des répertoires de logs, config, et captures d’écran.
+
+=== Navigation
+
+Lorsque vous lancez K9s, vous êtes accueilli par une vue par défaut qui affiche tous les pods dans le cluster actuellement sélectionné. Cette vue est le point de départ pour naviguer à travers les différentes ressources de votre cluster.
+
+[NOTE.speaker]
+--
+La simplicité et l’efficacité dominent la conception de l’interface, avec une barre d’état en haut pour des infos clés comme le contexte Kubernetes actuel et le namespace, et une ligne de commande en bas pour les instructions.
+--
+
+- **Changer de ressource** : Naviguer entre les ressources Kubernetes avec `:` suivi du nom de la ressource, ex. `:svc` pour les services.
+- **Naviguer dans les listes** : Utiliser les flèches pour se déplacer. `Enter` montre les détails de l’élément sélectionné.
+- **Retour à l’écran précédent** : `Esc` revient à l’affichage antérieur.
+
+Les autres vues incluent :
+
+- `:popeye` : Indique d’éventuels problèmes avec les ressources du cluster.
+- `:xray` : Montre les dépendances entre ressources.
+- `:pulse` : Dashboard de l’état de santé du cluster.
+- `:rbac` : Affiche les informations RBAC si activées.
+
+=== Commandes de contrôle
+
+Pour des détails sur un pod, choisir le pod et presser `d`. Une fenêtre s’ouvrira pour afficher les informations détaillées de ce pod.
+
+Appuyer sur `?` pour obtenir de l’aide.
+
+[NOTE.speaker]
+--
+Les commandes varient selon les vues : `l` pour logs, `e` pour éditer, `s` pour accéder au shell, etc. `[0]` montre toutes les ressources des namespaces ; `[CTRL] + [C]` ou `[:]quit` pour quitter.
+--
+
+== Personnalisation
+
+K9s est hautement personnalisable via son fichier de configuration `.k9s/config.yml`. 
+
+[NOTE.speaker]
+--
+Personnalisez les éléments l’interface avec les thèmes, les configurations des vues, et les raccourcis claviers dans `.k9s/config.yml` et `.k9s/skins`.
+--
+
+=== Thèmes
+
+Changer le thème en éditant `.k9s/config.yml` pour utiliser la section `k9s.skin`.
+
+Créer un fichier dans `~/.config/k9s/skins` pour définir un thème personnalisé, comme `in-the-navy.yaml`.
+
+=== Raccourcis Claviers
+
+Créer des raccourcis dans `hotkeys.yaml`.
+
+```yaml
+hotKeys:
+  shift-0:
+    shortCut: Shift-0
+    description: Viewing pods
+    command: pods app=kindnet
+```
+
+== Définition de plugins
+
+Utiliser `.config/k9s/plugins.yaml` pour ajouter des plugins.
+
+```yaml
+plugins:
+  dive:
+    shortcut: d
+    confirm: false
+    description: "Dive image"
+    scopes:
+      - containers
+    command: dive
+```
+
+[NOTE.speaker]
+--
+Les plugins, comme la commande Dive illustrée, enrichissent l’expérience utilisateur de K9s en intégrant des fonctionnalités externes directement dans l’outil.
+--
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* K9s est un outil essentiel pour interagir efficacement avec des clusters Kubernetes en fournissant rapidité et simplicité.
+
+[NOTE.speaker]
+--
+Grâce à sa personnalisation et sa capacité d'extension avec des plugins, K9s s'adapte parfaitement aux besoins individuels des administrateurs.
+--
+// end::conclusion[]

@@ -1,0 +1,6 @@
+stateDiagram-v2
+    [*] --> Untracked
+    Untracked --> Staged : git add
+    Staged --> Committed : git commit
+    Committed --> Modified : edit file
+    Modified --> Staged : git add

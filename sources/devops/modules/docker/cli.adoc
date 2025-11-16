@@ -1,0 +1,96 @@
+:titre: Docker CLI
+:module: Docker
+:duree: 30
+:description: Commandes CLI de Docker
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Connaître les commandes de base de Docker CLI
+// end::objectifs[]
+
+== Commande Line Interface
+
+image::https://media1.tenor.com/m/mpW2qB_ufw4AAAAd/ls-command-linux.gif[]
+
+**Testons ensemble les commandes CLI de Docker !**
+
+➡️ On vous recommande de reproduire les commandes pour voir leur effet 😎
+
+== Infos générales & mise en place
+
+* `docker version` : obtenir la version de Docker et des informations système
+
+* `docker info` : affiche des informations détaillées sur le système
+
+== Images Docker
+
+* `docker pull` : permet de rapatrier une image Docker sur sa machine
+** Exemple : `docker pull ubuntu`
+
+* `docker images` : permet de lister toutes les images Docker du système
+
+* `docker build` : permet de construire une image Docker à partir d'un `Dockerfile`
+** Exemple : `docker build -t myapp .`
+
+* `docker tag`: permet de tagger une image
+** Exemple : `docker tag ubuntu myrepo/ubuntu:latest`
+
+* `docker rmi` : supprime une image
+** Exemple : `docker rmi ubuntu`
+
+* `docker push` : envoie une image sur DockerHub
+** Exemple : `docker push myrepo/ubuntu:latest`
+
+== Conteneurs
+
+* `docker run` : lance un conteneur à partir d'une image
+** Exemple : `docker run ubuntu`
+** Lancer de manière interactive : `docker run -it ubuntu /bin/bash`
+
+* `docker ps` : liste tous les conteneurs en cours d'exécution
+** Inclure les conteneurs stoppés : `docker ps -a`
+
+* `docker stop` : stoppe un conteneur
+** Exemple : `docker stop 123abc`
+
+* `docker start` : démarre un conteneur
+** Exemple : `docker start 123abc`
+
+* `docker rm` : supprime un conteneur
+** Exemple : `docker rm 123abc`
+
+* `docker exec` : lance une commande dans un conteneur
+** Exemple : `docker exec -it 123abs /bin/bash` -> permet d'accéder au terminal du conteneur
+
+== Logs & debugging
+
+* `docker logs` : permet d'afficher les logs d'un conteneur
+** Exemple : `docker logs 123abc`
+
+* `docker system df` : affiche l'utilisation disque de Docker
+
+== Nettoyage
+
+`docker system prune` : nettoie tous les conteneurs inutilisés, les images, volumes et réseaux
+
+== Gérer les volumes et réseaux
+
+* `docker volume ls` : liste tous les volumes Docker
+
+* `docker network ls` : liste tous les réseaux Docker
+
+== Docker hub
+
+* `docker login` : se connecter à DockerHub
+* `docker pull` : récupérer une image depuis DockerHub
+* `docker push` : envoyer une image sur DockerHub
+
+== Conclusion
+
+* Connaissance des commandes de base de Docker CLI

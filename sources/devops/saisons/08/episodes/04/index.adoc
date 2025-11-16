@@ -1,0 +1,51 @@
+:title: Galaxy
+:number: 04
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Les apprenants consolideront leurs connaissances et apprendront les bonnes pratiques pour la création et la gestion des playbooks. Ils découvriront Ansible Galaxy pour utiliser et partager des rôles, facilitant ainsi la réutilisation du code.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Analyser* : Réviser et intégrer les bonnes pratiques dans l’écriture de playbooks Ansible
+* *Appliquer* : Utiliser Ansible Galaxy pour installer et partager des rôles
+* *Avaluer* : Évaluer et optimiser les configurations en fonction des bonnes pratiques
+// end::objectifs[]
+
+// tag::prerequis[]
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+Le module "Ansible Galaxy" sert de correction pour le link:https://github.com/O-clock-Devops-Peda/S08-Challenge[challenge S08]. Prendre le temps de voir qui a réussi et de quelle manière. Ont-ils trouvé des rôles/modules efficaces ? Ont-ils utilisé des collections ?...
+
+include::../../../../modules/ansible/galaxy.adoc[options=modules]
+
+Prendre le temps d'implémenter la collection community.mongodb pour installer MongoDB dans le challenge.
+
+TIP: ☕ Pause café
+
+include::../../../../modules/ansible/best-practices.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+Laisser l'après midi complète pour le challenge.
+
+:challenge: https://github.com/O-clock-Devops-Peda/S08-Challenge
+:description: Reprendre link:https://github.com/O-clock-Devops-Peda/S06-Atelier[l'atelier S06] pour configurer un conteneur avec Ansible
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s08e04]
+--
+
+
+// end::deroulement[]

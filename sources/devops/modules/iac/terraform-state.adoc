@@ -1,0 +1,250 @@
+:titre: State Terraform
+:module: Virtualisation
+:duree: 60
+:description: Ce module aborde le concept de state Terraform, un fichier crucial pour suivre l'état de l'infrastructure gérée.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre le rôle du State Terraform
+* Découvrir la structure du fichier `terraform.tfstate`
+* Comparer les avantages et inconvénients du stockage local et distant du state
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Comprendre le State Terraform
+
+* le State est un fichier qui stocke les informations sur les ressources gérées par Terraform
+* il est stocké localement par défaut dans un fichier `terraform.tfstate`
+
+=== Rôle du State
+
+* **Suivi des ressources** : 
+** contient des détails précis sur chaque ressource créée (idntifiants uniques, attributs, métadonnées)
+** permet de suivre l'évolution des ressources
+
+* **Comparaison avec la configuration** :
+** avec `terraform plan`, Terraform compare la configuration actuelle avec le state pour déterminer les actions à effectuer
+
+* **Gestion des dépendances** :
+** maintient les dépendances entre les ressources
+** garantit leur création dans le bon ordre
+
+=== State et planification
+
+Via la commande `terraform plan`
+
+* **Analyse des changements** : 
+** l'état permet d'identifier les différences entre l'infra actuelle et la configuration souhaitée
+
+* **Prévisualisation** :
+** génère un plan d'exécution des actions à effectuer
+** permet de vérifier les actions à effectuer avant de les appliquer
+
+=== State et application
+
+Via la commande `terraform apply`
+
+* **Exécution des changements** :
+** utilise le plan généré pour effectuer les modifications nécessaires
+** se base sur l'état actuel des ressources
+
+* **Mise à jour du state** :
+** après application, le state reflète l'état actuel de l'infrastructure
+** le fichier de state doit toujours rester synchronisé avec l'infra réelle
+
+=== State et destruction
+
+Via la commande `terraform destroy`
+
+* **Suppression sécurisée** :
+** utilise le state pour identifier les ressources à supprimer
+
+* **Gestion des dépendances** :
+** supprime les ressources dans le bon ordre pour éviter les erreurs
+
+== Structure du state
+
+Explorons le contenu du fichier `terraform.tfstate`
+
+=== Qu'est-ce que le fichier `terraform.tfstate` ?
+
+* fichier JSON généré par Terraform
+* stocke l'état actuel de l'infrastructure gérée
+* fichier crucial pour suivre les ressources et s'assurer de leur cohérence
+
+=== Emplacement du fichier
+
+* par défaut, le fichier est stocké localement dans le répertoire de travail où les commandes sont exécutées
+* peut être stocké dans un backend distant pour le partager entre les membres de l'équipe
+
+=== Contenu du fichier
+
+* **Ressources** :
+** chaque ressource est listée avec ses attributs spécifiques
+** contient des informations telles que les identifiants uniques, qui sont utilisés pour interagir avec l'API du fournisseur
+
+Exemple de ressource :
+
+```hcl
+{
+  "resources": [
+    {
+      "type": "aws_instance",
+      "name": "example",
+      "instances": [
+        {
+          "attributes": {
+            "id": "i-1234567890abcdef0",
+            "ami": "ami-123456",
+            "instance_type": "t2.micro"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+* **Métadonnées** :
+** comporte des informations sur la version de Terraform utilisée
+** important pour la compatibilité avec les versions futures
+** contient des informations sur les chemins des fichiers de configuration associés
+** peut contenir des informations sur le backend utilisé pour stocker le state
+
+Exemple de métadonnées :
+
+```hcl
+{
+  "version": 4,
+  "terraform_version": "0.12.0",
+  "serial": 1,
+  "lineage": "b2d3b4f3-3b7d-4f3b-8f3b-3b7d4f3b7d4f",
+  "outputs": {}
+}
+```
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+* **Dépendances** :
+** inclut des informations sur les dépendances entre les ressources
+** aident Terraform à gérer l'ordre de création et de suppression des ressources
+
+Exemple de dépendances :
+
+```hcl
+{
+  "resources": [
+    {
+      "depends_on": [
+        "aws_instance.example"
+      ]
+    }
+  ]
+}
+```
+
+== Stockage local du state
+
+Par défaut, Terraform stocke le state localement dans un fichier `terraform.tfstate`
+
+[cols="1,1"]
+|===
+| Avantages | Inconvénients
+
+a| 
+* Simple à configurer et utiliser
+* Adapté aux projets individuels ou de petite taille
+
+a|
+* Risque de perte de données en cas de suppression accidentelle
+* Difficile à partager entre les membres de l'équipe
+* Risque de conflits en cas de modifications simultanées
+|===
+
+== Stockage distant du state
+
+Permet de stocker le state dans un emplacement centralisé, souvent dans le cloud.
+
+[cols="1,1"]
+|===
+| Avantages | Inconvénients
+
+a|
+* Sécurisation et sauvegarde de l'état
+* Facilite la collaboration
+
+a|
+* Configuration plus complexe
+* Risque de dépendance à un service tiers
+* Coût supplémentaire
+|===
+
+**Exemples de backends** : S3 (AWS), GCS (Google Cloud), Azure Blob Storage, Consul, etc.
+
+=== Configurer un backend distant
+
+Prenons l'exemple de S3 (AWS) pour stocker le state à distance.
+
+**Pré-requis** :
+
+* Un compte AWS avec accès à S3
+* Un bucket S3 pour stocker le state
+
+=== Configuration dans Terraform
+
+Ajouter la configuration du backend dans le fichier `main.tf`
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket         = "mon-bucket-terraform"
+    key            = "chemin/vers/mon.tfstate"
+    region         = "us-west-2"
+    encrypt        = true
+    dynamodb_table = "terraform-lock"
+  }
+}
+```
+
+[NOTE.speaker]
+--
+terraform {
+  backend "s3" {
+    bucket         = "mon-bucket-terraform"
+    key            = "chemin/vers/mon.tfstate"
+    region         = "us-west-2"
+    encrypt        = true
+    dynamodb_table = "terraform-lock"
+  }
+}
+--
+
+=== Verrouillage d'état
+
+Pour éviter les conflits lors de l'accès concurrentiel au state, Terraform propose un verrouillage d'état.
+
+**Principe** :
+
+* Utilise une table DynamoDB pour stocker les verrous
+* Empêche les opérations concurrentes
+* Assure la cohérence du state
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Le state Terraform est un fichier crucial pour suivre l'état de l'infrastructure
+* Permet de comparer la configuration avec l'état actuel
+* Facilite la planification et l'application des changements
+// end::conclusion[]

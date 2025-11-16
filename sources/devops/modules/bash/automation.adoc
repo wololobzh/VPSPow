@@ -1,0 +1,204 @@
+:titre: Automatisation
+:module: Bash
+:duree: 120
+:description: Automatiser les tâches répétitives permet aux administrateurs système de se concentrer sur des tâches plus complexes et créatives, tout en laissant les scripts s'occuper des tâches routinières. Ce module couvre les sauvegardes automatiques, le nettoyage des dossiers, la surveillance des logs et la planification de tâches avec cron et anacron.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** les principes de base de l'automatisation des tâches.
+* **Appliquer** `cron` et `anacron` pour planifier des scripts.
+* **Analyser** les besoins du système
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction à l'automatisation
+
+L'automatisation permet d'économiser du temps et de réduire les erreurs humaines en exécutant des tâches répétitives à l'aide de scripts.
+
+* Les tâches courantes d'automatisation incluent les sauvegardes, le nettoyage des fichiers obsolètes ou la surveillance de fichiers logs.
+* Les outils comme `cron` et `anacron` permettent de planifier des tâches à des moments prédéfinis.
+
+[NOTE.speaker]
+--
+L'automatisation est essentielle dans la gestion des systèmes pour libérer les administrateurs des tâches répétitives.
+--
+
+=== Scripts de sauvegarde automatisée
+
+Les sauvegardes sont critiques pour protéger les données. Avec `rsync` et `tar`, nous pouvons automatiser des processus de sauvegarde simples.
+
+* `rsync` est un outil de synchronisation qui copie des fichiers d'un répertoire source vers un répertoire de destination.
+* `tar` permet de créer des archives compressées de répertoires.
+
+[NOTE.speaker]
+--
+Utilisez `rsync` pour synchroniser un répertoire et `tar` pour créer une archive compressée de celui-ci. Planifiez ces tâches avec `cron` pour une exécution régulière.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Automatiser une sauvegarde avec `rsync` et `cron`
+
+[NOTE.speaker]
+--
+* Créez un script Bash pour synchroniser un répertoire de sauvegarde :
+
+```bash
+rsync -av /chemin/source /chemin/destination
+# ou
+tar -czf /chemin/destination/sauvegarde.tar.gz /chemin/source
+```
+
+* Planifiez une sauvegarde quotidienne à 2h du matin avec `cron` :
+
+```bash
+0 2 * * * /chemin/script_sauvegarde.sh
+```
+--
+// end::demo[]
+
+=== Nettoyage automatique des dossiers
+
+Utilisez `find` pour supprimer les fichiers obsolètes dans un répertoire. Par exemple, les fichiers de plus de 30 jours.
+
+* `find` permet de rechercher des fichiers selon divers critères comme l'âge, la taille, etc.
+* Planifiez un nettoyage automatique avec `cron`.
+
+[NOTE.speaker]
+--
+Le nettoyage automatique est utile pour éviter de surcharger les disques avec des fichiers inutiles. Utilisez la commande `find` pour rechercher et supprimer les anciens fichiers.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Nettoyer automatiquement un dossier avec `find`
+
+[NOTE.speaker]
+--
+* Recherchez et supprimez les fichiers de plus de 30 jours :
+```bash
+files=$(find /chemin/dossier -type f -mtime +30)
+rm $files
+```
+
+* Planifiez ce nettoyage avec `cron` tous les dimanches à 3h du matin :
+```bash
+0 3 * * 0 /chemin/script_nettoyage.sh
+```
+--
+// end::demo[]
+
+=== Surveillance de logs
+
+Surveiller les fichiers logs permet d'anticiper les problèmes. Vous pouvez automatiser la surveillance avec `tail`, `grep` et envoyer des alertes.
+
+* Utilisez `tail` pour suivre en temps réel les logs.
+* Combinez avec `grep` pour filtrer les erreurs spécifiques et automatiser une alerte.
+
+[NOTE.speaker]
+--
+Les logs contiennent des informations précieuses pour identifier des problèmes. Automatiser la surveillance permet de réagir rapidement en cas d'anomalie.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Surveillance automatique des logs avec `tail` et `grep`
+
+[NOTE.speaker]
+--
+* Surveillez un fichier de log en temps réel :
+```bash
+tail -f /var/log/auth.log | grep "FAILED"
+```
+* Ouvrir un deuxième terminal et essayez de vous connecter en sudo avec un mauvais mot de passe pour voir l'alerte.
+
+Il n'est pas possible d'envoyer un email directement avec `tail -f`, il faut ruser un peu :
+
+```bash
+# Extrait les lignes
+$lines=$(tail -f /var/log/auth.log | grep "FAILED")
+# Pour chaque ligne
+for line in $lines; do
+    # Récupère la date
+    $date=$(echo $lines | awk '{print $1}')
+    # Si la date est de moins de 5 minutes
+    if [ $(date -d "$date" +%s) -gt $(date -d "5 minutes ago" +%s) ]; then
+        # Envoie un email
+        echo "Alerte : tentative de connexion échouée" | mail -s "Alerte de sécurité"
+    fi
+done
+```
+--
+// end::demo[]
+
+=== Planification des tâches avec `cron` et `anacron`
+
+`cron` est idéal pour planifier des tâches récurrentes, mais il nécessite que la machine soit en marche à l'heure prévue. `anacron` est utilisé pour les tâches non connectées, exécutées dès que la machine redémarre.
+
+* `cron` planifie les tâches à intervalles réguliers.
+* `anacron` exécute les tâches dès que possible après le démarrage de la machine.
+
+[NOTE.speaker]
+--
+`cron` est utile pour les tâches programmées, mais si la machine est éteinte à l'heure prévue, la tâche ne sera pas exécutée. C'est là que `anacron` intervient, permettant d'exécuter des tâches manquées après redémarrage.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Planification avec `cron` et `anacron`
+
+[NOTE.speaker]
+--
+* Planifiez une tâche avec `cron` pour qu'elle s'exécute tous les jours à 2h du matin :
+```bash
+0 2 * * * /chemin/script_tache.sh
+```
+
+* Configurez une tâche avec `anacron` pour qu'elle s'exécute chaque jour avec un délai d'un jour :
+```bash
+1 5 script_tache /chemin/script_tache.sh
+```
+Le `1` correspond à l'exécution quotidienne, et le `5` est le délai en minutes après le démarrage.
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercices
+
+=== Exercice 1
+
+. Écrire un script pour sauvegarder le dossier `/home/utilisateur/`.
+. Planifier le script pour qu'il s'exécute tous les jours à 1h du matin avec `cron`.
+// end::exercice[]
+
+// tag::exercice[]
+=== Exercice 2
+
+. Créer un script pour nettoyer le dossier `/tmp/` des fichiers de plus de n jours. N est un paramètre du script.
+. Planifier l'exécution de ce script chaque semaine avec `cron`.
+// end::exercice[]
+
+// tag::exercice[]
+=== Exercice 3
+
+. Mettre en place un système de surveillance des logs système.
+. Synthétiser les erreurs dans un fichier de log dans le dossier home de l'utilisateur.
+// end::exercice[]
+
+// end::deroulement[]
+
+// tag::conclusion[]
+== Conclusion
+
+* La surveillance des logs permet de détecter et réagir rapidement aux anomalies.
+* L'automatisation des tâches répétitives facilite la gestion des systèmes.
+// end::conclusion[]

@@ -1,0 +1,273 @@
+:titre: Développement vs Production, Tests Unitaires et Déploiement
+:module: DevOps
+:duree: 180
+:description: Comprendre les différences entre les environnements de développement et de production, maîtriser les tests unitaires, et le déploiement d'applications web, en particulier pour les projets Svelte.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* *Comprendre* les différences clés entre les environnements de développement et de production
+* *Analyser* l'impact des variables d'environnement sur le déploiement
+* *Appliquer* les meilleures pratiques d'optimisation des performances pour la production
+* *Évaluer* la configuration correcte des chemins d'accès pour un déploiement réussi
+* *Créer* et exécuter des tests unitaires pour une application Svelte
+* *Créer* et tester une version de production d'une application Svelte
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+
+Ce module explore les différences cruciales entre les environnements de développement et de production, l'importance des tests unitaires, ainsi que les considérations importantes pour le déploiement d'applications web, avec un focus particulier sur les projets Svelte.
+
+== Différence entre développement et production
+
+=== Variables d'environnement
+
+Les variables d'environnement sont essentielles pour distinguer et configurer les environnements de développement et de production.
+
+.Exemple de variables en développement
+[source,bash]
+----
+NODE_ENV=development
+API_URL=http://localhost:3000/api
+DEBUG=true
+----
+
+.Exemple de variables en production
+[source,bash]
+----
+NODE_ENV=production
+API_URL=https://api.monapp.com
+DEBUG=false
+----
+
+[TIP]
+--
+Utilisez des fichiers `.env` pour gérer vos variables d'environnement et assurez-vous de ne pas les committer dans votre dépôt Git.
+--
+
+=== Optimisation des performances
+
+[cols="1,1,2", options="header"]
+|===
+|Aspect |Développement |Production
+|Bundling |Minimal ou inexistant |Optimisé et minifié
+|Sourcemaps |Détaillées |Limitées ou absentes
+|Logging |Verbeux |Minimal
+|Caching |Désactivé |Activé et optimisé
+|===
+
+== Configuration des chemins d'accès
+
+=== Importance des chemins relatifs
+
+* Assure le fonctionnement correct de l'application, indépendamment du répertoire de base du serveur
+* Crucial pour les déploiements sur des plateformes comme GitHub Pages
+
+=== Bonnes pratiques
+
+. Utilisez des chemins relatifs dans vos fichiers HTML et JavaScript
+. Configurez correctement la `base` dans votre configuration Vite pour Svelte
+. Utilisez des imports dynamiques pour les ressources dans Svelte
+
+.Configuration Vite pour Svelte
+[source,javascript]
+----
+// vite.config.js
+import { defineConfig } from 'vite'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
+
+export default defineConfig({
+  plugins: [svelte()],
+  base: '/mon-projet/' // Pour GitHub Pages
+})
+----
+
+== Tests Unitaires
+
+=== Importance des tests unitaires
+
+Les tests unitaires sont cruciaux pour :
+
+* Assurer la qualité du code
+* Détecter les régressions
+* Faciliter la maintenance et les refactorisations
+* Documenter le comportement attendu du code
+
+=== Configuration des tests pour Svelte
+
+Pour Svelte, nous utiliserons Vitest comme framework de test.
+
+.Installation des dépendances
+[source,bash]
+----
+npm install --save-dev vitest @testing-library/svelte jsdom
+----
+
+.Configuration de Vitest
+[source,javascript]
+----
+// vite.config.js
+import { defineConfig } from 'vite'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
+
+export default defineConfig({
+  plugins: [svelte()],
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/setupTests.js']
+  }
+})
+----
+
+=== Écriture de tests unitaires
+
+.Exemple de test pour un composant Svelte
+[source,javascript]
+----
+// Counter.test.js
+import { render, fireEvent } from '@testing-library/svelte'
+import Counter from './Counter.svelte'
+
+test('increments count when button is clicked', async () => {
+  const { getByText } = render(Counter)
+  const button = getByText('Count is 0')
+  
+  await fireEvent.click(button)
+  
+  expect(button.textContent).toBe('Count is 1')
+})
+----
+
+=== Exécution des tests
+
+Ajoutez un script dans votre `package.json` pour exécuter les tests :
+
+[source,json]
+----
+{
+  "scripts": {
+    "test": "vitest"
+  }
+}
+----
+
+Exécutez les tests avec :
+
+[source,bash]
+----
+npm run test
+----
+
+== Création d'une version de production
+
+=== Configuration du projet Svelte pour la production
+
+. Ajustez les variables d'environnement
+. Configurez le fichier `svelte.config.js`
+. Créez un script de build dans `package.json`
+
+=== Configuration Svelte pour la production
+[source,javascript]
+----
+// svelte.config.js
+import adapter from '@sveltejs/adapter-static';
+
+const config = {
+  kit: {
+    adapter: adapter({
+      pages: 'build',
+      assets: 'build',
+      fallback: 'index.html',
+      precompress: false
+    }),
+    prerender: {
+      default: true
+    }
+  }
+};
+
+export default config;
+----
+
+=== Processus de build
+
+. Nettoyez le répertoire de build existant
+. Exécutez le script de build
+. Vérifiez le contenu du répertoire `build`
+
+[source,bash]
+----
+npm run build
+ls -R build
+----
+
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration 1 : Configuration des variables d'environnement
+
+[NOTE.speaker]
+--
+1. Créer un fichier `.env` pour le développement
+2. Créer un fichier `.env.production` pour la production
+3. Montrer comment accéder aux variables d'environnement dans une application Svelte
+4. Expliquer les meilleures pratiques de sécurité pour la gestion des variables d'environnement
+--
+
+== Démonstration 2 : Écriture et exécution de tests unitaires
+
+[NOTE.speaker]
+--
+1. Créer un composant Svelte simple (par exemple, un compteur)
+2. Écrire un test unitaire pour ce composant
+3. Configurer Vitest dans le projet
+4. Exécuter les tests et interpréter les résultats
+5. Montrer comment les tests peuvent détecter des régressions en modifiant le composant
+--
+
+== Démonstration 3 : Création et test d'une build de production
+
+[NOTE.speaker]
+--
+1. Configurer une application Svelte simple
+2. Ajouter des optimisations pour la production (minification, tree-shaking)
+3. Exécuter le processus de build
+4. Analyser les fichiers générés
+5. Tester la build de production localement avec `npm run preview`
+--
+
+// end::demo[]
+
+// tag::exercice[]
+== Exercice 1 : Écriture de tests unitaires
+
+1. Créez un nouveau composant Svelte de votre choix (par exemple, un formulaire de connexion)
+2. Écrivez au moins deux tests unitaires pour ce composant
+3. Exécutez les tests et assurez-vous qu'ils passent
+4. Introduisez intentionnellement un bug dans le composant et vérifiez que les tests échouent
+
+== Exercice 2 : Optimisation pour la production
+
+1. Créez une petite application Svelte avec au moins deux composants
+2. Configurez les variables d'environnement pour le développement et la production
+3. Optimisez l'application pour la production (minification, lazy loading, etc.)
+4. Créez une build de production et testez-la localement
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* La compréhension des différences entre développement et production est cruciale pour un déploiement réussi
+* La gestion appropriée des variables d'environnement est essentielle pour la sécurité et la flexibilité
+* Les tests unitaires sont fondamentaux pour assurer la qualité et la maintenabilité du code
+* L'optimisation des performances doit être une priorité pour la version de production
+* La configuration correcte des chemins d'accès est vitale pour le bon fonctionnement de l'application déployée
+* Un processus de build, de test et de déploiement bien défini améliore significativement la qualité et la fiabilité du projet
+* La pratique régulière du déploiement, des tests et de l'optimisation est nécessaire pour maîtriser ces compétences DevOps
+// end::conclusion[]

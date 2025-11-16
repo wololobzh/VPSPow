@@ -1,0 +1,30 @@
+flowchart TB
+    subgraph "Client"
+        nav[Navigateur web]
+    end
+    internet{{Internet}}
+    firewall{{Pare feu}}
+    subgraph lb [Equilibreur de charge]
+        lb1[Load Balancer 1]
+        lb2[Load Balancer 2]
+    end
+    subgraph "DMZ"
+        subgraph "Serveurs web"
+            subgraph server1 [Serveur 1]
+                nginx[Nginx]
+                ssl[SSL]
+            end
+            server2[Serveur 2]
+        end
+    end
+    subgraph "Réseau interne"
+        subgraph serverDB [Serveur de BDD]
+            DB[(Base de données)]
+        end
+    end
+
+    nav --> internet
+    internet --> firewall
+    firewall --> lb
+    lb --> server1 & server2
+    server1 & server2 --> serverDB

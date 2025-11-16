@@ -1,0 +1,529 @@
+:titre: Ressources de base K8S
+:module: Orchestration
+:duree: --
+:description: Comprendre les ressources essentielles de Kubernetes pour déployer, exposer et gérer efficacement vos applications conteneurisées.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* les rôles des NameSpaces, Pods, Services, Deployments, ConfigMaps et Secrets dans Kubernetes.
+* *Appliquer* des commandes kubectl pour interagir avec ces ressources.
+* *Évaluer* les besoins d'isolation et d'organisation via les Namespaces.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction aux ressources Kubernetes
+
+Dans Kubernetes, tout tourne autour des ressources. Ces objets représentent les éléments clés de votre infrastructure : vos applications, leur configuration, leur exposition au réseau et bien plus encore.
+
+[NOTE.speaker]
+--
+Pour bien démarrer avec Kubernetes, il est indispensable de comprendre ces ressources fondamentales et leur rôle dans l’écosystème.
+Les ressources que nous allons explorer constituent les briques de base sur lesquelles tout est construit. En maîtrisant leur fonctionnement, vous serez capable de :
+- Déployer vos applications de manière cohérente.
+- Exposer vos services aux utilisateurs internes ou externes.
+- Gérer les configurations et les données sensibles efficacement.
+--
+
+== Prérequis avant de commencer
+
+**Connaissances en ligne de commande Linux**
+- Être à l’aise avec les commandes de base dans un terminal.
+- Savoir naviguer dans un système de fichiers et exécuter des commandes simples.
+
+**Connaissances de base sur Kubernetes**
+- Comprendre l’architecture globale (plan de contrôle, nœuds de travail).
+- Savoir ce qu’est un cluster Kubernetes et comment il fonctionne.
+
+**Un environnement Kubernetes opérationnel**
+- Avoir installé un **“Mini Kubernetes”**, comme Minikube, K3s, ou Kind.
+- Vérifier que `kubectl` est configuré et fonctionne avec votre cluster.
+
+**Connaissance de la CLI Kubernetes : `kubectl`**
+
+=== Les Pods : L’unité fondamentale de Kubernetes
+
+Les pods sont au cœur de **Kubernetes**. Ce sont les plus petites unités déployables dans un cluster **Kubernetes**.
+
+[NOTE.speaker]
+--
+Comprendre leur fonctionnement est essentiel pour maîtriser **Kubernetes**, car toutes les applications conteneurisées s’exécutent dans des pods.
+Un pod est une abstraction qui représente une ou plusieurs instances de conteneurs exécutés ensemble dans un environnement partagé. Tous les conteneurs d’un même pod partagent :
+- Le réseau : Ils ont la même adresse IP et les mêmes ports.
+- Le stockage : Ils peuvent partager des volumes montés dans le pod.
+Cependant, chaque conteneur dans un pod reste indépendant en termes d’exécution et de ressources comme le CPU ou la mémoire.
+--
+
+=== Cycle de vie des pods
+
+// TIP : Description des différentes étapes du cycle de vie d'un pod
+
+![Diagramme du cycle de vie des pods](diagrams/pod-lifecycle.png)
+
+[NOTE.speaker]
+--
+1. **Pending** : Le pod est en attente d’être planifié sur un nœud.
+2. **Running** : Le pod a été déployé et au moins un conteneur est en cours d’exécution.
+3. **Succeeded** : Tous les conteneurs se sont terminés avec succès.
+4. **Failed** : Un ou plusieurs conteneurs ont échoué.
+5. **Unknown** : L’état du pod ne peut pas être déterminé (généralement en raison de problèmes réseau).
+
+Les contrôleurs **Kubernetes**, comme les deployments ou les ReplicaSets, surveillent constamment l’état des pods pour les maintenir dans l’état souhaité.
+--
+
+=== Communication entre pods
+
+[NOTE.speaker]
+--
+Les pods sont conçus pour communiquer entre eux via :
+
+1. **Cluster Networking** : Chaque pod dans un cluster **Kubernetes** a une adresse IP unique, ce qui facilite la communication directe entre pods.
+
+2. **Services Kubernetes** : Pour une communication stable entre pods, surtout lorsque des pods peuvent être redémarrés ou déplacés, les services jouent le rôle d’intermédiaire. Ils fournissent un point d’accès stable pour accéder aux pods.
+--
+
+=== Limitations des pods
+
+[NOTE.speaker]
+--
+1. **Éphémérité** : Les pods sont conçus pour être temporaires. Si un pod échoue ou est supprimé, **Kubernetes** ne le recrée pas automatiquement (sauf s’il est géré par un deployment ou un ReplicaSet).
+
+2. **Gestion manuelle** : Gérer directement des pods est rarement recommandé en production. On utilise généralement des abstractions comme les deployments pour garantir la scalabilité et la résilience.
+--
+
+=== Commandes de base kubectl pour les Pods
+
+// TAG: Pour manipuler et interagir avec les pods via kubectl
+
+[NOTE.speaker]
+--
+Pour gérer les pods, voici quelques commandes essentielles :
+
+- Lister les pods du Namespace courant :
+
+  ```
+  kubectl get pods
+  ```
+
+- Lister les pods de tous les namespaces :
+
+  ```
+  kubectl get pods -A
+  ```
+
+- Obtenir les détails d’un pod :
+
+  ```
+  kubectl describe pod <pod-name>
+  ```
+
+- Supprimer un pod :
+
+  ```
+  kubectl delete pod <pod-name>
+  ```
+
+- Afficher les logs d’un pod :
+
+  ```
+  kubectl logs <pod-name>
+  ```
+--
+
+=== Les services : Exposer et connecter vos pods
+
+[NOTE.speaker]
+--
+Un service agit comme une couche d’abstraction réseau pour un ensemble de pods. Il fournit :
+
+- Une adresse IP et un port fixe pour accéder aux pods correspondants.
+- Une méthode pour répartir le trafic entre plusieurs pods.
+
+Un service sélectionne les pods à gérer à l’aide de **labels** et de **selectors**, ce qui permet de définir dynamiquement quels pods font partie du service.
+--
+
+=== Types de services et cas d'utilisation
+
+[NOTE.speaker]
+--
+Les types de services incluent :
+1. **ClusterIP** : Par défaut, le service est uniquement accessible depuis l’intérieur du cluster. Idéal pour connecter des composants internes à des composants, par exemple, un backend communiquant avec une base de données.
+2. **NodePort** : Permet d’exposer un service à l’extérieur du cluster via un port spécifique sur chaque nœud. Utile pour des tests ou des déploiements simples sans gestion avancée du trafic.
+3. **LoadBalancer** : Utilisé principalement dans les environnements cloud. Configure automatiquement un équilibrage de charge pour rendre un service accessible depuis Internet.
+4. **ExternalName** : Redirige les requêtes vers un nom DNS externe. Utile pour connecter des applications à des services externes.
+--
+
+=== Répartition du trafic
+
+[NOTE.speaker]
+--
+1. **Découverte de service** : **Kubernetes** intègre un DNS interne qui permet aux pods de résoudre automatiquement les noms des services en adresses IP. Par exemple, un pod peut accéder à un service appelé `backend` via `backend.default.svc.cluster.local`.
+
+2. **Sélection dynamique de pods** : Les services utilisent des labels pour déterminer quels pods sont connectés à un service. Si un pod avec les labels correspondants est ajouté ou supprimé, le service s’adapte automatiquement.
+
+3. **Répartition du trafic** : Les services répartissent les requêtes entrantes entre tous les pods correspondants, assurant un équilibre de charge simple.
+--
+
+=== Commandes de base kubectl pour les Services
+
+[NOTE.speaker]
+--
+- Lister les services dans le cluster :
+
+  ```
+  kubectl get services -A
+  ```
+
+- Obtenir les détails d’un service :
+
+  ```
+  kubectl describe service <service-name> -n <namespace>
+  ```
+--
+
+== Les deployments : Gérer vos applications à grande échelle
+
+Les deployments sont une abstraction essentielle de **Kubernetes**.
+
+[NOTE.speaker]
+--
+Ils sont conçus pour déployer et gérer vos pods de manière déclarative et automatisée. Ils offrent des fonctionnalités avancées comme le **scaling**, les **mises à jour progressives** et la tolérance aux pannes, simplifiant la gestion de vos applications.
+--
+
+=== Pourquoi utiliser un deployment
+
+[NOTE.speaker]
+--
+1. **Automatisation des tâches complexes** : Les **deployments** gèrent automatiquement la création, la mise à jour et la suppression des pods. Ils garantissent un nombre constant de **réplicas**.
+
+2. **Mises à jour sans interruption** : Les **rolling updates** permettent de déployer une nouvelle version de votre application sans interrompre le service.
+
+3. **Revenir facilement en arrière** : Les **rollbacks** permettent de revenir rapidement à une version précédente en cas de problème.
+--
+
+=== Commandes de base kubectl pour les Deployments
+
+[NOTE.speaker]
+--
+- Créer un deployment :
+
+  ```
+  kubectl create deployment <nom-deployment> --image=<image-name>
+  ```
+
+- Mettre à jour un deployment :
+
+  ```
+  kubectl set image deployment/<nom-deployment> <container-name>=<new-image>
+  ```
+
+- Lister les deployments :
+
+  ```
+  kubectl get deployments
+  ```
+
+- Supprimer un deployment :
+
+  ```
+  kubectl delete deployment <nom-deployment>
+  ```
+--
+
+== ConfigMaps et Secrets : Gérer les configurations et données sensibles
+
+Dans **Kubernetes**, la gestion des configurations et des données sensibles est une nécessité pour séparer le code de son environnement d’exécution.
+
+[NOTE.speaker]
+--
+Un ConfigMap est une ressource qui permet de stocker des **données non sensibles** sous forme de paires clé-valeur. Il est utilisé pour externaliser des configurations de votre application, comme des URL d’API, des paramètres, ou des fichiers de configuration.
+Un Secret est similaire à un ConfigMap, mais il est conçu pour stocker des **données sensibles**, comme des mots de passe, des clés API, ou des certificats. Les données dans un Secret sont encodées en Base64 et peuvent être configurées pour être mieux sécurisées.
+--
+
+=== Fonctionnement et création
+
+[NOTE.speaker]
+--
+1. **Création** : Les ConfigMaps et Secrets sont créés comme des objets **Kubernetes** indépendants.
+
+2. **Injection dans les pods** : Ils peuvent être montés comme volumes, injectés comme variables d’environnement, ou utilisés directement dans des fichiers de configuration.
+
+3. **Mise à jour dynamique** : Les pods peuvent utiliser les nouvelles valeurs des ConfigMaps sans redémarrage, selon leur configuration.
+--
+
+=== Commandes de base kubectl pour ConfigMaps et Secrets
+
+[NOTE.speaker]
+--
+- Créer un ConfigMap :
+
+  ```
+  kubectl create configmap <nom-configmap> --from-literal=<cle=valeur>
+  ```
+
+- Créer un Secret :
+
+  ```
+  kubectl create secret generic <nom-secret> --from-literal=<cle=valeur>
+  ```
+
+- Voir un ConfigMap ou un Secret :
+
+  ```
+  kubectl get configmap
+  ```
+
+  ```
+  kubectl get secret
+  ```
+
+- Supprimer un ConfigMap ou un Secret :
+
+  ```
+  kubectl delete configmap <nom-configmap>
+  ```
+
+  ```
+  kubectl delete secret <nom-secret>
+  ```
+--
+
+== Les Namespaces : Organiser et Isoler vos Ressources dans Kubernetes
+
+Dans un cluster **Kubernetes**, les **namespaces** permettent de **segmenter**, **organiser** et **isoler** les ressources.
+
+[NOTE.speaker]
+--
+Ils sont particulièrement utiles lorsque vous gérez plusieurs projets, environnements ou équipes dans un même cluster. Grâce aux namespaces, il devient plus facile de structurer et de sécuriser vos ressources.
+--
+
+=== Qu’est-ce qu’un namespace ?
+
+[NOTE.speaker]
+--
+Un namespace est une **division logique** au sein d’un cluster **Kubernetes**. Pensez-y comme un espace virtuel dans lequel vous pouvez créer et gérer des ressources (pods, services, configmaps, etc.). Chaque namespace est indépendant des autres, bien qu’il partage les mêmes ressources physiques (CPU, mémoire, stockage) du cluster.
+--
+
+=== Pourquoi utiliser des namespaces ?
+
+[NOTE.speaker]
+--
+1. **Organisation** : Les namespaces permettent de regrouper les ressources par projet, application ou environnement (par exemple : développement, test, production).
+
+2. **Isolation** : Chaque namespace est isolé des autres. Les ressources d’un namespace ne peuvent pas accéder directement à celles d’un autre sans configuration explicite.
+
+3. **Gestion des quotas** : **Kubernetes** permet de définir des quotas de ressources (CPU, mémoire, etc.) au niveau des namespaces pour éviter qu’un projet ne monopolise les ressources du cluster.
+
+4. **Facilité d’administration** : En segmentant les ressources, il devient plus facile de gérer les permissions avec **Role-Based Access Control (RBAC)**.
+--
+
+=== Namespaces par défaut dans Kubernetes
+
+[NOTE.speaker]
+--
+Lorsque vous créez un cluster **Kubernetes**, plusieurs namespaces sont déjà disponibles :
+
+- `default` : Utilisé si aucun namespace spécifique n’est mentionné.
+- `kube-system` : Contient les composants internes du cluster (API Server, Scheduler, etc.).
+--
+
+=== Commandes de base kubectl pour les Namespaces
+
+[NOTE.speaker]
+--
+- Lister tous les namespaces :
+
+  ```
+  kubectl get namespaces
+  ```
+
+- Créer un namespace :
+
+  ```
+  kubectl create namespace <mon-namespace>
+  ```
+
+- Travailler dans un namespace spécifique :
+
+  ```
+  kubectl get pods -n <mon-namespace>
+  ```
+
+- Changer temporairement de namespace par défaut :
+
+  ```
+  kubectl config set-context --current --namespace=<mon-namespace>
+  ```
+--
+
+== Mise en œuvre des ressources Kubernetes
+
+Dans ce chapitre, nous allons explorer comment créer et gérer des ressources **Kubernetes** comme les **pods**, **services**, **configmaps** et **secrets** en utilisant le mode impératif.
+
+[NOTE.speaker]
+--
+Cette approche permet de rapidement tester ou déployer des ressources sans écrire de fichiers YAML, ce qui peut être utile pour des tests ou des environnements temporaires.
+--
+
+=== Créer un pod
+
+[NOTE.speaker]
+--
+Lancer un pod contenant un conteneur **nginx** avec une commande impérative :
+
+```
+kubectl run nginx-pod --image=nginx --restart=Never
+```
+
+Vérifier que le pod a été créé :
+
+```
+kubectl get pods
+```
+
+Afficher les logs du pod pour vérifier qu’il fonctionne :
+
+```
+kubectl logs nginx-pod
+```
+--
+
+=== Créer un service pour exposer le pod
+
+[NOTE.speaker]
+--
+Exposer le pod **nginx-pod** via un service de type `NodePort` pour le rendre accessible localement :
+
+```
+kubectl expose pod nginx-pod --type=NodePort --port=80
+```
+
+Lister les services pour obtenir le port d’accès :
+
+```
+kubectl get services
+```
+--
+
+=== Créer un ConfigMap
+
+[NOTE.speaker]
+--
+Créer un ConfigMap contenant une configuration simple :
+
+```
+kubectl create configmap app-config --from-literal=ENV=production --from-literal=VERSION=1.0
+```
+
+Lister les ConfigMaps pour vérifier la création :
+
+```
+kubectl get configmap
+```
+
+Voir le contenu du ConfigMap :
+
+```
+kubectl describe configmap app-config
+```
+--
+
+=== Créer un Secret
+
+[NOTE.speaker]
+--
+Créer un Secret pour stocker une clé API :
+
+```
+kubectl create secret generic api-secret --from-literal=API_KEY=mysecretkey123
+```
+
+Vérifier la création :
+
+```
+kubectl get secret
+```
+
+Afficher les détails encodés :
+
+```
+kubectl describe secret api-secret
+```
+
+Décoder la clé pour la lire :
+
+```
+kubectl get secret api-secret -o jsonpath="{.data.API_KEY}" | base64 --decode
+```
+--
+
+=== Limites du mode impératif
+
+[NOTE.speaker]
+--
+Bien que rapide et pratique pour des tests locaux, le mode impératif présente des limites importantes :
+
+- **Pas de traçabilité** : Les configurations créées directement dans le terminal ne sont pas versionnées ni documentées.
+- **Difficulté de réplication** : Reproduire une infrastructure exacte devient difficile sans un fichier YAML décrivant les ressources.
+- **Manque de standardisation** : Il est plus difficile de collaborer ou d’automatiser les déploiements avec cette approche.
+--
+
+=== Nettoyer les ressources créées
+
+[NOTE.speaker]
+--
+Pour supprimer les ressources créées lors des tests en mode impératif, voici les commandes nécessaires :
+
+Supprimer le pod **nginx-pod** :
+
+```
+kubectl delete pod nginx-pod
+```
+
+Supprimer le service exposant le pod :
+
+```
+kubectl delete service nginx-pod
+```
+
+Supprimer le ConfigMap **app-config** :
+
+```
+kubectl delete configmap app-config
+```
+
+Supprimer le Secret **api-secret** :
+
+```
+kubectl delete secret api-secret
+```
+
+Pour s’assurer que toutes les ressources ont bien été supprimées, vous pouvez lister les ressources restantes :
+
+```
+kubectl get all
+kubectl get configmap
+kubectl get secret
+```
+--
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+Dans ce module, vous avez découvert les ressources fondamentales de Kubernetes : **pods**, **services**, **configmaps** et **secrets**.
+
+[NOTE.speaker]
+--
+Ces briques essentielles fournissent une base solide pour gérer vos applications conteneurisées. La transition vers le **mode déclaratif** avec des **manifests YAML** rendra votre gestion de Kubernetes encore plus efficace. Nous couvrirons ceci dans un guide ultérieur.
+--
+
+* Maîtriser le déploiement et l'exposition d'applications conteneurisées avec Kubernetes.
+* Utiliser **kubectl** pour interagir avec les ressources Kubernetes.
+* Structurer vos ressources efficacement en utilisant les **namespaces**.
+// end::conclusion[]

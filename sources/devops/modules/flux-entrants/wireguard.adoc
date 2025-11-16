@@ -1,0 +1,159 @@
+:titre: WireGuard
+:module: Flux entrants
+:duree: 60
+:description: Savoir utiliser WireGuard pour sécuriser les flux entrants
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* **Comprendre** le fonctionnement de WireGuard
+* **Savoir** installer et configurer WireGuard
+* **Savoir** utiliser WireGuard pour sécuriser les flux entrants
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Installation
+
+```sh
+# Mettre à jour le système
+sudo apt update && sudo apt upgrade
+
+# Installer WireGuard
+sudo apt install wireguard
+```
+
+== Configuration
+
+```sh
+# Créer les clés publiques et privées pour le serveur
+umask 077
+wg genkey | tee server_private.key | wg pubkey > server_public.key
+```
+
+=== Serveur WireGuard
+
+```sh
+# Créer le fichier de configuration
+sudo nano /etc/wireguard/wg0.conf
+```
+
+Ajouter la configuration suivante :
+
+```sh
+[Interface]
+Address = 10.0.0.1/24
+ListenPort = 51820
+PrivateKey = [contenu de server_private.key]
+
+[Peer]
+PublicKey = [clé publique du client]
+AllowedIPs = 10.0.0.2/32
+```
+
+=== Configurer le routage et le NAT
+
+```sh
+# Activer le routage IP
+sudo sysctl -w net.ipv4.ip_forward=1
+
+# Activer une règle de masquerading avec nftables
+sudo nft add table ip nat
+sudo nft add chain ip nat postrouting { type nat hook postrouting priority 100 \; }
+sudo nft add rule ip nat postrouting oif "eth0" ip saddr 10.0.0.0/24 masquerade
+```
+
+=== Démarrer le serveur
+
+```sh
+sudo wg-quick up wg0
+sudo systemctl enable wg-quick@wg0
+```
+
+== Client WireGuard
+
+```sh
+# Créer les clés publiques et privées
+umask 077
+wg genkey | tee client_private.key | wg pubkey > client_public.key
+```
+
+=== Fichier de configuration du client
+
+```sh
+nano wg0.conf
+```
+
+Ajouter la configuration suivante :
+
+```sh
+[Interface]
+Address = 10.0.0.2/24
+PrivateKey = [contenu de client_private.key]
+
+[Peer]
+PublicKey = [clé publique du serveur]
+Endpoint = your_server_ip:51820
+AllowedIPs = 0.0.0.0/0
+PersistentKeepalive = 25
+```
+
+=== Connecter le client au serveur
+
+```sh
+sudo wg-quick up wg0
+```
+
+== Vérifier la connexion
+
+```sh
+sudo wg show
+```
+
+[NOTE.speaker]
+--
+* **Vérifiez les Informations de l'Interface** : Assurez-vous que l'interface wg0 (ou une autre nommée) est active et que l'adresse IP configurée est correcte.
+* **Vérifiez les Peers** : Assurez-vous que le client et le serveur apparaissent comme "peers" l'un pour l'autre. Vérifiez que les clés publiques et les adresses IP autorisées sont correctement configurées.
+--
+
+=== Tester la connectivité réseau
+
+* Ping entre le client et le serveur
+
+```sh
+ping 10.0.0.1
+```
+
+* Ping entre le serveur et le client
+
+```sh
+ping 10.0.0.2
+```
+
+// tag::demo[]
+
+== Démonstration
+
+**WireGuard**
+
+[NOTE.speaker]
+--
+Reprendre les étapes de l'installation et de la configuration de WireGuard.
+
+Parvenir à connecter le client au serveur et vérifier la connectivité réseau.
+--
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* **WireGuard** est un VPN léger et rapide
+* **WireGuard** est facile à configurer et à utiliser
+* **WireGuard** est une alternative intéressante à OpenVPN
+// end::conclusion[]

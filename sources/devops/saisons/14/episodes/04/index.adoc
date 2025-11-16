@@ -1,0 +1,36 @@
+:title: K8S introduction
+:number: 04
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Démarrage avec K8S et compréhension de l'outil
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Utiliser** K8S
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/orchestration/k8s.adoc[options=modules]
+
+include::../../../../modules/orchestration/worker_nodes.adoc[options=modules]
+
+:challenge: https://kubernetes.io/docs/tutorials/kubernetes-basics/deploy-app/deploy-intro/
+:description: Learn about application Deployments. Deploy your first app on Kubernetes with kubectl.
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+// end::deroulement[]

@@ -1,0 +1,89 @@
+++++
+<style>
+.sect2 {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 2rem 0 0;
+    padding: .5rem 1rem;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    
+    h3 {
+        content: '';
+        display: block;
+        height: 3rem;
+        margin-top: -3rem;
+        margin-bottom: 3rem;
+    }
+
+    sup {
+        color: var(--color-oclock-creme) !important;
+        background: var(--color-oclock-orange) !important;
+        padding: .125rem .5rem;
+        border-radius: 20px;
+        font-size: .8rem;
+        top: -1rem;
+    }
+
+    .notions ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .25rem .5rem;
+        list-style-type: none;
+        margin: 0;
+
+        li p {
+            border: 1px solid var(--color-oclock-orange);
+            padding: .125rem .5rem;
+            border-radius: 20px;
+            font-size: .75rem;
+        }
+    }
+
+    .objectifs {
+        margin: 1rem 0;
+    }
+
+    .links {
+        p {
+            display: flex;
+            justify-content: flex-end;
+            gap: 2rem;
+        }
+
+        a {
+            padding: .25rem 1.5rem;
+            border-radius: 4px;
+            font-size: .8rem;
+            background: #fecf84;
+            color: black;
+            text-decoration: none;
+            transition: transform .3s;
+        }
+
+        a:hover {
+            transform: scale(1.05);
+        }
+    }
+}
+</style>
+++++
+
+
+=== {number} : {title} ^{duration}h^
+
+include::{docdir}/saisons/{number}/index.adoc[tags=intro]
+
+[.notions]
+include::{docdir}/saisons/{number}/index.adoc[tags=notions]
+
+// -
+
+[.objectifs]
+include::{docdir}/saisons/{number}/index.adoc[tags=objectifs]
+
+[.links]
+link:./saisons/{number}/index.html[Vue linéaire]
+link:./saisons/{number}/overview.html[Vue Kanban]
+link:./saisons/{number}/pdf.html[📖 Ebook O'clock]

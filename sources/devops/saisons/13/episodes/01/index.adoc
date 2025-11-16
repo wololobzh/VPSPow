@@ -1,0 +1,35 @@
+:title: Multi staging
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+L'introduction au multi-staging permet de créer des images Docker plus efficaces et plus petites, ce qui est crucial pour la performance en production.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** le multi-staging
+- **Améliorer** l'efficacité des images Docker
+// end::objectifs[]
+
+// tag::prerequis[]
+
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+WARNING: *Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook]*
+
+include::../../../../modules/docker/multi-staging-intro.adoc[options=modules]
+
+include::../../../../modules/docker/multi-staging-examples.adoc[options=modules]
+
+include::../../../../modules/docker/multi-staging-analyse.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S13-Challenge
+:description: Transformer un projet NestJS en multi-staging
+:correction: https://github.com/O-clock-Devops-Peda/S13-Challenge/tree/correction
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+// end::deroulement[]

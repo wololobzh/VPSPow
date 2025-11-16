@@ -1,0 +1,221 @@
+:titre: Gestion de base de données PostgreSQL avec Adminer
+:module: SQL
+:duree: 60
+:description: Apprenez à utiliser Adminer pour gérer visuellement votre base de données PostgreSQL et effectuer des opérations CRUD.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* *Comprendre* les avantages d'Adminer par rapport à l'interface en ligne de commande psql
+* *Configurer* et *se connecter* à une base de données PostgreSQL via Adminer
+* *Effectuer* des opérations CRUD à travers l'interface graphique d'Adminer
+* *Exécuter* des requêtes SQL complexes dans Adminer
+* *Comparer* l'approche visuelle d'Adminer avec les commandes psql équivalentes
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction à Adminer
+
+Adminer est un outil de gestion de base de données complet et léger, offrant une interface web pour interagir avec différents types de bases de données, dont PostgreSQL.
+
+=== Avantages d'Adminer par rapport à psql
+
+1. Interface graphique intuitive
+2. Visualisation facile de la structure de la base de données
+3. Formulaires pour les opérations CRUD sans écrire de SQL
+4. Possibilité d'exécuter du SQL personnalisé
+5. Gestion visuelle des index, contraintes et relations
+
+== Configuration et connexion
+
+=== Lancement d'Adminer (rappel du cours DevContainer)
+
+Adminer est généralement accessible via `http://localhost:8080` lorsqu'il est configuré dans un DevContainer.
+
+=== Connexion à PostgreSQL
+
+1. Système : PostgreSQL
+2. Serveur : db (ou l'adresse de votre serveur PostgreSQL)
+3. Utilisateur : postgres (ou votre nom d'utilisateur)
+4. Mot de passe : (votre mot de passe)
+5. Base de données : (nom de votre base de données)
+
+[NOTE]
+Ces informations correspondent à celles utilisées avec la commande `psql` vue précédemment.
+
+== Navigation dans l'interface d'Adminer
+
+=== Structure de la base de données
+
+- Liste des tables (équivalent à `\dt` dans psql)
+- Schéma de chaque table (équivalent à `\d table_name` dans psql)
+
+=== Exécution de requêtes SQL
+
+Adminer offre un éditeur SQL similaire à l'interface psql, mais avec coloration syntaxique et autocomplétion.
+
+== Opérations CRUD avec Adminer
+
+image::https://media.tenor.com/gBHJtNMfw90AAAAC/data-star-trek.gif[]
+
+=== Création de table
+
+1. Cliquez sur "Créer une table"
+2. Définissez les colonnes (nom, type, contraintes)
+
+Équivalent psql :
+[source,sql]
+----
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL
+);
+----
+
+=== Insertion de données (Create)
+
+1. Sélectionnez la table
+2. Cliquez sur "Nouveau item"
+3. Remplissez le formulaire
+
+Équivalent psql :
+[source,sql]
+----
+INSERT INTO users (username, email) VALUES ('john_doe', 'john@example.com');
+----
+
+=== Read (Lire)
+
+1. Sélectionnez la table
+2. Utilisez les options de filtrage et de tri
+
+Équivalent psql :
+[source,sql]
+----
+SELECT * FROM users ORDER BY username ASC;
+----
+
+=== Update (Mettre à jour)
+
+1. Sélectionnez la table
+2. Cliquez sur l'ID de l'enregistrement à modifier
+3. Modifiez les champs dans le formulaire
+
+Équivalent psql :
+[source,sql]
+----
+UPDATE users SET email = 'new_email@example.com' WHERE id = 1;
+----
+
+=== Delete (Supprimer)
+
+1. Sélectionnez la table
+2. Cochez les enregistrements à supprimer
+3. Choisissez "Supprimer" dans le menu déroulant
+
+Équivalent psql :
+[source,sql]
+----
+DELETE FROM users WHERE id = 1;
+----
+
+== Fonctionnalités avancées
+
+=== Gestion des index
+
+Adminer permet de créer et gérer visuellement les index, ce qui est plus intuitif que les commandes SQL directes.
+
+=== Exportation et importation
+
+Adminer offre des options pour exporter et importer des données, similaires aux commandes `pg_dump` et `psql -f` mais avec une interface graphique.
+
+=== Gestion des privilèges
+
+Equivalent visuel aux commandes `GRANT` et `REVOKE` de PostgreSQL.
+
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration : Gestion d'une base de données de blog
+
+[NOTE.speaker]
+--
+1. Connectez-vous à Adminer et créez une nouvelle base de données "blog".
+
+2. Créez les tables suivantes via l'interface Adminer :
+   - `posts` (id, title, content, author_id, created_at)
+   - `authors` (id, name, email)
+
+3. Insérez quelques données d'exemple dans chaque table.
+
+4. Montrez comment effectuer une jointure entre `posts` et `authors` en utilisant l'éditeur SQL d'Adminer :
+
+   [source,sql]
+   ----
+   SELECT p.title, p.content, a.name as author_name
+   FROM posts p
+   JOIN authors a ON p.author_id = a.id;
+   ----
+
+5. Démontrez comment modifier la structure d'une table (par exemple, ajoutez une colonne `updated_at` à la table `posts`).
+
+6. Exportez la structure et les données de la base de données.
+
+7. Montrez où trouver les logs des requêtes exécutées par Adminer.
+
+Comparez chaque étape avec son équivalent en ligne de commande psql.
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice pratique : Gestion d'une bibliothèque avec Adminer
+
+=== Objectif
+Utilisez Adminer pour créer et gérer une petite base de données de bibliothèque, en vous basant sur le schéma PostgreSQL vu précédemment.
+
+[NOTE.speaker]
+--
+* Étapes
+
+1. Connectez-vous à Adminer et créez une nouvelle base de données "library".
+
+2. Créez les tables suivantes via l'interface Adminer :
+   - `books` (id, title, author, isbn, published_year)
+   - `members` (id, name, email, join_date)
+   - `loans` (id, book_id, member_id, loan_date, return_date)
+
+3. Insérez au moins 5 livres, 3 membres, et quelques prêts en utilisant l'interface d'Adminer.
+
+4. Utilisez l'éditeur SQL d'Adminer pour exécuter les requêtes suivantes :
+   a. Liste de tous les livres d'un auteur spécifique
+   b. Nombre total de livres empruntés
+   c. Liste des membres avec leurs livres actuellement empruntés
+
+5. Créez un index sur la colonne `isbn` de la table `books` via l'interface Adminer.
+
+6. Exportez la structure et les données de votre base de données.
+--
+
+=== Questions de réflexion
+
+1. Comment l'utilisation d'Adminer a-t-elle facilité la gestion de la base de données par rapport à l'utilisation de psql ?
+2. Quelles opérations trouvez-vous plus faciles à réaliser avec Adminer ? Lesquelles préféreriez-vous faire avec psql ?
+3. Comment Adminer pourrait-il être utile dans un flux de travail de développement incluant PostgreSQL ?
+
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Vous avez découvert Adminer comme alternative graphique à psql pour gérer PostgreSQL
+* Vous savez maintenant effectuer des opérations CRUD via l'interface d'Adminer
+* Vous comprenez comment les actions dans Adminer se traduisent en commandes SQL
+* Vous avez exploré des fonctionnalités avancées comme la gestion des index et l'exportation de données
+* Ces compétences vous permettent de gérer visuellement vos bases de données PostgreSQL
+* Adminer complète vos connaissances en ligne de commande, offrant une approche visuelle pour certaines tâches
+// end::conclusion[]
