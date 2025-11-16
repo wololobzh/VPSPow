@@ -55,6 +55,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2️⃣ Télécharger l'artifact généré lors du build
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: build
+
       # 2️⃣ Charger la clé SSH privée
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.7.0
@@ -75,7 +82,7 @@ jobs:
         run: |
           rsync -avz --delete ./ ubuntu@51.254.205.63:/home/ubuntu/mon-site
 
-      # 5️⃣ Redémarrer le conteneur Docker sur le VPS
-      - name: Restart Docker
+      # 5 Déployer les fichiers build sur le VPS avec rsync
+      - name: Deploy files
         run: |
-          ssh ubuntu@51.254.205.63 "cd /home/ubuntu/mon-site && docker compose up -d --build"
+          rsync -avz --delete ./build ubuntu@51.254.205.63:/home/ubuntu/mon-site
