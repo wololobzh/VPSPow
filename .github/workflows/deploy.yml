@@ -51,9 +51,5 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifact
-        uses: actions/download-pages-artifact@v1
-        with:
-          name: artifact
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
