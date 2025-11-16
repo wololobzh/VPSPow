@@ -51,9 +51,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Récupérer le code du repo
-      - name: Checkout code
-        uses: actions/checkout@v3
+      # 1️⃣ Récupérer le code du build
+      - name: Download artifact
+          uses: actions/download-artifact@v3
+          with:
+            name: artifact
+            path: build
 
       # 2️⃣ Charger la clé SSH privée
       - name: Setup SSH
@@ -73,7 +76,7 @@ jobs:
       # 4️⃣ Déployer le code sur le VPS avec rsync
       - name: Deploy files
         run: |
-          rsync -avz --delete ./build/ ubuntu@51.254.205.63:/home/ubuntu/mon-site/build/
+          rsync -avz --delete ./build ubuntu@51.254.205.63:/home/ubuntu/mon-site
 
       # 5️⃣ Redémarrer le conteneur Docker sur le VPS
       - name: Restart Docker
