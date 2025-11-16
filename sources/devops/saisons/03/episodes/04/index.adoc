@@ -1,0 +1,61 @@
+:title: 🚀 Déploiement et Hébergement d'Applications Frontend
+:number: 04
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Exploration du déploiement et de l'hébergement d'applications frontend, avec accent sur les applications Svelte. Présentation des concepts généraux d'hébergement pour DevOps et focus sur le déploiement pratique d'applications Svelte sur GitHub Pages.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** les différentes options d'hébergement pour les applications frontend
+- **Distinguer** les spécificités de l'hébergement statique et dynamique
+- **Maîtriser** les concepts clés tels que CDN, mise en cache et optimisation des performances
+- **Appliquer** les meilleures pratiques de déploiement pour les applications Svelte
+- **Configurer** et utiliser GitHub Pages pour héberger une application frontend
+- **Résoudre** les problèmes courants liés au déploiement sur GitHub Pages
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+- Expérience pratique dans le déploiement d'applications web frontend
+- Connaissance approfondie des concepts DevOps liés à l'hébergement web
+- Maîtrise du framework Svelte et de son processus de build
+- Familiarité avec GitHub et GitHub Pages
+- Compréhension des concepts de performance web et d'optimisation
+- Capacité à résoudre les problèmes courants de déploiement et à expliquer les solutions de manière claire
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/devops/intro-deploy.adoc[options=modules]
+
+TIP: Commencer les modules et intercaler la 🍕 Pause déjeuner
+
+include::../../../../modules/devops/gh-page.adoc[options=modules]
+
+WARNING: Journée async demain, programmer les activités.
+
+:challenge: https://github.com/O-clock-Devops-Peda/S03-Challenge
+:description: Déploiement de l'application LocalExpress sur GitHub Pages
+:correction: 16h30
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s03e04]
+--
+// end::deroulement[]

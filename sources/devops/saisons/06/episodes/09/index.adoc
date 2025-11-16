@@ -1,0 +1,60 @@
+:title: Atelier
+:number: 09
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Journée d'atelier récapitulative des modules de la saison pour recréer de zéro une machine virtuelle en tant que serveur web optimisé, sécurisé et supervisé.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* **Appliquer** une configuration système complète.
+* **Analyser** éléments nécessaires à la mise en place d'un serveur web.
+* **Appliquer** une sécurisation et optimisation.
+// end::objectifs[]
+
+// tag::prerequis[]
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+=== Présentation atelier
+
+NOTE: 15 minutes
+
+link:https://github.com/O-clock-Devops-Peda/S06-Atelier[Atelier S06]
+
+* **Comprendre** les différences entre les OS et faire un choix
+* **Comprendre** les règles de sécurisation Linux
+* **Appliquer** l’administration de systèmes Linux
+* **Appliquer** les procédures d’installation de services
+* **Analyser** l’activité d’un serveur
+
+=== Atelier
+
+NOTE: 345 minutes
+
+Passer dans les groupes pour voir l'avancement et aider à débloquer si besoin :
+
+* En fin de matinée
+* En milieu d'après-midi
+
+NOTE: Le challenge S08E04 fait référence à cet atelier. Si modification, vérifier que le challenge est cohérent.
+
+WARNING: Journée async demain, programmer les activités.
+
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s06e09]
+--
+// end::deroulement[]

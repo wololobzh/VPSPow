@@ -1,0 +1,227 @@
+:titre: OpenVPN
+:module: Flux entrants
+:duree: 60
+:description: Savoir utiliser OpenVPN pour sécuriser les flux entrants
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Comprendre la mise en place d'un VPN avec OpenVPN
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Installation d'OpenVPN
+
+```sh
+# Mettre à jour le système
+sudo apt update && sudo apt upgrade
+
+# Installer OpenVPN et easy-rsa (utilisé pour la gestion des certificats)
+sudo apt install openvpn easy-rsa
+
+# Vérifier l'installation
+openvpn --version
+```
+
+== Configuration réseau
+
+Avant de configurer OpenVPN, il est nécessaire de configurer le réseau pour autoriser le routage des paquets.
+
+=== Configuration du routage
+
+```sh
+sudo nano /etc/sysctl.conf
+```
+
+Décommenter la ligne suivante :
+
+```sh
+net.ipv4.ip_forward=1
+```
+
+Appliquer les modifications :
+
+```sh
+sudo sysctl -p
+```
+
+=== Configuration du NAT
+
+```sh
+sudo iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+```
+
+=== Ouverture de port
+
+En général il est nécessaire d'ouvrir le port 1194 pour le protocole UDP.
+
+Exemple pour UFW :
+
+```sh
+sudo ufw allow 1194/udp
+```
+
+== Configuration des certificats et clés
+
+Initialisation du répertoire easy-rsa :
+
+```sh
+make-cadir ~/openvpn-ca
+cd ~/openvpn-ca
+```
+
+=== Configuration de l'environnement
+
+```sh
+nano vars
+```
+
+Modifier les variables suivantes :
+
+```sh
+export KEY_COUNTRY="FR"
+export KEY_CITY="Paris"
+export KEY_ORG="MyOrganization"
+export KEY_EMAIL="email@example.com"
+export KEY_OU="MyOrganizationalUnit"
+export KEY_NAME="server"
+```
+
+=== Générer le certificat
+
+```sh
+source vars
+./clean-all
+./build-ca
+./build-key-server server
+./build-dh
+```
+
+[NOTE.speaker]
+--
+* **CA** : Génère le certificat de l'autorité de certification.
+* **Server Key** : Crée la clé et le certificat pour le serveur.
+* **Diffie-Hellman** : Génère des paramètres Diffie-Hellman pour le chiffrement.
+--
+
+=== Générer les clés pour les clients
+
+```sh
+./build-key client1
+```
+
+== Configuration du serveur OpenVPN
+
+Copier le fichier d'exemple
+
+```sh
+gunzip -c /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz > /etc/openvpn/server.conf
+nano /etc/openvpn/server.conf
+```
+
+=== Modification du fichier de configuration
+
+```sh
+port 1194
+proto udp
+dev tun
+ca ca.crt
+cert server.crt
+key server.key
+dh dh2048.pem
+server 10.8.0.0 255.255.255.0
+ifconfig-pool-persist ipp.txt
+push "redirect-gateway def1 bypass-dhcp"
+push "dhcp-option DNS 8.8.8.8"
+push "dhcp-option DNS 8.8.4.4"
+keepalive 10 120
+cipher AES-256-CBC
+user nobody
+group nogroup
+persist-key
+persist-tun
+status openvpn-status.log
+verb 3
+```
+
+=== Démarrage du serveur
+
+```sh
+systemctl start openvpn@server
+systemctl enable openvpn@server
+```
+
+== Configuration du client
+
+Copier le fichier d'exemple
+
+```sh
+gunzip -c /usr/share/doc/openvpn/examples/sample-config-files/client.conf.gz > ~/client.ovpn
+nano ~/client.ovpn
+```
+
+=== Modification du fichier de configuration
+
+```sh
+client
+dev tun
+proto udp
+remote your_server_ip 1194
+resolv-retry infinite
+nobind
+user nobody
+group nogroup
+persist-key
+persist-tun
+remote-cert-tls server
+cipher AES-256-CBC
+verb 3
+<ca>
+-----BEGIN CERTIFICATE-----
+[Your CA Certificate]
+-----END CERTIFICATE-----
+</ca>
+<cert>
+-----BEGIN CERTIFICATE-----
+[Your Client Certificate]
+-----END CERTIFICATE-----
+</cert>
+<key>
+-----BEGIN PRIVATE KEY-----
+[Your Client Key]
+-----END PRIVATE KEY-----
+</key>
+```
+
+=== Transférer et connecter
+
+* Transférer le fichier `client.ovpn` sur le client
+* Utiliser OpenVPN pour importer le fichier de configuration et se connecter
+
+// tag::demo[]
+
+== Démonstration
+
+**OpenVPN**
+
+[NOTE.speaker]
+--
+Reprendre toutes les étapes précédentes pour configurer un serveur OpenVPN et un client.
+--
+
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* OpenVPN est un outil puissant pour sécuriser les flux entrants
+* La configuration est fastidieuse mais nécessaire pour garantir la sécurité
+* Il est possible de configurer un serveur et un client pour sécuriser les communications
+// end::conclusion[]

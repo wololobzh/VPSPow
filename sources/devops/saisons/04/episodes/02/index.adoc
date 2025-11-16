@@ -1,0 +1,50 @@
+:title: 🖥️ Fondamentaux du Backend et Création d'API avec Flask
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode couvre les bases du développement backend et l'initiation à la création d'API avec Flask. Nous explorerons d'abord les concepts fondamentaux du backend, puis nous mettrons en pratique ces connaissances en créant une mini API simple avec Flask.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** le rôle et l'architecture du backend dans le développement web
+- **Identifier** les composants clés d'une application backend
+- **Expliquer** le fonctionnement des API et leur importance
+- **Créer** une API simple avec Flask en utilisant la méthode GET
+- **Manipuler** des données en mémoire pour simuler une base de données
+- **Tester** une API avec des outils comme cURL ou Postman
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+- Connaissance de base en programmation Python
+- Familiarité avec les concepts HTTP et REST
+- Environnement Python configuré avec Flask installé
+- Postman ou cURL installé pour tester l'API
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/backend/intro-back.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/backend/intro-flask.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S04-Python-Challenge
+:description: 
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

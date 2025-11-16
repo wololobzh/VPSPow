@@ -1,0 +1,224 @@
+:titre: Compose : back
+:module: Docker
+:duree: 60
+:description: Mise en place d'un environnement de développement complet avec compose en ajoutant un back.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+// Sous forme de liste à puce, en utilisant la taxonomie de Bloom
+* *Appliquer* compose
+* *Appliquer* un environnement de développement complet
+// end::objectifs[]
+
+// tag::deroulement[]
+== Back existant
+
+Pour le back, nous allons lancer une image Directus avec une base de données sqlite.
+
+https://hub.docker.com/r/directus/directus[Directus sur Docker Hub]
+
+[NOTE.speaker]
+--
+Directus est un CMS headless open-source qui permet de gérer des contenus de manière simple et efficace.
+--
+
+=== Ajout du service
+
+On ajoute un service `back` dans le fichier `compose.yml` :
+
+```yml
+services:
+  front:
+    image: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./front:/usr/share/nginx/html
+
+  back:
+    image: directus/directus
+    ports:
+      - 8055:8055
+```
+
+[NOTE.speaker]
+--
+Dans les logs on peut voir que Directus utilise une base de données SQLite et des identifiants par défaut :
+
+```
+docker compose up
+
+> INFO: No admin email provided. Defaulting to "admin@example.com"
+> INFO: No admin password provided. Defaulting to "BWc_Tx7vpgu6"
+```
+--
+
+=== Persistance des données
+
+Si on stoppe les conteneurs avec `docker compose down`, les données seront perdues.
+
+On verra plus tard comment persister les données avec un volume.
+
+== Back Node
+
+> Remplaçons Directus par notre propre back en Node.js.
+
+Pour cela, nous allons créer un dossier `back` à la racine de notre projet. Dans ce dossier, nous allons créer un fichier `index.js` avec le contenu suivant :
+
+```javascript
+import express from 'express';
+const app = express();
+const port = 3000;
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+```
+
+=== Changement du service
+
+```yml
+services:
+  front:
+    image: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./front:/usr/share/nginx/html
+
+  back:
+    image: node:20-alpine
+    ports:
+      - 3000:3000
+    volumes:
+      - ./back:/app
+    working_dir: /app
+```
+
+[NOTE.speaker]
+--
+Les paramètres `volumes` et `working_dir` permettent de monter le dossier `back` de notre machine hôte dans le conteneur et de définir le dossier de travail.
+
+Si on lance le service avec `docker compose up` tel quel, il ne se passera rien car notre back requiert la dépendance express et d'être lancé avec `node index.js`.
+--
+
+=== Dépendances
+
+En node, les dépendances sont gérées dans un fichier `package.json`.
+
+.package.json
+```json
+{
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "type": "module"
+}
+```
+
+Elles doivent ensuite être téléchargées avec la commande `npm i`.
+
+=== Lancement
+
+Pour lancer le service, on doit d'abord installer les dépendances avec `npm i` puis lancer le serveur avec `node index.js`.
+
+```yml
+back:
+    image: node:20-alpine
+    ports:
+      - 3000:3000
+    volumes:
+      - ./back:/app
+    working_dir: /app
+    command: sh -c "npm i && node index.js"
+```
+
+[NOTE.speaker]
+--
+Le paramètre `command` permet d'exécuter des commandes au lancement du conteneur.
+
+On voit qu'un dossier node_modules est créé dans le dossier `back` de notre machine hôte et que le serveur démarre sur le port 3000.
+--
+// end::deroulement[]
+
+// tag::exercice[]
+== Exercice
+
+Créer une application avec :
+
+* un front en Vite + React + TS sur le port 5173 : https://vitejs.dev/guide/#scaffolding-your-first-vite-project[Doc Vite] 
+* un back en Directus sur le port 8055 avec un email admin `admin@oclock.io` et un mot de passe `oclock` : https://docs.directus.io/self-hosted/docker-guide.html#docker-guide[Doc Directus]
+
+:warning: Vite dans un conteneur doit être lancé avec `vite --host` pour être accessible depuis l'extérieur.
+
+TIP: Vous allez devoir utiliser des variables d'environnement pour configurer Directus 😱
+
+[NOTE.speaker]
+--
+*Solution :*
+
+.front
+```bash
+npm create vite@latest front -- --template react-ts
+```
+
+.vite.config.ts
+```ts
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    host: true, // expose Vite à l'extérieur
+    watch: {
+      usePolling: true, // Hot reloading pour Windows
+    }
+  },
+})
+```
+
+.compose.yml
+```yml
+services:
+  front:
+    image: node:20-alpine
+    ports:
+      - 5173:5173
+    volumes:
+      - ./front:/app
+    working_dir: /app
+    command: sh -c "npm i && npm run dev"
+
+  back:
+    image: directus/directus
+    ports:
+      - 8055:8055
+    environment:
+        ADMIN_EMAIL: "admin@oclock.io"
+        ADMIN_PASSWORD: "oclock"
+```
+--
+
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* On peut monter plusieurs services dans un même fichier `compose.yml`
+* On peut créer des application dynamiques
+
+[NOTE.speaker]
+--
+On verra plus tard qu'on peut utiliser les Dockerfile pour créer des images personnalisées, notamment pour le téléchargement automatique des dépendances.
+--
+// end::conclusion[]

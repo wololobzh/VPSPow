@@ -1,0 +1,47 @@
+:title: Gestion des artefacts et sécurisation
+:number: 07
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Gestion efficace des artefacts générés par les builds et à la sécurisation des workflows CI/CD. Les apprenants veront comment stocker, versionner, et partager des artefacts, tout en mettant en place des pratiques robustes pour protéger les informations sensibles dans les workflows.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* les enjeux de la sécurité dans les workflows CI/CD.
+* *Appliquer* une bonne gestion des artefacts.
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Expérience avec la gestion des artefacts et les registres d'artefacts.
+* Connaissance des pratiques de sécurité dans les workflows CI/CD.
+* Compétence dans la configuration des permissions et des contrôles d'accès.
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/cicd/artefacts.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/cicd/securite.adoc[options=modules]
+
+include::../../../../modules/cicd/audit.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S09-Challenge/tree/correction
+:description: Produire des logs pour différentes versions de build.
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

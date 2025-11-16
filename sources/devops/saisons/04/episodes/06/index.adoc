@@ -1,0 +1,41 @@
+:title: 🐹 Introduction à Go pour les développeurs Python
+:number: 06
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode présente les bases du langage Go aux développeurs Python. Il couvre les différences clés entre Go et Python, ainsi que les structures de contrôle et la gestion des erreurs spécifiques à Go.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** les concepts de base du langage Go et ses différences avec Python
+- **Appliquer** les structures de contrôle en Go
+- **Maîtriser** la gestion des erreurs en Go
+// end::objectifs[]
+
+== Prérquis formateur
+
+// tag::prerequis[]
+- Connaissance approfondie de Go et Python
+- Expérience en développement avec les deux langages
+- Compréhension des systèmes de typage statique et dynamique
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+include::../../../../modules/go/intro-go.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/go/structures-controle-go.adoc[options=modules]
+
+TIP: Commencer les modules et intercaler la 🍕 Pause déjeuner
+
+:challenge: https://github.com/O-clock-Devops-Peda/S04-Go-Challenge
+:description: 
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

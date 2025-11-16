@@ -1,0 +1,116 @@
+:titre: Compose
+:module: Docker
+:duree: 30
+:description: Point de départ pour l'utilisation concrète de Docker dans les application à partir d'image existantes.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+// Sous forme de liste à puce, en utilisant la taxonomie de Bloom
+* *Comprendre* ce qu'est Docker Compose
+* *Appliquer* Docker Compose pour orchestrer des conteneurs en local
+// end::objectifs[]
+
+// tag::deroulement[]
+== Docker compose
+
+* Docker Compose est un outil pour définir et gérer des applications multi-conteneurs. 
+* Vous utilisez un fichier YAML pour configurer les services de votre application. 
+* Ensuite, avec une seule commande, vous créez et démarrez tous les services à partir de votre configuration.
+
+https://docs.docker.com/compose/[Documentation Docker Compose]
+
+[NOTE.speaker]
+--
+Compose permet de mettre en place des applications multi-conteneurs en local, pour le développement.
+--
+
+=== Pourquoi ?
+
+* Simplification du démarrage de plusieurs conteneurs
+* Centralisation de la configuration dans un seul fichier
+* Définition simple des dépendances entre les conteneurs
+* Définition simple des volumes partagés
+* Gestion d'environnements différents
+* Gain de temps pour le lancement de l'application
+
+=== Comment ?
+
+On crée un fichier `docker-compose.yml` ou `compose.yml`, dans lequel on définit les services de l'application.
+
+.Exemple
+```yml
+services:
+  web:
+    image: nginx
+    ports:
+      - 8080:80
+```
+
+[NOTE.speaker]
+--
+Dans cet exemple, on définit un seul service nommé `web` qui utilise l'image `nginx` et expose le port 80 en local sur le port 8080.
+
+Cette syntaxe est très proche de celle de Docker tout en étant plus simple et lisible.
+--
+
+== Commandes
+
+```bash
+docker compose up
+```
+
+Le service démarre, vous pouvez accéder à `http://localhost:8080` pour voir la page d'accueil de Nginx. Pour arrêter le service, faites `Ctrl + C`.
+
+[NOTE.speaker]
+--
+Nous sommes en mode interactif, donc le conteneur s'arrête dès que vous faites `Ctrl + C`.
+
+On peut voir les conteneurs démarrés avec `docker ps` dans un second terminal.
+--
+
+=== Démon
+
+On peut également lancer le service en arrière-plan avec l'option `-d` :
+
+```bash
+docker compose up -d
+```
+
+Pour arrêter le service :
+
+```bash
+docker compose down
+```
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration
+
+[NOTE.speaker]
+--
+* Créer un fichier `compose.yml` avec un service Apache sur le port 8000
+* Démarrer le service en arrière-plan avec `docker compose up -d`
+* Vérifier que le service est bien démarré avec `docker ps`
+* Rentrer dans le conteneur avec `docker exec -it <nom du conteneur> bash`
+* Modifier la page d'accueil d'Apache → `echo "Hello World!" >> htdocs/index.html`
+* Vérifier que les modifications sont bien prises en compte
+* Sortir du conteneur → `exit` ou `CTRL + D`
+* Arrêter le service avec `docker compose down`
+--
+// end::demo[]
+
+// tag::exercice[]
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+On est capable de lancer un conteneur avec des paramètres spécifiques avec une simple commande.
+// end::conclusion[]

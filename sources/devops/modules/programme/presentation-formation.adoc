@@ -1,0 +1,117 @@
+:titre: Présentation de la formation
+:module: Programme
+:duree: 60
+:description: Connaître le programme de formation et mieux comprendre le déroulé et la progression attendue
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Comprendre le programme de formation
+* Connaître les objectifs pédagogiques de chaque saison
+* Savoir comment se déroule la formation
+// end::objectifs[]
+
+== 📖 La formation DevOps
+
+image::https://i.giphy.com/XreQmk7ETCak0.webp[]
+
+== 🚀 Saison 01 : Intégration
+
+* Découverte et mise en place des outils O'Clock
+* Connaissance du programme de formation et du titre professionnel
+* Premiers pas avec Docker et Git
+
+== 🧮 Saison 02 : Algorithmie
+
+* Comprendre ce qu'est un algorithme
+* Pouvoir définir un algorithme en fonction d'une problématique donnée
+* Concepts clés des langages de programmation
+
+== 🖼️ Saison 03 : Dev Front et versioning
+
+* Savoir préparer un projet frontend pour un déploiement
+* Comprendre les problématiques principales DevOps côté frontend
+* Aller un peu plus loin dans l'utilisation de git
+
+== 👨‍💻 Saison 04 : Dev Back
+
+* Savoir créer une API
+* Comprendre les architectures backend
+* Spécificités du déploiement côté backend
+
+== 📦 Saison 05 : Container
+
+* Créer et gérer des conteneurs Docker pour isoler et déployer des applications
+* Optimiser les images Docker pour la performance et la sécurité
+
+== 🖥️ Saison 06 : Système
+
+* Savoir configurer un serveur dans une optique DevOps
+* Monitorer et maintenir la sécurité via des outils dédiés
+
+== 🛜 Saison 07 : Réseau
+
+* Comprendre les interactions réseaux dans un environnement cloud
+* Superviser et optimiser les performances réseau via des outils de monitoring
+
+== 🕸️ Saison 08 : Infrastructure de serveurs
+
+* Automatiser la configuration des serveurs et assurer leur haute disponibilité
+* Comprendre et appliquer la scalabilité
+* Optimiser les performances des serveurs et surveiller leur état
+
+== 🚚 Saison 09 : Chaînes de livraison
+
+* Mettre en place et optimiser des pipelines CI/CD pour le déploiement continu.
+* Automatiser les tests et les validations avant le déploiement en production.
+* Assurer la traçabilité et la qualité des livraisons
+
+== 🔄 Saison 10 : Flux entrants
+
+* Configurer et sécuriser les points d'entrée réseau
+* Gérer la distribution de trafic via des load balancers et des reverse proxies.
+* Optimiser les flux entrants pour la scalabilité et la haute disponibilité.
+
+== ☁️ Saison 11 : Cloud providers
+
+* Utiliser les services d’un cloud provider pour déployer des applications distribuées.
+* Optimiser l'utilisation des ressources cloud pour réduire les coûts tout en assurant la performance.
+* Gérer la sécurité et la conformité des infrastructures dans le cloud.
+
+== 🏗️ Saison 12 : Infrastructure as Code
+
+* Automatiser la gestion des infrastructures avec Terraform
+* Déployer des environnements reproductibles via du code pour assurer la cohérence et la rapidité.
+* Gérer les configurations multi-cloud via des scripts et templates.
+
+== 🎁 Saison 13 : Container avancé
+
+* Implémenter des politiques de sécurité et de mise à l'échelle automatique pour les conteneurs.
+* Aller plus loin dans la mise en place de conteneurs Docker
+
+== 🎻 Saison 14 : Orchestration
+
+* Mettre en place et gérer des clusters Kubernetes pour orchestrer des conteneurs.
+* Optimiser l’orchestration des microservices et leur communication à l’échelle.
+* Implémenter des solutions de gestion des secrets et de sécurité pour les conteneurs.
+
+== 👔 Projet
+
+* Concevoir et implémenter un projet DevOps complet, de l’infrastructure au déploiement continu.
+* Utiliser l'ensemble des outils DevOps pour gérer l’intégration, le versionnement, et la surveillance du projet.
+* Assurer la scalabilité, la sécurité et la résilience du projet final dans un environnement de production.
+
+== ⚙️ Journées asynchrones
+
+* Pas de formateur sur ces journées
+* C’est l’occasion de vous permettre d’avancer sur différents sujets :
+** préparation & obtention de certification
+** progression sur des compétences telles que l’anglais, le retour à l’emploi…
+** révisions
+** repos du cerveau (car pas de nouvelle notion à ingurgiter)
+** … et préparation du titre professionnel 

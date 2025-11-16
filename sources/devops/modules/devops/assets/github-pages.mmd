@@ -1,0 +1,5 @@
+graph TD
+    A[Développeur] -->|Push du code| B(Dépôt GitHub)
+    B -->|Détection des changements| C{GitHub Pages}
+    C -->|Construction| D[Site statique]
+    D -->|Déploiement| E[Site web public]

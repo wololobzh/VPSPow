@@ -1,0 +1,88 @@
+:titre: Les environnements de travail
+:module: Devops
+:duree: 30
+:description: Comprendre le concept d'environnement
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre la notion d'environnement de travail
+* Savoir nommer les environnements de travail
+// end::objectifs[]
+
+// tag::deroulement[]
+== Définition
+
+[]
+----
+Un environnement de travail est un ensemble d’infrastructures, de
+configurations matérielles, logicielles et de paramètres spécifiques où
+une application ou un système est déployé et exécuté pour servir les
+utilisateurs finaux.
+----
+
+=== Utilité des environnements
+
+- Offrir une plateforme stable et sécurisée pour les utilisateurs finaux.
+- Tester et évaluer l’application dans des conditions réelles avant le déploiement.
+- Séparer les étapes de développement, de test et de production pour minimiser les risques de bugs et de défaillances.
+
+== Principaux environnements
+
+- 👨‍💻 Environnement de développement
+- 🧪 Environnement d'homologation (staging ou pré-production)
+- 🚀 Environnement de production
+
+=== 👨‍💻 Environnement de développement
+
+* utilisé par les développeurs
+* permet de créer, tester et valider de nouvelles fonctionnalités
+* environnement flexible
+* permet de travailler sans craindre d'interférer avec l'environnement de production
+
+=== 🧪 Environnement d'homologation (staging ou pré-production)
+
+* réplique de l'environnement de production
+* permet de tester et valider les nouvelles fonctionnalités et mises à jour
+* permet de s'assurer que tout fonctionne correctement et prévenir les problèmes potentiels en production
+
+=== 🚀 Environnement de production
+
+* serveur ou système utilisé par les utilisateurs finaux
+* doit être hautement disponible, performant et sécurisé
+* nécessité de contrôler soigneusement les changements avant de les déployer sur cet environnement
+
+== Déploiement et gestion des environnements
+
+* 🔄 Déploiement continu (Continuous Deployment)
+* 🗃️ Gestion des versions (versioning)
+* 👁️ Monitoring et maintenance
+
+=== 🔄 Déploiement continu (Continuous Deployment)
+
+* processus automatisé
+* permet de déployer les changements dans l'environnement de production dés qu'ils sont validés dans l'environnement d'homologation
+* permet une mise à jour rapide et continue de l'application
+
+=== 🗃️ Gestion des versions (versioning)
+
+* consiste à attribuer des numéros de version à chaque déploiement pour garder une trace
+* permet de revenir à des versions antérieures en cas de problème
+
+=== 👁️ Monitoring et maintenance
+
+* essentiel pour détecter les problèmes et défaillances rapidement
+* nécessaire pour assurer la stabilité et la performance de l'application
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Compréhension de la notion d'environnement de travail
+* Capacité à nommer les environnements de travail
+// end::conclusion[]

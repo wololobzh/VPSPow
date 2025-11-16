@@ -1,0 +1,42 @@
+:title: Tests de charge
+:number: 08
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Amélioration continue des applications grâce à la mise en œuvre de tests de charge pour garantir leur robustesse.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* l'intérêt des tests de charge
+* *Appliquer* un test de charge avec Artillery.io
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Connaissance des principes et outils de tests de charge, notamment Artillery.io.
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/tests/tests-charge.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+Laissez l'après-midi pour le challenge car il peut être assez long.
+
+:challenge: https://github.com/O-clock-Devops-Peda/S09-Challenge/tree/correction
+:description: Mettre en œuvre un test de charge avec Artillery.io et analyser les résultats
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+// end::deroulement[]

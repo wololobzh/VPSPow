@@ -1,0 +1,129 @@
+:titre: Introduction aux DevContainers
+:module: Docker
+:duree: 45
+:description: Comprendre le concept et savoir les lancer
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Comprendre le principe des DevContainers.
+* Savoir créer et configurer un DevContainer dans VS Code.
+* Savoir lancer un projet dans un DevContainer avec VS Code.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Qu'est-ce qu'un DevContainer ?
+
+* environnement de développement isolé basé sur des conteneurs Docker
+* permet d'isoler les dépendances et outils nécessaires à un projet
+* permet à tous les développeurs de travailler dans le même environnement
+
+=== Pourquoi utiliser un DevContainer ?
+
+* Portabilité : Chaque membre de l'équipe a le même environnement de développement.
+* Isolation : Les outils et dépendances sont confinés dans le conteneur, sans affecter la machine hôte.
+* Cohérence : Aucun problème de "ça marche chez moi", puisque le conteneur garantit que l’environnement est toujours le même.
+
+== Pré-requis
+
+**Outils nécessaires :**
+
+* VS Code (Visual Studio Code)
+* Docker installé sur la machine (Docker Desktop sur Windows et macOS)
+* Extension DevContainers dans VS Code
+
+== Mise en place d'un DevContainer
+
+image::https://media1.tenor.com/m/vynAZ59g4XgAAAAC/rc-staff-keller-bar.gif[]
+
+=== Etape 1 : créer un projet ou ouvrir un projet existant
+
+* Ouvrez VS Code et créez un nouveau dossier de projet ou ouvrez-en un existant.
+
+* Par exemple, créez un dossier appelé `my-devcontainer-project`.
+
+=== Etape 2 : ajouter les fichiers DevContainer
+
+* Utilisez la palette de commandes de VS Code (Ctrl+Shift+P ou Cmd+Shift+P sur macOS) et tapez Add Development Container Configuration Files.
+
+* Choisissez un environnement de base, comme Debian ou Node.js.
+
+* Cela génère un dossier .devcontainer avec deux fichiers principaux :
+** `devcontainer.json` : Contient la configuration du DevContainer.
+** `Dockerfile`` (optionnel) : Permet de personnaliser l'image Docker.
+
+=== Etape 3 : Contenu de base du `devcontainer.json`
+
+Le fichier `devcontainer.json` permet de décrire la configuration :
+
+* Image Docker à utiliser.
+* Extensions VS Code à installer automatiquement.
+* Commandes à exécuter après la création du conteneur (comme installer des dépendances).
+
+```json
+{
+  "name": "Node.js DevContainer",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:0-16-bullseye",
+  "extensions": [
+    "dbaeumer.vscode-eslint"
+  ],
+  "postCreateCommand": "npm install"
+}
+```
+
+=== Etape 4 : Recharger le projet dans le DevContainer
+
+* Une fois la configuration en place, ouvrez à nouveau le projet dans le DevContainer en utilisant la commande :
+** `Ctrl+Shift+P` > Reopen in Container
+
+* VS Code va :
+** Télécharger l’image Docker si nécessaire.
+** Construire le DevContainer.
+** Recharger VS Code dans l’environnement du conteneur.
+
+=== Etape 5 : Tester l'environnement conteneurisé
+
+* Utilisez le terminal intégré de VS Code pour vérifier que le DevContainer est actif et isolé.
+** Exemple : tapez `uname -a` ou `node -v` pour vérifier l'environnement.
+
+* Notez que le DevContainer est distinct de l’hôte, mais que les fichiers sont synchronisés.
+
+== Démonstration
+// tag::demo[]
+image::https://media1.tenor.com/m/ZMh2yVg28UsAAAAC/popcorn-stephen.gif[]
+
+[NOTE.speaker]
+--
+* Créer un nouveau projet dans VS Code
+
+* Créer les fichiers de configuration d'un dev container à l'aide de la commande CTRL+Shift+P puis "Add Dev Container Configuration Files". Sélectionner un modèle pré-établi Debian, il n'est pas nécessaire d'installer de paquets supplémentaires
+
+* Si l'on est pas envoyé directement sur le dev container, cliquer sur la connexion remote en bas à gauche de VS Code et choisir "Reopen in Container"
+
+* Une fois dans le dev container, ouvrir un nouveau terminal : il s'agit d'un terminal Debian. Confirmer en tapant la commande `sudo apt update` par exemple
+
+* Vérifier que l'on se trouve bien dans le répertoire home de l'utilisateur courant avec `cd ~`
+
+* Tester de faire fonctionner un serveur web tout bête avec la commande `python3 -m http.server 8000`. Une fois lancé, VS Code nous met à disposition le port 8000 directement. Consulter localhost:8000 depuis l'hôte pour confirmer que tout fonctionne
+--
+// end::demo[]
+
+== Avantages des DevContainers
+
+* **Isolation** : Les outils et dépendances sont dans le conteneur, pas sur votre machine.
+* **Cohérence** : Même environnement pour tous les développeurs.
+* **Facilité de partage** : Le fichier devcontainer.json peut être versionné avec Git, ce qui permet à n’importe quel développeur de cloner et de travailler dans le même environnement.
+* **Portabilité** : Les DevContainers sont agnostiques au système d’exploitation, garantissant le même comportement sur Windows, macOS et Linux.
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Compréhension du principe des DevContainers.
+* Capacité à créer et configurer un DevContainer dans VS Code.
+* Capacité à lancer un projet dans un DevContainer avec VS Code.
+// end::conclusion[]

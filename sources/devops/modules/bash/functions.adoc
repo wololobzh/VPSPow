@@ -1,0 +1,143 @@
+:titre: Fonctions
+:module: Bash
+:duree: 30
+:description: Introduction à l'utilisation des fonctions dans les scripts bash pour structurer et factoriser le code.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Appliquer** les fonctions dans un script Bash
+// end::objectifs[]
+
+// tag::deroulement[]
+== Pourquoi utiliser des fonctions dans un script Bash ?
+
+* Les fonctions permettent de réutiliser du code.
+* Elles améliorent la lisibilité du script.
+* Elles facilitent la maintenance et l'extension du code.
+
+[NOTE.speaker]
+--
+Les fonctions en Bash permettent d’organiser le code de manière modulaire. Plutôt que de répéter des blocs de code, on peut les regrouper dans une fonction et les appeler autant de fois que nécessaire.
+--
+
+== Syntaxe de base d'une fonction
+
+.Créer une fonction simple
+[source,bash]
+----
+function nom_fonction {
+    # instructions
+}
+----
+
+.Appeler une fonction
+[source,bash]
+----
+nom_fonction
+----
+
+[NOTE.speaker]
+--
+La syntaxe d’une fonction en bash est simple : le mot-clé `function` peut être optionnel, mais il est souvent utilisé pour rendre le code plus lisible. Une fois définie, la fonction peut être appelée par son nom.
+--
+
+== Exemple : Fonction de calcul
+
+Créer une fonction pour additionner deux nombres
+
+[source,bash]
+----
+function additionner {
+    local somme=$(( $1 + $2 ))
+    echo "La somme est : $somme"
+}
+
+# Appel de la fonction
+additionner 5 10
+----
+
+[NOTE.speaker]
+--
+Ici, la fonction `additionner` prend deux arguments et calcule leur somme. Le mot-clé `local` est utilisé pour déclarer une variable locale à la fonction, évitant ainsi les conflits avec d'autres variables dans le script.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Utilisation des fonctions avec des arguments.
+
+[NOTE.speaker]
+--
+. Créer une fonction simple qui prend des arguments.
+. Appeler la fonction avec différents jeux de données.
+. Montrer comment les variables locales évitent les conflits avec d'autres parties du script.
+--
+// end::demo[]
+
+=== Passage de paramètres aux fonctions
+
+* Les fonctions peuvent accepter des arguments comme n'importe quelle commande en bash.
+* Ces arguments sont récupérés via `$1`, `$2`, etc.
+
+[NOTE.speaker]
+--
+Les arguments passés aux fonctions sont similaires à ceux passés aux scripts. Le premier argument est accessible avec `$1`, le deuxième avec `$2`, et ainsi de suite. Cela permet de créer des fonctions plus dynamiques et réutilisables.
+--
+
+== Utilisation du retour de valeur
+
+* En bash, une fonction peut retourner une valeur en utilisant la commande `return` ou en utilisant `echo` pour envoyer une valeur en sortie.
+
+.Exemple de fonction avec retour
+[source,bash]
+----
+function retourner_valeur {
+    local result=$(( $1 * 2 ))
+    echo $result
+}
+
+# Appel de la fonction
+valeur=$(retourner_valeur 5)
+echo "Le résultat est : $valeur"
+----
+
+[NOTE.speaker]
+--
+Le retour de valeur en bash se fait généralement via `echo`, qui permet de capturer la sortie de la fonction. `return` est limité aux codes de sortie (0 ou 1) et ne doit pas être utilisé pour retourner des valeurs autres que des codes d’erreur.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Fonction avec retour de valeur
+
+[NOTE.speaker]
+--
+. Créer une fonction qui retourne une valeur via `echo`.
+. Montrer comment capturer cette valeur dans une variable.
+. Montrer l'usage de la commande `return` pour retourner un code de succès ou d'erreur.
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice
+
+. Créer une fonction `multiplier` qui prend deux arguments et retourne leur produit.
+. Appeler la fonction avec des valeurs différentes pour vérifier son fonctionnement.
+. Ajouter des messages d'erreur si l'utilisateur ne passe pas deux arguments.
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Compréhension de la syntaxe et de l'utilisation des fonctions dans un script bash.
+* Capacité à factoriser et réutiliser du code dans des scripts bash via des fonctions.
+* Connaissance du passage de paramètres et du retour de valeurs dans les fonctions bash.
+// end::conclusion[]

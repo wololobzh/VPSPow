@@ -1,0 +1,8 @@
+flowchart TD;
+    subgraph "Conteneur Docker"
+        B[Application]
+        C[Librairies et dépendances]
+        D[Système de fichiers isolé]
+        E[Noyau du système d'exploitation partagé]:::shared
+        classDef shared fill:#ffffde
+    end

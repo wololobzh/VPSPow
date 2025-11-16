@@ -1,0 +1,47 @@
+:title: Container
+:number: 05
+:duration: 35
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Utilisation de Docker comme brique fondamentale d'un DevOps. 
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** les concepts de conteneurisation
+- **Appliquer** Docker dans un environnement de développement
+- **Analyser** les conteneurs
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+- Dockerfile
+- Docker compose
+- Devcontainer
+// end::notions[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+- Avoir docker d'installé sur sa machine.
+- Penser à fournir le ebook O'clock
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+Cette saison est consacrée à la compréhension et l'utilisation de Docker. Lors des saisons précédentes, les apprenants ont entendus parler de Docker et utiliser les devcontainers pour simplifier les environnements de développement. Cette saison est l'occasion de comprendre les concepts de conteneurisation et d'appliquer Docker dans un environnement de développement.
+
+La saison commence par une introduction et une ouverture aux conteneurs, pour ensuite utiliser directement docker compose. En jour 4, Dockerfile est abordé pour boucler les concepts de base. Cette approche permet de comprendre l'intérêt et d'ammener graduellement la complexité.
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue kanban]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

@@ -1,0 +1,210 @@
+:titre: Utilisateurs et groupes
+:module: Système
+:duree: 90
+:description: Savoir gérer les utilisateurs et les groupes, comprendre les fichiers de configuration associés et appliquer les commandes de base.
+include::../../../../adoc/libs/header-module.adoc[]
+
+// https://docs.google.com/presentation/d/12ca1tQlpJlXZdE0out3DTe84eP_U7U9ctdYtEcn_kr0/edit
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** les concepts de base de la gestion des utilisateurs et des groupes
+* **Se rappeler** des principaux fichiers de configuration associés
+* **Appliquer** les commandes de base
+// end::objectifs[]
+
+// tag::deroulement[]
+== Concept de base
+
+* Utilisateurs et groupes permettent la gestion de la sécurité et des permissions dans Linux
+* Chaque utilisateur a un identifiant unique (UID) et chaque groupe a un identifiant unique (GID).
+* Les utilisateurs peuvent appartenir à plusieurs groupes
+* Les permissions sont gérées via des commandes telles que chmod, chown et chgrp
+
+[NOTE.speaker]
+--
+Les utilisateurs individuels sont identifiés par un UID unique, tandis que les groupes de plusieurs utilisateurs sont identifiés par un GID unique, permettant ainsi de contrôler précisément l'accès aux ressources du système.
+
+Ces identifiants sont essentiels pour différencier les utilisateurs et les groupes au sein du système d'exploitation, assurant une gestion sécurisée et efficace des permissions.
+
+Cette capacité permet de définir des niveaux d'accès différents pour différents ensembles de fichiers et de répertoires, augmentant la flexibilité dans la gestion des permissions.
+
+Ces commandes permettent respectivement de modifier les permissions d'accès aux fichiers, de changer le propriétaire d'un fichier ou d'un répertoire, et de modifier le groupe associé à un fichier ou à un répertoire, offrant ainsi un contrôle granulaire sur la sécurité des données.
+--
+
+== Superuser do (sudo)
+
+* sudo permet d'exécuter des commandes avec les privilèges d'un autre utilisateur, par défaut le superutilisateur (root).
+* sudo est essentiel pour les tâches administratives nécessitant des permissions élevées sans que l'utilisateur se connecte en tant que root.
+* La configuration de sudo est gérée par le fichier /etc/sudoers, qui doit être modifié avec précaution en utilisant la commande visudo pour éviter les erreurs de syntaxe.
+* On peut attribuer des privilèges spécifiques à des utilisateurs ou des groupes via des alias de commandes et des règles définies dans /etc/sudoers.
+
+[NOTE.speaker]
+--
+Cela permet aux utilisateurs autorisés d'exécuter des commandes qui nécessitent des permissions élevées, assurant ainsi la sécurité en évitant une connexion permanente en tant que root.
+
+Il simplifie la gestion des accès administratifs en permettant aux utilisateurs spécifiques d'exécuter des commandes spéciales tout en limitant les risques associés à une utilisation constante du compte root.
+
+La configuration de sudo est gérée par le fichier /etc/sudoers, qui doit être modifié avec précaution en utilisant la commande visudo pour éviter les Ce fichier centralise les règles d'accès sudo et l'utilisation de visudo garantit une édition sécurisée en vérifiant la syntaxe avant de sauvegarder les modifications.
+
+Cette flexibilité permet de définir précisément quelles commandes et quelles actions peuvent être exécutées avec sudo par chaque utilisateur ou groupe, selon les besoins spécifiques de l'environnement.
+--
+
+=== Exécution de commande
+
+.Exécution d'une commande avec sudo
+```
+sudo commande
+```
+
+Exemple d'édition du fichier /etc/sudoers :
+
+.Syntaxe de base pour accorder l'accès sudo à un utilisateur 
+```
+utilisateur ALL=(ALL:ALL) ALL
+```
+
+[NOTE.speaker]
+--
+Préfixer une commande avec sudo permet à un utilisateur autorisé d'exécuter cette commande avec les privilèges du superutilisateur (root), assurant ainsi l'accès aux opérations administratives sécurisées.
+
+La ligne utilisateur ALL=(ALL:ALL) ALL dans le fichier /etc/sudoers spécifie que l'utilisateur nommé utilisateur peut exécuter toutes les commandes (ALL) en tant que tous les utilisateurs (ALL) et tous les groupes (ALL), démontrant ainsi la flexibilité et la précision de la configuration sudo.
+--
+
+// tag::demo[]
+== Démonstration 1
+
+Utilisation de sudo.
+
+[NOTE.speaker]
+--
+. Tenter la commande visudo -> command not found
+. Tenter la commande sudo visudo -> it works!
+. Ajouter la ligne suivante pour donner des privilèges sudo à un utilisateur nommé testuser :
+
+`testuser ALL=(ALL:ALL) ALL`
+--
+// end::demo[]
+
+== Gestions des utilisateurs
+
+* Créer un utilisateur : `adduser`
+* Modifier un utilisateur : `usermod`
+* Supprimer un utilisateur : `userdel`
+* Changer le mot de passe : `passwd`
+* Changer d'utilisateur : `su`
+
+[NOTE.speaker]
+--
+`adduser` permet d'ajouter un nouvel utilisateur au système Linux, en créant un répertoire personnel par défaut et en ajoutant l'utilisateur aux groupes spécifiés.
+
+`usermod` permet de modifier les attributs d'un utilisateur existant tels que son nom d'utilisateur, son UID, ses groupes supplémentaires ou son répertoire personnel.
+
+`userdel` supprime un utilisateur du système, en optionnellement supprimant également son répertoire personnel et ses fichiers associés.
+
+`passwd` permet à un utilisateur de changer son mot de passe ou à l'administrateur de modifier le mot de passe d'un utilisateur.
+
+`su` : Permet de changer d'utilisateur en se connectant sous un autre compte utilisateur, souvent utilisé pour accéder temporairement aux privilèges de root avec `su -`.
+--
+
+== Gestion des groupes
+
+* Créer un groupe : `groupadd`
+* Modifier un groupe : `groupmod`
+* Supprimer un groupe : `groupdel`
+
+[NOTE.speaker]
+--
+`groupadd` permet de créer un nouveau groupe sur le système, en attribuant un GID unique et en ajoutant des utilisateurs au groupe.
+
+`groupmod` permet de modifier les attributs d'un groupe existant tels que son nom ou son GID.
+
+`groupdel` supprime un groupe du système, en optionnellement supprimant également les fichiers associés au groupe.
+--
+
+== Fichiers de configuration
+
+* `/etc/passwd` : fichier contenant les informations de base sur les utilisateurs.
+* `/etc/shadow` : fichier contenant les mots de passe chiffrés des utilisateurs.
+* `/etc/group` : fichier contenant les informations sur les groupes.
+* `/etc/gshadow` : fichier contenant les mots de passe des groupes chiffrés.
+
+[NOTE.speaker]
+--
+**/etc/passwd** : Ce fichier contient les informations de base sur chaque utilisateur du système, y compris leur nom d'utilisateur, leur UID (User ID), leur GID (Group ID), leur répertoire personnel et leur shell par défaut.
+
+**/etc/shadow** : Fichier sécurisé qui stocke les mots de passe chiffrés des utilisateurs, ainsi que des informations supplémentaires comme la date de dernière modification du mot de passe et la politique de durée de vie du mot de passe.
+
+**/etc/group** : Ce fichier contient les informations sur les groupes du système, listant les noms des groupes, leurs GIDs et les utilisateurs membres de chaque groupe.
+
+**/etc/gshadow** : Fichier sécurisé qui contient les mots de passe chiffrés des groupes, utilisé pour restreindre l'accès à la gestion des groupes à des administrateurs spécifiques.
+--
+
+// end::deroulement[]
+
+// tag::demo[]
+=== Démonstration 2
+
+Gestion d’utilisateurs et de groupes
+
+[NOTE.speaker]
+--
+. Ajouter un nouvel utilisateur avec useradd
+. Modifier un utilisateur existant avec usermod
+. Supprimer un utilisateur avec userdel
+. Ajouter un nouveau groupe avec groupadd
+. Modifier un groupe existant avec groupmod
+. Supprimer un groupe avec groupdel
+. Changer le mot de passe d’un utilisateur avec passwd
+. Se connecter à l’utilisateur créé avec la commande su
+--
+// end::demo[]
+
+// tag::demo[]
+=== Démonstration 3
+
+Fichiers de configuration
+
+[NOTE.speaker]
+--
+Montrer le contenu des fichiers suivants avec la commande cat :
+
+** /etc/passwd
+** /etc/shadow
+** /etc/group
+** /etc/gshadow
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice
+
+. Créer un nouvel utilisateur appelé testuser et lui assigner un mot de passe
+. Se connecter en tant que testuser et tester la commande sudo apt update
+. Ajouter l’utilisateur au groupe sudo
+. Se connecter en tant que testuser
+. La commande sudo apt update  devrait à présent fonctionner
+
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+
+* Compréhension des concepts de base de la gestion des utilisateurs et des groupes. ¹
+* Maîtrise des principales commandes pour gérer les utilisateurs et les groupes. ²
+* Connaissance des fichiers de configuration essentiels et de leur rôle. ³
+* Capacité à appliquer ces connaissances dans un environnement Linux. ⁴
+
+[NOTE.speaker]
+--
+. Cela inclut la reconnaissance des rôles des utilisateurs individuels et des groupes dans la gestion des permissions et l'accès aux ressources sur un système Linux.
+. Il s'agit de connaître et de pouvoir utiliser efficacement des commandes telles que `adduser`, `usermod`, `userdel`, `groupadd`, `groupmod`, `groupdel` pour créer, modifier et supprimer des comptes utilisateurs et des groupes.
+. Savoir l'importance de fichiers comme `/etc/passwd`, `/etc/shadow`, `/etc/group`, et `/etc/gshadow` qui contiennent des informations critiques sur les utilisateurs, les mots de passe et les groupes.
+. Utiliser ces compétences pour gérer de manière sécurisée et efficace les utilisateurs et les groupes, en ajustant les permissions et en assurant la sécurité du système.
+--
+// end::conclusion[]

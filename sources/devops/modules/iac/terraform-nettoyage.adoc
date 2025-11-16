@@ -1,0 +1,97 @@
+:titre: Nettoyage de ressources Terraform
+:module: Virtualisation
+:duree: 30
+:description: Ce module sensibilise à l'importance du nettoyage des ressources Terraform et présente les bonnes pratiques pour le nettoyage des ressources.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre l'importance du nettoyage des ressources Terraform
+* Savoir utiliser `terraform destroy` pour supprimer des ressources
+* Connaître les bonnes pratiques pour le nettoyage des ressources
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Importance du nettoyage des ressources
+
+**Optimisation des coûts**
+
+* les ressources inutilisées ou obsolètes peuvent coûter cher
+* le nettoyage permet de libérer des ressources et de réduire les coûts
+
+**Gestion de la complexité**
+
+* les ressources inutilisées peuvent rendre la configuration complexe
+* le nettoyage permet de garder une configuration claire et lisible
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Sécurité**
+
+* les ressources inutilisées peuvent être une porte d'entrée pour des attaques
+* le nettoyage permet de réduire la surface d'attaque
+
+== `terraform destroy`
+
+* permet de supprimer toutes les ressources Terraform d'une configuration spécifique
+* utile pour nettoyer complètement un environnement
+
+WARNING: Cette commande supprime toutes les ressources, à utiliser avec précaution
+
+== Suppression sélective
+
+* Terraform permet de cibler des ressources spécifiques à supprimer
+* utilisation de l'option `-target` pour supprimer une ressource spécifique
+
+```hcl
+terraform destroy -target=cloud_instance.example_vm
+```
+
+== Gestion du cycle de vie des ressources
+
+* utiliser `lifecycle` dans la configuration
+* permet de définir des actions à effectuer lors de la création, de la modification ou de la suppression d'une ressource
+
+**Exemple** : l'attribut `prevent_destroy` pour empêcher la suppression d'une ressource
+
+```hcl
+resource "aws_instance" "example" {
+  # ...
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+```
+
+== Automatisation et scripts
+
+* intégrer également le nettoyage des ressources dans les scripts d'automatisation
+* cela garantit que les ressources inutilisées sont supprimées régulièrement
+
+== Audit et surveillance
+
+* mettre en place des processus d'audit régulier pour vérifier les ressources inutilisées
+* utiliser des outils de surveillance pour détecter les ressources non utilisées
+
+== Précautions et bonnes pratiques
+
+* S'assurer d'avoir des sauvegarde avant toute suppression
+* Tester les scripts de nettoyage dans un environnement de test
+* Utiliser la commande `terraform plan` pour vérifier les changements avant de les appliquer
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Le nettoyage des ressources Terraform est essentiel pour optimiser les coûts, la sécurité et la gestion de la configuration
+* Utiliser `terraform destroy` pour supprimer toutes les ressources ou `-target` pour une suppression sélective
+* Intégrer le nettoyage dans les scripts d'automatisation et les processus d'audit
+// end::conclusion[]

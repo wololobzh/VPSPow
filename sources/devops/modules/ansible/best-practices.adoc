@@ -1,0 +1,192 @@
+:titre: Bonnes pratiques
+:module: Ansible
+:duree: 90
+:description: Retour sur la saison pour faire un récap en appuyant sur les bonnes pratiques d'utilisation d'Ansible.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* l'importance des bonnes pratiques pour améliorer la gestion des configurations avec Ansible
+* *Appliquer* les bonnes pratiques pour écrire des playbooks plus lisibles et maintenables
+* *Organiser* efficacement les inventaires et répertoires Ansible
+* *Adopter* des stratégies de déploiement sécurisé avec Ansible
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+
+Les bonnes pratiques permettent d'assurer des configurations fiables, lisibles et facilement maintenables dans le temps.
+
+* Simplification des configurations
+* Organisation efficace des fichiers et répertoires
+* Sécurité et versionnement
+
+[NOTE.speaker]
+--
+L'utilisation des bonnes pratiques avec Ansible aide les équipes DevOps à maintenir des configurations cohérentes, réduire les erreurs et simplifier le déploiement de nouvelles versions.
+--
+
+== Conseils généraux
+
+* Gardez les configurations simples et faciles à comprendre.
+* Utilisez le contrôle de version pour suivre les modifications.
+* Personnalisez la sortie de la ligne de commande pour améliorer la lisibilité.
+* Évitez le contenu dépendant de la configuration qui pourrait causer des conflits.
+* *Utilisez Ansible Galaxy* pour réutiliser au maximum les rôles existants.
+
+[NOTE.speaker]
+--
+Ces principes de base permettent de maintenir des configurations claires et cohérentes. Le contrôle de version est essentiel pour suivre les modifications et revenir à des versions précédentes si nécessaire.
+
+Un bon DevOps est un DevOps paresseux : réutilisez autant que possible le travail des autres pour gagner du temps et éviter de réinventer la roue.
+--
+
+== Playbooks
+
+* Utilisez l'indentation et les espaces pour améliorer la lisibilité.
+* Donnez toujours un nom aux plays, tasks, et blocks.
+* Mentionnez systématiquement l'état désiré avec le paramètre `state`.
+* Ajoutez des commentaires pour expliquer les actions importantes.
+* Utilisez des noms de collections entièrement qualifiés pour éviter les conflits.
+
+[NOTE.speaker]
+--
+La clarté des playbooks est primordiale. Les noms et commentaires permettent aux autres membres de l'équipe de comprendre rapidement ce que chaque tâche effectue. De plus, en précisant toujours le `state`, vous réduisez les risques d'erreurs inattendues.
+--
+
+== Inventaires
+
+* Utilisez des inventaires dynamiques pour les environnements cloud.
+* Groupez les inventaires par fonction pour plus de clarté.
+* Séparez les inventaires de production et de staging pour éviter les erreurs.
+* Utilisez des variables vaultées pour protéger les informations sensibles tout en les gardant visibles.
+
+[NOTE.speaker]
+--
+Les inventaires doivent être organisés pour refléter la structure de l'infrastructure. L'utilisation d'inventaires dynamiques pour le cloud permet de gérer automatiquement les changements d'instances.
+--
+
+=== Inventaire dynamique
+
+Un inventaire dynamique est un script qui génère un inventaire à partir de sources externes, comme des API cloud.
+
+* Adaptabilité : Ils s'adaptent automatiquement aux changements dans votre infrastructure
+* Scalabilité : Ils sont idéaux pour gérer des infrastructures de grande taille
+* Intégration avec les services cloud : Ils permettent de s'intégrer facilement avec des services cloud comme AWS, Azure, GCP, etc.
+
+[NOTE.speaker]
+--
+Les inventaires dynamiques dans Ansible sont une fonctionnalité puissante qui permet de générer des listes d'hôtes et de groupes d'hôtes à la volée, plutôt que de les définir statiquement dans un fichier d'inventaire. Cela est particulièrement utile dans les environnements où les ressources sont dynamiques, comme les environnements cloud ou les infrastructures éphémères.
+
+Un inventaire dynamique est généralement un script ou un programme qui interroge une source de données externe (comme une API cloud) et renvoie un inventaire au format JSON qu'Ansible peut comprendre. Ce script est appelé chaque fois qu'un playbook est exécuté, garantissant que l'inventaire est toujours à jour.
+--
+
+=== Exemple OpenStack
+
+```bash
+chmod +x openstack_inventory.py
+ansible-playbook -i openstack_inventory.py playbook.yml
+```
+
+[NOTE.speaker]
+--
+.openstack_inventory.py
+```python
+#!/usr/bin/env python
+
+import openstack
+import json
+import sys
+
+def list_instances():
+    # Connect to OpenStack
+    conn = openstack.connect()
+
+    inventory = {
+        '_meta': {
+            'hostvars': {}
+        },
+        'openstack_instances': {
+            'hosts': [],
+            'vars': {}
+        }
+    }
+
+    # Iterate over all servers
+    for server in conn.compute.servers():
+        name = server.name
+        # Here we assume the first IP is the one we want to use
+        ip = server.addresses[next(iter(server.addresses))][0]['addr']
+        
+        inventory['openstack_instances']['hosts'].append(name)
+        inventory['_meta']['hostvars'][name] = {
+            'ansible_host': ip
+        }
+
+    return inventory
+
+if __name__ == '__main__':
+    if len(sys.argv) == 2 and sys.argv[1] == '--list':
+        print(json.dumps(list_instances(), indent=2))
+    elif len(sys.argv) == 2 and sys.argv[1] == '--host':
+        print(json.dumps({'_meta': {'hostvars': {}}}, indent=2))
+    else:
+        print("Usage: {} --list or --host <hostname>".format(sys.argv[0]))
+        sys.exit(1)
+```
+
+* OpenStack SDK : Le script utilise le SDK OpenStack pour Python (openstacksdk) pour interagir avec l'API OpenStack et récupérer la liste des instances.
+* Structure d'Inventaire : Le script génère un inventaire Ansible avec un groupe nommé openstack_instances. Chaque instance est ajoutée comme un hôte dans ce groupe, et l'adresse IP de l'instance est utilisée pour accéder à celle-ci.
+* Utilisation :
+** `--list` : Génère l'inventaire complet.
+** `--host` : Option nécessaire pour être compatible avec Ansible, mais dans ce cas, elle ne fait rien de particulier.
+* Configuration de Connexion OpenStack
+* `clouds.yml` : Vous pouvez utiliser un fichier `clouds.yml` pour stocker vos informations d'authentification OpenStack. Le SDK OpenStack peut lire ce fichier pour se connecter à votre cloud.
+--
+
+
+== Exécution
+
+* Utilisez des environnements d'exécution pour isoler les dépendances.
+* Testez toujours les modifications en staging avant de les appliquer en production.
+* Effectuez les mises à jour par lots pour éviter les interruptions globales.
+* Gérez les différences entre systèmes d'exploitation et distributions.
+
+== Configuration Ansible
+
+Les configurations peuvent varier selon les besoins, mais voici quelques exemples :
+
+* Exemple de layout de répertoire :
+
+```
+├── playbooks/
+├── roles/
+├── inventories/
+├── group_vars/
+├── host_vars/
+```
+
+* Exemples de playbooks organisés par fonction :
+** Déploiement web
+** sauvegarde de bases de données
+** configuration de firewall
+** etc.
+
+[NOTE.speaker]
+--
+Organisez vos répertoires Ansible pour faciliter la gestion et la maintenance. Un layout clair permet de trouver facilement les fichiers nécessaires pour des opérations spécifiques.
+--
+
+== Conclusion
+
+// tag::conclusion[]
+* Les bonnes pratiques Ansible permettent une gestion efficace et sécurisée des configurations.
+* Des playbooks clairs et bien organisés sont plus faciles à maintenir et à déployer.
+* L'organisation des inventaires et des répertoires est cruciale pour les environnements complexes.
+// end::conclusion[]

@@ -1,0 +1,54 @@
+:title: Sécurtié et tendances
+:number: 09
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Intégration de l'analyse de code dans les pipelines CI/CD pour renforcer la protection des applications, ainsi que sur l'exploration des tendances émergentes telles que GitOps et DevSecOps.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* l'intérêt des tests statiques
+* *Appliquer* des tests statiques
+* *Se rappeler* des concepts de GitOps et DevSecOps
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Expérience avec SonarQube
+* Connaissance des outils d'analyse de sécurité (Snyk, Dependabot)
+* Connaissance des concepts et pratiques de GitOps et DevSecOps.
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+// exploration des tendances émergentes : GitOps et DevSecOps
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/cicd/analyse-code.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/cicd/gitops-devsecops.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S09-challenge/tree/correction
+:description: Intégrer un scanner de sécurité dans le cycle de développement.
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s09e09]
+--
+
+// end::deroulement[]

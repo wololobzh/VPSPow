@@ -1,0 +1,104 @@
+:titre: Compose : front
+:module: Docker
+:duree: 30
+:description: Mise en place d'un environnement de développement complet avec compose en commençant par le front.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+// Sous forme de liste à puce, en utilisant la taxonomie de Bloom
+* *Appliquer* compose
+* *Appliquer* un environnement de développement complet
+// end::objectifs[]
+
+// tag::deroulement[]
+== Plusieurs services
+
+Imaginons que nous avons un front en Vanilla JS, un back en Node.js et une base de données Pgsql.
+
+- Le front sera servi par le serveur Nginx
+- Le back sera servi par le serveur Node.js
+- La base de données sera fournie par le serveur Pgsql
+
+[NOTE.speaker]
+--
+Un seul fichier de configuration yml sera nécessaire pour démarrer l'ensemble des services.
+--
+
+== Front
+
+Pour le front, nous allons créer un dossier `front` à la racine de notre projet. Dans ce dossier, nous allons créer un fichier `index.html` avec le contenu suivant :
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Front</title>
+  </head>
+  <body>
+    <h1>Front</h1>
+  </body>
+</html>
+```
+
+=== Ajout du service
+
+```yaml
+services:
+  front:
+    image: nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./front:/usr/share/nginx/html
+```
+
+L'instruction `volumes` permet de monter un volume entre le dossier `front` de notre machine hôte et le dossier `/usr/share/nginx/html` du conteneur Nginx.
+
+[NOTE.speaker]
+--
+Un volume se définit de la manière suivante : `./dossier_local:/dossier_conteneur` (comme les ports).
+
+Si on modifie le fichier `index.html` sur notre machine hôte, les modifications seront automatiquement prises en compte dans le conteneur (et inversement).
+--
+
+=== Lancement
+
+```bash
+docker compose up -d
+```
+
+Accédez à `http://localhost:8080` pour voir la page d'accueil du front !
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration
+
+[NOTE.speaker]
+--
+* Lancer la configuration vue précédemment
+* Modifier le fichier `index.html` pour ajouter un paragraphe depuis la machine hôte
+* Vérifier que les modifications sont bien prises en compte sur le navigateur
+* Rentrer dans le conteneur Nginx pour vérifier que le fichier a bien été modifié
+** `docker exec -it compose-front-1 bash`
+** `cd /usr/share/nginx/html`
+* Modifier le fichier `index.html` depuis le conteneur pour ajouter un autre paragraphe
+** `echo "<h1>Updated page</h1>" > index.html`
+* Vérifier que les modifications sont bien prises en compte sur le navigateur
+* Vérifier que les modifications sont bien prises en compte sur la machine hôte
+--
+// end::demo[]
+
+== Conclusion
+
+// tag::conclusion[]
+* On peut servir des fichiers statiques
+* On peut modifier les fichiers depuis la machine hôte avec les volumes
+// end::conclusion[]

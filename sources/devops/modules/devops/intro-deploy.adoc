@@ -1,0 +1,225 @@
+:titre: Hébergement d'Applications Frontend pour DevOps
+:module: Frontend Deployment
+:duree: 120
+:description: Comprendre les concepts clés de l'hébergement d'applications frontend et les options disponibles
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* la différence entre hébergement statique et dynamique
+* *Connaître* les principales options d'hébergement pour les applications frontend
+* *Analyser* les concepts clés liés à l'hébergement et à la performance
+* *Évaluer* la solution d'hébergement adaptée à un projet frontend
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction à l'hébergement d'applications frontend
+
+L'hébergement d'applications frontend est une étape cruciale dans le déploiement de sites web et d'applications web modernes. Il s'agit de rendre accessible au public le code frontend (HTML, CSS, JavaScript) via Internet.
+
+=== Importance de l'hébergement pour les DevOps
+
+* Assure la disponibilité et l'accessibilité de l'application
+* Impacte directement les performances et l'expérience utilisateur
+* Influence la scalabilité et la maintenance de l'application
+
+== Différence entre hébergement de sites statiques et dynamiques
+
+=== Sites statiques
+
+* *Définition* : Pages web avec contenu fixe, identique pour tous les utilisateurs
+* *Caractéristiques* :
+** Fichiers HTML, CSS, et JavaScript pré-générés
+** Pas de traitement côté serveur au moment de la requête
+** Rapide à charger et facile à mettre en cache
+
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Site Statique</title>
+</head>
+<body>
+    <h1>Bienvenue sur mon site statique</h1>
+    <p>Ce contenu est le même pour tous les visiteurs.</p>
+</body>
+</html>
+----
+
+=== Sites dynamiques
+
+* *Définition* : Pages web générées à la demande, potentiellement différentes pour chaque utilisateur
+* *Caractéristiques* :
+** Nécessite un traitement côté serveur (PHP, Node.js, etc.)
+** Peut interagir avec une base de données
+** Plus flexible mais généralement plus lent à charger
+
+[source,php]
+----
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Site Dynamique</title>
+</head>
+<body>
+    <h1>Bienvenue, <?php echo $username; ?></h1>
+    <p>Contenu personnalisé basé sur les données de l'utilisateur.</p>
+</body>
+</html>
+----
+
+=== Comparaison
+
+[cols="1,1,1", options="header"]
+|===
+|Aspect |Site Statique |Site Dynamique
+|Vitesse de chargement |Rapide |Peut être plus lent
+|Mise en cache |Facile |Plus complexe
+|Personnalisation |Limitée |Élevée
+|Sécurité |Généralement plus sûr |Nécessite plus d'attention
+|Coût d'hébergement |Souvent moins cher |Généralement plus coûteux
+|===
+
+== Options d'hébergement pour une application frontend
+
+=== GitHub Pages
+
+* *Description* : Service gratuit d'hébergement de sites statiques directement depuis un dépôt GitHub
+* *Avantages* :
+** Intégration facile avec les projets GitHub
+** Déploiement automatique via Git
+** Gratuit pour les projets open source
+* *Limites* :
+** Uniquement pour les sites statiques
+** Pas de support pour les langages côté serveur
+
+=== Déploiement sur GitHub Pages
+[source,bash]
+----
+git checkout -b gh-pages
+git push origin gh-pages
+----
+
+=== Netlify
+
+* *Description* : Plateforme d'hébergement et d'automatisation pour les applications web modernes
+* *Avantages* :
+** Déploiement continu depuis Git
+** Fonctionnalités avancées (formulaires, fonctions serverless)
+** Excellent support pour les frameworks frontend modernes
+* *Particularités* :
+** Offre gratuite généreuse
+** CDN global intégré
+
+=== Vercel
+
+* *Description* : Plateforme cloud pour les sites statiques et les applications JAMstack
+* *Avantages* :
+** Optimisé pour les frameworks Next.js, React, Vue, et Angular
+** Déploiements instantanés et rollbacks faciles
+** Fonctions serverless intégrées
+* *Particularités* :
+** Preview deployments pour chaque push
+** Excellent pour les applications SSR (Server-Side Rendering)
+
+== Concepts clés
+
+=== CDN (Content Delivery Network)
+
+* *Définition* : Réseau de serveurs géographiquement distribués pour servir le contenu plus rapidement
+* *Avantages* :
+** Réduction de la latence
+** Amélioration des temps de chargement
+** Protection contre les pics de trafic
+
+image::./assets/cdn.mmd.png[]
+
+[NOTE.speaker]
+--
+. L'utilisateur demande une ressource
+. La requête est dirigée vers le serveur CDN le plus proche
+. Si le CDN a la ressource en cache, il la sert directement
+. Sinon, il la récupère du serveur d'origine, la met en cache, puis la sert
+--
+
+=== Mise en cache
+
+* *Définition* : Stockage temporaire de données pour un accès plus rapide
+* *Niveaux de cache* :
+** Cache navigateur
+** Cache CDN
+** Cache serveur
+* *Stratégies de cache* :
+** Cache-Control headers
+** ETags
+** Invalidation de cache
+
+[NOTE.speaker]
+--
+. Le cache navigateur stocke les ressources localement
+. Le cache CDN accélère la distribution des ressources
+. Le cache serveur améliore les performances du serveur
+--
+
+=== Optimisation des performances
+
+* *Minification* : Réduction de la taille des fichiers en supprimant les espaces, commentaires, etc.
+* *Compression* : Utilisation de gzip ou Brotli pour réduire la taille des fichiers transmis
+* *Lazy loading* : Chargement différé des ressources non essentielles
+* *Code splitting* : Division du code en chunks plus petits chargés à la demande
+
+[NOTE.speaker]
+--
+
+--
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration 1 : Analyse de performance avec Lighthouse
+
+[NOTE.speaker]
+--
+1. Ouvrez votre site web dans Google Chrome.
+2. Ouvrez les DevTools (F12 ou Ctrl+Shift+I).
+3. Allez dans l'onglet "Lighthouse".
+4. Sélectionnez "Performance" et "Desktop" (ou "Mobile" selon votre cible).
+5. Cliquez sur "Generate report".
+--
+== Démonstration 2 : Déploiement sur GitHub Pages
+
+[NOTE.speaker]
+--
+1. Créer un nouveau dépôt GitHub
+2. Cloner le dépôt localement
+3. Ajouter un fichier index.html simple
+4. Commiter et pousser les changements
+5. Aller dans les paramètres du dépôt et activer GitHub Pages
+6. Montrer le site en ligne
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice 1 : Déploiement sur GitHub Pages
+
+1. Créez un dépôt GitHub pour votre portfolio personnel
+2. Ajoutez une page HTML simple présentant votre profil
+3. Déployez cette page sur GitHub Pages
+4. Partagez l'URL de votre site avec le groupe
+
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Le choix de l'hébergement dépend des besoins spécifiques du projet
+* L'optimisation des performances est cruciale pour une bonne expérience utilisateur
+* Les DevOps doivent comprendre ces concepts pour déployer efficacement les applications frontend
+* L'évolution constante des technologies web nécessite une veille technologique continue
+// end::conclusion[]

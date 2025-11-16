@@ -1,0 +1,43 @@
+:title: Pack appli web
+:number: 07
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Installation d'une base de données Redis et d'un serveur HTTP pour une application web complète.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** les bases de données NoSQL
+- **Appliquer** et configurer une base de données Redis
+- **Appliquer** et configurer un serveur HTTP
+// end::objectifs[]
+
+// tag::prerequis[]
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/systeme/redis.adoc[options=modules]
+
+include::../../../../modules/systeme/server.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/database/ui.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S06-Challenge
+:description: Installer et configurer un serveur web utilisant Caddy pour servir des fichiers et gérer les services de manière sécurisée. Vous configurerez également Adminer pour gérer facilement vos bases de données via une interface web. Cet exercice vous permettra de comprendre les concepts de base des serveurs web et des interfaces graphiques pour la gestion de bases de données.
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

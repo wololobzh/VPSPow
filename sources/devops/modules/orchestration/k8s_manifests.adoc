@@ -1,0 +1,354 @@
+:titre: Premiers Manifests K8S
+:module: Orchestration
+:duree: --
+:description: Introduction à l'écriture et la gestion des manifests Kubernetes.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* la structure des manifests Kubernetes.
+* *Apprendre* à créer des ressources basiques comme les Pods et les Namespaces.
+* *Appliquer* les concepts de Déploiements et Services.
+* *Utiliser* ConfigMaps et Secrets pour gérer les configurations.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction à Kubernetes
+
+Kubernetes repose sur des fichiers YAML ou JSON appelés manifests pour gérer l'état des ressources d'un cluster. Ces manifests spécifient des configurations pour tout, des Pods aux Déploiements.
+
+[NOTE.speaker]
+--
+Kubernetes est un système d'orchestration de conteneurs permettant de déployer et gérer des applications à grande échelle. Les manifests sont cruciaux pour définir et gérer les ressources Kubernetes.
+--
+
+== Prérequis et Environnement de Travail
+
+=== Prérequis
+
+* Compréhension des concepts de base de Kubernetes (Pods, Services, Déploiements, Volumes).
+* Connaissance de base de YAML (structures clés-valeurs, listes).
+
+=== Configuration de l’Environnement
+
+* Installation de Kubernetes (Minikube, k3s, Kind).
+* Installer kubectl pour interagir avec le cluster Kubernetes.
+* Utiliser un éditeur de texte comme Visual Studio Code avec des extensions pour Kubernetes.
+
+[NOTE.speaker]
+--
+Pour interagir efficacement avec Kubernetes, vous devez être à l'aise avec les concepts de base et avoir un environnement configuré pour l'écriture et le déploiement de manifests.
+--
+
+== La Structure d’un Manifest Kubernetes
+
+=== Exemple de manifest
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mon-premier-pod
+spec:
+  containers:
+  - name: conteneur-simple
+    image: nginx
+```
+
+[NOTE.speaker]
+--
+Un manifest Kubernetes commence par `apiVersion`, qui est la version de l'API utilisée, et `kind`, définissant le type de ressource. `metadata` identifie la ressource tandis que `spec` en détaille la configuration. Assurez-vous de respecter la syntaxe YAML pour éviter les erreurs.
+--
+
+== Création des ressources simples
+
+=== Créer un Namespace
+
+Dans Kubernetes, les **Namespaces** permettent de segmenter les ressources du cluster en différents groupes logiques, facilitant leur gestion et leur isolation.
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monprojet
+```
+
+Pour créer le **Namespace**, exécutez:
+
+```bash
+kubectl apply -f monprojet-namespace.yaml
+```
+
+Vérifiez votre Namespace avec la commande :
+
+```bash
+kubectl get namespaces
+```
+
+[NOTE.speaker]
+--
+Déclarez vos ressources dans un Namespace pour les organiser. Créez-le avec la commande `kubectl apply -f monprojet-namespace.yaml`.
+--
+
+=== Création d’un Pod Simple
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nginx
+  namespace: monprojet
+spec:
+  containers:
+  - name: conteneur-nginx
+    image: nginx
+```
+
+Pour déployer ce Pod, exécutez :
+
+```bash
+kubectl apply -f mon-pod-nginx.yaml
+```
+
+Vérifiez son état avec :
+
+```bash
+kubectl get pods -n monprojet
+```
+
+et
+
+```bash
+kubectl describe pod pod-nginx -n monprojet
+```
+
+[NOTE.speaker]
+--
+Les Pods sont les unités de déploiement de base. Ce manifest déploie un serveur nginx dans le Namespace `monprojet`. Appliquez-le avec `kubectl apply -f mon-pod-nginx.yaml`.
+--
+
+== Les Labels et Sélecteurs
+
+Les labels sont des paires clé-valeur que vous attachez aux objets pour les identifier et les organiser.
+
+=== Labels et Sélecteurs
+
+Ajoutez des labels:
+
+```yaml
+metadata:
+  labels:
+    app: nginx
+    env: test
+```
+
+Lister les Pods spécifiques:
+
+```bash
+kubectl get pods -n monprojet -l env=test
+```
+
+[NOTE.speaker]
+--
+Les labels aident à organiser vos ressources. Vous pouvez sélectionner des ressources spécifiques avec des sélecteurs.
+--
+
+== Les Déploiements et RéplicaSets
+
+Les Déploiements gèrent un ensemble de répliques d'un Pod et assurent leur disponibilité constante.
+
+=== Exemple de Déploiement
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: monprojet
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+```
+
+Appliquez-le avec :
+
+```bash
+kubectl apply -f mon-deploiement.yaml
+```
+
+Pour vérifier le déploiement :
+
+```bash
+kubectl get deployment
+```
+
+et pour les détails :
+
+```bash
+kubectl describe deployments.apps nginx-deployment
+```
+
+[NOTE.speaker]
+--
+Les Déploiements gèrent les Pods et assurent leur disponibilité constante. Ils orchestrent les mises à jour et les répliques. Appliquez ce déploiement avec `kubectl apply -f mon-deploiement.yaml`.
+--
+
+== Les Services
+
+Les Services définissent des ensembles logiques de Pods et une politique d'accès.
+
+=== Exemple de Service NodePort
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  namespace: monprojet
+spec:
+  type: NodePort
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 30007
+```
+
+Vérifiez le Service:
+
+```bash
+kubectl get services
+```
+
+Accédez à l'application via l'IP:
+
+```bash
+curl http://localhost:30007
+```
+
+[NOTE.speaker]
+--
+Les Services exposent vos applications au cluster ou à l'extérieur, en fonction de leur type. Le type NodePort expose le service sur un port choisi et accessible de l'extérieur.
+--
+
+== ConfigMaps et Secrets
+
+Les ConfigMaps stockent des configurations non sensibles tandis que les Secrets sont pour les informations sensibles.
+
+=== Créer une ConfigMap
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: exemple-configmap
+  namespace: monprojet
+data:
+  config.json: |
+    {
+      "param1": "valeur1",
+      "param2": "valeur2"
+    }
+```
+
+=== Créer un Secret
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: exemple-secret
+  namespace: monprojet
+type: Opaque
+data:
+  password: cGFzc3dvcmQ=  # 'password' encodé en base64
+```
+
+Utilisez ce Secret dans un Pod:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-secret
+  namespace: monprojet
+spec:
+  containers:
+  - name: mon-conteneur
+    image: nginx
+    env:
+    - name: PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: exemple-secret
+          key: password
+```
+
+Appliquez-le :
+
+```bash
+kubectl apply -f second-pod.yaml
+```
+
+Vérifiez :
+
+```bash
+kubectl describe pods pod-secret
+```
+
+[NOTE.speaker]
+--
+Les ConfigMaps stockent des configurations non sensibles et les Secrets sont pour les données sensibles. Utilisez-les pour référencer des configurations dans vos Pods sans les coder en dur.
+--
+
+== Détruire une ressource Kubernetes
+
+Pour détruire une ressource, exécutez :
+
+```bash
+kubectl delete pod busybox
+```
+
+Pour détruire un objet déclaré avec un manifest :
+
+```bash
+kubectl -n kube-system delete -f pod.yaml
+```
+
+[NOTE.speaker]
+--
+La commande `delete` est utilisée pour détruire des ressources. Soyez prudent avec la suppression de Namespaces, car cela supprime toutes les ressources contenues.
+--
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+
+* Kubernetes utilise des manifests YAML pour définir et gérer des ressources.
+* Les pratiques vues ici sont essentielles pour gérer efficacement un cluster Kubernetes.
+* Continuez à pratiquer pour maîtriser la rédaction et la gestion des manifests.
+
+[NOTE.speaker]
+--
+Pratiquer régulièrement et participer à la communauté Kubernetes vous aidera à améliorer vos compétences et à maintenir vos déploiements à jour avec les meilleures pratiques.
+--
+// end::conclusion[]

@@ -1,0 +1,84 @@
+:titre: Custom actions
+:module: CICD
+:duree: 90
+:description: Ouverture à la création d'actions personnalisées pour les workflows CI/CD. Présentation des concepts, avantages et bonnes pratiques.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* **Comprendre** la structure d'une action personnalisée
+* **Créer** une action JavaScript simple pour un workflow
+* **Évaluer** les avantages des actions personnalisées dans un projet CI/CD
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+
+* Les actions personnalisées permettent d'étendre les fonctionnalités de GitHub Actions
+* Importance pour personnaliser et automatiser les workflows CI/CD
+
+https://docs.github.com/fr/actions/sharing-automations/creating-actions/about-custom-actions[Créer une action personnalisée]
+
+[NOTE.speaker]
+--
+Les actions personnalisées sont des blocs réutilisables qui permettent d'automatiser les tâches dans vos workflows CI/CD. Elles sont essentielles pour adapter les workflows aux besoins spécifiques des projets.
+--
+
+== Concepts clés
+
+* **Structure d'une action personnalisée** : Comprend un fichier `action.yml` pour la configuration
+* **Types d'actions** : JavaScript pour la portabilité, Docker pour l'isolation
+
+[NOTE.speaker]
+--
+Une action personnalisée est définie par un fichier `action.yml` qui spécifie les inputs, outputs, et le code à exécuter. Les actions peuvent être écrites en JavaScript pour une exécution native ou en Docker pour un environnement isolé.
+--
+
+== Avantages
+
+* **Réutilisation** : Centraliser les logiques récurrentes dans une action unique
+* **Personnalisation** : Adapter les workflows aux besoins spécifiques de l'équipe ou du projet
+
+[NOTE.speaker]
+--
+Les actions personnalisées permettent de réutiliser du code et de standardiser les bonnes pratiques au sein d'une équipe. Cela facilite également la maintenance et l'évolution des workflows.
+--
+
+== Cas d'usages réels
+
+* **Notifications** : Envoyer des alertes par email ou Slack
+* **Déploiement** : Publier des artefacts sur des serveurs distants
+* **Tests** : Exécuter des suites de tests spécifiques
+
+// tag::demo[]
+== Démonstration
+
+https://docs.github.com/fr/actions/sharing-automations/creating-actions/creating-a-javascript-action[Créer une action JavaScript] qui imprime "Hello World" dans le log, puis l'utiliser dans un workflow.
+// end::demo[]
+
+== Bonnes pratiques
+
+* **Documentation** : Décrire clairement les inputs, outputs et exemples d'utilisation
+* **Gestion des versions** : Utiliser le versionnage sémantique pour la maintenance
+* **Utilisation des actions publiques** : S'appuyer sur des actions existantes pour éviter la duplication
+
+[NOTE.speaker]
+--
+Une bonne documentation est cruciale pour que d'autres développeurs puissent utiliser et contribuer à votre action. Le versionnage permet de gérer les changements sans casser les workflows existants. Enfin, tirer parti des actions publiques peut vous faire gagner du temps et réduire les erreurs.
+--
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Les actions personnalisées enrichissent les workflows CI/CD en offrant flexibilité et réutilisation
+* Leur création nécessite une bonne compréhension des besoins du projet et des bonnes pratiques de développement
+* L'utilisation judicieuse des actions personnalisées peut significativement améliorer l'efficacité des pipelines
+// end::conclusion[]

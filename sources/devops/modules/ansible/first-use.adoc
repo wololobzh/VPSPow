@@ -1,0 +1,131 @@
+:titre: Première utilisation
+:module: Ansible
+:duree: 120
+:description: L'objectif est de lancer un playbook capable de créer un fichier sur la VM Kourou. La procédure est détaillée étape par étape pour créer tous les fichiers et lancer la commande.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* **Comprendre** le fonctionnement de base d'un playbook Ansible
+* **Appliquer** les commandes Ansible pour exécuter un playbook
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+
+* Objectif : Utiliser Ansible pour créer un fichier sur la VM Kourou
+* Processus : 
+** Création d'un inventaire
+** Rédaction d'un playbook
+** Exécution du playbook
+** Vérification du résultat
+
+== Création de l'inventaire
+
+* Fichier d'inventaire : Contient la liste des hôtes cibles
+* Format : fichier ini ou yml, généralement appelé `hosts` ou `inventory`
+
+[NOTE.speaker]
+--
+Un fichier d'inventaire Ansible est essentiel pour définir les machines sur lesquelles vous souhaitez exécuter vos playbooks. Il peut être aussi simple qu'une liste d'adresses IP ou de noms d'hôtes.
+--
+
+// tag::demo[]
+=== Exemple d'inventaire
+
+.Format .ini
+```ini
+[kourou]
+192.168.1.10 ansible_user=your_username
+```
+
+[NOTE.speaker]
+--
+Dans un premier temps, on utilise la syntaxe INI pour définir un groupe d'hôtes nommé "kourou".
+
+Cet inventaire cible une machine avec l'adresse IP 192.168.1.10. Assurez-vous de remplacer `your_username` par le nom d'utilisateur approprié pour la connexion SSH.
+--
+// end::demo[]
+
+== Création du playbook
+
+* Structure : Fichiers YAML décrivant les tâches à exécuter
+* Exemple : Playbook pour créer un fichier dans /tmp/test.txt
+
+[NOTE.speaker]
+--
+Un playbook Ansible est écrit en YAML et décrit les actions que vous souhaitez exécuter sur vos hôtes cibles. Nous allons écrire un playbook qui crée un fichier sur la VM Kourou.
+--
+
+// tag::demo[]
+=== Exemple de playbook
+
+```yaml
+---
+- hosts: kourou
+  tasks:
+    - name: Créer un fichier sur la VM Kourou
+      file:
+        path: /tmp/test.txt
+        state: touch
+```
+
+[NOTE.speaker]
+--
+Ce playbook cible le groupe d'hôtes "kourou" défini dans notre inventaire. La tâche utilise le module `file` pour créer un fichier vide nommé `test.txt`.
+--
+// end::demo[]
+
+== Lancement du playbook
+
+Ansible se lance avec une commande :
+
+```bash
+ansible-playbook -i hosts playbook.yml
+```
+
+[NOTE.speaker]
+--
+L'option `-i` spécifie le chemin vers l'inventaire, et `playbook.yml` est le nom du playbook à exécuter. Assurez-vous d'être dans le répertoire contenant les fichiers `hosts` et `playbook.yml`.
+--
+
+// tag::demo[]
+=== Démonstration
+
+[NOTE.speaker]
+--
+* Lancer la commande `ansible-playbook -i hosts playbook.yml` pour exécuter le playbook. 
+* Analyser ce qui est affiché dans la console
+* Vérifiez que le fichier `test.txt` a été créé sur la VM Kourou.
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice : Modification du playbook
+
+Adapter le playbook pour créer un fichier avec le texte `Bonjour Ansible`
+
+[NOTE.speaker]
+--
+Modifiez le playbook précédent pour que le fichier `test.txt` contienne le texte "Bonjour Ansible". Utilisez le module `copy` pour accomplir cette tâche. Testez-le en exécutant à nouveau le playbook.
+--
+// end::exercice[]
+
+// tag::deroulement[]
+== Conclusion
+
+* Création réussie d'un fichier sur la VM Kourou avec Ansible
+* Utilisation de l'inventaire et du playbook
+* Modification du playbook pour inclure du contenu
+
+[NOTE.speaker]
+--
+Nous avons couvert les bases pour utiliser Ansible afin d'automatiser la création de fichiers sur une VM distante. Vous avez appris à configurer un inventaire, écrire un playbook, et l'exécuter pour atteindre vos objectifs.
+--
+// end::conclusion[]

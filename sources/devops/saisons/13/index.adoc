@@ -1,0 +1,41 @@
+:title: Container avancé
+:number: 13
+:duration: 35
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Utilisation avancée des conteneurs pour déployer des applications.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Appliquer** des concepts avancés de conteneurs
+- **Analyser** des architectures complexes
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+- Docker
+// end::notions[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+- Penser à fournir le ebook O'clock
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue kanban]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

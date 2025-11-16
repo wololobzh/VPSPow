@@ -1,0 +1,412 @@
+:titre: Gestion avancée des règles avec NFTables
+:module: Flux entrants
+:duree: 120
+:description: Aller plus loin dans la gestion des flux entrants avec NFTables
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Comprendre l'intérêt des ensembles dans NFTables
+* Comprendre la notion de règles dynamiques
+* Utiliser des scripts pour automatiser la gestion des règles NFTables
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Ensembles avancés
+
+**Rappel** : les ensembles permettent de regrouper des valeurs (adresses IP, ports, etc.) pour les utiliser dans des règles NFTables. Il existe deux types d'ensembles : les **sets** et les **maps**.
+
+=== Réduction des redondances
+
+Utiliser les ensembles permet d'éviter de répéter des valeurs dans les règles
+
+**Exemple** : au lieu de créer plusieurs règles pour bloquer différentes adresses IP, les regrouper dans un ensemble unique
+
+```sh
+nft add table ip filter
+nft add chain ip filter input { type filter hook input priority 0; }
+nft add set ip filter blocked_ips { type ipv4_addr; flags interval; }
+nft add element ip filter blocked_ips { 192.168.1.1, 203.0.113.0/24 }
+nft add rule ip filter input ip saddr @blocked_ips drop
+```
+
+[NOTE.speaker]
+--
+```sh
+# 1. Crée une table nommée "filter" pour le protocole IPv4.
+# La table est un conteneur logique qui regroupe des chaînes et des règles.
+nft add table ip filter
+
+# 2. Crée une chaîne nommée "input" dans la table "filter".
+# - type filter : Indique que la chaîne est utilisée pour filtrer les paquets.
+# - hook input : La chaîne s'applique aux paquets entrants sur le système local.
+# - priority 0 : Définit la priorité de la chaîne (0 est une priorité standard).
+nft add chain ip filter input { type filter hook input priority 0; }
+
+# 3. Crée un ensemble (set) nommé "blocked_ips" dans la table "filter".
+# - type ipv4_addr : Spécifie que l'ensemble contiendra des adresses IPv4.
+# - flags interval : Permet d'ajouter des plages d'adresses IP en plus des adresses uniques.
+nft add set ip filter blocked_ips { type ipv4_addr; flags interval; }
+
+# 4. Ajoute des éléments à l'ensemble "blocked_ips".
+# - 192.168.1.1 : Une adresse IPv4 spécifique à bloquer.
+# - 203.0.113.0/24 : Une plage d'adresses IPv4 à bloquer.
+nft add element ip filter blocked_ips { 192.168.1.1, 203.0.113.0/24 }
+
+# 5. Ajoute une règle dans la chaîne "input" pour bloquer les paquets provenant des adresses dans l'ensemble "blocked_ips".
+# - ip saddr @blocked_ips : Vérifie si l'adresse source du paquet est dans l'ensemble "blocked_ips".
+# - drop : Bloque (ignore) les paquets correspondants.
+nft add rule ip filter input ip saddr @blocked_ips drop
+```
+--
+
+=== Amélioration de la lisibilité
+
+* les ensembles rendent les configurations plus lisibles et compréhensibles
+* nommer judicieusement les ensembles permet de mieux comprendre l'intention derrière chaque règle
+
+[cols="1,1"]
+|===
+a| **❌ Mauvais nommages**
+a| **✅ Bons nommages**
+
+a|
+* `set1` : trop générique, ne donne pas d'indication sur le contenu
+* `x` : incompréhensible et inutile pour une config maitnenable
+* `ips` : trop vague, ne précise pas quel type d'adresses IP
+* `block` : ambigu, ne précise pas ce qui est bloqué
+* `test` : nom temporaire, peu utile pour une config de production
+a| 
+* `blocked_ips` : ensemble d'adresses IP bloquées
+* `allowed_ips` : ensemble d'adresses IP autorisées
+* `ssh_whitelist` : ensemble d'adresses IP autorisées pour SSH
+* `internal_networks` : ensemble d'adresses IP du réseau interne
+* `ddos_blacklist` : ensemble d'adresses IP bloquées pour attaques DDoS
+|===
+
+[NOTE.speaker]
+--
+**Recommandations pour un bon nommage**
+
+* Soigner la clarté : Le nom doit immédiatement refléter l'objectif de l'ensemble (ex. : `blocked_ips`).
+* Être précis : Évitez les noms trop génériques ou ambigus.
+* Utiliser une convention : Par exemple, un préfixe ou un suffixe :
+** Préfixe par fonction : `ssh_`, `http_`.
+** Suffixe par type : `_whitelist`, `_blacklist`.
+* Être concis : Éviter les noms inutiles longs, mais gardez-les compréhensibles (ex. : `admin_access_ips` plutôt que `ips_that_have_access_for_admins`).
+* Un bon nommage améliore non seulement la lisibilité mais facilite également la maintenance par vous-même ou d'autres administrateurs.
+--
+
+=== Maintenance simplifiée
+
+* les ensembles permettent de gérer facilement l'ajout ou la suppression d'éléments sans modifier les règles elles-mêmes
+* réduit les erreurs lors des mises à jour
+
+// tag::demo[]
+
+=== Démonstration
+
+**Maintenance des règles nftables avec ou sans ensemble**
+
+[NOTE.speaker]
+--
+
+**Sans ensemble : maintenance compliquée**
+
+```sh
+nft add rule ip filter input ip saddr 192.168.1.1 drop
+nft add rule ip filter input ip saddr 203.0.113.5 drop
+nft add rule ip filter input ip saddr 198.51.100.10 drop
+```
+
+Retirer une adresse devient fastidieux :
+
+```sh
+nft delete rule ip filter input handle <rule_number>
+```
+
+**Inconvénients :**
+
+* La liste des règles devient rapidement longue et difficile à gérer.
+* Modifier les règles directement augmente le risque d'erreurs (supprimer ou ajouter une mauvaise règle, par exemple).
+
+
+**Avec ensemble : maintenance simplifiée**
+
+* Créer un ensemble pour les adresses IP bloquées :
+
+```sh
+nft add set ip filter blocked_ips { type ipv4_addr; flags interval; }
+```
+
+* Ajouter une règle unique qui utilise l'ensemble :
+
+```sh
+nft add rule ip filter input ip saddr @blocked_ips drop
+```
+
+* Ajout ou suppression d'adresses dans l'ensemble :
+
+** Pour ajouter une adresse IP ou une plage :
+
+```sh
+nft add element ip filter blocked_ips { 192.168.1.1, 203.0.113.5 }
+```
+
+** Pour supprimer une adresse spécifique :
+
+```sh
+nft delete element ip filter blocked_ips { 192.168.1.1 }
+```
+
+** Pour mettre à jour en masse les adresses (exemple : à partir d'un fichier) :
+
+```sh
+nft flush set ip filter blocked_ips
+nft add element ip filter blocked_ips { 192.168.1.1, 203.0.113.5, 198.51.100.10 }
+```
+
+**Avantages :**
+
+* La règle reste inchangée (`ip saddr @blocked_ips drop`), même si les adresses dans l'ensemble évoluent.
+* Les mises à jour se font uniquement au niveau de l'ensemble, réduisant le risque d'erreur.
+* La gestion en masse devient possible avec des scripts ou des fichiers sources.
+
+--
+// end::demo[]
+
+== Mise à jour dynamique des ensembles
+
+La mise à jour dynamique est cruciale pour garantir que les modifications de sécurité ne perturbent pas les services en production.
+
+=== Scripts automatisés
+
+* permettent d'ajouter ou supprimer des éléments d'un ensemble en fonction de critères spécifiques
+* **exemple** : des alertes de sécurité ou des logs d'accès.
+
+```sh
+# Script simple pour ajouter une IP à un ensemble
+new_ip="203.0.113.15"
+sudo nft add element ip filter blocked_ips { $new_ip }
+```
+
+=== Transactions atomiques
+
+* permettent de garantir que les mises à jour des ensembles sont cohérentes et complètes
+* minimisent le risque de règles incohérentes
+
+```sh
+table ip filter {
+    set blocked_ips {
+        type ipv4_addr;
+        flags interval;
+        elements = { 198.51.100.0/24, 10.0.0.1 }
+    }
+}
+```
+
+[NOTE.speaker]
+--
+**Pourquoi est-ce atomique ?**
+
+* **Avant l'application** : Les anciennes adresses restent actives.
+* **Pendant l'application** : Nftables prépare la nouvelle configuration en mémoire.
+* **Après l'application** : La nouvelle configuration remplace instantanément l'ancienne. Si une erreur se produit (fichier mal formé, conflit, etc.), les anciennes règles restent en place.
+--
+
+=== Surveillance et réactivité
+
+* il est judicieux d'intégrer des outils de surveillance pour détecter les changements dans les ensembles
+* ces outils peuvent également déclencher des actions en cas de modification
+* **exemple** : alertes en cas d'ajout d'une adresse IP suspecte
+
+// tag::demo[]
+== Démonstration
+
+**Gestion d'une liste d'adresses IP bannies avec mise à jour en temps réel**
+
+[NOTE.speaker]
+--
+**Configuration initiale de l'ensemble**
+
+```sh
+sudo nft add set ip filter blocked_ips { type ipv4_addr\; }
+```
+
+**Intégration avec les Logs**
+
+Utiliser un outil comme `fail2ban` pour analyser les logs en temps réel et déterminer les adresses IP à bannir
+
+**Mise à jour en temps réel**
+
+```sh
+tail -F /var/log/auth.log | \
+grep --line-buffered "Failed password" | \
+awk '{print $NF}' | \
+while read ip; do
+  sudo nft add element ip filter blocked_ips { $ip }
+done
+```
+--
+// end::demo[]
+
+== Chaînes et tables dynamiques
+
+* les chaînes et tables peuvent également être dynamiques
+* cela permet de répondre rapidement aux menaces ou aux événements inattendus
+* on peut modifier les règles de filtrage sans redémarrer les services ou redéployer la configuration
+
+=== Création dynamique de tables et chaînes
+
+* ces tables et chaînes réagiront à des événements spécifiques, définis par la politique de sécurité
+
+**Exemple** : lors de la détection d'un comportement anormal, une nouvelle chaîne peut être créée pour filtrer les paquets suspects.
+
+```sh
+# Créer une table temporaire pour gérer une menace spécifique
+sudo nft add table ip temp_security
+
+# Ajouter une chaîne dans cette table pour filtrer des paquets spécifiques
+sudo nft add chain ip temp_security temp_chain { type filter hook input priority 10\; }
+```
+
+== Minimiser l'impact sur les performances
+
+* les modifications dynamiques peuvent impacter les performances du système
+* il est important de les gérer correctement
+
+=== Utiliser les transactions atomiques
+
+Comme pour les ensembles, on peut utiliser les transactions atomiques 
+
+```sh
+# Exemple de transaction atomique
+sudo nft -f - <<EOF
+flush chain ip temp_security temp_chain
+add rule ip temp_security temp_chain ip saddr 203.0.113.0/24 drop
+EOF
+```
+
+=== Autres recommandations
+
+* privilégier les ensembles pour regrouper des adresses IP ou des ports
+* mettre en place des outils de surveillance pour détecter les changements et les erreurs
+* effectuer des tests dans un environnement de pré-production pour valider les modifications
+
+== Scripts automatisés
+
+* permettent de gérer les règles NFTables de manière dynamique
+* peuvent faire gagner du temps et réduire les erreurs humaines
+
+=== Ajout de règles
+
+```sh
+#!/bin/bash
+
+# Ajouter une adresse IP à un ensemble bloqué
+BLOCKED_IPS_SET="blocked_ips"
+IP_TO_BLOCK="$1"
+
+if [ -z "$IP_TO_BLOCK" ]; then
+  echo "Usage: $0 <IP_ADDRESS>"
+  exit 1
+fi
+
+sudo nft add element ip filter $BLOCKED_IPS_SET { $IP_TO_BLOCK }
+echo "IP $IP_TO_BLOCK added to blocked set."
+```
+
+[NOTE.speaker]
+--
+* `#!/bin/bash` : Indique que le script doit être exécuté avec bash, un interpréteur de commandes populaire.
+* `BLOCKED_IPS_SET` : Une variable qui contient le nom de l'ensemble nftables.
+* `IP_TO_BLOCK` : Une variable qui contient le premier argument passé au script
+** `$1` : Représente le premier argument en ligne de commande (l'adresse IP à bloquer).
+** Cela permet à l'utilisateur de spécifier dynamiquement l'adresse IP qu'il souhaite ajouter.
+* **Condition pour vérifier si l'adresse IP est fournie :**
+** `[ -z "$IP_TO_BLOCK" ]` : Vérifie si la variable `IP_TO_BLOCK` est vide.
+** Si aucun argument n'est passé, le script affiche un message d'utilisation et termine avec un code de sortie `1` (indiquant une erreur).
+** `echo "Usage: $0 <IP_ADDRESS>"` : Indique à l'utilisateur la manière correcte d'utiliser le script (`$0` représente le nom du script).
+--
+
+=== Suppression de règles
+
+```sh
+#!/bin/bash
+
+# Supprimer une adresse IP d'un ensemble bloqué
+IP_TO_REMOVE="$1"
+
+if [ -z "$IP_TO_REMOVE" ]; then
+  echo "Usage: $0 <IP_ADDRESS>"
+  exit 1
+fi
+
+sudo nft delete element ip filter $BLOCKED_IPS_SET { $IP_TO_REMOVE }
+echo "IP $IP_TO_REMOVE removed from blocked set."
+```
+
+[NOTE.speaker]
+--
+Similaire au script précédent, ici c'est pour supprimer une adresse IP de l'ensemble bloqué.
+--
+
+=== Gestion des chaînes et tables
+
+```sh
+#!/bin/bash
+
+# Créer une chaîne temporaire pour une analyse
+CHAIN_NAME="temp_chain"
+
+sudo nft add chain ip filter $CHAIN_NAME { type filter hook input priority 10\; }
+echo "Temporary chain $CHAIN_NAME created."
+
+# Ajouter une règle temporaire
+sudo nft add rule ip filter $CHAIN_NAME ip saddr 203.0.113.0/24 drop
+```
+
+== Intégration avec `fail2ban`
+
+`fail2ban` peut déclencher des actions en cas de tentatives de connexion infructueuses
+
+```sh
+# fail2ban configuration snippet
+[nftables]
+enabled = true
+filter = sshd
+action = iptables[name=SSH, port=ssh, protocol=tcp]
+         nftables-add[name=SSH]
+```
+
+== Surveillance avec `syslog`
+
+Surveiller les logs système pour détecter des événements spécifiques :
+
+```sh
+#!/bin/bash
+
+tail -F /var/log/syslog | while read line; do
+  if echo "$line" | grep -q "Failed password"; then
+    IP=$(echo "$line" | awk '{print $NF}')
+    sudo nft add element ip filter blocked_ips { $IP }
+    echo "Blocked IP $IP due to failed login attempts."
+  fi
+done
+```
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Les ensembles sont un outil puissant pour gérer les règles NFTables de manière dynamique.
+* Ils permettent de réduire les redondances, d'améliorer la lisibilité et de simplifier la maintenance.
+* Les scripts automatisés peuvent faciliter la gestion des règles et réduire les erreurs humaines.
+* L'intégration avec des outils de surveillance et de réactivité permet de renforcer la sécurité du système.
+// end::conclusion[]

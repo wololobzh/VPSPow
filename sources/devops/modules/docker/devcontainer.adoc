@@ -1,0 +1,110 @@
+:titre: DevContainer
+:module: Docker
+:duree: 60
+:description: Les DevContainers sont utilisés dans la formation depuis le début, sans que les apprenants ne comprennent ce qu'ils sont. Ce module permet de faire le lien et de comprendre que toutes les compétences Docker sont applicables aux DevContainers.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+// Sous forme de liste à puce, en utilisant la taxonomie de Bloom
+* *Comprendre* le fonctionnement des DevContainers
+* *Appliquer* les compétences Docker aux DevContainers
+// end::objectifs[]
+
+// tag::deroulement[]
+== Rappels
+
+* Un DevContainer est un environnement de développement isolé basé sur des conteneurs, souvent utilisé dans des projets avec Visual Studio Code et Docker.
+* Ils permettent d'uniformiser l'environnement de développement pour tous les membres d'une équipe, évitant ainsi les problèmes liés aux dépendances locales.
+
+== Liens avec Docker
+
+* Images : DevContainers utilisent des images Docker pour créer des environnements.
+* Containers : Comme les conteneurs Docker, les DevContainers encapsulent les dépendances, les outils et les configurations.
+* Volumes : Permet de partager des fichiers entre le conteneur et l’hôte.
+* Ports : Les DevContainers peuvent exposer des ports pour communiquer avec l’extérieur (ex: application web locale).
+
+== Création d'un DevContainer
+
+Pour cette saison, nous allons avoir besoin d'un DevContainer pour travailler sur nos projets. Il aura la particularité d'avoir accès à Docker de la machine hôte.
+
+[NOTE.speaker]
+--
+Certaines notions seront expliquées plus en détail dans les modules suivants.
+--
+
+=== Étapes par étapes
+
+* Créer un dossier `test` sur la machine hôte
+* L'ouvrir avec VsCode
+* Dans VsCode :
+** `CTRL`+ `SHIFT` + `P` puis `Add Dev Container Configuration Files...`
+** Sélectionner "Add configuration to workspace"
+** Sélectionner "Docker in Docker"
+** Sélectionner "latest"
+** Laisser par défaut
+** Ajouter "Node.js"
+** Laisser par défaut
+** Ne pas ajouter de dependabot
+* Dans le fichier `.devcontainer/devcontainer.json` :
+** Décommenter la ligne `forwardPorts`
+** Ajouter les port 8080, 5173, 3000, 8055
+* Choisir "Reopen in Container"
+
+=== Fichier `.devcontainer/devcontainer.json`
+
+```json
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-in-docker
+{
+	"name": "Docker in Docker",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
+
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"version": "latest",
+			"enableNonRootDocker": "true",
+			"moby": "true"
+		},
+		"ghcr.io/devcontainers/features/node:1": {}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [8080, 5173, 3000, 8055]
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "docker --version",
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
+```
+
+WARNING: dans certains cas, il est nécessaire de supprimer le fichier `~/.docker/config.json` de la machine hôte → erreur rencontrée : « docker: Error response from daemon: Head "https://registry-1.docker.io/v2/library/hello-world/manifests/latest": unauthorized: incorrect username or password. » 
+
+[NOTE.speaker]
+--
+Avec cette méthode de création de DevContainers assistée par VsCode, on peut facilement monter des environnements de développement pour des projets variés.
+--
+
+=== Test du terminal
+
+. Ouvrir un terminal dans VsCode
+. Lancer la commande `docker -v`
+. Lancer la commande `node -v`
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* On a un environnement pour la saison contenant Node, NPM et Docker
+* On sait créer un DevContainer avec VsCode suivant nos besoins
+// end::conclusion[]

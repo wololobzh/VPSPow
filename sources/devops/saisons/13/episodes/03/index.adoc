@@ -1,0 +1,39 @@
+:title: Sécurité
+:number: 03
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Bonnes pratiques basées sur les règles de SonarQube pour comprendre les vulnérabilités potentielles et à adopter des pratiques sécurisées lors de la création et du déploiement de conteneurs.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Sécuriser** une image Docker
+// end::objectifs[]
+
+// tag::prerequis[]
+
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+Finir le module code smell si le temps manquait la veille.
+
+include::../../../../modules/docker/best-practice-code-smell.adoc[options=modules]
+
+include::../../../../modules/docker/best-practice-security.adoc[options=modules]
+
+include::../../../../modules/docker/tools-trivy.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S13-Challenge
+:description: Analyser le dockerfile d'un ancien projet et appliquer les bonnes pratiques de sécurité. Bonus : Utiliser Trivy dans son environnement.
+:correction: https://github.com/O-clock-Devops-Peda/S13-Challenge/tree/correction
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+// end::deroulement[]

@@ -1,0 +1,193 @@
+:titre: Introduction à Svelte
+:module: Svelte
+:duree: 60
+
+:description: Apprendre les bases du développement avec Svelte
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Comprendre ce qu'est Svelte
+* Créer un premier composant
+* Utiliser des attributs dynamiques
+* Appliquer des styles
+* Imbriquer des composants
+* Utiliser les balises HTML
+// end::objectifs[]
+
+== Vue d'ensemble des frameworks frontend
+
+Les frameworks frontend sont des outils essentiels pour le développement web moderne. Ils fournissent une structure et des fonctionnalités pour créer des interfaces utilisateur interactives et réactives. Les trois frameworks les plus populaires actuellement sont :
+
+1. React : Développé par Facebook, il utilise un DOM virtuel et des composants réutilisables.
+2. Vue : Créé par Evan You, il est connu pour sa simplicité et sa flexibilité.
+3. Svelte : Un « nouveau venu » qui compile le code à la construction plutôt qu'à l'exécution.
+
+== Qu'est ce que Svelte
+
+Svelte est un framework JavaScript moderne qui compile vos composants en JavaScript pur pour des performances optimales.
+
+* Simplicité de la syntaxe
+* Performances accrues grâce au code compilé
+* Réactivité native
+
+[NOTE.speaker]
+--
+Svelte se distingue par sa capacité à compiler le code en JavaScript optimisé, ce qui élimine le besoin d'un runtime virtuel. Cela signifie que votre application est plus rapide et plus légère.
+--
+
+=== Pourquoi utiliser Svelte ?
+
+Svelte propose une approche unique où le code est compilé, ce qui réduit la taille des fichiers et améliore les performances de l'application.
+
+== Votre premier composant
+
+Un composant Svelte est un fichier `.svelte` contenant du HTML, du CSS et du JavaScript.
+
+=== Exemple de composant simple
+
+```jsx
+<script>
+  let name = 'Monde';
+</script>
+
+<h1>Bonjour {name}!</h1>
+```
+
+[NOTE.speaker]
+--
+Ce composant affiche "Bonjour Monde!" et démontre l'utilisation de variables dynamiques dans Svelte.
+--
+
+== Attributs dynamiques
+
+Les attributs dynamiques permettent de lier facilement les propriétés des éléments HTML à des variables JavaScript.
+
+=== Exemple d'attribut dynamique
+
+```jsx
+<script>
+  let color = 'blue';
+</script>
+
+<button style="color: {color}">Cliquez-moi</button>
+```
+
+[NOTE.speaker]
+--
+Dans cet exemple, la couleur du texte du bouton est contrôlée par la variable `color`, illustrant la réactivité de Svelte.
+--
+
+== Styles
+
+Svelte permet d'intégrer du CSS directement dans vos composants, garantissant que les styles sont encapsulés.
+
+=== Exemple de style intégré
+
+```jsx
+<style>
+  h1 {
+    color: red;
+  }
+</style>
+
+<h1>Bonjour Svelte!</h1>
+```
+
+[NOTE.speaker]
+--
+Le texte "Bonjour Svelte!" sera rouge, et ce style est localisé au composant, ce qui évite les conflits de style.
+--
+
+== Composants imbriqués
+
+Les composants Svelte peuvent être imbriqués pour créer des applications modulaires et réutilisables.
+
+=== Exemple de composant imbriqué
+
+**Parent.svelte**
+
+```jsx
+<script>
+  import Child from './Child.svelte';
+</script>
+
+<Child />
+```
+
+**Child.svelte**
+
+```jsx
+<h2>Je suis un composant enfant</h2>
+```
+
+[NOTE.speaker]
+--
+L'imbriquement des composants permet de structurer votre application de manière modulaire et réutilisable.
+--
+
+== HTML Tags
+
+Svelte utilise des balises HTML standard et permet de créer des balises personnalisées via les composants.
+
+=== Exemple d'utilisation de balises HTML
+
+```jsx
+<div>
+  <p>Ceci est un paragraphe dans un composant Svelte.</p>
+  <button>Cliquez ici</button>
+</div>
+```
+
+[NOTE.speaker]
+--
+L'utilisation des balises HTML dans Svelte est similaire à leur utilisation dans le HTML traditionnel, avec l'ajout de la réactivité et des fonctionnalités de Svelte.
+--
+
+== Démonstration
+
+[NOTE.speaker]
+--
+1. Installez Svelte :
++
+```bash
+npm create vite@latest
+cd my-svelte-project
+npm install
+```
+
+2. Ouvrez `src/App.svelte` et remplacez le contenu par :
++
+```html
+<script>
+  let name = 'world';
+</script>
+
+<h1>Hello {name}!</h1>
+<input bind:value={name}>
+```
+
+3. Lancez l'application :
++
+```bash
+npm run dev
+```
+
+4. Ouvrez un navigateur et observez la réactivité en modifiant l'input.
+--
+== Exercice rapide
+
+Créez un composant Svelte simple qui affiche un compteur et deux boutons pour l'incrémenter et le décrémenter. Utilisez la réactivité de Svelte pour mettre à jour l'affichage automatiquement.
+
+== Conclusion
+
+Svelte est un outil puissant pour créer des applications web modernes avec une syntaxe simple et efficace.
+
+* Vous avez créé un composant de base en Svelte
+* Vous comprenez l'utilisation des attributs dynamiques et du style encapsulé
+* Vous savez imbriquer des composants et utiliser les balises HTML

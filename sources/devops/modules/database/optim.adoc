@@ -1,0 +1,337 @@
+:titre: Optimisation et sécurisation
+:module: BDD
+:duree: 120
+:description: Optimiser les performances des bases de données PostgreSQL et les sécuriser en suivant les meilleures pratiques.
+
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** les facteurs influençant les performances de PostgreSQL
+* **Appliquer** les techniques d'optimisation des requêtes SQL
+* **Analyser** les configurations de sécurité dans PostgreSQL
+* **Créer** une stratégie de sauvegarde et de restauration sécurisée
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+
+* Eléments critiques pour garantir à la fois les performances et l'intégrité des données
+* Nécessité de la sécurisation pour protéger les données sensibles
+
+[NOTE.speaker]
+--
+PostgreSQL offre de nombreux outils pour améliorer la gestion des ressources et sécuriser l'accès.
+--
+
+== Vérification de l'état de santé de la base de données
+
+* Surveiller l'activité des bases de données avec `pg_stat_activity`
+* Vérifier l'état des bases avec `pg_stat_database`
+* Identifier les verrous avec `pg_locks`
+
+```bash
+SELECT * FROM pg_stat_activity;
+SELECT * FROM pg_stat_database;
+SELECT * FROM pg_locks;
+```
+
+[NOTE.speaker]
+--
+Il est essentiel de surveiller en temps réel l'activité des bases de données pour repérer les requêtes bloquantes ou longues, ainsi que les verrous qui pourraient perturber le bon fonctionnement du système.
+--
+
+=== `pg_stat_activity`
+
+**Description :**
+
+Fournit des informations sur les connexions actives à la base de données :
+
+* sessions en cours
+* requêtes exécutées par ces sessions
+
+**Syntaxe :**
+
+`SELECT pid, usename, datname, client_addr, state, query FROM pg_stat_activity;`
+
+*Utilité :*
+
+* Détecter les verrous (ce qui pourrait bloquer d’autres transactions)
+* Analyser les requêtes lentes pour pouvoir les améliorer
+* Surveiller les connexions, notamment celles qui sont inattendues ou suspectes
+
+=== `pg_stat_statements`
+
+**Description :**
+
+Fournit des statistiques sur les requêtes exécutées :
+
+* fréquence des requêtes
+* durée des requêtes
+* coût des requêtes
+
+**Syntaxe :**
+
+`SELECT * FROM pg_stat_statements ORDER BY total_time DESC LIMIT 10;`
+
+*Utilité :*
+
+* Identifier les requêtes lentes pour les optimiser
+* Analyser les modèles de requêtes et leur impact sur les performances
+
+== Identification des requêtes gourmandes
+
+* Utiliser `pg_stat_statements` pour lister les requêtes les plus gourmandes en ressources
+* Configurer `log_min_duration_statement` pour journaliser les requêtes lentes
+
+```bash
+SELECT * FROM pg_stat_statements ORDER BY total_time DESC LIMIT 10;
+```
+
+[NOTE.speaker]
+--
+Le module `pg_stat_statements` permet de capturer des statistiques détaillées sur l'exécution des requêtes SQL, y compris leur durée et leur fréquence. Ceci est utile pour identifier les requêtes qui ralentissent le système.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Surveillance et détection des requêtes gourmandes
+// end::demo[]
+
+=== Analyse des performances des requêtes SQL
+
+* Utiliser `EXPLAIN` et `EXPLAIN ANALYZE` pour comprendre le plan d'exécution d'une requête
+* Optimiser les requêtes en fonction des résultats
+
+```bash
+EXPLAIN ANALYZE SELECT * FROM ma_table WHERE condition;
+```
+
+[NOTE.speaker]
+--
+`EXPLAIN` et `EXPLAIN ANALYZE` permettent de visualiser le plan d'exécution des requêtes SQL, facilitant ainsi l'identification des améliorations possibles dans leur écriture ou leur optimisation.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Analyse de requêtes avec `EXPLAIN`
+// end::demo[]
+
+=== Indexation pour améliorer les performances
+
+* Créer des index pour optimiser les requêtes
+* Types d'index dans PostgreSQL : B-tree, Hash, GIN, GiST
+
+```bash
+CREATE INDEX idx_ma_table ON ma_table (colonne);
+```
+
+[NOTE.speaker]
+--
+L'indexation est cruciale pour accélérer les recherches dans les tables. Il est important de choisir le bon type d'index en fonction du type de requête et des données manipulées. Trop d'index peut cependant être contre-productif.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Création d'un index et comparaison des performances avant/après
+// end::demo[]
+
+== Optimisation des configurations serveur
+
+* Paramètres de configuration importants : `work_mem`, `shared_buffers`, `maintenance_work_mem`
+* Ajuster les paramètres selon la charge de travail
+
+.postgresql.conf
+```bash
+# quantité de mémoire allouée au cache des données
+# recommandation : 64MB ou plus
+work_mem = 64MB	
+# quantité de mémoire allouée aux opérations de tri et les jointures
+# recommandation : 25% de la RAM disponible
+shared_buffers = 2GB 		
+# quantité de mémoire cache disponible
+# recommandation : 50% à 75% de la RAM totale
+effective_cache_size = 6GB	
+# quantité de mémoire allouée aux opérations de maintenance telles que index et VACUUM
+maintenance_work_mem = 512MB
+# nombre maximal de connexions simultanées
+# recommandation : entre 100 et 1000
+max_connections = 200		
+# taille maximale des fichiers de journalisation des transactions avant déclenchement d’un point de contrôle (checkpoint)
+max_wal_size = 1GB
+```
+
+[NOTE.speaker]
+--
+La configuration du serveur PostgreSQL joue un rôle majeur dans l'optimisation des performances globales. L'ajustement des paramètres comme `work_mem` ou `shared_buffers` permet de mieux allouer les ressources mémoire en fonction des besoins.
+--
+
+== Optimisation des transactions
+
+* Gestion des verrous et isolation des transactions
+* Utilisation de `VACUUM` et `ANALYZE` pour maintenir les performances
+
+```bash
+VACUUM ANALYZE;
+```
+
+[NOTE.speaker]
+--
+Le verrouillage efficace et la maintenance régulière des tables avec `VACUUM` et `ANALYZE` permettent de garder les performances de la base de données à un niveau optimal.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Utilisation de `VACUUM` et optimisation des transactions
+// end::demo[]
+
+== Sécurisation des bases de données
+
+=== Configuration des connexions sécurisées
+
+* Utilisation de SSL pour sécuriser les connexions
+* Configuration du fichier `pg_hba.conf` pour définir les accès
+
+.Génération d’un certificat auto-signé et d’une clé privée :
+```bash
+openssl genrsa -out server.key 2048
+openssl req -new -x509 -key server.key -out server.crt -days 365
+```
+
+.Configurer PostgreSQL pour accepter les certificats SSL :
+```bash
+sudo nano /etc/postgresql/[version]/main/postgresql.conf
+    ssl = on
+    ssl_cert_file = ‘server.crt’
+    ssl_key_file = ‘server.key’
+
+sudo nano /etc/postgresql/[version]/main/pg_hba.conf
+    hostssl all all [ip] [cert_file]
+
+sudo systemctl restart postgresql
+```
+
+Pour se connecter, le client devra à présent fournir un certificat valide
+
+```bash
+# Activer SSL dans postgresql.conf
+ssl = on
+
+# Modifier pg_hba.conf
+hostssl all all 0.0.0.0/0 md5
+```
+
+[NOTE.speaker]
+--
+La sécurisation des connexions entre le client et le serveur PostgreSQL passe par l'activation de SSL. Il est aussi important de définir des règles d'accès précises dans le fichier `pg_hba.conf`.
+--
+
+=== Limiter les IP autorisées
+
+* Utilisation de `pg_hba.conf` pour restreindre les connexions
+* Configuration des règles d'accès en fonction des adresses IP
+
+.Lorsque la BDD n’a pas besoin d’être en accès distant
+```bash
+sudo nano /etc/postgresql/[version]/main/postgresql.conf
+    # Ajouter / modifier la ligne listen_adresses :
+    listen_addresses = 'localhost'
+
+sudo nano /etc/postgresql/[version]/main/pg_hba.conf
+    # Laisser uniquement la ligne de connexion suivante,
+    # commenter les autres lignes de connexion :
+    local 	all 	all 	trust
+
+sudo systemctl restart postgresql
+```
+
+[NOTE.speaker]
+--
+Suivant le contexte, il est préférable de limiter l'accès à la dbb uniquement en local. Dans la cas où l'accès distant est nécessaire, il est recommandé de créer une whiteliste pour restreindre les adresses IP autorisées.
+--
+
+=== Contrôle d'accès et gestion des privilèges
+
+* Création et gestion des rôles et des permissions
+* Utilisation des commandes SQL pour gérer les accès
+
+```sql
+CREATE ROLE admin_user LOGIN;
+GRANT ALL PRIVILEGES ON DATABASE ma_base TO admin_user;
+```
+
+[NOTE.speaker]
+--
+Il est important de bien définir les rôles et les privilèges dans PostgreSQL pour contrôler l'accès aux données et garantir que seules les personnes autorisées peuvent effectuer certaines actions.
+--
+
+=== Chiffrement des données
+
+* Utiliser `pgcrypto` pour chiffrer les données sensibles
+* Chiffrement des données au repos et en transit
+
+```sql
+SELECT pgp_sym_encrypt('donnée_sensible', 'clé_secrète');
+```
+
+[NOTE.speaker]
+--
+Le module `pgcrypto` permet de chiffrer les données directement dans PostgreSQL, offrant ainsi une couche de sécurité supplémentaire pour protéger les informations sensibles.
+--
+
+== Sauvegarde et restauration sécurisée
+
+* Sauvegardes avec `pg_dump` et `pg_basebackup`
+* Stratégies de restauration sécurisée
+
+```bash
+pg_dump -U user -F c -b -v -f sauvegarde.dump ma_base
+pg_restore -U user -d ma_base -v sauvegarde.dump
+```
+
+[NOTE.speaker]
+--
+Les stratégies de sauvegarde régulières sont essentielles pour garantir la disponibilité et l'intégrité des données en cas d'incident. Il est également important de tester régulièrement les processus de restauration pour s'assurer qu'ils fonctionnent correctement.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Sauvegarde et restauration d'une base de données PostgreSQL
+
+[NOTE.speaker]
+--
+* Sauvegarder une base de données : `pg_dump my_database > my_database_backup.sql`
+* Restaurer une base de données : `psql my_database < my_database_backup.sql`
+* Automatiser la sauvegarde via un script bash
+* Exécuter la sauvegarde de manière périodique avec crontab : `crontab -e`
+** `0 2 * * * /path/to/your_backup_script.sh # exécuter le script tous les jours à 2h du matin`
+* Stocker les sauvegardes sur un emplacement sécurisé et avec une redondance géographiquement distante avec rsync
+** `rsync -avz /path/to/backup/directory/my_database_backup.sql remote_user@remote_host:/path/to/remote/directory`
+--
+
+// end::demo[]
+
+// tag::exercice[]
+== Exercices
+
+Sauvegarde et restauration d'une base de données
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Compréhension des concepts fondamentaux des bases de données
+* Capacité à configurer une base de données avec l’exemple de PostgreSQL
+* Connaissance de techniques pour sécuriser une base de données
+* Connaissance de techniques pour optimiser une base de données
+* Capacité à effectuer des opérations de sauvegarde et de récupération d’une base de données
+// end::conclusion[]
