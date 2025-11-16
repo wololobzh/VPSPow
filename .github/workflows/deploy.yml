@@ -45,36 +45,3 @@ concurrency:
         with:
           path: build
           name: artifact
-
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      # 1️⃣ Récupérer le code du repo
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # 2️⃣ Charger la clé SSH privée
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.7.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      # 3️⃣ Ajouter les clés du serveur dans known_hosts
-      - name: Add server to known_hosts
-        run: |
-          mkdir -p ~/.ssh
-          # Clés récupérées avec ssh-keyscan sur ton VPS
-          echo "|1|TME6gLhvk9CBat6CUQoeHyfX1Rk=|YwWqo3fN8IyzYDrjUYMDz2pg9dk= ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDICT8oMSx7RnSMhZl+Vdks5Q66l/8eJD8NbwFLFBSED4bZw14WbNp7XMoXnuNDUhlAapHYdga4l5n9LOovSd0GucXLe0SfYm4/9nYaT1kKcE/3I+42Rs+C+jgVgFRZrnplzeeahRa6IkzgT9JXCIpZb/ilZhD1usbNolW3xb5XN8cv/dOG/rqUuz9NSOyjsw85om6dmUFc4uaK3tRHs8OnqAGjv3/rwUsbr0q/B3WPPbMJpyYQq82DLx8O88Y1Q9e+MYKRf5Cyt/opqdsrypHrop3I1pbSYl2nua6asdxvSoIigVSijxNzXeSvKStbFTfQBTCNs+0ulPX5PrFQccNSNexhNRwFNLGBg3kFAWHSNylN0YWBW4ZEToxOm1mgnhZ9hlvG5UnDi9SyQgJyE+gcv3pUjypgi+eYimMuSdje+DFaqopB0H9WZJu3zzjrP+6l0UGfq+6MdSyzKR3KNRNUe8EYDk7EUIeiqCcCmKPCLazKW7oa5GPYUIi9KDR5wcM=" >> ~/.ssh/known_hosts
-          echo "|1|w9oASUNQA6nLrF7Ydw8alaGHC4U=|v0UpLBz5We3XCA1DSCp1MUQMQfg= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEsaEydNk4E4FaPkuMZWYo01X61FAjRIHVZ/vCnmrgmzZxsYYb2UImXzx1JRAhFwWepfiSpkZ2ol7kDm4Z+aJeo=" >> ~/.ssh/known_hosts
-          echo "|1|2lPuQMVdZc8gL2FWIqs0TEXTTos=|IRAMJLESLIFh/5aN5VEOnSNHmus= ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDvHDdLY+9ARujFc8GumH+trLtXwyIZSFGEeYoAnEMmE" >> ~/.ssh/known_hosts
-
-      # 4️⃣ Déployer le code sur le VPS avec rsync
-      - name: Deploy files
-        run: |
-          rsync -avz --delete ./ ubuntu@51.254.205.63:/home/ubuntu/mon-site
-
-      # 5️⃣ Redémarrer le conteneur Docker sur le VPS
-      - name: Restart Docker
-        run: |
-          ssh ubuntu@51.254.205.63 "cd /home/ubuntu/mon-site && docker compose up -d --build"
