@@ -1,0 +1,62 @@
+:title: Persistance des données
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée de formation permet de maîtriser la persistance des données avec NestJS pour créer des applications backend robustes et fiables. Vous apprendrez à configurer et utiliser des bases de données, à intégrer des ORM comme TypeORM ou Prisma, et à gérer les opérations de création, lecture, mise à jour et suppression (CRUD) de manière efficace.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les concepts de persistance des données et les bases de données relationnelles et non relationnelles
+* Configurer une base de données dans un projet NestJS
+* Intégrer un ORM (TypeORM, Prisma) avec NestJS
+* Créer des entités et gérer les relations entre les données
+* Implémenter les opérations CRUD (création, lecture, mise à jour, suppression)
+* Gérer la validation et la transformation des données
+* Assurer la sécurité et l'intégrité des données
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Maîtrise avancée de NestJS
+* Expérience pratique avec les bases de données relationnelles et/ou non relationnelles
+* Connaissance approfondie des ORM tels que TypeORM ou Prisma
+* Compétences en conception et gestion des entités et des relations entre données
+* Expérience dans l'implémentation des opérations CRUD en NestJS
+* Connaissance des bonnes pratiques de validation et de transformation des données
+* Connaissance des pratiques de sécurité des données et gestion de l’intégrité
+* Compétences pédagogiques
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+:correction: https://github.com/O-clock-Formations-courtes/NestJSChallenge/blob/main/correctionJ1.md
+:temps: jusqu'à 90 minutes
+:description: Passer du temps à bien corriger le challenge d'hier en commentant bien votre code.
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/nestJs/04Persistance.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+Finir le module du matin
+
+:challenge: https://github.com/O-clock-Formations-courtes/NestJSChallenge
+:description: ÔTarte : Persistance des données
+:correction: https://github.com/O-clock-Formations-courtes/NestJSChallenge/blob/main/correctionJ2.md
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s06e02]
+--
+// end::deroulement[]

@@ -1,0 +1,36 @@
+:title: Formations courtes
+include::../../adoc/libs/header-formation.adoc[]
+
+// tag::links[]
+* link:https://oclock.io/formations-pro[Site O'Clock - Formations courtes]
+// end::links[]
+
+// tag::intro[]
+Notre catalogue de formations courtes pour les professionnels
+// end::intro[]
+
+link:./suivi.html[Référent de promo]
+
+== Objectifs
+
+// tag::objectifs[]
+Proposer des formation courtes dans ces différents domaines :
+
+* Cybersécurité
+* Data
+* Design
+* Développement Web
+* DevOps
+* Systèmes et réseaux
+// end::objectifs[]
+
+== Déroulement
+
+link:./modules/index.html[Glossaire des modules]
+
+// tag::deroulement[]
+include::./saisons/*/index.adoc[opts=saisons]
+// end::deroulement[]
+
+
+

@@ -1,0 +1,440 @@
+:titre: Websockets
+:module: nestJs
+:duree: 45
+:description: Comprendre les Websockets
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* **Comprendre** le fonctionnement des WebSockets et leur utilité
+* **Appliquer** l'intégration des WebSockets avec NestJS
+* **Créer** des gateways pour la communication en temps réel
+* **Comprendre** la différence entre communication HTTP et WebSocket
+// end::objectifs[]
+
+// tag::deroulement[]
+
+[background-color="var(--r-oclock-color)"]
+== Prérequis*
+
+* _Connaissance théorique des websockets_
+
+*https://docs.nestjs.com/websockets/gateways[La documentation]*
+
+*https://github.com/O-clock-Teach/DWWM-NestJS-GraphQL-support/tree/websockets[Support github]*
+
+[background-color="var(--r-oclock-color)"]
+== Que sont les Websockets ?
+
+Les Websockets sont un protocole permettant la communication en temps réels entre un client et un serveur.
+
+Le protocole Websockets a été conçu pour être compatible avec le protocole http, en fonctionnant sur les ports 80 (http) et 443 (https).
+
+// UML only
+// [mermaid]
+// -----
+// graph TD
+//     style http fill:#31AFD4,stroke:#333,stroke-width:2px
+//     style ws fill:#4062BB,stroke:#333,stroke-width:2px
+
+//     subgraph http ["HTTP"]
+//         http_req[("Client")]
+//         http_res[("Serveur")]
+//         http_req -->|Requête| http_res
+//         http_res -->|Réponse| http_req
+//     end
+
+//     subgraph ws ["WebSocket"]
+//         ws_client[("Client")]
+//         ws_server[("Serveur")]
+//         ws_client <-->|Communication bidirectionnelle| ws_server
+//     end
+// -----
+
+[background-color="var(--r-oclock-color)"]
+=== Principe de fonctionnement des Websockets
+
+Au moment où un client tente de contacter un serveur websockets, le protocole http est utilisé, et lorsque le serveur répond, il se produit ce qu'on appelle une handshake (signal d'authentification  servant à coordonner les deux parties ).
+
+Si cette handshake est réalisé avec succès, le header https://en.wikipedia.org/wiki/HTTP/1.1_Upgrade_header[Upgrade] permettra de passer du protocole HTTP au protocole Websockets.
+
+Ce header est aussi utilisé quand on se connecte à un site Web, c'est lui qui permet de mettre en place la connexion HTTPS quand on s'est connecté en HTTP (si le serveur est bien configuré).
+
+[background-color="var(--r-oclock-color)"]
+=== Choix de la technologie
+
+Pour mettre en place les websockets, on a le choix entre deux des implémentations les plus populaires de ce protocole : socket.io ou la librairie ws.
+
+On a choisi d'intégrer socket.io à NestJS, car c'est une librairie très populaire et surtout, parce que les choses sont rendues plus simples avec cette librairie, on aura moins de code à faire.
+
+[background-color="var(--r-demonstration)"]
+== Mise en place des modules
+
+Ces modules vont nous fournir les décorateurs et la possibilité d'intégrer les websockets dans l'application, ainsi que le serveur websockets.
+
+NestJS relaiera les messages et agira comme la colle entre client et serveur Websockets.
+
+[source,bash]
+----
+npm i --save @nestjs/websockets @nestjs/platform-socket.io
+----
+
+[background-color="var(--r-oclock-color)"]
+== Concepts : les gateways
+
+Pour comprendre comment intégrer les websockets à NestJS, il faut comprendre ce que sont les gateways.
+
+Gateway signifie littéralement passerelle. Dans NestJS, les *_gateways_* sont des classes décorées avec `@WebSocketGateway()`.
+
+Les données transitent par ces classes, elles écoutent des évènements, reçoivent et transmettent des données.
+
+On peut aussi les injecter dans d'autres classes ou leur injecter des classes.
+
+En ce sens, elles sont traitées comme des providers.
+
+[background-color="var(--r-demonstration)"]
+== Mise en place
+
+Avec la CLI, on peut générer une gateway, le module movie sera mis à jour en conséquence (on vérifiera quand même ) :
+
+[source,bash]
+----
+nest g gateway movie --no-spec
+----
+
+On lit le code de ce nouveau fichier, il y a déjà du code boilerplate, dont deux décorateurs :
+
+* `@WebSocketGateway()` Ce décorateur déclare la classe en tant que gateway, ce qui rend possible la gestion de connexion et d'évènements  WebSockets.
+
+* `@SubscribeMessage('message')` Ce décorateur  indique que la méthode `handleMessage(client: any, data: any)` gèrera des évènements dont le nom est 'message'.
+
+[background-color="var(--r-demonstration)"]
+=== Mise en place du serveur
+
+On va modifier cette classe pour la dynamiser et la rendre plus intéressante :
+
+[source,typescript]
+----
+import {
+  SubscribeMessage,
+  WebSocketGateway,
+  MessageBody,
+  WebSocketServer,
+} from '@nestjs/websockets';
+import { Server } from 'socket.io';
+
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+})
+export class MovieGateway {
+  @WebSocketServer()
+  server: Server;
+  @SubscribeMessage('ping')
+  handleMessage(@MessageBody() data: string): object {
+    return {
+      event: 'pong',
+      data: `Hello ! We received ${data}`,
+    };
+}
+----
+
+
+[background-color="var(--r-demonstration)"]
+=== Mise en place du client
+
+On a le minimum 'légal' pour tester la communication bidirectionnelle, on installe un module supplémentaire pour implémenter un client, et on teste.
+
+[source,bash]
+----
+npm i socket.io-client
+----
+
+On crée un répertoire client, et un fichier `client.js`, où on veut, il faut surtout comprendre qu'il est censé être séparé de l'application NestJS : *c'est juste un client Websocket*.
+
+[background-color="var(--r-demonstration)"]
+=== Le client
+
+[source,javascript]
+----
+const { io } = require('socket.io-client');
+function callServer() {
+  const ioClient = io('http://localhost:3000', {
+    autoConnect: false,
+   // TODO : expliquer ça
+    transports: ['websocket', 'polling'],
+  });
+  // On se connecte au serveur
+  ioClient.connect();
+  // On émet un évènement, et on envoie des données
+  ioClient.emit('ping', 'Hello world!');
+  // On reçoit un message depuis le serveur
+  ioClient.on('pong', (data) => {
+    console.log('RECEIVED', data);
+  });
+  // est-on connecté ?
+  ioClient.on('connect', () => {
+    console.log('connected');
+  });
+}
+callServer();
+----
+
+Exécuter ce fichier dans le terminal : `node client.js`, si tout va bien, on devrait voir les messages se loguer dans le terminal.
+
+[background-color="var(--r-oclock-color)"]
+== Bonus : Un service Websockets
+
+On va mettre en place l'envoie d'un évènement après avoir créé un movie,  et ensuite, on dira à notre client d'écouter cet évènement.
+
+Pour ce faire, on va créer un module socket proprement, que l'on injectera pour nous en resservir où on veut.
+
+[source,bash]
+----
+nest generate module socket
+nest generate service socket --no-spec
+nest generate gateway socket --no-spec
+----
+
+[background-color="var(--r-demonstration)"]
+=== Bonus : Souscription à un évènement
+
+Voici le service `socket`, il recevra les connexions des clients et les enregistrera pour pouvoir leur envoyer des messages.
+
+On ajoute une méthode emitEvent qui enverra les messages aux clients.
+
+[source,typescript]
+----
+// socket/socket.service.ts
+import { Injectable } from '@nestjs/common';
+import { Socket } from 'socket.io';
+@Injectable()
+export class SocketService {
+  private connectedClients: Map<string, Socket> = new Map();
+  handleConnection(socket: Socket): void {
+    // Id du client qui se connecte pour recevoir des messages
+    const clientId = socket.id;
+    this.connectedClients.set(clientId, socket);
+
+    socket.on('disconnect', () => {
+      this.connectedClients.delete(clientId);
+    });
+  }
+  emitEvent(event: string, data: any) {
+      // Chaque client est un socket, on envoie un message à chacun
+    this.connectedClients.forEach((client) => {
+      client.emit(event, data);
+    });
+  }
+}
+----
+
+[background-color="var(--r-demonstration)"]
+=== Bonus : Souscription à un évènement
+
+Ensuite, on importe le `gateway` et le `service` dans le module `socket` :
+
+[source,typescript]
+----
+// socket.module.ts
+import { Module } from '@nestjs/common';
+import { SocketGateway } from './socket.gateway';
+import { SocketService } from './socket.service';
+@Module({
+  providers: [SocketGateway, SocketService],
+})
+export class SocketModule {}
+----
+
+[background-color="var(--r-demonstration)"]
+=== Bonus : Souscription à un évènement
+
+On implémente le gateway avec pour gérer les connexions, on se souvient que le gateway est la passerelle entre le serveur Websockets et NestJS :
+
+[source,typescript]
+----
+import {
+  WebSocketGateway,
+  OnGatewayConnection,
+  WebSocketServer,
+} from '@nestjs/websockets';
+import { Socket } from 'socket.io';
+import { SocketService } from './socket.service';
+
+@WebSocketGateway()
+export class SocketGateway implements OnGatewayConnection {
+  @WebSocketServer()
+  private server: Socket;
+
+  constructor(private readonly socketService: SocketService) {}
+
+  handleConnection(socket: Socket): void {
+    this.socketService.handleConnection(socket);
+  }
+
+  emitEvent(event: string, data: any): void {
+    this.socketService.emitEvent(event, data);
+  }
+}
+----
+
+
+[background-color="var(--r-oclock-color)"]
+=== Bonus : Souscription à un évènement
+
+On pense à vérifier que le module `App` a été mis à jour avec le module `Socket` on devrait retrouver `SocketModule` dans le tableau des imports.
+
+[background-color="var(--r-demonstration)"]
+=== Bonus : Souscription à un évènement
+
+On peut enfin modifier le module et le provider `movie` pour tenir compte de cette nouvelle fonctionnalité.
+
+On ajoute le `service` et le `gateway` socket aux providers du module movie :
+
+[source,typescript]
+----
+// movie.module.ts
+// ...
+import { SocketService } from '../socket/socket.service';
+import { SocketGateway } from '../socket/socket.gateway';
+
+@Module({
+  providers: [
+    // ...
+    SocketService,
+    SocketGateway,
+  ],
+})
+export class MovieModule {}
+----
+
+[background-color="var(--r-demonstration)"]
+=== Bonus : Souscription à un évènement
+
+On peut à présent dire à notre provider d'envoyer un évènement websockets dans la méthode `create` de `movie.provider` :
+
+[source,typescript]
+----
+// ...
+import { SocketService } from '../socket/socket.service';
+
+@Resolver((of) => MovieType)
+export class MovieResolver {
+  constructor(
+    // ...
+    // On injecte notre service WebSockets
+    private readonly socketService: SocketService,
+  ) {}
+  @Mutation((returns) => MovieType)
+  async create(@Args('data') data: MovieInput) {
+    const movie = await this.movieService.create(data);
+    // On émet l'évènement avec les données
+    this.socketService.emitEvent('movieAdded', movie);
+
+    return movie;
+  }
+}
+----
+
+[background-color="var(--r-demonstration)"]
+=== Bonus : Souscription à un évènement
+
+Il nous reste à modifier le client pour qu'il écoute l'évènement `movieAdded` :
+
+[source,javascript]
+----
+// socket-client/client.js
+function callServer() {
+    ioClient.on('movieAdded', (movie) => {
+        console.log('We received a movie', movie);
+        console.log('MOVIE ADDED', movie);
+    });
+}
+----
+
+On peut démarrer le serveur et le client, on ajoute un movie avec la sandbox GraphQL et si tout va bien, on reçoit le movie dans le client.
+
+// tag::exercice[]
+== Les Exos du jour
+
+* Mettre en place des websockets afin d'envoyer des notifications quand on modifie le prix d'un produit.
+
+== Correction
+
+[NOTE.speaker]
+--
+1. Créer un gateway pour les produits :
++
+```typescript
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+})
+export class ProductGateway {
+  @WebSocketServer()
+  server: Server;
+
+  notifyPriceChange(productId: number, oldPrice: number, newPrice: number) {
+    this.server.emit('priceChanged', {
+      productId,
+      oldPrice,
+      newPrice,
+      timestamp: new Date()
+    });
+  }
+}
+```
+
+2. Modifier le service des produits :
++
+```typescript
+@Injectable()
+export class ProductService {
+  constructor(private productGateway: ProductGateway) {}
+
+  async updatePrice(id: number, newPrice: number) {
+    const product = await this.findOne(id);
+    const oldPrice = product.price;
+    
+    await this.prisma.product.update({
+      where: { id },
+      data: { price: newPrice }
+    });
+
+    this.productGateway.notifyPriceChange(id, oldPrice, newPrice);
+  }
+}
+```
+
+3. Client WebSocket simple :
++
+```javascript
+const socket = io('http://localhost:3000');
+
+socket.on('priceChanged', (data) => {
+  console.log(`Prix modifié pour le produit ${data.productId}`);
+  console.log(`Ancien prix: ${data.oldPrice}€`);
+  console.log(`Nouveau prix: ${data.newPrice}€`);
+});
+```
+--
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Maîtrise des concepts fondamentaux des WebSockets
+* Capacité à implémenter une communication bidirectionnelle en temps réel
+* Compréhension de l'utilisation des gateways dans NestJS
+* Aptitude à gérer les connexions WebSocket et les événements
+* Maîtrise de l'intégration de Socket.io avec NestJS
+* Capacité à créer un système de notification en temps réel
+// end::conclusion[]

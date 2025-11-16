@@ -1,0 +1,33 @@
+[background-color=var(--r-demonstration)]
+== show
+
+Afficher une ressource devrait être plus direct et plus simple, il y a juste deux particularités à prendre en compte : on récupère le paramètre d'URL avec un décorateur,
+
+Et on convertit explicitement ce paramètre en nombre `(+id)` pour que typescript nous laisse tranquille :
+
+[source ,typescript]
+----
+// notes.controller.ts
+// * On paramètre la route avec l'id
+@Get(':id')
+// * On récupère l'ID avec un décorateur que l'on doit importer
+async show(@Param('id') id: string): Promise<object> {
+    // * Le + devant une string convertit celle-ci en nombre : '1' devient alors 1
+    return { note: await this.notesService.find(+id) };
+}
+----
+
+[background-color=var(--r-demonstration)]
+=== show
+
+On doit créer la méthode `find` dans le service et on fait appelle à https://sequelize.org/docs/v6/core-concepts/model-querying-finders/#findbypk[la méthode `findByPk`]  de sequelize :
+
+[source ,typescript]
+----
+// notes.service.ts
+async find(noteId: number): Promise<Note> {
+    return await this.noteModel.findByPk(noteId);
+}
+----
+
+On peut customiser le paramètre d'URL, si on souhaite paramétrer les URL avec le titre d'une note plutôt qu'un ID, dans ce cas, il faudra aussi changer la requête du service  et utiliser https://sequelize.org/docs/v6/core-concepts/model-querying-finders/#findone[la méthode `findOne`] de sequelize.

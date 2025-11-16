@@ -1,0 +1,67 @@
+:title: Introduction aux APIs avec Gin
+:number: 03
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée de formation est dédiée à la création d'APIs web avec le framework Gin en Go. Vous découvrirez comment concevoir et implémenter des APIs RESTful performantes et bien structurées. De la mise en place des routes de base à l'implémentation de middlewares avancés, vous apprendrez les meilleures pratiques pour développer des applications web robustes avec Gin.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les principes fondamentaux des APIs RESTful
+* Maîtriser l'installation et la configuration de Gin
+* Implémenter des routes HTTP basiques et avancées
+* Créer et utiliser des middlewares personnalisés
+* Gérer les requêtes et les réponses HTTP efficacement
+* Structurer une application web avec Gin
+* Sécuriser les endpoints d'une API
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Expertise approfondie du framework Gin
+* Maîtrise des principes REST et des protocoles HTTP
+* Expérience significative dans le développement d'APIs
+* Connaissance des bonnes pratiques de sécurité web
+* Compréhension des patterns de conception web
+* Maîtrise des outils de test d'API (Postman, curl)
+* Expérience dans la gestion des erreurs HTTP
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/go/09ApiGo.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/go/10Gin.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/go/11GinRoutesMiddleware.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Formations-courtes/GoChallenge
+:description: Création d'une application de quizz en Go
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+* Vérifier la compréhension des concepts REST
+* S'assurer de la bonne utilisation des fonctionnalités de Gin
+* Accompagner dans la structuration des routes
+* Veiller à l'implémentation correcte des middlewares
+* Contrôler la gestion des erreurs HTTP
+* Guider dans les bonnes pratiques de sécurité
+--
+// end::deroulement[]

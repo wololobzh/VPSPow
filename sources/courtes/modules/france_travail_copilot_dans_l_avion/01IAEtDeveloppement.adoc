@@ -1,0 +1,105 @@
+:titre: L'IA au service de l'apprentissage du développement web
+:module: IA et développement web
+:duree: 45
+:description: Découvrir comment les outils d'IA accélèrent l'apprentissage des compétences en développement web, tout en explorant leurs limites.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre comment les outils d'IA peuvent accélérer l'apprentissage.
+* Identifier les outils d'IA pertinents pour le développement web.
+* Analyser les limites et défis liés à l'utilisation de l'IA dans ce contexte.
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Les outils d'IA et leur rôle dans l'apprentissage
+
+L'IA joue un rôle clé dans la formation des apprenants, notamment en développement web, en facilitant l'accès aux ressources, en automatisant les tâches complexes, et en offrant des solutions interactives et personnalisées.
+
+image::./assets/Github-copilot-logo.png[Les outils d'IA,500]
+
+[NOTE.speaker]
+--
+Les outils d’IA comme ChatGPT, GitHub Copilot ou Replit Ghostwriter permettent de :
+* Réduire les obstacles techniques en guidant les apprenants pas à pas.
+* Accéder instantanément à des explications ou des exemples de code.
+* Générer du code rapidement, offrant une base pour expérimenter et apprendre.
+--
+
+== Pourquoi les outils d'IA rendent-ils l'apprentissage plus rapide ?
+
+L’utilisation de l’IA dans l’apprentissage du développement web accélère la montée en compétences grâce à :
+
+* L'apprentissage interactif : Les assistants IA répondent aux questions des apprenants en temps réel.
+* La pratique simplifiée : Les générateurs de code proposent des solutions que les apprenants peuvent analyser, tester et modifier.
+* L'optimisation du temps : Les outils comme Copilot suggèrent des blocs de code pré-écrits pour des tâches récurrentes.
+
+[NOTE.speaker]
+--
+Ces outils suppriment des obstacles tels que le manque de compréhension des bases ou la difficulté à déboguer un code, en fournissant des retours rapides et précis.
+--
+
+== Les outils IA populaires pour le développement web
+
+Voici quelques outils d'IA qui révolutionnent le domaine du développement web :
+
+* **ChatGPT** : Répond aux questions, explique les concepts, et aide à résoudre les problèmes de code.
+* **GitHub Copilot** : Génère automatiquement des suggestions de code à partir de commentaires ou de lignes existantes.
+* **Codeium/Replit Ghostwriter** : Intègre une IA d'assistance au codage directement dans l'environnement de développement.
+* **Grammarly for Developers** : Assure la qualité linguistique de la documentation ou des commentaires.
+
+[NOTE.speaker]
+--
+Ces outils permettent aux apprenants de se concentrer sur la compréhension des concepts plus complexes tout en externalisant les tâches répétitives ou difficiles.
+--
+
+== Limites des outils d'IA
+
+Bien que l’IA simplifie l’apprentissage, elle présente aussi des limites :
+
+* **Compréhension partielle** : Les apprenants risquent de ne pas comprendre le code généré s’ils s'appuient trop sur l’IA.
+* **Manque de personnalisation** : Les réponses peuvent être génériques et ne pas convenir aux cas d’usage spécifiques.
+* **Dépendance** : Une trop grande utilisation peut entraîner une dépendance, limitant l'autonomie.
+* **Biais et erreurs** : L'IA peut fournir des solutions incorrectes ou biaisées.
+* **Coût** : Certains outils avancés nécessitent des abonnements coûteux.
+
+[NOTE.speaker]
+--
+Il est important d'équilibrer l'utilisation de l'IA avec une formation solide sur les bases du développement web. Les apprenants doivent comprendre qu'un outil est une aide, pas une solution.
+--
+
+== Comment intégrer l'IA efficacement dans son apprentissage ?
+
+* Alterner entre apprentissage assisté par IA et exercices sans IA.
+* Analyser chaque solution générée pour en comprendre les mécanismes.
+* Tester les limites de l'IA en posant des questions complexes ou en explorant des cas non standards.
+* Compléter les outils d’IA avec des ressources traditionnelles (livres, cours en ligne).
+
+[NOTE.speaker]
+--
+Pour devenir un développeur compétent, il est crucial d'apprendre à utiliser l'IA comme un levier, tout en conservant une approche critique et proactive.
+--
+
+== Conclusion
+
+// tag::conclusion[]
+* L'IA est un levier puissant pour accélérer l'apprentissage.
+* Elle permet de simplifier les tâches complexes et de proposer des solutions interactives.
+* Toutefois, elle ne remplace pas l'effort humain et peut induire des biais ou une dépendance.
+// end::conclusion[]
+
+// end::deroulement[]
+
+== Ressources complémentaires
+
+* Documentation GitHub Copilot : https://github.com/features/copilot
+* Tutoriels interactifs avec Replit Ghostwriter : https://replit.com
+* Articles sur les usages de ChatGPT dans le développement : [lien]
+* Forum pour poser des questions de développement : https://stackoverflow.com
