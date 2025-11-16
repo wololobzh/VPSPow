@@ -46,3 +46,14 @@ jobs:
         with:
           path: build
           name: artifact
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-pages-artifact@v3
+        with:
+          name: artifact
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
