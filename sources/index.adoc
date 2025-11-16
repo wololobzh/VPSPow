@@ -7,6 +7,7 @@
 * Bac+2 TSSR
 * link:./ais/index.html[DAC Bac+4 - Expert Administration d'Infrastructures Sécurisées]
 * link:./devops/index.html[DAC Bac+4 - Expert DevOps]
+* link:/devops/index.html[TEST]
 
 === Développement
 
