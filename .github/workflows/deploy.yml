@@ -44,8 +44,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          path: build
-          name: artifact
+          path: build/
+          name: wololo-artifact
 
   deploy:
     runs-on: ubuntu-latest
@@ -56,11 +56,11 @@ jobs:
         uses: actions/checkout@v3
 
       # 2️⃣ Télécharger l'artifact généré lors du build
-      - name: Download artifact
-        uses: actions/download-artifact@v4
+      - name: Download wololo-artifact
+        uses: actions/download-artifact@v5
         with:
-          name: artifact
-          path: build
+          name: wololo-artifact
+          path: /home/ubuntu/mon-site
 
       # 2️⃣ Charger la clé SSH privée
       - name: Setup SSH
