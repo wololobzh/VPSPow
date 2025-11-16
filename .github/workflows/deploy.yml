@@ -86,4 +86,4 @@ jobs:
       # 5 Déployer les fichiers build sur le VPS avec rsync
       - name: Deploy files
         run: |
-          rsync -avz --delete ./build ubuntu@51.254.205.63:/home/ubuntu/mon-site
+          rsync -avz --delete ./le-build ubuntu@51.254.205.63:/home/ubuntu/mon-site
