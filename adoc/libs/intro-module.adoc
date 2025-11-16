@@ -38,14 +38,14 @@ endif::[]
 <div class="links" style="display: flex; justify-content: space-around; align-items: baseline;">
 ++++
 
-link:/{path}.html[🔗 Contenu]
+link:./{path}.html[🔗 Contenu]
 
-link:/{path}-slides.html[🔗 Slides]
+link:./{path}-slides.html[🔗 Slides]
 
 [subs="attributes"]
 ++++
-<button onclick="preview(`/{path}.html`)">👀 Preview</button>
-<button onclick="preview(`/{path}-slides.html`)">👀 Slides</button>
+<button onclick="preview(`./{path}.html`)">👀 Preview</button>
+<button onclick="preview(`./{path}-slides.html`)">👀 Slides</button>
 </div>
 ++++
 ****
