@@ -53,7 +53,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-      deployment: github-pages
     steps:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v3.0.4
