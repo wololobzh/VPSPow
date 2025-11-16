@@ -87,3 +87,8 @@ jobs:
       - name: Deploy files
         run: |
           rsync -avz --delete ./le-build ubuntu@51.254.205.63:/home/ubuntu/mon-site
+
+      # 5️⃣ Redémarrer le conteneur Docker sur le VPS
+      - name: Restart Docker
+        run: |
+          ssh ubuntu@51.254.205.63 "cd /home/ubuntu/mon-site && docker compose up -d --build"
