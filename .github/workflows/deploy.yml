@@ -8,10 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: asciidoctor/docker-asciidoctor
-      volumes:
-        - .:/workspace
 
     steps:
       - name: Checkout
@@ -28,16 +24,28 @@ jobs:
           name: site-build
           path: build
 
+      - name: Upload compose file
+        uses: actions/upload-artifact@v4
+        with:
+          name: compose-file
+          path: docker-compose.yml
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
 
     steps:
-      - name: Download artifact
+      - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
           name: site-build
           path: ./build
+
+      - name: Download compose file
+        uses: actions/download-artifact@v4
+        with:
+          name: compose-file
+          path: ./
 
       # 🔐 Setup SSH
       - name: Load SSH private key
@@ -45,19 +53,28 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      # 🔐 Add host key automatically
       - name: Add VPS to known_hosts
         run: |
           mkdir -p ~/.ssh
-          echo "|1|TME6gLhvk9CBat6CUQoeHyfX1Rk=|YwWqo3fN8IyzYDrjUYMDz2pg9dk= ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDICT8oMSx7RnSMhZl+Vdks5Q66l/8eJD8NbwFLFBSED4bZw14WbNp7XMoXnuNDUhlAapHYdga4l5n9LOovSd0GucXLe0SfYm4/9nYaT1kKcE/3I+42Rs+C+jgVgFRZrnplzeeahRa6IkzgT9JXCIpZb/ilZhD1usbNolW3xb5XN8cv/dOG/rqUuz9NSOyjsw85om6dmUFc4uaK3tRHs8OnqAGjv3/rwUsbr0q/B3WPPbMJpyYQq82DLx8O88Y1Q9e+MYKRf5Cyt/opqdsrypHrop3I1pbSYl2nua6asdxvSoIigVSijxNzXeSvKStbFTfQBTCNs+0ulPX5PrFQccNSNexhNRwFNLGBg3kFAWHSNylN0YWBW4ZEToxOm1mgnhZ9hlvG5UnDi9SyQgJyE+gcv3pUjypgi+eYimMuSdje+DFaqopB0H9WZJu3zzjrP+6l0UGfq+6MdSyzKR3KNRNUe8EYDk7EUIeiqCcCmKPCLazKW7oa5GPYUIi9KDR5wcM=" >> ~/.ssh/known_hosts
-          echo "|1|w9oASUNQA6nLrF7Ydw8alaGHC4U=|v0UpLBz5We3XCA1DSCp1MUQMQfg= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEsaEydNk4E4FaPkuMZWYo01X61FAjRIHVZ/vCnmrgmzZxsYYb2UImXzx1JRAhFwWepfiSpkZ2ol7kDm4Z+aJeo=" >> ~/.ssh/known_hosts
-          echo "|1|2lPuQMVdZc8gL2FWIqs0TEXTTos=|IRAMJLESLIFh/5aN5VEOnSNHmus= ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDvHDdLY+9ARujFc8GumH+trLtXwyIZSFGEeYoAnEMmE" >> ~/.ssh/known_hosts
+          ssh-keyscan 51.254.205.63 >> ~/.ssh/known_hosts
 
-      # 📦 Déploiement du build vers /home/ubuntu/mon-site/build
+      # 📦 Deploy build/
       - name: Deploy build to VPS
         run: |
           rsync -avz --delete ./build/ ubuntu@51.254.205.63:/home/ubuntu/mon-site/build
 
-      # 🔄 Redémarrer Docker (nginx recharge automatiquement les fichiers)
-      - name: Restart docker compose
+      # 📦 Deploy docker-compose.yml
+      - name: Deploy compose file to VPS
         run: |
-          ssh ubuntu@51.254.205.63 "cd /home/ubuntu/mon-site && docker compose up -d"
+          rsync -avz docker-compose.yml ubuntu@51.254.205.63:/home/ubuntu/mon-site/docker-compose.yml
+
+      # 🧪 Debug: list directory on VPS
+      - name: List remote directory
+        run: |
+          ssh ubuntu@51.254.205.63 "ls -l /home/ubuntu/mon-site"
+
+      # 🔄 Restart containers
+      - name: Restart Docker Compose
+        run: |
+          ssh ubuntu@51.254.205.63 "cd /home/ubuntu/mon-site && docker compose up -d --build"
