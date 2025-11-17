@@ -1,0 +1,58 @@
+:title: WebSocket
+:number: 07
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée de formation permet de maîtriser l'utilisation des WebSockets avec NestJS pour créer des applications en temps réel. Vous apprendrez à configurer et à utiliser des WebSockets pour des communications bidirectionnelles instantanées, en gérant efficacement les événements et les échanges de données en temps réel.
+// end::intro[]
+
+// == Objectifs pédagogiques
+// tag::objectifs[]
+* Comprendre les bases des WebSockets et des communications en temps réel
+* Maîtriser la configuration des WebSockets dans un projet NestJS
+* Établir des connexions bidirectionnelles avec NestJS
+* Gérer les événements et les flux de données en temps réel
+* Optimiser les performances des applications en temps réel
+* Mettre en œuvre des cas d’usage pratiques avec les WebSockets
+* Assurer la sécurité et la gestion des connexions
+// end::objectifs[]
+
+== Prérequis formateur
+// tag::prerequis[]
+* Maîtrise avancée de NestJS
+* Expérience pratique avec les WebSockets
+* Compréhension des protocoles de communication en temps réel
+* Compétences en gestion des événements asynchrones
+* Expérience en optimisation des performances
+* Connaissance des pratiques de sécurité
+* Compétences pédagogiques
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: https://github.com/O-clock-Formations-courtes/NestJSChallenge/blob/main/correctionJ6.md
+:temps: jusqu'à 90 minutes
+:description: Passer du temps à bien corriger le challenge d'hier en commentant bien votre code.
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/nestJs/12Websockets.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+Finir le module du matin
+
+:challenge: https://github.com/O-clock-Formations-courtes/NestJSChallenge
+:description: ÔTarte : WebSocket
+:correction: https://github.com/O-clock-Formations-courtes/NestJSChallenge/blob/main/correctionJ7.md
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s06e07]
+--
+// end::deroulement[]

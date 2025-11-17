@@ -1,0 +1,380 @@
+:titre: Bash les fonctions
+:module: Scripting
+:duree: 150
+:description: Compréhension des fonctions en Bash
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Les fonctions
+* Passage de paramètres
+* Code de retour
+* Gestion des erreurs
+* Fonction avancée
+* Modularisation
+// end::objectifs[]
+
+// tag::deroulement[]
+== Les fonctions
+
+Les fonctions en Bash sont des blocs de code encapsulés sous un nom, qui peuvent être appelés à plusieurs reprises dans le script. 
+
+Elles permettent de regrouper des commandes pour effectuer des tâches spécifiques, facilitant ainsi la structure, la réutilisation et la gestion du code. 
+
+L'utilisation des fonctions améliore la lisibilité et l'organisation des scripts, tout en permettant de réduire la duplication de code.
+
+=== Création de Fonctions
+
+```sh
+nom_de_fonction() {
+    # Corps de la fonction
+    commandes
+}
+```
+
+* `nom_de_fonction` : Nom de la fonction, appelle la fonction. Les conventions de nommage recommandent d'utiliser des lettres minuscules et des underscores pour séparer les mots.
+* `{ ... }` : Le corps de la fonction est délimité par des accolades { }, et contient les commandes qui seront exécutées 
+* `commandes` : Une série de commandes qui sont exécutées lorsque la fonction est appelée.
+
+=== Exemple de Fonction Simple
+
+```sh
+saluer() {
+    echo "Bonjour, $1!"
+}
+saluer "Alice"
+saluer "Bob"
+```
+
+* `saluer() { ... }` : Définit une fonction nommée saluer.
+* `echo "Bonjour, $1!"` : Affiche "Bonjour" suivi du premier argument passé à la fonction.
+* `saluer "Alice"` : Appelle la fonction avec "Alice" comme argument, ce qui entraîne l'affichage de "Bonjour, Alice!".
+* La fonction `saluer()` est appelée deux fois, ce qui entraînera l'affichage du message “Bonjour, Alice!” puis du message “Bonjour, Bob!”.
+
+== Passage de paramètres
+
+Les fonctions en Bash peuvent recevoir des arguments
+
+Les arguments sont référencés à l'intérieur de la fonction en utilisant des variables positionnelles (`$1`, `$2`, etc.), où `$1` est le premier argument, `$2` le deuxième, et ainsi de suite.
+
+=== Exemple et Explication
+
+```sh
+addition() {
+    echo "La somme de $1 et $2 est : $(($1 + $2))"
+}
+addition 5 7
+```
+
+* `addition() { ... }` : Déclare une fonction nommée addition.
+* `echo "La somme de $1 et $2 est : $(($1 + $2))"` : Affiche la somme des deux arguments passés à la fonction.
+* `addition 5 7` : Appelle la fonction addition avec les arguments 5 et 7, ce qui affiche "La somme de 5 et 7 est : 12".
+* Les paramètres permettent de rendre les fonctions plus flexibles et réutilisables.
+* Ils peuvent être utilisés pour passer des données dynamiques et contrôler le flux d'exécution à l'intérieur de la fonction
+
+== Code de Retour
+
+Une fonction peut retourner une valeur à l'aide de la commande `return`, 
+
+* retourne un code de sortie compris entre 0 et 255. 
+* Ce code de sortie est souvent utilisé pour indiquer le succès ou l'échec d'une fonction. 
+* Par défaut, un code de retour de 0 indique que la fonction s'est exécutée avec succès
+* Toute autre valeur indique une erreur. 
+* Le code de sortie peut être récupéré à l'aide de la variable spéciale $?.
+* Les codes de retour permettent de contrôler le flux d'exécution et de gérer les erreurs.
+* Ils peuvent être utilisés pour vérifier si une fonction s'est exécutée correctement et pour réagir en conséquence.
+
+=== Syntaxe de base et Exemple
+
+```sh
+ma_fonction() {
+    if [ $1 -gt 0 ]; then
+        echo "Argument positif"
+        return 0
+    else
+        echo "Argument négatif ou nul"
+        return 1
+    fi
+}
+ma_fonction 5
+echo "Code de retour : $?"
+ma_fonction -1
+echo "Code de retour : $?"
+```
+
+[NOTE.speaker]
+--
+**Explication**
+
+* `if [ $1 -gt 0 ]; then ... fi` : Vérifie si le premier argument est supérieur à 0.
+* `return 0` : Retourne le code de sortie 0 pour indiquer le succès.
+* `return 1` : Retourne le code de sortie 1 pour indiquer une erreur ou une condition non satisfaisante.
+* `echo "Code de retour : $?"` : Affiche le code de retour de la fonction, accessible via la variable spéciale `$?`.
+--
+
+== Gestion des erreurs
+
+Consiste à anticiper et à gérer les situations où des erreurs peuvent se produire, telles que des fichiers manquants, des permissions insuffisantes, ou des entrées utilisateur incorrectes.
+
+=== Exemple 
+
+```sh
+lire_fichier() {
+    if [ ! -f "$1" ]; then
+        echo "Erreur : Le fichier $1 n'existe pas."
+        return 1
+    fi
+
+    while IFS= read -r ligne; do
+        echo "$ligne"
+    done < "$1"
+    return 0
+}
+
+lire_fichier "fichier.txt"
+if [ $? -ne 0 ]; then
+    echo "La fonction a échoué."
+fi
+```
+
+[NOTE.speaker]
+--
+**Explication**
+
+* `if [ ! -f "$1" ]; then ... fi` : Vérifie si le fichier passé en argument n'existe pas.
+* `echo "Erreur : Le fichier $1 n'existe pas."` : Affiche un message d'erreur si le fichier n'existe pas.
+* `return 1` : Retourne un code d'erreur 1 pour indiquer l'échec de la fonction.
+* `while IFS= read -r ligne; do ... done < "$1"` : Lit chaque ligne du fichier et l'affiche.
+* `return 0` : Retourne 0 pour indiquer que la lecture du fichier s'est terminée avec succès.
+--
+
+=== Importance de la gestion des erreurs
+
+* Aide à prévenir les plantages inattendus et à fournir des informations utiles sur les erreurs.
+* Permet aux utilisateurs de prendre des mesures correctives en fonction des erreurs rencontrées.
+* Améliore la fiabilité et la robustesse des scripts.
+
+== Fonction avancée
+
+Les fonctions peuvent être utilisées de manière avancée pour des tâches telles que l'utilisation de tableaux, 
+
+* Le traitement des erreurs complexes, 
+* L'organisation modulaire des scripts. 
+* Elles permettent également de créer des bibliothèques de fonctions réutilisables.
+
+=== Fonctions avec tableaux :
+
+```sh
+traiter_tableau() {
+    local tableau=("$@")
+    for element in "${tableau[@]}"; do
+        echo "Élément : $element"
+    done
+}
+traiter_tableau "Pomme" "Banane" "Orange"
+```
+
+**Explication**
+
+* `local tableau=("$@")` : Stocke tous les arguments passés à la fonction dans un tableau.
+* `for element in "${tableau[@]}"; do ... done` : Parcourt chaque élément du tableau et l'affiche.
+
+== Modularisation
+
+```sh
+# contenu de fonctions.sh
+dire_bonjour() {
+    echo "Bonjour, $1!"
+}
+
+# contenu du script principal
+source fonctions.sh
+dire_bonjour "Alice"
+```
+
+**Explication**
+
+* `source fonctions.sh` : Inclut le fichier `fonctions.sh` et permet d'utiliser les fonctions définies dans ce fichier.
+* `dire_bonjour "Alice"` : Appelle la fonction définie dans `fonctions.sh`.
+
+// tag::demo[]
+
+== Démonstration
+
+[NOTE.speaker]
+--
+* **Introduction aux fonctions en Bash**
+
+Commencez par expliquer ce qu'est une fonction en Bash.
+
+```sh
+#!/bin/bash
+
+# Déclaration d'une fonction simple
+hello_world() {
+    echo "Hello, World!"
+}
+
+# Appel de la fonction
+hello_world
+```
+
+* **Passage de paramètres**
+
+Expliquez comment passer des paramètres à une fonction en Bash.
+
+```sh
+#!/bin/bash
+
+# Fonction qui prend deux paramètres et affiche une salutation personnalisée
+greet() {
+    local name=$1
+    local time_of_day=$2
+    echo "Good $time_of_day, $name!"
+}
+
+# Appel de la fonction avec des paramètres
+greet "Alice" "morning"
+greet "Bob" "afternoon"
+```
+
+* **Code de retour**
+
+Montrez comment retourner un code de sortie depuis une fonction.
+
+```sh
+#!/bin/bash
+
+# Fonction qui vérifie si un fichier existe
+file_exists() {
+    local file=$1
+    if [[ -f $file ]]; then
+        return 0  # Le fichier existe
+    else
+        return 1  # Le fichier n'existe pas
+    fi
+}
+
+# Appel de la fonction et utilisation du code de retour
+file_exists "/etc/passwd"
+if [[ $? -eq 0 ]]; then
+    echo "Le fichier existe."
+else
+    echo "Le fichier n'existe pas."
+fi
+```
+
+* **Gestion des erreurs**
+
+Intégrez la gestion des erreurs dans une fonction pour montrer comment gérer les échecs.
+
+```sh
+#!/bin/bash
+
+# Fonction qui divise deux nombres avec gestion des erreurs
+divide() {
+    local dividend=$1
+    local divisor=$2
+
+    if [[ $divisor -eq 0 ]]; then
+        echo "Erreur: Division par zéro." >&2
+        return 1
+    fi
+
+    echo "Résultat: $(($dividend / $divisor))"
+    return 0
+}
+
+# Appel de la fonction avec gestion des erreurs
+divide 10 2
+if [[ $? -ne 0 ]]; then
+    echo "Une erreur est survenue lors de la division."
+fi
+
+divide 10 0
+if [[ $? -ne 0 ]]; then
+    echo "Une erreur est survenue lors de la division."
+fi
+```
+
+* **Fonctions avancées**
+
+Utilisez des concepts avancés comme les arrays et les fonctions récursives.
+
+```sh
+#!/bin/bash
+
+# Fonction qui calcule la factorielle d'un nombre de manière récursive
+factorial() {
+    local n=$1
+    if [[ $n -le 1 ]]; then
+        echo 1
+    else
+        local temp=$(factorial $((n - 1)))
+        echo $((n * temp))
+    fi
+}
+
+# Appel de la fonction
+echo "Factorielle de 5: $(factorial 5)"
+```
+
+* **Modularisation**
+
+Montrez comment organiser le code en modules pour une meilleure réutilisation et lisibilité.
+
+```sh
+#!/bin/bash
+
+# Module math.sh
+math_operations() {
+    add() {
+        echo $(($1 + $2))
+    }
+
+    subtract() {
+        echo $(($1 - $2))
+    }
+
+    multiply() {
+        echo $(($1 * $2))
+    }
+}
+
+# Charger le module
+source math.sh
+
+# Utilisation des fonctions du module
+math_operations
+echo "10 + 5 = $(add 10 5)"
+echo "10 - 5 = $(subtract 10 5)"
+echo "10 * 5 = $(multiply 10 5)"
+```
+
+**Conclusion**
+
+Pour conclure la démonstration, récapitulez les points suivants :
+
+* Les fonctions permettent de structurer et réutiliser du code.
+* Le passage de paramètres permet de personnaliser les fonctions.
+* Le code de retour permet de gérer les états de succès ou d'échec.
+* La gestion des erreurs est cruciale pour des scripts robustes.
+* Les fonctions avancées comme les récursions ou les tableaux ajoutent de la puissance à vos scripts.
+* La modularisation aide à organiser et maintenir des scripts complexes.
+--
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* **Modularisation et organisation** : Les fonctions permettent de structurer le code en modules réutilisables et bien définis.
+* **Paramètres et retour de valeurs** : Flexibilité dans l'utilisation des fonctions grâce au passage de paramètres et à la gestion des codes de retour.
+* **Gestion des erreurs** : Cruciale pour écrire des scripts robustes et fiables, capables de gérer des situations inattendues.
+* **Utilisation avancée** : Capacité à intégrer des tableaux, à créer des bibliothèques de fonctions, et à organiser les scripts de manière modulaire pour une meilleure maintenance et réutilisation.
+// end::conclusion[]

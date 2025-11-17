@@ -1,0 +1,711 @@
+:title: Suivi DevOps
+:toclevels: 5
+include::../../adoc/libs/header-formation.adoc[]
+
+== Tâches récurrentes
+
+Tout ce qu'un référent de promo doit faire et quand.
+
+=== 🛠 Création d'un RETEX référent
+
+Le retour d'expérience du référent est essentiel pour l'amélioration continue.
+
+Voici une liste des points d’intérêt qu’un RETEX (retour d'expérience) hebdomadaire d’un référent de promotion peut apporter :
+
+. *Évaluation de la compréhension des apprenants* ; Permet d'identifier rapidement les notions ou compétences qui ont été bien assimilées, et celles qui nécessitent un approfondissement.
+Aide à anticiper des difficultés potentielles et à adapter le rythme des semaines suivantes.
+. *Identification des bloquages* ; Recueille les blocages rencontrés par les apprenants (techniques, méthodologiques, organisationnels).
+Permet de réagir en ajustant les contenus, en proposant des sessions de rattrapage ou en offrant des explications supplémentaires.
+. *Feedback sur les méthodes pédagogiques* ; Évalue l'efficacité des méthodes pédagogiques utilisées (exercices, ateliers pratiques, études de cas).
+Aide à ajuster les approches si certaines ne fonctionnent pas bien avec cette promotion, ou au contraire, à renforcer celles qui ont un impact positif.
+. *Suivi de la cohésion de groupe* ; Permet de mesurer la dynamique de groupe et d’identifier si des tensions ou des difficultés relationnelles apparaissent.
+Favorise la mise en place d’actions pour renforcer la cohésion, indispensable pour une progression harmonieuse de la promotion.
+. *Anticipation des besoins en soutien* ; Identifie les apprenants qui nécessitent un accompagnement supplémentaire ou des aménagements spécifiques.
+Permet de mettre en place des soutiens ponctuels pour éviter le décrochage ou pour remédier à des difficultés individuelles.
+. *Amélioration continue des supports de cours* ; Permet de recueillir des suggestions pour enrichir ou clarifier les supports de cours.
+Aide à repérer les contenus qui manquent de précision ou qui pourraient être mieux structurés pour la compréhension.
+. *Analyse des retours sur les exercices et évaluations* ; Mesure la pertinence et la difficulté des exercices ou évaluations donnés pendant la semaine.
+Aide à calibrer la difficulté des activités proposées et à les ajuster pour la progression optimale des apprenants.
+. *Visibilité sur la charge de travail* ; Permet de vérifier si la charge de travail est bien répartie et adaptée au niveau d’avancement de la promotion.
+Évite le surmenage et permet de répartir plus justement les travaux si la charge s’avère trop intense.
+. *Documentation des points forts et faiblesses de la promotion* ; Aide à repérer les points forts de la promotion, qui peuvent être valorisés pour motiver les apprenants.
+Permet d’identifier des faiblesses récurrentes qui pourraient faire l’objet d’une intervention ciblée.
+. *Préparation des saisons suivantes* ; Sert de base pour adapter la progression des saisons suivantes en fonction des besoins spécifiques de cette promotion.
+Assure une meilleure transition entre les différentes saisons, en renforçant les acquis là où c’est nécessaire.
+
+=== 📚 Checker les ebooks
+
+* Vérifier que le formateur a bien fournis le ebook de la saison
+* Si ce n'est pas le cas, faites le !
+
+Ebook O'clock : Pour la formation DevOps, nous mettons dorénavant à disposition des apprenants un EBook qui reprend l’intégralité des supports, démonstrations et exercices de la saison, et le plus beau dans tout ça c’est qu’il n’y aura même pas besoin de le mettre à jour quand le cours sera modifié car il puise toutes ses informations depuis la trame même. Alors à chaque fois que l'on parle des e-books, on dit 'Ebook O'clock' pour renforcer notre marque. 
+
+==== ☑️ Checker la plateforme d'anglais
+
+Le référent doit regarder si tous les apprenants se sont bien inscrit à l'anglais, si ce n'est pas le cas il faut leur envoyer ce message :
+
+```
+Hello ! J'espère que tu vas bien. Je me permets de te rappeler qu'il est essentiel que tu t'inscrives sur la plateforme d'anglais afin de suivre les cours qui sont une partie intégrante de ta formation. Cette inscription est nécessaire pour t'assurer de bien développer les compétences linguistiques qui seront un véritable atout dans ton futur métier. En effet, l'anglais est incontournable dans le domaine de l'informatique, tant pour la documentation technique que pour les échanges professionnels internationaux. Je t'invite donc à finaliser ton inscription dès que possible afin de ne pas prendre de retard. Si tu rencontres des difficultés pour le faire ou si tu as des questions, n'hésite pas à me contacter, je suis là pour t'aider. Bonne soirée !
+```
+
+=== ✅ Check de fin de semaine
+
+* Vérifier que le formateur a bien suivis les instructions de la journée asynchrone
+* Si pas de journée asynchrone, checker que l'ECF et le QS ont bien été transmis aux apprenants
+* Indiquer aux formateurs de faire un RETEX
+
+Dans une formation, le QS, ou questionnaire de satisfaction, est un outil clé pour s'assurer que la qualité de l'enseignement et des contenus répond aux attentes des apprenants. 
+
+Vérifier que le formateur a bien fourni le QS à chaque fin de saison permet de recueillir des retours précieux pour maintenir un haut niveau pédagogique et pour ajuster les contenus ou les méthodes si besoin. Ces retours nous aident aussi à identifier les aspects les plus appréciés ou ceux qui nécessitent des améliorations, assurant ainsi que la formation reste toujours alignée avec les besoins des apprenants.
+
+== Saison 00
+
+=== E01
+
+//tag::s00e01[]
+
+TIP: 9h00 : Assurez-vous que les apprenants ont bien reçu le programme de la journée.
+
+TIP: 16h30 : Exprimez-leur vos souhaits de bon week-end avec votre touche personnelle.
+
+//end::s00e01[]
+
+//tag::s00e02[]
+
+TIP: 16h00 : Souhaitez leur un bon weekend
+
+```
+Hello tout le monde ! 👋
+
+On arrive au bout de la semaine, et je voulais prendre un petit moment pour vous féliciter pour vos efforts et votre engagement. Vous avez bien bossé, bravo ! 💪
+
+Je vous souhaite un super week-end, prenez le temps de souffler, de profiter, et de recharger les batteries. 😌🌞 Que ce soit pour se déconnecter ou pour faire un peu de révisions tranquilles, chacun son rythme !
+
+Juste un rappel aussi : je suis là pour vous ! N’hésitez pas à me contacter si vous avez des questions, besoin d’aide ou juste pour discuter de votre parcours. Le chemin de la formation peut être intense, et je suis là pour vous accompagner.
+
+Allez, profitez bien de votre week-end ! À lundi pour la suite de nos aventures, avec toute l’énergie nécessaire pour attaquer de nouveaux défis ! 🚀
+
+Bon week-end à tous ! 🎉
+```
+TIP: 16h10 : Vérifiez que chaque apprenant a bien complété son ECF ; si ce n’est pas le cas, envoyez-lui un rappel précisant que c’est obligatoire et notifiez cette action dans Inside.
+
+//end::s00e02[]
+
+//tag::s00e03[]
+TIP: 16h00 : Souhaitez leur un bon weekend
+
+```
+Hello tout le monde !
+Bravo pour vos efforts cette semaine, vous avez vraiment donné le meilleur de vous-mêmes ! Profitez de ce week-end pour vous ressourcer et, surtout, prenez soin de vous. Si vous avez la moindre question ou besoin d'un coup de pouce, je suis là. Bon week-end, et à lundi en forme ! 🌞🚀
+```
+
+TIP: 16h10 : Vérifiez que chaque apprenant a bien complété son ECF ; si ce n’est pas le cas, envoyez-lui un rappel précisant que c’est obligatoire et notifiez cette action dans Inside.
+
+//end::s00e03[]
+
+//tag::s00e04[]
+TIP: 16h00 : Souhaitez leur un bon weekend
+
+```
+Salut la promo !
+Fin de semaine bien méritée ! Prenez ce week-end pour souffler, relâcher la pression et vous faire plaisir. Rappelez-vous que je suis là pour vous, à chaque étape du parcours. Bon week-end et à très vite pour la suite ! 💪✨
+```
+
+TIP: 16h10 : Vérifiez que chaque apprenant a bien complété son ECF ; si ce n’est pas le cas, envoyez-lui un rappel précisant que c’est obligatoire et notifiez cette action dans Inside.
+
+
+//end::s00e04[]
+
+//tag::s00e05[]
+TIP: 16h00 : Souhaitez leur un bon weekend
+
+```
+Coucou tout le monde !
+Félicitations pour cette semaine, c’était intense mais vous avez assuré ! Prenez le temps de vous reposer et de recharger les batteries. Et si vous avez besoin de quoi que ce soit, je suis là. Bon week-end et profitez bien ! 🌟🍃
+```
+
+TIP: 16h10 : Vérifiez que chaque apprenant a bien complété son ECF ; si ce n’est pas le cas, envoyez-lui un rappel précisant que c’est obligatoire et notifiez cette action dans Inside.
+//end::s00e05[]
+
+//tag::s00e06[]
+TIP: 16h00 : Souhaitez leur un bon weekend
+
+```
+Hey équipe !
+Vous avez vraiment bien bossé cette semaine, bravo ! Ce week-end, accordez-vous un peu de repos bien mérité. Profitez, et n’oubliez pas que je reste disponible si vous avez des questions. À lundi pour de nouvelles aventures ! 🚀😊
+```
+
+TIP: 16h10 : Vérifiez que chaque apprenant a bien complété son ECF ; si ce n’est pas le cas, envoyez-lui un rappel précisant que c’est obligatoire et notifiez cette action dans Inside.
+
+//end::s00e06[]
+
+//tag::s00e07[]
+TIP: 16h00 : Souhaitez leur un bon weekend
+
+```
+Salut à tous !
+Encore une semaine de terminée et que de progrès ! Je vous souhaite un excellent week-end, profitez de chaque instant pour vous détendre et vous amuser. Restez motivés, et sachez que je suis là pour vous si besoin ! Bon repos, à très vite ! 🌈✨
+```
+
+TIP: 16h10 : Vérifiez que chaque apprenant a bien complété son ECF ; si ce n’est pas le cas, envoyez-lui un rappel précisant que c’est obligatoire et notifiez cette action dans Inside.
+
+//end::s00e07[]
+
+//tag::s00e08[]
+TIP: 16h00 : Souhaitez leur un bon weekend
+
+```
+Hello la promo !
+La semaine se termine et vous avez fait du super boulot ! Profitez bien de ce week-end pour recharger les batteries et faire le plein de bonne énergie. Je reste dispo si vous avez des questions ou juste envie d’échanger. Bon week-end ! 🎉🌞
+```
+
+TIP: 16h10 : Vérifiez que chaque apprenant a bien complété son ECF ; si ce n’est pas le cas, envoyez-lui un rappel précisant que c’est obligatoire et notifiez cette action dans Inside.
+
+//end::s00e08[]
+
+//tag::s00e09[]
+TIP: 16h00 : Souhaitez leur un bon weekend
+
+```
+Salut les courageux !
+Vous avez tous donné le meilleur de vous-mêmes cette semaine, un grand bravo ! Profitez bien de votre week-end, reposez-vous, et n’hésitez pas à m’écrire si vous avez la moindre question. À lundi en pleine forme ! 🎉💪
+```
+
+TIP: 16h10 : Vérifiez que chaque apprenant a bien complété son ECF ; si ce n’est pas le cas, envoyez-lui un rappel précisant que c’est obligatoire et notifiez cette action dans Inside.
+
+//end::s00e09[]
+
+//tag::s00e10[]
+TIP: 16h00 : Souhaitez leur un bon weekend
+
+```
+Bonsoir à tous !
+La semaine touche à sa fin, et c’est l’occasion de vous dire à quel point je suis fier de vos progrès. Passez un très bon week-end, déconnectez, amusez-vous et revenez plein d’énergie lundi. Et je suis là si vous avez besoin de moi d’ici là ! 🌟✨
+```
+
+TIP: 16h10 : Vérifiez que chaque apprenant a bien complété son ECF ; si ce n’est pas le cas, envoyez-lui un rappel précisant que c’est obligatoire et notifiez cette action dans Inside.
+
+//end::s00e10[]
+
+//tag::s00e11[]
+TIP: 16h00 : Souhaitez leur un bon weekend
+
+```
+Hello la team !
+Bravo pour cette semaine de travail intense ! Reposez-vous bien ce week-end, c’est l’occasion de décompresser et de faire le plein de bonnes vibes. N’oubliez pas que je suis là pour vous épauler. Bon week-end à tous ! 🍃🎉
+```
+
+TIP: 16h10 : Vérifiez que chaque apprenant a bien complété son ECF ; si ce n’est pas le cas, envoyez-lui un rappel précisant que c’est obligatoire et notifiez cette action dans Inside.
+
+//end::s00e11[]
+
+//tag::s00e12[]
+TIP: 16h00 : Souhaitez leur un bon weekend
+
+```
+Salut à vous !
+Vous avez tenu bon cette semaine, bravo à chacun d’entre vous ! Profitez bien du week-end pour faire une pause et vous ressourcer. Comme toujours, je reste dispo si vous avez des questions ou besoin de soutien. À lundi pour continuer ensemble ! 💪🚀
+```
+
+TIP: 16h10 : Vérifiez que chaque apprenant a bien complété son ECF ; si ce n’est pas le cas, envoyez-lui un rappel précisant que c’est obligatoire et notifiez cette action dans Inside.
+
+//end::s00e12[]
+
+== Saison 01
+
+=== E01
+
+==== 🎤 Se présenter
+
+//tag::s01e01p01[]
+Présentation du rôle du référent de promotion après la pause du matin. 
+//end::s01e01p01[]
+
+Voici ses principales responsabilités :
+
+* **Accompagnement personnalisé** : Il est le point de contact principal pour les étudiants d'une promotion. Il assure un suivi individualisé, répond à leurs questions, les aide à surmonter les difficultés (pédagogiques, administratives, ou autres) et les guide dans leur parcours.
+* **Coordination pédagogique** : Il fait le lien entre les apprenants et les formateurs. Il s’assure que les objectifs pédagogiques sont bien compris et atteints par les apprenants, et peut ajuster le programme si nécessaire.
+* **Suivi de la progression** : Il surveille les progrès de chaque apprenant, en fonction des évaluations et des retours des formateurs, et les aide à améliorer leurs performances si nécessaire.
+* **Gestion de la cohésion de groupe** : Il veille à créer une bonne dynamique au sein de la promotion. Il peut organiser des activités de groupe, résoudre des conflits et encourager la collaboration entre les étudiants.
+* **Médiation et motivation** : Il agit comme un motivateur et un médiateur. Si un apprenant a des difficultés ou des inquiétudes, le référent de promotion est là pour écouter et proposer des solutions.
+* **Lien avec l'administration** : Il transmet les informations administratives, fait remonter les besoins ou les préoccupations des étudiants auprès de la direction, et s’assure que tout se déroule bien au niveau organisationnel.
+
+Le référent de promotion est en quelque sorte un mentor et un facilitateur, garant de la bonne expérience des apprenants tout au long de leur parcours de formation.
+
+//tag::s01e01p02[]
+TIP: A partir de 16h
+
+* Ecrire un message de bienvenue sur le canal de la promo
+* Checker les absences
+* Checker les ebooks
+//end::s01e01p02[]
+
+==== 💬 Ecrire un message
+
+```md
+Hello tout le monde !! Et bienvenue chez O'Clock !!!
+```
+
+==== ☹️ Checker les absences
+
+Le référent doit regarder s'il y a eu des absences lors de la première journée et si c'est le cas de comprendre pourquoi et de contacter l'apprenant afin de comprendre qu'elle est la problématique et l'aider à revenir si cela est possible.
+
+Le suivi de la présence dès le premier jour de formation, surtout dans un programme intensif comme DevOps, présente plusieurs avantages essentiels pour le référent de formation :
+
+* *Mesurer l’engagement initial* : La présence le premier jour est un bon indicateur de la motivation de l’apprenant et de son engagement dans la formation. En DevOps, où le rythme est soutenu et les compétences techniques sont essentielles, un absentéisme dès le départ peut signaler un manque d’implication ou des obstacles logistiques.
+* *Prévenir l’abandon* : Si des absences sont relevées au début, le référent peut rapidement entrer en contact avec les apprenants concernés pour comprendre leurs raisons et agir en conséquence. Une intervention rapide peut permettre de réduire les risques d’abandon en identifiant et en résolvant les éventuels problèmes de connexion, d’organisation, ou même de motivation.
+* *Assurer un bon démarrage pédagogique* : Les premières heures d’une formation DevOps incluent souvent l’introduction aux outils, aux méthodes de travail collaboratif et aux règles de l’équipe. Si un apprenant rate ces bases, il pourrait avoir des difficultés à rattraper le groupe, créant des lacunes dès les premières semaines.
+* *Maintenir la dynamique de groupe* : Une formation comme DevOps est souvent rythmée par des projets de groupe et des ateliers pratiques. Si certains apprenants sont absents le premier jour, cela peut casser la dynamique et rendre les premiers échanges et travaux plus compliqués, notamment si des binômes ou des équipes sont déjà formés.
+* *Répondre aux obligations administratives* : Pour des raisons contractuelles et de gestion des financements, le référent doit justifier de la présence des apprenants dès le début de la formation. Un absentéisme au premier jour peut impacter les dossiers administratifs, les subventions ou financements en place pour cette formation.
+
+En bref, vérifier les présences dès le premier jour permet de prévenir des soucis pédagogiques et logistiques qui, s’ils ne sont pas anticipés, risquent de compromettre l’intégration et la réussite des apprenants dans un parcours aussi exigeant que celui de DevOps.
+
+==== 📚 Checker les ebooks
+
+* Vérifier que le formateur a bien fournis le ebook de la saison
+* Si ce n'est pas le cas, faites le !
+
+Ebook O'clock : Pour la formation DevOps, nous mettons dorénavant à disposition des apprenants un EBook qui reprend l’intégralité des supports, démonstrations et exercices de la saison, et le plus beau dans tout ça c’est qu’il n’y aura même pas besoin de le mettre à jour quand le cours sera modifié car il puise toutes ses informations depuis la trame même. Alors à chaque fois que l'on parle des e-books, on dit 'Ebook O'clock' pour renforcer notre marque. 
+
+=== E03
+
+//tag::s01e03[]
+TIP: 16h
+
+Gérer les inscriptions et la communication pour l'apprentissage de l'anglais.
+//end::s01e03[]
+
+==== 💂 Inscrire les apprenants à l'anglais
+
+* Inscrire les apprenants au cours d'anglais sur la plateforme Cisco.
+* Détails dans le Preview.
+
+Adresse de la plateforme : https://www.netacad.com/
+
+Si vous n'avez pas les droits pour pouvez les demander au PNO.
+
+==== 💬 Ecrire un message
+
+```md
+Hello @canal,
+Parmi les compétences à acquérir lors de la formation O'clock, figure la capacité à échanger sur des réseaux professionnels, y compris en anglais.
+C'est pourquoi, chaque vendredi matin, vous participerez à un cours d'anglais dispensé par Cisco. Ce cours vous aidera à progresser et à obtenir une certification d'anglais délivrée par Cisco. En tant qu'académie Cisco, O'clock fait partie du réseau mondial des académies Cisco, et vous serez sollicité à plusieurs reprises durant votre formation pour passer des certifications. Vous avez donc normalement reçu dans votre boîte mail un lien d'inscription à la plateforme Cisco dans laquelle vous retrouverez votre inscription à votre classe d'anglais.
+Bonne réception, Ciao !
+```
+
+=== E04
+
+//tag::s01e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+//end::s01e04[]
+
+=== E05
+
+// tag::s01e05[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s01e05[]
+
+== Saison 02
+
+=== E01
+
+// tag::s02e01[]
+TIP: 16h
+
+* ☑️ Checker la plateforme d'anglais
+* 📚 Checker les ebooks
+// end::s02e01[]
+
+=== E04
+
+// tag::s02e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s02e04[]
+
+=== E05
+
+// tag::s02e05[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s02e05[]
+
+== Saison 03
+
+=== E01
+
+// tag::s03e01[]
+TIP: 16h
+
+* ☑️ Checker la plateforme d'anglais
+* 📚 Checker les ebooks
+* 💬 Ecrire un message
+// end::s03e01[]
+
+```md
+Hello @canal ! :salut_main: 
+Pour faciliter nos échanges et créer une ambiance plus conviviale, ce serait super si chacun pouvait ajouter une photo sur son profil Slack. Cela nous aide à mieux nous reconnaître et rend les interactions plus chaleureuses. :rougir: Pas besoin d'une photo professionnelle ! Un portrait qui vous ressemble, où on voit bien votre visage, sera parfait. Cela permettra aussi aux formateurs et à vos camarades de mettre un visage sur un nom, et de renforcer l'esprit de promo ! 
+Merci à vous pour cette petite contribution qui fera une grande différence ! Ciao !!
+```
+
+=== E02
+
+// tag::s03e02[]
+TIP: 16h
+
+* 💬 Ecrire un message
+// end::s03e02[]
+
+```md
+Hello @canal!! Que vous êtes beaux sur vos photos !! Bonne fin de journée à toutes et à tous !!!
+```
+
+=== E04
+
+// tag::s03e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s03e04[]
+
+=== E05
+
+// tag::s03e05[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s03e05[]
+
+== Saison 04
+
+=== E01
+
+// tag::s04e01[]
+TIP: 16h
+
+* 📚 Checker les ebooks
+// end::s04e01[]
+
+=== E04
+
+// tag::s04e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+// end::s04e04[]
+
+=== E09
+
+// tag::s04e09[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s04e09[]
+
+=== E10
+
+// tag::s04e10[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s04e10[]
+
+== Saison 05
+
+=== E01
+
+// tag::s05e01[]
+TIP: 16h
+
+* 📚 Checker les ebooks
+// end::s05e01[]
+
+=== E04
+
+// tag::s05e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s05e04[]
+
+=== E05
+
+// tag::s05e05[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s05e05[]
+
+== Saison 06
+
+=== E01
+
+// tag::s06e01[]
+TIP: 16h
+
+* 📚 Checker les ebooks
+// end::s06e01[]
+
+=== E04
+
+// tag::s06e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+// end::s06e04[]
+
+=== E09
+
+// tag::s06e09[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s06e09[]
+
+=== E10
+
+// tag::s06e10[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s06e10[]
+
+== Saison 07
+
+=== E01
+
+// tag::s07e01[]
+TIP: 16h
+
+* 📚 Checker les ebooks
+// end::s07e01[]
+
+=== E04
+
+// tag::s07e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+// end::s07e04[]
+
+=== E09
+
+// tag::s07e09[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s07e09[]
+
+=== E10
+
+// tag::s07e10[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s07e10[]
+
+== Saison 08
+
+=== E01
+
+// tag::s08e01[]
+TIP: 16h
+
+* 📚 Checker les ebooks
+* 💬 Ecrire un message
+
+```md
+Bonjour à tous @canal ! 
+Juste un petit mot pour vous rappeler qu’on aura notre bilan de mi-formation dans deux jours. Ce sera l'occasion de faire un point ensemble sur vos avancées, de répondre à vos questions, et de voir si des ajustements sont nécessaires pour que chacun de vous soit à l’aise avec le programme. Préparez donc vos questions et vos retours, car c’est votre moment pour vous exprimer et maximiser votre expérience de formation ! On se retrouve donc dans deux jours pour ce moment d’échange et de feedback. 
+À très vite, et bon courage pour les révisions d'ici là !
+```
+
+// end::s08e01[]
+
+=== E04
+
+// tag::s08e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s08e04[]
+
+=== E05
+
+// tag::s08e05[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s08e05[]
+
+== Saison 09
+
+=== E01
+
+// tag::s09e01[]
+TIP: 16h
+
+* 📚 Checker les ebooks
+// end::s09e01[]
+
+=== E04
+
+// tag::s09e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+// end::s09e04[]
+
+=== E09
+
+// tag::s09e09[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s09e09[]
+
+=== E10
+
+// tag::s09e10[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s09e10[]
+
+== Saison 10
+
+=== E01
+
+// tag::s10e01[]
+TIP: 16h
+
+* 📚 Checker les ebooks
+// end::s10e01[]
+
+=== E04
+
+// tag::s10e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s10e04[]
+
+=== E05
+
+// tag::s10e05[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s10e05[]
+
+== Saison 11
+
+=== E01
+
+// tag::s11e01[]
+TIP: 16h
+
+* 📚 Checker les ebooks
+// end::s11e01[]
+
+=== E04
+
+// tag::s11e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+// end::s11e04[]
+
+=== E09
+
+// tag::s11e09[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s11e09[]
+
+=== E10
+
+// tag::s11e10[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s11e10[]
+
+== Saison 12
+
+=== E01
+
+// tag::s12e01[]
+TIP: 16h
+
+* 📚 Checker les ebooks
+// end::s12e01[]
+
+=== E04
+
+// tag::s12e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s12e04[]
+
+=== E05
+
+// tag::s12e05[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s12e05[]
+
+== Saison 13
+
+=== E01
+
+// tag::s13e01[]
+TIP: 16h
+
+* 📚 Checker les ebooks
+// end::s13e01[]
+
+=== E04
+
+// tag::s13e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s13e04[]
+
+=== E05
+
+// tag::s13e05[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s13e05[]
+
+== Saison 14
+
+=== E01
+
+// tag::s14e01[]
+TIP: 16h
+
+* 📚 Checker les ebooks
+// end::s14e01[]
+
+=== E04
+
+// tag::s14e04[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+// end::s14e04[]
+
+=== E09
+
+// tag::s14e09[]
+TIP: 16h
+
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+// end::s14e09[]
+
+=== E10
+
+// tag::s14e10[]
+* 🛠 Faire un RETEX sur le suivi de la semaine en tant que référent de promo.
+// end::s14e10[]

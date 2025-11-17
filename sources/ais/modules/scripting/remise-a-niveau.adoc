@@ -1,0 +1,469 @@
+:titre: Remise à niveau scripting
+:module: Scripting
+:duree: 240
+:description: Commandes courantes Linux/Windows, bases du scripting en Bash, Python, PowerShell, gestion de version avec Git, démos de scripts
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Maîtriser les commandes courantes des systèmes Linux et Windows.
+* Comprendre et utiliser les bases du scripting en Bash, Python, et PowerShell.
+* Apprendre à utiliser Git pour la gestion de version des scripts et configurations.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Commandes courantes Linux / Windows
+
+=== 🗂️ Lister les fichiers et répertoires
+
+* **Linux :** `ls`
+** **`ls -l`** : Liste détaillée des fichiers et répertoires sous Linux.
+
+* **Windows :** `dir`
+** **`dir /p`** : Liste les fichiers et répertoires sous Windows page par page.
+
+=== 📁 Changer de répertoire
+
+* **Linux :** `cd`
+** **`cd /home/user`** : Accède au répertoire `/home/user` sous Linux.
+
+* **Windows :** `cd`
+** **`cd C:\Users\User`** : Accède au répertoire `C:\Users\User` sous Windows.
+
+=== 📋 Copier des fichiers
+
+* **Linux :** `cp`
+** **`cp file1.txt /home/user/`** : Copie `file1.txt` vers le répertoire `/home/user/` sous Linux.
+
+* **Windows :** `copy`
+** **`copy file1.txt C:\Users\User\`** : Copie `file1.txt` vers le répertoire `C:\Users\User\` sous Windows.
+
+=== ✍️ Déplacer ou renommer des fichiers
+
+* **Linux :** `mv`
+** **`mv file1.txt /home/user/`** : Déplace `file1.txt` vers `/home/user/` sous Linux.
+
+* **Windows :** `move`
+** **`move file1.txt C:\Users\User\`** : Déplace `file1.txt` vers `C:\Users\User\` sous Windows.
+
+=== 🔎 Rechercher dans le contenu des fichiers
+
+* **Linux :** `grep`
+** **`grep "text" file1.txt`** : Recherche le texte "text" dans `file1.txt` sous Linux.
+
+* **Windows :** `find`
+** **`find "text" file1.txt`** : Recherche le texte "text" dans `file1.txt` sous Windows.
+
+=== 📊 Lister les processus en cours
+
+* **Linux :** `ps`, `top`, `kill`
+
+* **Windows :** `tasklist`, `taskkill`, Gestionnaire de tâches
+
+=== 👤 Gérer les permissions des fichiers
+
+* **Linux :** `chmod`, `chown`, ACL
+
+* **Windows :** ACL et groupes d’utilisateurs
+
+**ACL** = Access Control Lists
+
+// tag::demo[]
+== 📋 Démonstration 01 : Commandes courantes Linux / Windows
+
+[NOTE.speaker]
+--
+* Manipuler les commandes présentées dans les sections précédentes.
+--
+// end::demo[]
+
+== Bases en scripting Bash
+
+=== Bash (Bourne Again Shell)
+
+* Interpréteur de commandes surtout utilisé sur les OS Linux et Unix.
+* Utilisé pour l’automatisation des tâches via des scripts.
+* Outil essentiel pour l’administration système.
+
+=== Rappels de syntaxe
+
+**Variables**
+
+```bash
+my_var="Hello World"
+
+# Afficher la valeur d’une variable
+echo $my_var
+```
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Boucles**
+
+```bash
+for i in {1..5}; do
+	echo "Iteration $i"
+done
+```
+
+**Conditions**
+
+```bash
+if [ "$my_var" == "Hello World" ]; then
+	echo "Condition is true"
+else
+	echo "Condition is false"
+fi
+```
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Fonctions**
+
+```bash
+my_function() {
+	echo "This is a function"
+}
+my_function
+```
+
+=== Bonnes pratiques
+
+* Utiliser les commentaires (`#`) pour expliquer les sections du script.
+* Vérifier et valider les entrées des utilisateurs.
+* Utiliser les conditions pour gérer les erreurs.
+* Encapsuler les variables dans des guillemets.
+* Éviter d’utiliser des commandes spécifiques à un système d’exploitation.
+
+// tag::demo[]
+== 📋 Démonstration 02 : Exemple de script Bash
+
+[NOTE.speaker]
+--
+```bash
+#!/bin/bash
+directory="/path/to/directory"
+
+# Vérifie si le répertoire existe
+if [ -d "$directory" ]; then
+	echo "Listing files in $directory:"
+	
+	# Parcourt chaque fichier dans le répertoire
+	for file in "$directory"/*; do
+    	if [ -f "$file" ]; then
+        	echo "File: $(basename "$file")"
+        	echo "Size: $(stat -c%s "$file") bytes"
+    	fi
+	done
+else
+	echo "Directory not found!"
+fi
+```
+--
+// end::demo[]
+
+== Bases en scripting Python
+
+=== Python
+
+* Langage interprété, dynamique et de haut niveau.
+* Utilisé pour le développement web, l’analyse de données, l’automatisation des tâches…
+* Syntaxe claire et concise, pratique pour les scripts.
+* Choix polyvalent pour de nombreuses tâches.
+
+=== Rappels de syntaxe
+
+**Variables**
+
+```bash
+my_var = "Hello, Python!"
+print(my_var)
+```
+
+**Types de données**
+
+```bash
+my_int = 10
+my_float = 3.14
+my_list = [1, 2, 3]
+my_dict = {"key": "value"}
+my_bool = True
+```
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Boucles**
+
+```bash
+for i in range(5):
+	print(f"Iteration {i}")
+```
+
+**Conditions**
+
+```bash
+if my_int > 5:
+	print("my_int is greater than 5")
+else:
+	print("my_int is 5 or less")
+```
+
+=== Exemples de bibliothèques spécifiques à l’administration système
+
+* `os`
+** Permet d'interagir avec le système d’exploitation, comme la gestion des fichiers et des répertoires, la récupération d’information système, etc.
+
+```bash
+import os
+current_directory = os.getcwd()
+print(f"Current directory: {current_directory}")
+```
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+* `subprocess`
+** Permet d'exécuter des commandes système à partir d'un script Python, de capturer leur sortie, et de gérer les processus.
+
+```bash
+import subprocess
+result = subprocess.run(["ls", "-l"], capture_output=True, text=True)
+print(result.stdout)
+```
+
+// tag::demo[]
+== 📋 Démonstration 03 : Exemple de script Python
+
+[NOTE.speaker]
+--
+```bash
+import os
+import subprocess
+
+# Parcours d'un répertoire et affichage des fichiers
+directory = "/path/to/directory"
+if os.path.exists(directory):
+	print(f"Listing files in {directory}:")
+	for filename in os.listdir(directory):
+    	file_path = os.path.join(directory, filename)
+    	if os.path.isfile(file_path):
+        	print(f"File: {filename}, Size: {os.path.getsize(file_path)} bytes")
+else:
+	print(f"Directory {directory} not found.")
+
+# Exécution d'une commande système
+command = ["df", "-h"]
+result = subprocess.run(command, capture_output=True, text=True)
+if result.returncode == 0:
+	print("Disk usage:")
+	print(result.stdout)
+else:
+	print("Failed to execute command")
+
+# Traitement d'un fichier de log
+log_file = "/path/to/logfile.log"
+if os.path.isfile(log_file):
+	with open(log_file, 'r') as file:
+    	for line in file:
+        	if "ERROR" in line:
+            	print(f"Error found: {line.strip()}")
+else:
+	print(f"Log file {log_file} not found.")
+```
+--
+// end::demo[]
+
+== Bases en scripting PowerShell
+
+=== PowerShell
+
+* Shell de commande et langage script développé par Microsoft.
+* Conçu spécifiquement pour l’administration des systèmes Windows.
+* Manipule des objets, offrant puissance et flexibilité accrues.
+* Utilisé pour gérer les configurations systèmes, automatiser les tâches répétitives, déployer des scripts à grande échelle…
+
+=== Rappels de concepts clés
+
+**Cmdlets**
+
+* Commandes légères intégrées à PowerShell, conçues pour effectuer des tâches spécifiques.
+* Chaque cmdlet suit la convention Verbe-Nom.
+* Exemples : `Get-Process`, `Set-Service`
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Pipeline**
+
+* Permet de chaîner plusieurs cmdlets, en passant la sortie d’une cmdlet comme entrée de la suivante.
+* Permet de réaliser des tâches complexes en combinant des cmdlets simples.
+* Exemple : 
+
+```powershell
+Get-Service | Where-Object {$_.Status -eq 'Running'}
+```
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Objets**
+
+* La sortie de chaque commande est un objet avec des propriétés et des méthodes manipulables directement.
+* Permet des manipulations de données plus précises.
+
+```powershell
+$service = Get-Service -Name "wuauserv"
+$service.Status
+```
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Scripts**
+
+* Fichiers .ps1 contenant une série de commandes exécutées ensemble.
+
+```powershell
+# MyScript.ps1
+Get-Service | Where-Object {$_.Status -eq 'Stopped'} | Start-Service
+```
+
+=== Principales cmdlets
+
+**Gestion des processus**
+
+* `Get-Process` : Récupère les processus en cours d'exécution.
+* `Stop-Process` : Arrête un processus.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Gestion des services**
+
+* `Get-Service` : Récupère l'état des services.
+* `Start-Service` : Démarre un service.
+* `Stop-Service` : Arrête un service.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Gestion des utilisateurs**
+
+* `Get-LocalUser` : Récupère les utilisateurs locaux.
+* `New-LocalUser` : Crée un nouvel utilisateur local.
+* `Remove-LocalUser` : Supprime un utilisateur local.
+
+// tag::demo[]
+== 📋 Démonstration 04 : Exemple de script PowerShell
+
+[NOTE.speaker]
+--
+```powershell
+# Script pour gérer les services et processus
+
+# Démarrer un service si arrêté
+$serviceName = "wuauserv"
+$service = Get-Service -Name $serviceName
+if ($service.Status -eq 'Stopped') {
+	Start-Service -Name $serviceName
+	Write-Output "$serviceName started successfully."
+} else {
+	Write-Output "$serviceName is already running."
+}
+
+# Arrêter un processus spécifique
+$processName = "notepad"
+$process = Get-Process -Name $processName -ErrorAction SilentlyContinue
+if ($process) {
+	Stop-Process -Name $processName
+	Write-Output "$processName has been stopped."
+} else {
+	Write-Output "$processName is not running."
+}
+```
+--
+// end::demo[]
+
+== Gestion de version avec Git
+
+=== Git
+
+* Système de contrôle de version distribué.
+* Permet de suivre les modifications apportées aux fichiers au fil du temps.
+* Utile pour la gestion de scripts et configurations dans un environnement d’administration système.
+* Permet de collaborer efficacement en assurant :
+** La traçabilité des modifications.
+** La récupération de versions antérieures.
+** La gestion simultanée de plusieurs versions d’un projet.
+
+=== Concepts de base
+
+**Dépôt (repository)**
+
+* Espace de stockage où sont conservés tous les fichiers et l’historique des modifications d’un projet.
+* Peut être local (votre machine) ou distant (plateforme comme GitHub, GitLab, etc.).
+* Initialisation d’un dépôt : `git init`
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Commit**
+
+* Instantané des modifications apportées aux fichiers suivis par Git.
+* Chaque commit a un identifiant unique et enregistre un point précis de l’historique du projet.
+
+```bash
+git add .
+git commit -m "Initial commit"
+```
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Branche (branch)**
+
+* Version parallèle du dépôt, permettant de développer des fonctionnalités ou de tester des modifications sans affecter la branche principale (souvent appelée main ou master).
+
+```bash
+git branch feature-branch
+git checkout feature-branch
+```
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Fusion (merge)**
+
+* Consiste à combiner les modifications d’une branche dans une autre, généralement pour intégrer de nouvelles fonctionnalités ou des correctifs dans la branche principale.
+
+```bash
+git checkout main
+git merge feature-branch
+```
+
+=== Bonnes pratiques
+
+* Faire des commits souvent et écrire des messages clairs expliquant la nature des modifications.
+* Créer des branches pour chaque nouvelle fonctionnalité ou correctif.
+* Avant de fusionner des branches, s’assurer que les modifications sont compatibles.
+* Dans un contexte collaboratif, effectuer des reviews de code avant de fusionner les branches.
+* Sauvegarder régulièrement le dépôt sur une plateforme distante telle que GitHub ou votre propre Git hébergé.
+
+// tag::demo[]
+== 📋 Démonstration 05 : Exemple de manipulation Git
+
+[NOTE.speaker]
+--
+* Créer un nouveau repository avec git init.
+* Ajouter un fichier au dépôt, par exemple un des scripts faits précédemment (Bash / Python / PowerShell).
+* Effectuer un commit.
+* Créer une nouvelle branche, apporter une modification à l’un des fichiers et commit.
+* Fusionner avec la branche principale.
+* Montrer le push sur une plateforme distante. 
+--
+// end::demo[]
+// end::deroulement[]
+
+== 📝 Conclusion
+// tag::conclusion[]
+* Compréhension approfondie des commandes courantes sur Linux et Windows.
+* Maîtrise des bases du scripting en Bash, Python, et PowerShell.
+* Capacité à automatiser des tâches d'administration via des scripts.
+* Connaissance des bonnes pratiques de gestion de version avec Git pour la collaboration sur des scripts.
+// end::conclusion[]

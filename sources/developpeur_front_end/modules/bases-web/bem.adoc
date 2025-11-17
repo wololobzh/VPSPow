@@ -1,0 +1,244 @@
+:titre: BEM
+:module: CSS
+:duree: 45
+:description: Découverte de la méthodologie BEM (Block Element Modifier) pour une meilleure organisation et maintenabilité du CSS.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** l'origine et les objectifs de la méthodologie BEM
+* **Comprendre** la structure Block Element Modifier
+* **Appliquer** les conventions de nommage BEM
+* **Analyser** les avantages en termes de maintenabilité
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction à BEM
+
+BEM (Block Element Modifier) est une méthodologie de nommage des classes CSS développée par Yandex en 2006.
+
+* Objectif : Améliorer la maintenabilité des projets web de grande envergure
+* Approche basée sur une convention de nommage stricte
+* Favorise la réutilisabilité des composants
+* Réduit les conflits de styles
+
+[NOTE.speaker]
+--
+BEM a été créé pour répondre aux problématiques de maintenance des grands projets web.
+La méthodologie impose une structure claire qui permet de comprendre rapidement la relation entre les éléments HTML et CSS.
+L'utilisation exclusive de classes permet d'avoir un poids de sélecteur constant et prévisible.
+La convention de nommage rend le code plus lisible et auto-documenté.
+--
+
+== Structure BEM
+
+=== Les Blocks
+
+Un Block est un composant autonome et réutilisable :
+
+* Représente une entité indépendante
+* Peut contenir des Elements
+* Exemples : `.header`, `.menu`, `.card`, `.button`
+
+[NOTE.speaker]
+--
+Un Block est comme un container parent qui peut fonctionner de manière autonome.
+Il doit pouvoir être réutilisé n'importe où dans l'application.
+Le nom du Block doit décrire sa fonction et non son apparence.
+Les Blocks peuvent être imbriqués les uns dans les autres.
+--
+
+=== Les Elements
+
+Un Element est une partie d'un Block qui ne peut pas être utilisé séparément :
+
+* Syntaxe : `block__element`
+* Toujours lié à son Block parent
+* Exemples : `.menu__item`, `.card__title`, `.form__input`
+
+[NOTE.speaker]
+--
+Les Elements sont toujours partie d'un Block et ne peuvent pas exister seuls.
+La double underscore __ indique la relation parent-enfant.
+Un Element ne peut pas être utilisé en dehors de son Block parent.
+Le nom de l'Element doit décrire son rôle dans le Block.
+--
+
+=== Les Modifiers
+
+Un Modifier définit l'apparence, l'état ou le comportement :
+
+* Syntaxe : `block--modifier` ou `block__element--modifier`
+* Représente une variation
+* Exemples : `.button--large`, `.menu__item--active`
+
+[NOTE.speaker]
+--
+Les Modifiers permettent de créer des variations d'un Block ou d'un Element.
+Le double tiret -- indique qu'il s'agit d'une modification.
+Un Modifier ne doit jamais être utilisé seul, il s'ajoute toujours à un Block ou un Element.
+Le nom du Modifier doit décrire la variation qu'il apporte.
+--
+
+== Bonnes Pratiques
+
+* Utiliser uniquement des classes (pas d'ID ni de sélecteurs d'éléments)
+* Éviter les imbrications profondes
+* Un sélecteur = une classe
+* Maintenir une spécificité constante
+
+[NOTE.speaker]
+--
+L'utilisation exclusive de classes permet d'avoir un poids de sélecteur constant.
+Éviter les imbrications aide à maintenir un code plus propre et plus performant.
+La spécificité constante facilite les surcharges quand nécessaire.
+Ces pratiques rendent le code plus maintenable sur le long terme.
+--
+
+// tag::demo[]
+== Démonstration
+
+Création d'une carte produit avec BEM
+
+[NOTE.speaker]
+--
+1. Créer la structure HTML de base d'une carte produit :
++
+```html
+<article class="product-card">
+  <img class="product-card__image" src="product.jpg">
+  <h2 class="product-card__title">Titre du produit</h2>
+  <p class="product-card__description">Description</p>
+  <div class="product-card__price">99€</div>
+  <button class="product-card__button">Acheter</button>
+</article>
+```
+
+2. Ajouter le CSS correspondant :
++
+```css
+.product-card {
+  padding: 1rem;
+  border: 1px solid #ddd;
+}
+
+.product-card__image {
+  width: 100%;
+}
+
+.product-card__title {
+  font-size: 1.2rem;
+}
+
+.product-card__button {
+  width: 100%;
+  padding: 0.5rem;
+}
+```
+
+3. Ajouter un modifier pour un produit en promotion :
++
+```html
+<article class="product-card product-card--promo">
+```
+
+4. Ajouter le style du modifier :
+```css
+.product-card--promo {
+  border-color: red;
+}
+```
+--
+// end::demo[]
+
+// tag::demo[]
+== Démonstration
+
+ifeval::["{visible-on-html}" !=  "yes"]
+
+[.tips]
+--
+💡 Appuyer sur la touche "*s*" pour le mode speaker
+--
+
+endif::[]
+
+Création d'une navigation avec BEM
+
+[NOTE.speaker]
+--
+1. Créer la structure HTML de la navigation :
++
+```html
+<nav class="nav">
+  <ul class="nav__list">
+    <li class="nav__item">
+      <a class="nav__link nav__link--active" href="#">Accueil</a>
+    </li>
+    <li class="nav__item">
+      <a class="nav__link" href="#">Produits</a>
+    </li>
+    <li class="nav__item">
+      <a class="nav__link" href="#">Contact</a>
+    </li>
+  </ul>
+</nav>
+```
+
+2. Ajouter le CSS :
++
+```css
+.nav {
+  background: #f8f8f8;
+}
+
+.nav__list {
+  display: flex;
+  list-style: none;
+}
+
+.nav__item {
+  padding: 1rem;
+}
+
+.nav__link {
+  color: black;
+  text-decoration: none;
+}
+
+.nav__link--active {
+  font-weight: bold;
+}
+```
+
+3. Montrer l'ajout d'un modifier pour une navigation verticale :
++
+```html
+<nav class="nav nav--vertical">
+```
+
+4. Ajouter le style du modifier :
++
+```css
+.nav--vertical .nav__list {
+  flex-direction: column;
+}
+```
+--
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* BEM permet une meilleure organisation du code CSS
+* La convention de nommage rend le code plus maintenable
+* Les composants sont réutilisables et indépendants
+* Les modifiers permettent des variations sans duplication de code
+* BEM encourage une approche modulaire du développement frontend
+// end::conclusion[]

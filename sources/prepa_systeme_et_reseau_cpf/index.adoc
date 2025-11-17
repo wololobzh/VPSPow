@@ -1,0 +1,65 @@
+:title: Prepa Système et Réseaux O'clock
+include::../../adoc/libs/header-formation.adoc[]
+
+// tag::links[]
+* link:https://github.com/O-clock-Devops-Peda[GitHub]
+* link:https://oclock.io/formations/devops[Site O'Clock - DevOps]
+* link:https://github.com/O-clock-Devops-Peda/.github-private/blob/main/profile/REAC.pdf[REAC]
+// end::links[]
+
+---
+
+// tag::intro[]
+Prépa Système et Réseau O’clock : Une immersion pour se reconvertir et se préparer à une formation intensive
+La Prépa Système et Réseau O’clock est une formation conçue pour accompagner les personnes en reconversion professionnelle, en particulier celles issues de métiers manuels, vers le domaine de l’administration système et réseau. Elle constitue également un test grandeur nature pour évaluer la capacité des apprenants à suivre une formation intensive devant un ordinateur.
+
+Cette prépa offre une première immersion dans les bases du métier de Technicien Supérieur Systèmes et Réseaux (TSSR) grâce à un parcours structuré et progressif en 5 saisons :
+
+Saison 1 : Intégration et Linux (35h)
+Découverte des bases du numérique, de l’environnement Linux, et des fondamentaux de la ligne de commande.
+
+Saison 2 : Centre de service (35h)
+Introduction aux bonnes pratiques de gestion et de support technique dans un centre de service, avec un focus sur ITIL et les interactions avec les clients.
+
+Saison 3 : Systèmes Windows (35h)
+Apprentissage des bases de l’administration de systèmes Windows : gestion des utilisateurs, des droits et des services essentiels.
+
+Saison 4 : Réseau (35h)
+Initiation aux concepts fondamentaux des réseaux : adressage IP, configuration basique des équipements réseau et introduction à la sécurité.
+
+Saison 5 : Projet (35h)
+Mise en pratique des compétences acquises à travers un projet concret, simulant des situations professionnelles.
+
+Objectifs principaux
+Acquérir les bases essentielles pour envisager une carrière dans l’administration système et réseau.
+Tester et valider l’aptitude à suivre une formation intensive devant un ordinateur, indispensable dans le secteur IT.
+Donner envie et les outils nécessaires pour poursuivre avec une formation TSSR (Technicien Supérieur Systèmes et Réseaux).
+Instaurer une méthodologie de travail et une approche de résolution de problèmes adaptée au métier.
+Cette Prépa, accessible sans prérequis techniques, s’adresse à des débutants. Elle allie théorie, ateliers pratiques, et accompagnement bienveillant pour permettre une reconversion réussie dans un secteur en pleine expansion. C’est une porte d’entrée idéale pour les nouveaux talents souhaitant rejoindre le monde de l’informatique, tout en se préparant au rythme exigeant des métiers numériques.
+// end::intro[]
+
+* link:./suivi.html[Référent de promo]
+* link:./modules/index.html[Glossaire des modules]
+
+== Objectifs
+
+// tag::objectifs[]
+* Acquérir les bases essentielles du métier d’administrateur système et réseau.
+* Valider l’aptitude à suivre une formation intensive devant un ordinateur.
+* Découvrir les environnements Linux et Windows ainsi que leurs fondamentaux.
+* Assimiler les concepts de base des réseaux et de la sécurité.
+* Développer une méthodologie de travail et de résolution de problèmes.
+* Se familiariser avec les bonnes pratiques de gestion et de support technique (ITIL).
+* Expérimenter les compétences acquises à travers un projet concret.
+* Préparer une poursuite de formation en TSSR ou un autre parcours IT avancé.
+* Permettre une immersion progressive dans un secteur en pleine croissance.
+// end::objectifs[]
+
+== Déroulement
+
+// tag::deroulement[]
+include::./saisons/*/index.adoc[opts=saisons]
+// end::deroulement[]
+
+
+

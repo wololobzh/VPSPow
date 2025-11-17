@@ -1,0 +1,270 @@
+:titre: Variables Terraform
+:module: Virtualisation
+:duree: 90
+:description: Ce module présente l'importance des variables dans Terraform, comment les déclarer et les utiliser, ainsi que les bonnes pratiques pour gérer les variables sensibles.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre l'importance des variables dans Terraform
+* Apprendre à déclarer et utiliser des variables dans Terraform
+* Découvrir les bonnes pratiques pour gérer les variables sensibles
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Introduction aux variables
+
+Exemple de variable :
+
+```hcl
+variable "region" {
+  description = "The AWS region to launch resources."
+  default     = "us-west-2"
+}
+```
+
+=== Rôle des variables
+
+* **Paramétrage dynamique** : facilite la modification des configurations sans avoir à réécrire le code
+* **Réutilisation** : permet de définir des valeurs une seule fois et de les réutiliser dans plusieurs configurations
+* **Clarté et maintenanabilité** : facilite la lecture et la compréhension du code
+* **Sécurité** : permet de masquer des informations sensibles
+
+== Types de variables
+
+* **String** : Une chaîne de caractères. Par exemple : `"us-west-1"`.
+* **Number** : Un nombre entier ou flottant. Par exemple : `8080`.
+* **Bool** : Un booléen, soit `true` ou `false`.
+* **List** : Une liste de valeurs du même type. Par exemple : `["web", "db", "cache"]`.
+* **Map** : Une collection de paires clé-valeur. Par exemple : `{ "name" = "app", "env" = "prod" }`.
+* **Object** : Une structure complexe qui peut contenir des types variés. Par exemple : `object({ name = string, size = number })`.
+
+== Déclaration de variables
+
+En général les variables sont déclarées dans un fichier `variables.tf` :
+
+```hcl
+variable "region" {
+  description = "The region where the resources will be created"
+  type        = string
+  default     = "us-west-1"
+}
+
+variable "instance_size" {
+  description = "The size of the instance"
+  type        = string
+  default     = "t2.micro"
+}
+```
+
+=== Utilisation des variables
+
+Pour utiliser une variable dans un fichier Terraform, on utilise la syntaxe `var.<nom_variable>` :
+
+```hcl
+provider "aws" {
+  region = var.region
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-12345678"
+  instance_type = var.instance_size
+}
+```
+
+// tag::demo[]
+
+=== Démonstration
+
+Utilisation de variables
+
+[NOTE.speaker]
+--
+**Créer le fichier `variables.tf`:**
+
+Déclarez quelques variables comme illustré ci-dessus.
+
+**Mettre à jour le fichier `main.tf`:**
+
+Remplacez les valeurs codées en dur par des références aux variables déclarées dans `variables.tf`.
+
+**Exécuter Terraform :**
+
+Initiez votre projet avec `terraform init`.
+
+Appliquez la configuration avec `terraform apply` et vérifiez que les variables sont bien utilisées.
+--
+
+// end::demo[]
+
+== Structure des fichiers de variables
+
+Pour une meilleure organisation, il est recommandé de séparer les variables par type dans des fichiers distincts :
+
+* `variables.tf` : variables générales
+* `inputs.tf` : variables d'entrée
+* `outputs.tf` : variables de sortie
+
+=== Fichiers de variables `terraform.tfvars`
+
+Pour définir des valeurs de variables sans les écrire directement dans les fichiers de configuration, on peut utiliser des fichiers `terraform.tfvars` :
+
+```hcl
+region        = "us-west-1"
+instance_size = "t2.micro"
+```
+
+Cela permet notamment de pouvoir gérer différents environnements (dev, staging, prod) sans toucher au code :
+
+* `dev.tfvars`
+* `staging.tfvars`
+* `prod.tfvars`
+
+=== Application des configurations avec des fichiers `tfvars`
+
+Lors de l'exécution de Terraform, spécifier le fichier de variables correspondant à l'environnement :
+
+```bash
+terraform apply -var-file="dev.tfvars"
+```
+
+Ou pour la production
+
+```bash
+terraform apply -var-file="prod.tfvars"
+```
+
+=== Bonnes pratiques
+
+* Garder les valeurs sensibles hors des fichiers `.tfvars` 
+** utiliser plutôt des variables d'environnement ou un gestionnaire de secrets
+
+* Penser à nommer les variables et fichiers de variables de manière explicite
+
+* Documenter les différences entre les fichiers `tfvars` pour chaque environnement
+
+== Variables avancées
+
+Les variables complexes permettent souvent de structurer et gérer les données de manière plus efficace.
+
+=== Variable de type `list`
+
+* collection ordonnée de valeurs du même type
+* permet de gérer plusieurs valeurs similaires sous une seule variable
+
+```hcl
+variable "availability_zones" {
+  type = list(string)
+  default = ["us-west-1a", "us-west-1b", "us-west-1c"]
+}
+```
+
+=== Variable de type `map`
+
+* collection de paires clé-valeur
+* utile pour associer des valeurs à des clés uniques facilitant l'accès aux données
+
+```hcl
+variable "instance_types" {
+  type = map(string)
+  default = {
+    "dev"  = "t2.micro"
+    "prod" = "m5.large"
+  }
+}
+```
+
+=== Variable de type `object`
+
+* structure complexe pouvant contenir des types variés
+* idéal pour gérer des configurations complexes
+
+```hcl
+variable "vm_config" {
+  type = object({
+    name   = string
+    size   = string
+    region = string
+  })
+  default = {
+    name   = "my-vm"
+    size   = "t2.micro"
+    region = "us-west-1"
+  }
+}
+```
+
+== Variables sensibles
+
+* Utiliser la directive `sensitive = true` pour masquer la valeur de la variable dans les sorties Terraform
+* permet d'éviter l'exposition accidentelle de données sensibles
+
+```hcl
+variable "db_password" {
+  type      = string
+  sensitive = true
+}
+```
+
+=== Importance de ne pas inclure des valeurs sensibles
+
+* **Ne jamais inclure des valeurs sensibles dans les fichiers de configuration**
+
+* les inclure directement peut entraîner des risques de sécurité
+** c'est d'autant plus vrai quand ces fichiers sont partagés ou versionnés (Git)
+
+* **préférer les variables d'environnement ou un gestionnaire de secrets**
+
+== Variables d'environnement
+
+* peuvent être utilisées pour passer des valeurs de variables à Terraform sans les stocker dans des fichiers
+* doivent être préfixées par `TF_VAR_` suivi du nom de la variable Terraform
+
+```bash
+export TF_VAR_db_password="my-secret-password"
+```
+
+=== Fichier d'environnement `.env`
+
+Pour une meilleure gestion des variables d'environnement, on peut utiliser un fichier `.env` :
+
+```bash
+TF_VAR_db_password=my-secret-password
+TF_VAR_region=us-west-1
+```
+
+Puis charger les variables avec la commande `source` :
+
+```bash
+source .env
+```
+
+Ce fichier peut être ajouté au `.gitignore` pour éviter de le versionner.
+
+== Gestionnaire de secrets
+
+* HashiCorp Vault : 
+** outil open-source de gestion de secrets
+** permet de stocker, distribuer et contrôler l'accès aux données sensibles
+** intégration directe avec Terraform pour récupérer les secrets
+
+* AWS Secrets Manager :
+** service de gestion de secrets d'AWS
+** stocke, distribue et gère les secrets de manière sécurisée
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Les variables Terraform permettent de rendre les configurations plus flexibles et de documenter la configuration
+* Elles facilitent la réutilisation des valeurs et la gestion des configurations
+* Les variables sensibles doivent être gérées avec précaution pour éviter les fuites de données
+// end::conclusion[]

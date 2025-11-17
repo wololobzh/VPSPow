@@ -1,0 +1,263 @@
+:titre: Méthodes et Interfaces en Go
+:module: Go
+:duree: 90
+:description: Découverte des méthodes et interfaces en Go, avec focus sur la composition et les bonnes pratiques.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** le concept de méthodes en Go
+* **Comprendre** l'implémentation implicite des interfaces
+* **Appliquer** la composition de types et d'interfaces
+* **Analyser** les cas d'usage des différentes approches
+// end::objectifs[]
+
+// tag::deroulement[]
+== Méthodes
+
+Une méthode est une fonction associée à un type :
+
+[source,go]
+----
+type Rectangle struct {
+    Largeur, Hauteur float64
+}
+
+// Méthode avec récepteur valeur
+func (r Rectangle) Surface() float64 {
+    return r.Largeur * r.Hauteur
+}
+
+// Méthode avec récepteur pointeur
+func (r *Rectangle) Redimensionner(facteur float64) {
+    r.Largeur *= facteur
+    r.Hauteur *= facteur
+}
+----
+
+[NOTE.speaker]
+--
+Les méthodes peuvent être définies sur n'importe quel type nommé.
+Le récepteur apparaît avant le nom de la méthode.
+Le choix entre récepteur valeur et pointeur est important.
+Les méthodes sont appelées avec la notation point.
+--
+
+// tag::demo[]
+== Démonstration Méthodes
+
+[NOTE.speaker]
+--
+1. Créer un fichier `methodes.go`
+2. Ajouter le code suivant :
++
+```go
+package main
+
+import (
+    "fmt"
+    "math"
+)
+
+type Cercle struct {
+    Rayon float64
+}
+
+func (c Cercle) Surface() float64 {
+    return math.Pi * c.Rayon * c.Rayon
+}
+
+func (c *Cercle) Agrandir(facteur float64) {
+    c.Rayon *= facteur
+}
+
+func main() {
+    c := Cercle{Rayon: 5}
+    fmt.Printf("Surface initiale: %.2f\n", c.Surface())
+    
+    c.Agrandir(2)
+    fmt.Printf("Surface après agrandissement: %.2f\n", c.Surface())
+}
+```
+3. Expliquer la différence entre les deux types de récepteurs
+4. Montrer l'impact sur la modification de l'objet
+--
+// end::demo[]
+
+== Interfaces
+
+Une interface définit un ensemble de méthodes :
+
+[source,go]
+----
+type Forme interface {
+    Surface() float64
+    Perimetre() float64
+}
+
+type Rectangle struct {
+    Largeur, Hauteur float64
+}
+
+// Rectangle implémente automatiquement Forme
+func (r Rectangle) Surface() float64 {
+    return r.Largeur * r.Hauteur
+}
+
+func (r Rectangle) Perimetre() float64 {
+    return 2 * (r.Largeur + r.Hauteur)
+}
+----
+
+[NOTE.speaker]
+--
+L'implémentation est implicite en Go.
+Pas besoin de déclarer explicitement l'implémentation.
+Une interface peut être implémentée par plusieurs types.
+Les interfaces doivent être petites et focalisées.
+--
+
+== Interfaces Communes
+
+Go définit plusieurs interfaces standard :
+
+[source,go]
+----
+// Interface Stringer pour représentation string
+type Stringer interface {
+    String() string
+}
+
+// Interface error pour la gestion d'erreurs
+type error interface {
+    Error() string
+}
+
+// Interface io.Reader pour la lecture
+type Reader interface {
+    Read(p []byte) (n int, err error)
+}
+----
+
+[NOTE.speaker]
+--
+fmt.Stringer est utilisée pour l'affichage personnalisé.
+error est fondamentale pour la gestion d'erreurs.
+io.Reader et io.Writer sont très utilisées pour l'I/O.
+--
+
+// tag::demo[]
+== Démonstration Interfaces
+
+[NOTE.speaker]
+--
+1. Créer un fichier `interfaces.go`
+2. Ajouter le code suivant :
++
+```go
+package main
+
+import "fmt"
+
+type Personne struct {
+    Nom string
+    Age int
+}
+
+func (p Personne) String() string {
+    return fmt.Sprintf("%s (%d ans)", p.Nom, p.Age)
+}
+
+type Animal struct {
+    Espece string
+    Age    int
+}
+
+func (a Animal) String() string {
+    return fmt.Sprintf("%s de %d ans", a.Espece, a.Age)
+}
+
+func afficher(s fmt.Stringer) {
+    fmt.Println(s.String())
+}
+
+func main() {
+    p := Personne{"Alice", 30}
+    a := Animal{"Chat", 5}
+    
+    afficher(p)
+    afficher(a)
+}
+```
+3. Expliquer l'interface Stringer
+4. Montrer le polymorphisme via l'interface
+--
+// end::demo[]
+
+== Composition
+
+Go favorise la composition plutôt que l'héritage :
+
+[source,go]
+----
+type Animal struct {
+    Nom string
+    Age int
+}
+
+type Chat struct {
+    Animal  // Embedding
+    Griffes bool
+}
+
+// Les méthodes de Animal sont promues à Chat
+func (a Animal) Description() string {
+    return fmt.Sprintf("%s (%d ans)", a.Nom, a.Age)
+}
+----
+
+[NOTE.speaker]
+--
+L'embedding permet la promotion de champs et méthodes.
+Plus flexible que l'héritage classique.
+Permet de composer des comportements.
+Favorise la réutilisation de code.
+--
+
+// tag::exercice[]
+== Exercice 1 - Formes Géométriques
+
+Créer un système de formes avec :
+
+1. Interface Forme
+2. Structures Cercle, Rectangle, Triangle
+3. Méthodes pour surface et périmètre
+4. Fonction pour comparer des formes
+
+[source,go]
+----
+type Forme interface {
+    // À compléter
+}
+
+type Cercle struct {
+    // À compléter
+}
+----
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Compréhension des méthodes et leurs récepteurs
+* Maîtrise de l'implémentation d'interfaces
+* Capacité à utiliser la composition efficacement
+* Compréhension des interfaces standard de Go
+* Capacité à concevoir des systèmes modulaires
+// end::conclusion[]

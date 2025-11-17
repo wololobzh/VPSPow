@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+
+actor Writer
+actor ProofReader
+actor Editor
+actor Reader
+
+rectangle "Publish a story" {
+   usecase "Draft" as uc1
+   usecase "Review" as uc2
+   usecase "Suggest edits" as uc3
+   usecase "Revise" as uc4
+   usecase "Sell" as uc5
+}
+usecase "Read" as uc6
+
+Writer --> uc1
+Writer --> uc4
+ProofReader --> uc2
+ProofReader --> uc3
+Editor --> uc2
+Editor --> uc3
+Editor --> uc5
+Reader --> uc6
+
+@enduml

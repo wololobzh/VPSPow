@@ -1,0 +1,36 @@
+:title: Développeur Front End
+include::../../adoc/libs/header-formation.adoc[]
+
+// tag::links[]
+* link:https://github.com/O-clock-FS-JS[GitHub,window=_blank]
+* link:https://oclock.io/formations/developpeur-web-web-mobile[Site O'Clock - DWWM,window=_blank]
+* link:https://github.com/O-clock-FS-JS/.github-private/blob/main/profile/REAC.pdf[REAC,window=_blank]
+// end::links[]
+
+---
+
+// tag::intro[]
+La formation "Développeur Front End" vise à développer les compétences nécessaires pour obtenir le CCP "Développer la partie front-end d’une application web ou web mobile sécurisée", sous-esemble du titre professionnel de niveau 5 "Développeur web et web mobile".
+// end::intro[]
+
+* link:./suivi.html[Référent de promo]
+* link:./modules/index.html[Glossaire des modules]
+
+== Objectifs
+
+// tag::objectifs[]
+.Compétences pro
+. Installer et configurer son environnement de travail en fonction du projet web ou web mobile
+. Maquetter des interfaces utilisateur web ou web mobile
+. Réaliser des interfaces utilisateur statiques web ou web mobile
+. Développer la partie dynamique des interfaces utilisateur web ou web mobile
+// end::objectifs[]
+
+== Déroulement
+
+// tag::deroulement[]
+include::./saisons/*/index.adoc[opts=saisons]
+// end::deroulement[]
+
+
+

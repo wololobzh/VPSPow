@@ -1,0 +1,48 @@
+:title: Optimisation des requêtes et performances avec GraphQL
+:number: 03 
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[] 
+Cet épisode explore les techniques d’optimisation de GraphQL pour améliorer la performance des applications. Les apprenants apprendront à gérer les index pour les bases de données graphes et à utiliser des techniques de cache, de pagination et d'optimisation des résolveurs.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+Apprendre à optimiser les requêtes GraphQL pour de meilleures performances
+Gérer l’indexation et le cache des données dans une base de données orientée graphes
+Maîtriser la pagination et les directives GraphQL pour des requêtes précises
+Optimiser les résolveurs d’Apollo Server pour des requêtes plus efficaces
+Configurer les options de cache et de pagination en GraphQL 
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+Expérience en optimisation des performances pour les API
+Bonne connaissance des concepts de cache et d'indexation
+Maîtrise de l’utilisation des résolveurs dans Apollo Server
+Compétences pédagogiques 
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[] 
+
+:correction: https://github.com/Oclock-CDA/S07-Challenge/tree/04-Challenge-D02-Correction
+:temps: jusqu'à 60 minutes
+:description: Passer du temps à bien corriger le challenge d'hier.
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/GraphQL/07RESTDataSource.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/GraphQL/08DirectivesAndServer-SideCaching.adoc[options=modules]
+
+:challenge: https://github.com/Oclock-CDA/S07-Challenge/blob/main/documentation/challenges/D03.md
+:description: Optimiser une requête complexe avec cache, pagination et résolveurs 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+// end::deroulement[]

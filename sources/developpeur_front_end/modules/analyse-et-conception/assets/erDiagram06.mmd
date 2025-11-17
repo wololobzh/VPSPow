@@ -1,0 +1,15 @@
+erDiagram
+    ETUDIANT {
+        int id PK
+        string nom
+    }
+    COURS {
+        int id PK
+        string nom
+    }
+    ETUDIANT_COURS {
+        int etudiant_id PK, FK
+        int cours_id PK, FK
+    }
+    ETUDIANT }o--o{ ETUDIANT_COURS : "s'inscrit à"
+    COURS }o--o{ ETUDIANT_COURS : "offre"

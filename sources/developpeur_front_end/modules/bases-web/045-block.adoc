@@ -1,0 +1,134 @@
+:titre: Block & inline-block
+:module: HTML / CSS
+:duree: 60
+:description: Découvrir les propriétés CSS pour afficher des éléments en block ou en inline-block.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Utiliser* `float` pour habiller un élément par du texte
+* *Utiliser* `inline-block` pour afficher des éléments côte à côte
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Introduction
+
+Parlons un peu de layout (mise en page, disposition des blocs)
+
+3 solutions :
+
+* `float`
+* `inline-block`
+* `flex`
+
+== Float
+
+* On veut habiller un élément par du texte
+* Il va se caler soit à gauche soit à droite
+* Il peut pousser ses voisins
+* Et on peut nettoyer avec un `clear`
+
+// tag::demo[]
+
+== Démonstration
+
+ifeval::["{visible-on-html}" !=  "yes"]
+
+[.tips]
+--
+💡 Appuyer sur la touche "*s*" pour le mode speaker
+--
+
+endif::[]
+
+Fonctionnement de `float`
+
+[NOTE.speaker]
+--
+Reprendre la https://github.com/O-clock-FS-JS/Hero-corp-fan-page/tree/correction[Correction Hero Corps,window=_blank]
+
+Par exemple, mettre l'image de présentation sur le côté droit ou gauche du texte. On limitera l'utilisation de float à ce cas de figure, qui est celui prévu (une image dans un texte).
+
+On intègre la liste des acteurs
+
+* Montrez les sélecteurs CSS plus en détail : `#id>li` et `#id + li`.
+* On montre les pseudos classes `:hover` et `:visited`, on peut montrer la liste sur MDN
+* On met le hover sur les `a`, ça change le `background-color` que sur le `a` c'est pourris
+* Donc on met un `:hover` sur le `li`, sauf que ça induit en erreur on peut cliquer que sur le `a` et pourtant tout le `li` se color au hover
+* Donc on remet le hover sur le `a` et on le met en `display: block;`
+--
+
+// end::demo[]
+
+== Inline-block
+
+* certains tags sont en `display: block;` comme les `<li>`
+* en `display: block;` ils prennent toute la largeur, et en `display: inline;` ils prennent la largeur du contenu
+** il faut un entre-deux : `display: inline-block;`
+** il se comporte comme un `block` mais n'impose pas de retour à la ligne
+
+```css
+#tag-list li {
+    margin: 6px;
+    padding: 6px;
+    border-radius: 1em;
+    background-color: #d3d3d3;
+}
+```
+
+// tag::demo[]
+
+== Démonstration
+
+ifeval::["{visible-on-html}" !=  "yes"]
+
+[.tips]
+--
+💡 Appuyer sur la touche "*s*" pour le mode speaker
+--
+
+endif::[]
+
+Fonctionnement de `inline-block`
+
+[NOTE.speaker]
+--
+Reprendre la https://github.com/O-clock-FS-JS/Hero-corp-fan-page/tree/correction[Correction Hero Corps,window=_blank]
+
+On peut faire une autre liste en dessous, même style, avec par exemple des mots-clefs sans balise de lien : Série, Française, Super héros, Comédie, Humour de qualité, Village de Palhers, CALT, Suspens insoutenable.
+
+Que des `ul` et `li` sans les balises `a` qui compliquent l'explication.
+
+Les `li` sont par défaut en `display:block;` alors on les met en `inline` pour qu'ils soient cote à cote.
+
+Si on met un style identique à celui des liens, les tags se superposent :
+
+* En `display: block;` ça poussait bien mais en `display: inline` c'était sur la même ligne, il faut un entre deux --> `display: inline-block;`
+* Il se comporte comme un `block` sauf qu'il impose pas de retour à la ligne avant et après
+
+On peut reprendre la liste des acteurs. Si on mets le lien en `display: inline` on voit que le les liens ne prennent plus toute leur place, ils prennent exactement celle du contenu et donc ils sont les uns sur les autres.
+
+On mets `display:inline-block;` sur les liens, et hop ils s'affichent les uns sous les autres et cette fois `padding` et `margin` sont pris en compte. La taille est réduite au maximum.
+
+Par contre on voudrait les mettre côte à côte.
+
+Les `li` sont par défaut en `display:block;` alors on les met en inline pour qu'ils soient cote à cote et le comportement est le bon.
+--
+
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Capacité à utiliser `float` pour habiller un élément par du texte
+* Capacité à utiliser `inline-block` pour afficher des éléments côte à côte
+// end::conclusion[]

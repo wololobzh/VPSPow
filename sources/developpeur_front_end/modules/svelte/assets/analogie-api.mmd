@@ -1,0 +1,9 @@
+sequenceDiagram
+    participant Client
+    participant Serveur(API)
+    participant Cuisine(Backend)
+
+    Client->>Serveur(API): Commande (Plat souhaité)
+    Serveur(API)->>Cuisine(Backend): Transmet la commande
+    Cuisine(Backend)-->>Serveur(API): Prépare et renvoie le plat
+    Serveur(API)-->>Client: Sert le plat au client

@@ -1,0 +1,50 @@
+:title: Sécuriser un réseau Linux
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+On commence à aborder les notions de sécurité réseau dans le contexte de Linux. Le but est de savoir comment articuler les différents aspects de la sécurité système et réseau au travers de commandes Linux.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre l’importance de la sécurité réseau
+* Connaître les principales menaces et attaques envers un réseau
+* Comprendre les outils de réseau sous Linux
+* Savoir diagnostiquer le réseau pour résoudre des problématiques
+* Savoir mettre en place des mesures de défense réseau efficaces sous Linux
+* Être capable de configurer un pare-feu et gérer les règles de filtrage
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Préparer le cours en parcourant les modules de cet épisode
+* Machine virtuelle Debian prête à l’emploi
+* Avoir l’outil hydra prêt à l’utilisation sur l’hôte ou sur une deuxième VM (pour la démo sur l’attaque brute force)
+* S’entraîner à faire les démonstrations, notamment si l’on risque de ne pas être à l’aise pour les faire en direct
+* On peut aussi prendre le parti de découvrir la démonstration en plein cours, mais il ne faut pas que cela impacte trop le rythme de la journée
+* Préparer des documents ou des ressources de référence sur les commandes de sécurité réseau, à partager aux apprenants
+// end::prerequis[]
+
+== Déroulement
+// tag::deroulement[]
+
+:correction: 
+:temps: 30 minutes
+:description: Correction du challenge E02
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/systeme/securite-reseau.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner pendant le module de sécurité réseau
+
+:challenge: https://drive.google.com/drive/folders/17FIsmyw0rNLbIGz8Q51qSDcLlquG2rtT
+:description: Sécuriser le réseau d’une entreprise
+:correction: https://docs.google.com/document/d/1LIEK8JaXx1lDFbIjZUL4kBCQhSVDuyNIAQYjeeY0V3M/edit?tab=t.0
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

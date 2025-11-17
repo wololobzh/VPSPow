@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant User
+    participant MainThread
+    participant AsyncTask
+
+    User->>MainThread: Déclenche une opération asynchrone
+    MainThread->>AsyncTask: Lance l'opération asynchrone
+    Note right of AsyncTask: Par exemple, une requête réseau
+
+    MainThread->>User: Continue d'autres tâches sans attendre
+
+    AsyncTask->>MainThread: Opération terminée (résultat ou erreur)
+    MainThread->>User: Traite le résultat ou l'erreur

@@ -1,0 +1,46 @@
+:title: 🛠️ Framework JS (Svelte)
+:number: 06
+:duration: 35
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+La saison "Framework JS (Svelte)" est consacrée à la découverte et à la prise en main de Svelte, un framework JavaScript. Les apprenants apprennent à concevoir des applications web dynamiques et performantes en utilisant les concepts propres à Svelte. Ils découvrent les avantages de ce framework et apprennent à l'utiliser pour développer des applications modernes.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les principes de fonctionnement de Svelte
+* Découvrir les avantages de Svelte par rapport aux autres frameworks JS
+* Apprendre à concevoir des applications web avec Svelte
+* Maîtriser les concepts clés de Svelte : composants, états, événements, etc.
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+* Framework JS
+* Composants
+* États
+* Événements
+// end::notions[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Connaissance des langages web (HTML, CSS, JavaScript)
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+En découvrant Svelte, les apprenants acquièrent une nouvelle compétence en développement web. Ils apprennent à concevoir des applications modernes et performantes en utilisant les concepts propres à ce framework. Cette saison leur permet de diversifier leurs compétences et de se familiariser avec un outil de développement de plus en plus utilisé dans l'industrie.
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue kanban]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

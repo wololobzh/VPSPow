@@ -1,0 +1,245 @@
+:titre: Approche et concepts ITIL v4
+:module: Centre de services
+:duree: 60
+:description: Comprendre les évolutions de la version 4 d'ITIL et les concepts clés de la gestion des services IT.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les Fondamentaux
+* Maîtriser le Système de Valeur des Services (SVS)
+* Explorer les Quatre Dimensions
+* Approfondir les Pratiques ITIL 4
+* Adopter l’Agilité et la Collaboration
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Concept d'agilité
+
+L'agilité est un concept central dans ITIL 4.
+
+* Inspirée des méthodologies agiles utilisées dans le développement logiciel (comme Scrum, Kanban ou SAFe),
+* vise à permettre aux organisations de s’adapter rapidement aux changements
+* En maintenant une efficacité opérationnelle élevée.
+
+=== Qu’est-ce que l’agilité ?
+
+L’agilité est la capacité d'une organisation ou d'un système à s’adapter rapidement et efficacement aux changements internes et externes.
+
+Elle repose sur des principes tels que :
+
+* **Collaboration** : Travailler efficacement avec les parties prenantes.
+* **Flexibilité** : Adapter les priorités, les processus et les livrables au fur et à mesure que les besoins évoluent.
+* **Réactivité** : Répondre rapidement aux opportunités ou aux problèmes émergents.
+* **Amélioration continue** : Évaluer et ajuster constamment les pratiques pour une meilleure performance.
+
+=== Pourquoi l’agilité est-elle importante ?
+
+Dans un monde numérique en évolution rapide, les entreprises doivent :
+
+* Répondre rapidement aux **changements technologiques** et aux attentes des clients.
+* Réduire les **temps de cycle** pour livrer de nouvelles fonctionnalités ou services.
+* Être résilientes face aux **incertitudes** (économiques, concurrentielles ou réglementaires).
+
+ITIL 4 représente une évolution qui abandonne la structure rigide du cycle de vie des services pour adopter une approche plus souple, centrée sur la création de valeur et l'agilité.
+
+== Concept SVS
+
+* SVS (Service Value System) est une vision systémique de la gestion des services.
+* Il relie tous les composants nécessaires pour gérer et améliorer les services
+* mettant l'accent sur la création de valeur pour les clients.
+
+=== Les Composants du SVS :
+
+**Principes directeurs** : Recommandations universelles pour orienter les décisions, comme :
+
+* Se concentrer sur la valeur.
+* Progresser par itération avec feedback.
+* Collaborer et promouvoir la visibilité.
+* Optimiser et automatiser.
+
+=== Gouvernance
+
+Définit comment les décisions stratégiques et opérationnelles sont prises et alignées.
+
+=== Chaîne de Valeur des Services (Service Value Chain)
+
+* Un modèle d’activités interconnectées pour transformer les demandes des parties prenantes en valeur.
+* Activités clés : Planifier, améliorer, engager, concevoir/transférer, obtenir/construire, livrer/supporter.
+
+=== Pratiques
+
+Regroupent des activités, compétences et ressources pour exécuter efficacement les processus (remplaçant les processus rigides d'ITIL v3).
+
+=== Amélioration continue
+
+Une boucle omniprésente dans le SVS, qui vise à améliorer les services, pratiques et résultats.
+
+== Les 4 Dimensions de la Gestion des Services
+
+ITIL v4 adopte une vision globale de la gestion des services en tenant compte des quatre dimensions suivantes
+
+=== Organisations et Personnes
+
+* Importance des compétences, de la culture et des structures organisationnelles.
+* Accent mis sur des équipes collaboratives et multidisciplinaires pour favoriser l’agilité.
+
+=== Information et Technologie
+
+* Utilisation de technologies modernes (cloud, IA, ...) pour répondre aux besoins.
+* Une gestion agile des données et des outils pour un suivi en temps réel.
+
+=== Partenaires et Fournisseurs
+
+* Écosystèmes pour fournir des services plus rapidement et de manière plus flexible.
+* Collaboration stratégique avec les fournisseurs pour co-créer de la valeur.
+
+=== Flux de Valeur et Processus
+
+Analyse des chaînes de valeur pour optimiser chaque étape, éliminer les gaspillages et accélérer les livraisons.
+
+== Les pratiques ITIL V4
+
+ITIL 4 remplace les processus rigides d’ITIL v3 par des pratiques flexibles.
+
+Ces pratiques permettent une meilleure intégration avec des approches modernes comme DevOps, Agile et Lean.
+
+Elles sont divisées en trois catégories
+
+=== Les pratiques générales
+
+**Gestion des risques :**
+
+* Identifier, évaluer et atténuer les risques potentiels pour l'organisation.
+* S'assurer que les services IT restent alignés avec les objectifs business, même dans des environnements incertains.
+
+**Gestion financière :**
+
+* Contrôler les coûts, les budgets et les investissements IT.
+* Faciliter les décisions éclairées sur l’allocation des ressources.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Amélioration continue :**
+
+* Maintenir une boucle de rétroaction pour évaluer les performances, identifier les opportunités d’amélioration et mettre en œuvre des ajustements.
+* S’appuie sur le cycle PDCA (Plan-Do-Check-Act).
+
+=== Pratiques de Gestion des Services
+
+Pratiques spécifiques à la gestion des services IT pour garantir une expérience utilisateur et client optimale.
+
+**Gestion des incidents :**
+
+* Répondre rapidement aux interruptions pour minimiser leur impact.
+* Automatiser les réponses aux incidents récurrents pour réduire les délais de résolution.
+
+**Gestion des niveaux de service :**
+
+* Définir et surveiller les accords de niveaux de service (SLAs) pour garantir la satisfaction des clients.
+* Identifier et combler les écarts entre les attentes des clients et la performance réelle des services.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Gestion des demandes de service :**
+
+* Fournir une réponse standardisée et efficace aux demandes des utilisateurs
+
+=== Pratiques Techniques
+
+Concernent des activités spécifiques au développement et à la gestion des infrastructures IT.
+
+**Gestion des infrastructures :**
+
+* Surveiller, maintenir et optimiser les infrastructures IT pour garantir une performance continue.
+* Intégrer des solutions cloud et hybrides pour améliorer l’évolutivité et la résilience.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Développement logiciel et gestion des versions :**
+
+* Adopter des méthodologies agiles pour accélérer les cycles de livraison de nouvelles fonctionnalités.
+* Intégrer des outils CI/CD (Continuous Integration/Continuous Delivery) pour des déploiements fréquents et fiables.
+
+**Gestion des bases de données :**
+
+* S'assurer que les données restent accessibles, sécurisées et conformes aux réglementations.
+
+== Comparaison ITIL v3 vs ITIL v4
+
+|===
+| Caractéristique               | ITIL v3                                         | ITIL 4
+
+| Version
+| ITIL v3
+| ITIL 4
+
+| Structure principale
+| Cycle de vie des services
+| Système de Valeur des Services (SVS)
+
+| Approche
+| Linéaire et axée sur les processus
+| Agile, collaborative et centrée sur la valeur
+
+| Adaptabilité
+| Relativement rigide
+| Hautement flexible et réactif
+
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+|===
+| Caractéristique               | ITIL v3                                         | ITIL 4
+
+| Amélioration continue
+| Phase dédiée
+| Intégrée dans tout le système
+
+| Réponse aux changements
+| Plus lente en raison de la rigidité des processus
+| Rapide grâce à l’agilité et à l’automatisation
+
+| Collaboration
+| Silos entre les fonctions et processus
+| Collaboration interdisciplinaire intégrée
+|===
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+**Centré sur la Valeur :**
+
+ITIL 4 met la création de valeur pour les clients et les parties prenantes au centre de la gestion des services IT.
+
+**Approche Globale**
+
+Grâce aux Quatre Dimensions (organisation et personnes, information et technologie, partenaires et fournisseurs, flux de valeur et processus), ITIL 4 couvre tous les aspects nécessaires à une gestion efficace.
+
+**Pratiques Flexibles :**
+
+Les pratiques modulaires remplacent les processus rigides d’ITIL v3, avec une meilleure adaptabilité aux méthodologies modernes comme DevOps et Agile.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Chaîne de Valeur Dynamique :**
+
+La chaîne de valeur des services optimise la transformation des demandes en valeur, intégrant toutes les activités nécessaires.
+
+**Amélioration Continue Intégrée :**
+
+Présente dans chaque composant, elle favorise une évolution constante des services et processus.
+
+**Adapté aux Environnements Modernes :**
+
+ITIL v4 répond aux défis numériques en intégrant agilité, automatisation et collaboration interdisciplinaire.
+// end::conclusion[]

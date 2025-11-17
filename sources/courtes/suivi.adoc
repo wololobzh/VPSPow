@@ -1,0 +1,89 @@
+:title: Suivi Formations courtes
+:toclevels: 5
+include::../../adoc/libs/header-formation.adoc[]
+
+== Tâches récurrentes
+
+Tout ce qu'un référent de promo doit faire et quand.
+
+=== ✅ Check de fin de semaine
+
+* Vérifier que le formateur a bien suivis les instructions de la journée asynchrone
+* Si pas de journée asynchrone, checker que l'ECF et le QS ont bien été transmis aux apprenants
+* Indiquer aux formateurs de faire un RETEX
+
+Dans une formation, le QS, ou questionnaire de satisfaction, est un outil clé pour s'assurer que la qualité de l'enseignement et des contenus répond aux attentes des apprenants. 
+
+Vérifier que le formateur a bien fourni le QS à chaque fin de saison permet de recueillir des retours précieux pour maintenir un haut niveau pédagogique et pour ajuster les contenus ou les méthodes si besoin. Ces retours nous aident aussi à identifier les aspects les plus appréciés ou ceux qui nécessitent des améliorations, assurant ainsi que la formation reste toujours alignée avec les besoins des apprenants.
+
+=== 📚 Checker les ebooks
+
+* Vérifier que le formateur a bien fournis le ebook de la saison
+* Si ce n'est pas le cas, faites le !
+
+Ebook O'clock : Pour la formation DevOps, nous mettons dorénavant à disposition des apprenants un EBook qui reprend l’intégralité des supports, démonstrations et exercices de la saison, et le plus beau dans tout ça c’est qu’il n’y aura même pas besoin de le mettre à jour quand le cours sera modifié car il puise toutes ses informations depuis la trame même. Alors à chaque fois que l'on parle des e-books, on dit 'Ebook O'clock' pour renforcer notre marque. 
+
+== Saison 06
+
+=== E01
+
+//tag::s06e01[]
+* 📚 Checker les ebooks
+* 💬 Ecrire *deux* messages
+* ⚠️ Si ce n'est pas encore fait, fournir le Github Student Pack aux apprenants
+//end::s06e01[]
+
+```md
+💡 Astuce : Si vous ne l’avez pas encore fait, pensez à installer GitHub Copilot pour vous assister dans votre code ! C’est un outil d’IA qui peut vous proposer des suggestions en temps réel et vous aider à gagner du temps.
+```
+
+```md
+Hello @canal ! :salut_main: 
+
+Juste pour vous dire que 🚀 NestJS, c'est génial ! 🚀
+
+NestJS est un framework puissant et intuitif qui rend le développement backend moderne plus rapide et plus structuré. Vous allez adorer sa simplicité et sa flexibilité, surtout pour créer des APIs performantes et modulaires. Préparez-vous à gagner du temps et à coder plus efficacement ! 😊
+```
+=== E02
+
+//tag::s06e02[]
+Rien à faire
+//end::s06e02[]
+
+=== E03
+
+//tag::s06e03[]
+Rien à faire
+//end::s06e03[]
+
+
+=== E04
+
+//tag::s06e04[]
+* ✅ Check de fin de semaine
+//end::s06e04[]
+
+=== E05
+
+//tag::s06e05[]
+Rien à faire
+//end::s06e05[]
+
+=== E06
+
+//tag::s06e06[]
+Rien à faire
+//end::s06e06[]
+
+=== E07
+
+//tag::s06e07[]
+Rien à faire
+//end::s06e07[]
+
+=== E08
+
+//tag::s06e08[]
+* ✅ Check de fin de semaine
+* 🎓 L'ECF de cette saison permet de valider les compétences suivantes : --
+//end::s06e08[]

@@ -1,0 +1,41 @@
+:title: XXX
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode permet aux apprenants de se lancer dans leur formation sereinement avec l'installation des outils O'clock et la découverte du programme de formation, ainsi que de leur promo.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Connaître** et **savoir utiliser** les outils O'clock pour une formation réussie
+- **Prendre en main** les outils de communication pour échanger avec l'équipe pédagogique et le reste de la promo
+- **Comprendre** le programme de formation et les modalités du titre professionnel
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+- S'assurer que les assets de promo ont bien été créés
+- Penser à envoyer le questionnaire de rentrée
+- Penser à compléter le suivi apprenant tout au long de la saison
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+
+:challenge: 
+:description: 
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s01e01p02]
+--
+// end::deroulement[]

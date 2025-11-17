@@ -1,0 +1,127 @@
+:titre: JSON
+:module: JavaScript
+:duree: 120
+:description: Ce module a pour objectif de découvrir le format JSON et d'apprendre à manipuler des objets JSON en JavaScript.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" != "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Découvrir le concept d'objet JSON
+* Savoir manipuler des objets JSON
+* Comprendre l'intérêt de la sérialisation en JSON
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Introduction à JSON
+
+* JSON (JavaScript Object Notation) est un format de données textuelles qui permet de représenter des objets JavaScript sous forme de chaînes de caractères.
+* il est facile à lire et à écrire pour les humains
+* il est facile à analyser et à générer pour les machines
+
+=== Syntaxe
+
+* Les données sont représentées sous forme de paires clé-valeur, un peu comme les objets JavaScript.
+
+**Règles** :
+
+* Les clés doivent être des chaînes de caractères entourées de guillemets doubles.
+* Les valeurs peuvent être des chaînes de caractères, des nombres, des booléens, des tableaux, des objets ou `null`.
+
+```json
+{
+  "nom": "Dupont",
+  "age": 22,
+  "cours": ["Mathématiques", "Physique", "Informatique"]
+}
+```
+
+=== Intérêt de JSON
+
+* JSON est un format de données très utilisé pour échanger des données entre un serveur et un client.
+* il est compatible avec de nombreux langages de programmation.
+* il est léger et facile à manipuler.
+
+== Convertir du JSON
+
+* il est souvent nécessaire de convertir des objets JavaScript en JSON pour les envoyer à un serveur.
+* inversement, il est nécessaire de convertir du JSON en objet JavaScript pour pouvoir l'utiliser dans notre code.
+
+=== `JSON.stringify`
+
+* La méthode `JSON.stringify` permet de convertir un objet JavaScript en chaîne de caractères JSON.
+
+```javascript
+let etudiant = { nom: "Dupont", age: 22 };
+let jsonEtudiant = JSON.stringify(etudiant);
+console.log(jsonEtudiant); // Affiche '{"nom":"Dupont","age":22}'
+```
+
+=== `JSON.parse`
+
+* La méthode `JSON.parse` permet de convertir une chaîne de caractères JSON en objet JavaScript.
+
+```javascript
+let chaineJSON = '{"nom":"Dupont","age":22}';
+let objetEtudiant = JSON.parse(chaineJSON);
+console.log(objetEtudiant); // Affiche l'objet { nom: "Dupont", age: 22 }
+```
+
+// tag::exercice[]
+
+* Créez un objet complexe ou générez-le à l'aide de l'IA
+* Utilisez `JSON.stringify` pour transformer cet objet en chaîne JSON.
+* Ensuite, utilisez `JSON.parse` pour reconvertir la chaîne JSON en objet.
+
+[NOTE.speaker]
+====
+```javascript
+// Création de l'objet livre
+let livre = {
+  titre: "1984",
+  auteur: "George Orwell",
+  anneePublication: 1949
+};
+
+// Transformation en JSON
+let jsonLivre = JSON.stringify(livre);
+console.log(jsonLivre); // Affiche '{"titre":"1984","auteur":"George Orwell","anneePublication":1949}'
+
+// Transformation inverse en objet
+let objetLivre = JSON.parse(jsonLivre);
+console.log(objetLivre); // Affiche l'objet { titre: "1984", auteur: "George Orwell", anneePublication: 1949 }
+```
+====
+
+== Limitations
+
+* JSON ne supporte pas les commentaires, il n'est donc pas possible de le documenter
+* Il ne supporte pas les types de données binaires (images, sons, etc.)
+* Il ne supporte pas les fonctions
+
+WARNING: **JSON est uniquement destiné à représenter des données**
+
+== Pourquoi on a abordé le JSON ?
+
+* On va l'utiliser régulièrement pour manipuler / afficher des données dans nos applications web.
+* Il est souvent utilisé pour échanger des données avec un serveur.
+* Il est important de comprendre comment convertir des objets JavaScript en JSON et inversement.
+
+WARNING: **Un objet JSON n'est pas un objet JavaScript !**
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* JSON est un format de données textuelles très utilisé pour échanger des données entre un serveur et un client.
+* Il est facile à lire et à écrire pour les humains, et facile à analyser et à générer pour les machines.
+* Il est important de savoir convertir des objets JavaScript en JSON et inversement.
+* JSON est uniquement destiné à représenter des données, il ne supporte pas les commentaires, les types de données binaires ou les fonctions.
+// end::conclusion[]

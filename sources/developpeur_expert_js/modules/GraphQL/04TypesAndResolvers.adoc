@@ -1,0 +1,201 @@
+:titre: Configuration d’Apollo Server avec TypeScript et Définition du schéma GraphQL
+:module: apollo-server-typescript
+:duree: 45
+:description: Configurer Apollo Server en TypeScript, définir un schéma GraphQL et démarrer un serveur.
+
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Configurer Apollo Server avec TypeScript.
+* Définir et mettre en place un schéma GraphQL.
+* Démarrer et tester un serveur Apollo.
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Introduction à Apollo Server avec TypeScript
+
+Apollo Server est un serveur GraphQL open-source qui permet de simplifier la création et la gestion d'API GraphQL. Dans ce module, nous allons apprendre à configurer Apollo Server avec TypeScript et à définir un schéma GraphQL pour interroger et manipuler des données.
+
+[NOTE.speaker]
+====
+Apollo Server permet aux développeurs de créer des serveurs GraphQL robustes, offrant une interface flexible pour récupérer et manipuler les données. L'utilisation de TypeScript améliore la sécurité et la lisibilité du code grâce au typage statique.
+====
+
+== Étape 1 : Définition du schéma GraphQL
+
+Avant de démarrer le serveur Apollo, nous devons définir notre schéma GraphQL. Le schéma spécifie la structure des données et les requêtes possibles.
+
+[source,typescript]
+----
+src/types.ts
+
+import { gql } from 'graphql-tag';
+
+const typeDefs = gql`
+  type Person {
+    id: ID!
+    name: String!
+    partner: Person
+  }
+
+  type Query {
+    people: [Person]
+    hello: String
+  }
+`;
+
+export { typeDefs };
+----
+
+* `typeDefs` contient la définition du schéma GraphQL.
+* Le type `Person` décrit les champs d'une personne, avec une relation récursive pour le champ `partner`.
+* `Query` spécifie les requêtes disponibles, comme `people` qui retourne une liste de `Person`.
+
+[NOTE.speaker]
+====
+Le schéma GraphQL est fondamental. Ici, nous avons un type `Person` et une requête `people` qui renvoie une liste d'objets `Person`. Une autre requête `hello` permet de tester le serveur avec une réponse simple.
+====
+
+== Étape 2 : Démarrage du serveur Apollo
+
+Avec notre schéma défini, nous pouvons démarrer Apollo Server.
+
+[source,typescript]
+----
+src/index.ts
+
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
+import { typeDefs } from './types';
+
+const resolvers = {
+  Query: {
+    hello: () => 'Hello World!',
+  },
+};
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
+startStandaloneServer(server, {
+  listen: { port: 4005 },
+}).then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
+});
+----
+
+* ApolloServer requiert le schéma (`typeDefs`) et un objet `resolvers` définissant comment les données sont récupérées.
+* `startStandaloneServer` lance le serveur sur le port 4005.
+
+[NOTE.speaker]
+====
+Démarrer Apollo Server permet de tester nos requêtes dans le playground à l'adresse http://localhost:4005. Pour l'instant, seule la requête `hello` est opérationnelle.
+====
+
+== Étape 3 : Ajouter une Source de Données et un Resolver
+
+Nous allons créer une source de données pour les personnes et ajouter des résolveurs qui récupèrent ces données.
+
+[source,typescript]
+----
+src/dataset/people.ts
+
+const people = [
+  { id: 1, name: 'John Doe', partnerId: 2 },
+  { id: 2, name: 'Jane Doe', partnerId: 1 },
+];
+
+export { people };
+----
+
+Ensuite, nous modifions le résolveur `people` pour retourner cette liste de personnes :
+
+[source,typescript]
+----
+src/index.ts
+
+import { people } from './dataset/people';
+
+const resolvers = {
+  Query: {
+    hello: () => 'Hello World!',
+    people: () => people,
+  },
+};
+----
+
+[NOTE.speaker]
+====
+Nous avons maintenant une liste statique de personnes dans `people.ts`. Cette source de données est renvoyée par le résolveur de la requête `people`.
+====
+
+== Étape 4 : Résoudre un Individu et le Champ `partner`
+
+Ajoutons un résolveur permettant de récupérer une personne par son `id` et de résoudre le champ `partner`.
+
+[source,typescript]
+----
+src/index.ts
+
+const resolvers = {
+  Query: {
+    hello: () => 'Hello World!',
+    people: () => people,
+    person: (_, { id }) => people.find(person => person.id === id),
+  },
+  Person: {
+    partner: (parent) => people.find(person => person.id === parent.partnerId),
+  },
+};
+----
+
+Le schéma est étendu pour inclure `person(id: Int!)` dans les requêtes.
+
+[NOTE.speaker]
+====
+Nous pouvons maintenant récupérer un `partner` dans une requête, avec un `person` et son partenaire associé. Apollo Server résout les relations imbriquées, permettant ainsi d'explorer l'arbre des relations en profondeur.
+====
+
+== Exécuter une Requête de Test
+
+Testons la configuration avec une requête GraphQL pour récupérer une personne et son partenaire.
+
+```graphql
+query Person {
+  person(id: 1) {
+    id
+    name
+    partner {
+      name
+    }
+  }
+}
+```
+
+Cette requête renverra les informations sur "John Doe" et son partenaire "Jane Doe".
+
+[NOTE.speaker]
+====
+Apollo Server permet une exploration flexible des données avec des résolutions automatiques et imbriquées. Ce test valide la configuration et le bon fonctionnement du schéma et des résolveurs.
+====
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+
+Apollo Server et TypeScript permettent une configuration typée et sécurisée.
+Le schéma GraphQL définit la structure des données, les résolveurs gèrent leur accès.
+Ce module constitue une base pour un serveur GraphQL avancé avec des relations de données.
+La prochaine étape pourrait inclure l'ajout de bases de données avec Prisma. 
+// end::conclusion[]

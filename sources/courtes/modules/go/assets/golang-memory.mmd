@@ -1,0 +1,5 @@
+graph LR
+    A[Allocation] --> B{Taille connue<br/>à la compilation?}
+    B -->|Oui| C[Stack]
+    B -->|Non| D[Heap]
+    D --> E[Garbage<br/>Collector]

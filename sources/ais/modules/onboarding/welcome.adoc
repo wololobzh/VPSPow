@@ -1,0 +1,158 @@
+:titre: Hello World!
+:module: Onboarding
+:duree: 30
+:description: Premier contact avec les apprenants
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Accueillir et lancer les apprenants dans la formation
+* Expliquer le fonctionnement O'clock
+* Prodiguer quelques premiers conseils
+// end::objectifs[]
+
+// tag::deroulement[]
+== On est très heureux d'être là avec vous !
+
+=== Ok, mais c'est qui, on ?
+
+On a commencé à 4.
+
+Maintenant on est une petite armée à s'occuper de vous tout au long de votre parcours chez O'clock. 
+
+== Accompagnement
+
+* **Formateur**
+* **Référent**
+* **CPA** - _si problème personnel, hors pédagogie, pouvant impacter ta progression_
+* **Référent admission** - _si problème administratif (financement, assiduité, factures)_
+* **SAV** - _si problème technique, logistique => canal Slack #sav_
+
+=== Une journée-type
+
+* **9h - 12h** - _Cours_
+* **13h - 15h** - _Cours_
+* **15h - 17h** - _Challenge_
+
+⚠️ Vous devez être présent (devant votre ordi, joignable sur Slack) tous les jours entre 9h et 17h.
+
+=== Vendredis
+
+Tous les vendredis, vous serez en **autonomie** !
+
+Profitez de ce temps pour **pratiquer les notions vues en cours**, faire de la **veille**, préparer votre **certification CCNA** (on en reparle bientôt).
+
+Vous aurez parfois des QCM/quiz, pour vérifier votre progression.
+
+=== Découpage en saisons / épisodes
+
+Comme vos séries TV préférées,
+la formation est découpée en plusieurs saisons.
+
+* une saison = **un certain nombre d'épisodes** (5 ou 10, en général)
+* parfois des épisodes **"atelier"** (travaux pratiques)
+* **l'évaluation** le vendredi via un **QCM/quiz** (+ des exercices pratiques, parfois !)
+
+=== On prépare l'avenir
+
+Le but premier, c'est quand-même de trouver un job dans l'informatique, non ?
+
+* **Certification** - on t'accompagne pour préparer ta soutenance et décrocher ton Titre Professionnel.
+* **Recherche d'emploi** - ton référent pro interviendra à plusieurs occasions lors de ta formation pour te mettre sur la bonne voie car trouver un travail, ok, mais dans l'info, c'est plus sympa quand même.
+
+== Le Titre Professionnel
+
+=== AIS 🎓
+
+* La formation vous prépare au Titre Professionnel (TP) **Administrateur d'Infrastructures Sécurisées**.
+* C'est un titre de **Niveau 6**, équivalent à un Bac+4.
+* Les titres professionnels sont gérés par le Ministère du travail.
+
+On en parle un peu plus tard !
+
+== 6 mois
+
+Pour aller loin...
+
+tout en restant chez soi
+
+Une opportunité mais aussi un défi !
+
+* Vous allez devenir Administrateur d'Infrastructures Sécurisées !
+* Des centaines d'heures de travail en perspective.
+* Un planning, des horaires (à respecter ⚠️)
+
+== 6 mois
+
+Ça va vite !
+
+* **Faites de votre mieux** pour ne pas laissez pas de retard s'accumuler
+* Profitez du challenge pour **assimiler les notions de la journée**.
+* Pas de panique, **on va commencer doucement**.
+* **Chacun son rythme**.
+
+== 6 choses à ne pas oublier
+
+=== 1. N'hésitez jamais à demander
+
+On est là pour ça.
+
+=== 2. Vous êtes largués ?
+
+C'est normal !
+
+Être admin sys, c'est aussi passer beaucoup de temps
+devant des choses qu'au départ, on ne comprend pas.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+image::./assets/no-idea.jpg[]
+
+=== 3. Restez concentrés
+
+Pendant 6 mois, faites de O’clock votre priorité.
+
+Attention à ne pas s'éparpiller !
+
+=== 4. Attention à la fatigue
+
+Il faut se ménager !
+
+Une formation ce n'est pas une course.
+
+=== 5. Vous êtes largués ?
+
+C'est normal !
+
+Ok j'arrête.
+
+=== 6. Gardez le sourire
+
+Don't worry, be happy!
+
+Adopter une attitude positive vous aidera à braver les obstacles.
+
+== FrontControllers
+
+++++
+<iframe src="https://giphy.com/embed/VqMbOWBZzqYvcP9mee" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+++++
+
+We want you to vote !
+
+* FrontController = délégué
+* Sert d'intermédiaire entre votre promo et nous
+* Manifestez-vous !
+* Un vote aura lieu dans les prochains jours
+
+== Bon, on commence ?!
+
+Prêts ?
+
+Zou, c'est parti !
+// end::deroulement[]

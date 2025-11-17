@@ -1,0 +1,9 @@
+classDiagram
+    class Client {
+        - nom : string
+    }
+    class Commande {
+        - numero : int
+        - date : Date
+    }
+    Client "1" --> "0..*" Commande : passe

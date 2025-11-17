@@ -1,0 +1,499 @@
+:titre: Persistance des données
+:module: nestJs
+:duree: 60
+:description: Comprendre la Persistance des données
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* **Comprendre** le fonctionnement de la persistance des données avec NestJS
+* **Appliquer** l'intégration de Sequelize dans une application NestJS
+* **Créer** des modèles de données avec les décorateurs appropriés
+* **Comprendre** la configuration de la connexion à une base de données PostgreSQL
+// end::objectifs[]
+
+// tag::deroulement[]
+== Lire des données
+
+Pour démarrer doucement, on va lire un faux jeu de données avant de refactoriser le code pour se servir d'une BDD.
+
+// tag::demo[]
+== Démonstration 01
+
+Lecture de donnees
+
+[NOTE.speaker]
+--
+*Le contrôleur*
+
+On a injecté le service `notesService` dans le contrôleur, on peut donc s'en servir dans une méthode de ce contrôleur :
+
+[source,typescript]
+====
+// src/notes/notes.controller
+@Get()
+index() {
+    return this.notesService.getNotes();
+}
+====
+
+On doit modifier le service pour y ajouter la méthode `getNotes` et une propriété privée `notes`, afin de ne pas pouvoir modifier les notes accidentellement ailleurs que dans ce service.
+
+[source ,typescript]
+====
+// src/notes/notes.service
+export class NotesService {
+    private notes = [];
+
+    getNotes() {
+        return this.notes;
+    }
+}
+====
+
+*Lecture de donnees*
+
+On va vérifier en interrogeant l'URL http://localhost:3000[] (avec insomnia ou le navigateur, mais à ce stade insomnia est plus pratique), et si on reçoit un tableau vide en réponse, tout est ok.
+--
+// end::demo[]
+
+== Branchement de la BDD
+
+Lire des notes vides, c'est très bien, mais on va avoir besoin de faire un CRUD avec nos ressources, on a donc besoin de modèles.
+
+On va d'abord brancher Sequelize, puis faire un modèle et s'en servir pour créer une table de BDD.
+
+https://docs.nestjs.com/techniques/database#sequelize-integration[Intégration de Sequelize dans NestJS]
+
+// tag::demo[]
+== Démonstration 02
+
+Branchement de la BDD
+
+[NOTE.speaker]
+--
+*Branchement de la BDD*
+
+On commence par créer un fichier `.env` et son collègue éternel le `.env.example`.
+Il faudra sûrement ajouter ce fichier dans le gitignore.
+
+[source,dotenv]
+----
+BASE_URL=http://localhost
+PORT=3000
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=notes
+DB_PASS=notes
+DB_NAME=notes
+----
+
+[background-color=var(--r-demonstration)]
+:tip-caption: 💡
+[TIP]
+
+
+Encore un avantage de NestJS, on n'a rien besoin de faire explicitement pour parser le `.env` ( pas de ligne `dotenv.config()` 🙂 ), sauf redémarrer le serveur.
+
+*Modules pour la BDD*
+
+On doit installer quelques librairies supplémentaires, qui vont permettre d'écrire du code simple et lisible avec Sequelize :
+
+[source ,bash]
+----
+npm i @nestjs/config @nestjs/sequelize pg sequelize sequelize-typescript
+----
+
+
+*Modules pour les types Sequelize*
+
+Et également les types typescript sequelize :
+
+[source,bash]
+----
+npm i -D @types/sequelize
+----
+
+*Description des modules `@nest/*`*
+
+* Le module https://docs.nestjs.com/techniques/configuration[`@nestjs/config`] est un module de configuration qui permet de charger des fichiers .env et de configurer des modules en fonction des variables d'environnement
+
+* Le module `@nestjs/sequelize` est un module officiel qui permet l'intégration facile et propre de Sequelize avec NestJS.
+
+* Le module `@types/sequelize` permet par exemple de typer les associations sequelize, le module `sequelize-typescript` se sert de ce module pour nous offrir des décorateurs simples à lire. On n'utilisera pas explicitement ce module.
+
+
+*TIP*
+Le module `pg` est la car sequelize a besoin d'un driver pour se connecter aux BDD.
+
+*Configuration*
+
+On crée un répertoire `config` et on y place un fichier de configuration `configuration.ts` dont voici le contenu :
+
+[source ,typescript]
+----
+// src/config/configuration.ts
+import { SequelizeModule } from '@nestjs/sequelize';
+
+export default () => ({
+  port: parseInt(process.env.PORT, 10) || 3000, // Le port sur lequel on souhaite voir notre app tourner.
+  // La connexion a la BDD avec sequelize
+  sequelize: SequelizeModule.forRoot({
+    dialect: 'postgres', // La BDD qu'on utilise
+    host: process.env.DB_HOST, // L'hôte de la BDD
+    port: parseInt(process.env.DB_PORT, 10), // Le port de la BDD
+    username: process.env.DB_USERNAME, // Le nom d'utilisateur de la BDD
+    password: process.env.DB_PASS, // Le mot de passe de DB_USERNAME
+    database: process.env.DB_NAME, // La BDD sur laquelle on se connecte
+    // Chargement des modèles automatique :
+    // pas besoin de les importer un a un
+    // ni de les brancher manuellement dans le fichier `app.module.ts`.
+    // tout se fait dans le module de la ressource
+    // https://docs.nestjs.com/techniques/database#sequelize-integration
+    autoLoadModels: true,
+    define: {
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+      underscored: true
+    },
+  }),
+});
+----
+
+*Note*
+
+C'est possible que `eslint` colore le fichier en rouge, ce n'est pas grave, c'est parce qu'on ne se sert pas encore de cet `export default`.
+--
+// end::demo[]
+
+// tag::demo[]
+== Démonstration 03
+
+Créer un modèle
+
+[NOTE.speaker]
+--
+*Entité*
+
+On est prêt pour créer un modèle, on fait un fichier `notes/entities/note.entity.ts` , ce fichier sera notre modèle Sequelize, que voici :
+
+[source ,typescript]
+----
+// notes.entity.ts
+import { Column, Model, Table } from 'sequelize-typescript';
+
+@Table({ tableName: 'notes' })
+class Note extends Model {
+  @Column
+  title: string;
+
+  @Column
+  content: string;
+}
+
+export { Note };
+----
+
+Maintenant que tout ce beau monde est là, il faut s'en servir, on doit brancher le tout dans NestJS, plusieurs étapes sont nécessaires.
+--
+// end::demo[]
+
+== Raccordement
+
+On s'en souviendra à force de le faire, mais ce n'est pas évident au départ :
+
+. On doit dire à notre module `notes` que sequelize est de la partie.
+. On doit dire à notre service `notes` que sequelize est de la partie en lui injectant le modèle.
+. On doit dire à notre module root `app` comment se connecter à la BDD.
+
+// tag::demo[]
+== Démonstration 04
+
+Brancher Sequelize 
+
+[NOTE.speaker]
+--
+*Brancher Sequelize dans le module `notes`*
+
+On commence par importer nos nouveaux fichiers, ensuite, on les branche
+
+[source,typescript]
+----
+// notes.module.ts
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Note } from './entities/note.entity';
+
+@Module({
+  imports: [SequelizeModule.forFeature([Note])],
+  controllers: [NotesController],
+  providers: [NotesService],
+  exports: [SequelizeModule],
+})
+----
+
+Notez qu'on ajoute le module Sequelize au tableau `import` afin de charger le modèle (avec `.forFeature`), et on l'ajoute au tableau `exports` pour le charger dans l'application par la suite.
+
+*Brancher le modèle dans le service `notes`*
+
+On va injecter le modèle qu'on vient de faire dans le service, et au passage y ajouter une méthode pour tester le tout :
+
+[source ,typescript]
+----
+// notes.service.ts
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
+import { Note } from './entities/note.entity';
+
+@Injectable()
+export class NotesService {
+  constructor(@InjectModel(Note) private noteModel: typeof Note) {}
+
+  async getNotes(): Promise<Note[]> {
+    return await this.noteModel.findAll();
+  }
+----
+
+Le typage du constructeur est peu plus complexe que celle du contrôleur, car on a déclaré la propriété dans le constructeur plutôt qu'en dehors.
+
+On a aussi typé le retour de la méthode `findAll`, c'est une promesse qui doit retourner un tableau d'instance de Note.
+
+*Brancher Sequelize dans le module `app`*
+
+Il ne reste qu'à importer nos nouveaux éléments dans le module racine de l'application :
+
+[source ,typescript]
+----
+// app.module.ts
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
+import { NotesModule } from './notes/notes.module';
+
+@Module({
+    imports: [
+        // On charge les variables d'env
+        ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
+        // On init sequelize
+        configuration().sequelize,
+        NotesModule,
+    ],
+})
+export class AppModule {}
+----
+
+*NOTE*
+
+* `ConfigModule.forRoot({ load: [configuration], isGlobal: true })` : Cette ligne importe le `ConfigModule` de `@nestjs/config`. La méthode `forRoot` est utilisée pour configurer le module. L'option `load` est un tableau de fonctions qui retournent les configurations à charger. `isGlobal: true` signifie que les configurations chargées seront disponibles dans toute l'application.
+
+* `configuration().sequelize` : Cette ligne est utilisée pour configurer le module de connexion à la base de données via Sequelize.
+
+*Postgres*
+
+Les branchements sont faits, on se connecte à `postgresql` pour créer la BDD
+
+[source ,bash]
+----
+sudo -i -u postgres psql
+----
+
+[source ,sql]
+----
+// On est connecté si le prompt a changé
+CREATE ROLE notes WITH LOGIN PASSWORD 'notes';
+CREATE DATABASE notes OWNER notes;
+exit # pour se déconnecter
+----
+
+On peut tester à nouveau l'URL http://localhost:3000/notes[localhost:3000/notes] et si on reçoit un tableau vide en réponse, c'est qu'on a bien fait le boulot, à ceci prêt que Sequelize a synchronisé le modèle `notes` avec la BDD et qu'il a créé la table pour nous.
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice
+
+1. En utilisant la CLI, créer un module complet (incluant service, et contrôleur et modèle) pour pouvoir gérer des utilisateurs.
+
+2. Installer les modules manquants.
+
+3. Créer une BDD PostgreSQL avec les fichiers fournis.
+
+4. Brancher Sequelize sur la base de données.
+
+5. Faire une méthode de contrôleur qui affiche tous les utilisateurs et qui est correctement typé (ce qui implique de faire le service et l'entité et la 'plomberie').
+
+== Correction
+
+[NOTE.speaker]
+--
+La commande `nest g resource users --no-spec`  permet de générer un module complet.
+
+Cette commande créée le répertoire d'un module complet `users`, avec contrôleur, module, etc. Tout est branché automatiquement, et on a un nouveau répertoire DTO, qui est le sujet du module suivant.
+
+* En utilisant la CLI, créer un module complet (incluant service, et contrôleur et modèle) pour pouvoir gérer des utilisateurs.
+** `nest g resource users --no-spec`,
+** On choisit les options REST API et CRUD.
+** Lire et expliquer le code, ainsi que les avantages (gain de temps) et inconvénients (on subit) d'avoir un outil qui fait tout à notre place.
+
+* Installation des modules
+** `npm i sequelize sequelize-typescript @nestjs/sequelize @nestjs/config pg`
+
+* Créer une BDD PostgreSQL avec les fichiers fournis.
++
+[source,bash]
+----
+# Connexion à PostgreSQL
+sudo -i -u postgres psql
+----
++
+[source,sql]
+----
+-- Création de la BDD
+CREATE ROLE oshop WITH LOGIN PASSWORd 'oshop';
+CREATE DATABASE oshop OWNER oshop;
+\q
+----
++
+[source,bash]
+----
+# Création des tables et insertion de données
+psql -U oshop < data/tables.sql
+psql -U oshop < data/data.sql
+----
+
+* Brancher Sequelize sur la base de données.
+
+** Faire un fichier `.env` (et `.env.example`, pour avoir les bonnes habitudes)
++
+[source, dotenv]
+----
+BASE_URL=http://localhost:3000
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=oshop
+DB_PASS=oshop
+DB_NAME=oshop
+----
+
+** On crée un répertoire config, et dans ce répertoire un fichier `configuration.ts`.
++
+[source,typescript]
+----
+import { SequelizeModule } from '@nestjs/sequelize';
+
+export default () => ({
+    port: parseInt(process.env.PORT, 10) || 3000,
+    sequelize: SequelizeModule.forRoot({
+        dialect: 'postgres',
+        host: process.env.DB_HOST,
+        port: parseInt(process.env.DB_PORT, 10),
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
+        autoLoadModels: true,
+        logging: false,
+        define: {
+            createdAt: 'created_at',
+            updatedAt: 'updated_at',
+            underscored: true,
+        },
+    }),
+});
+----
+
+
+* Faire une méthode de contrôleur qui affiche tous les utilisateurs et qui est correctement typé (ce qui implique de faire le service et l'entité et la 'plomberie').
+
+** À partir de là, il faut se souvenir des étapes nécessaires pour  réaliser la fonctionnalité, le ligne de commande qui a créée le module nous a bien aidé, mais il reste quelques étapes pour tout brancher :
+
+*** 1. Faire le modèle (entité) User.
++
+[source,typescript]
+----
+import { Column, Model, Table } from 'sequelize-typescript';
+@Table({ tableName: 'users' })
+export class User extends Model {
+  @Column({
+    allowNull: false,
+    validate: {
+      isEmail: true,
+    },
+  })
+  email: string;
+  @Column({
+    allowNull: false,
+    validate: {
+      min: {
+        args: [8],
+        msg: 'Minimum 8 characters required in password',
+      },
+    },
+  })
+  password: string;
+  @Column
+  firstname: string;
+  @Column
+  lastname: string;
+  @Column
+  role: string;
+  @Column
+  status: number;
+}
+----
+
+*** 2. Ajouter la configuration dans le module App.
++
+[source,typescript]
+----
+import { Module } from '@nestjs/common';
+import { UsersModule } from './users/users.module'; // Est ajouté par NestJS
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
+
+@Module({
+  imports: [
+    // ...
+    ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
+    configuration().sequelize,
+    UsersModule // Est ajouté par NestJS
+  ]
+})
+export class AppModule {}
+----
+
+*** 3. Faire la méthode `findAll` dans le service User.
+
+* On injecte le modèle `User` dans le constructeur et on fait la méthode `findAll()`
++
+[source,typescript]
+----
+import { InjectModel } from '@nestjs/sequelize';
+import { User } from './entities/user.entity';
+export class UsersService {
+  constructor(@InjectModel(User) private userModel: typeof User) {}
+    async findAll(): Promise<User[]> {
+      return await this.userModel.findAll({
+        attributes: { exclude: ['password'] },
+      });
+    }
+}
+----
+
+//TODO ramener les fichiers sources SQL
+--
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Maîtrise de l'intégration d'une base de données avec NestJS
+* Capacité à configurer Sequelize dans un environnement NestJS
+* Compréhension de la création et utilisation des modèles de données
+* Aptitude à implémenter des opérations CRUD basiques
+* Maîtrise de la configuration des variables d'environnement pour la base de données
+// end::conclusion[]

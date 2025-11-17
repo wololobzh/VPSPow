@@ -1,0 +1,88 @@
+:title: Fond & Forme : HTML, CSS
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Plongée dans le développement frontend moderne avec HTML et CSS, enrichie par l'utilisation d'outils d'IA comme GitHub Copilot. Cette journée pose les fondations essentielles pour créer des interfaces web tout en exploitant les technologies actuelles pour optimiser le processus de développement.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* la différence entre HTML et CSS
+* *Appliquer* HTML pour structurer une page web
+* *Appliquer* les concepts fondamentaux du CSS pour styliser des pages
+* *Utiliser* GitHub Copilot pour accélérer le développement
+* *Évaluer* la pertinence des suggestions d'IA dans le code
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Installation de Visual Studio Code
+* Extension GitHub Copilot activée
+* Connaissance basique de l'utilisation de Copilot
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook O'Clock,window=_blank]**
+
+:temps: 30 minutes
+:correction: https://github.com/O-clock-FS-JS/Presentation-markdown/tree/correction
+:description: Retour rapide sur le challenge de la saison précédente.
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+.Indications complémentaires pour la correction
+[%collapsible]
+====
+⚠️ Ne pas durer trop longtemps sur la correction
+
+* Vérifier que tous les apprenants ont accès à GitHub Copilot
+* S'assurer que VS Code est correctement configuré
+* Expliquer brièvement le rôle de l'IA dans le développement
+
+Piqûre de rappel sur la LDC, bien insister sur les chemins (utiliser l’analogie de l’adresse du voisin, GPS ou instructions) :
+
+* Si on est chez soi, et on veut aller chez le coiffeur, au bout de la rue, bon bah, on sort de chez soi, on tourne à droite et c'est tout droit
+* Si on est à 300km de chez soi, et qu'on veut aller chez notre coiffeur, si on tourne à droite et on va au bout de la rue, on rentrera surement chez un inconnu et on va se faire engueuler ! C'est donc un chemin relatif, l'origine est importante
+* Si on veut utiliser un chemin absolu, on est sûr que ça va marcher peu importe où on se trouve. L'origine est fixe, le chemin toujours le même. Comme si on prenait un GPS, peu importe où on se trouve, avec le GPS, on est sûr d'arriver à bon port
+
+Parler de la tabulation qui auto-complète les chemins / commandes, des Ctrl+Shift+V et Ctrl+Shift+C, et de la flèche du haut dans le terminal
+
+On git clone côté formateur en expliquant rapidement, on rentre pas dans les détails, c'est plus tard dans la journée
+
+On donne le lien liveshare, attention à ceux qui livecode, la compréhension prime sur la maîtrise !
+
+Débriefer sur le déroulé des challenges, il ne faut pas qu'ils cherchent à faire du par cœur, il faut utiliser les supports à notre disposition.
+====
+
+// include::../../../../modules/bases-web/010-introduction_au_web.adoc[options=modules]
+
+include::../../../../modules/bases-web/020-html.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/bases-web/021-html-demo.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+WARNING: Ne pas aborder box-model (margin, padding), display, reset.css / normalize.css, (class & id)
+
+include::../../../../modules/bases-web/030-css.adoc[options=modules]
+
+*Fin du cours*
+
+* Un bouton challenge sera disponible sur kourou, il peut être possible de leur montrer sur une autre promotion
+* Rappeler comment cloner à ce moment
+* Rien à envoyer pour ce challenge encore (c'est le dernier)
+
+:challenge: https://github.com/O-clock-FS-JS/Recette-pancakes
+:description: Création et design simple et surtout basique d'une recette de pancakes maison 🥞
+:correction:
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+
+// end::deroulement[]

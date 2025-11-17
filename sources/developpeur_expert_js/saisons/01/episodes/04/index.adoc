@@ -1,0 +1,47 @@
+:title: Diagrammes Entité-Relation
+:number: 04 
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée est consacrée aux diagrammes Entité-Relation (ERD) pour la modélisation des bases de données. Les apprenants apprendront à identifier les entités, à définir leurs attributs et à établir les relations entre elles. Ils comprendront comment traduire les besoins métier en schémas de base de données et maîtriseront les principes de base des cardinalités, des contraintes et de la normalisation.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre le rôle et l'utilité des diagrammes Entité-Relation pour modéliser des bases de données relationnelles
+* Identifier et définir les entités et leurs attributs
+* Modéliser les relations entre entités et comprendre les concepts de cardinalité
+* Apprendre les bonnes pratiques pour organiser les ERD (nommage, structuration)
+* Appliquer les concepts de normalisation pour améliorer la structure de la base de données
+* Savoir traduire des exigences métier en modèle relationnel
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Bonne compréhension des bases de données relationnelles
+* Expérience en conception de schémas de base de données et diagrammes ERD
+* Connaissance des concepts de cardinalité, de normalisation et de contraintes
+* Maîtrise des bonnes pratiques pour organiser et structurer des diagrammes Entité-Relation
+* Compétences pédagogiques pour transmettre les notions de modélisation relationnelle et de structuration de données
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[] 
+:correction: https://github.com/O-clock-Teach/AnalyseEtConception/blob/main/Challenge/docs/corrections/J4.adoc
+:temps: jusqu'à 45 minutes
+:description: Passer du temps à bien corriger le challenge d'hier.
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/AnalyseEtConception/060DiagrammeEntiteRelation.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+TIP: 🍕 Pause déjeuner
+
+:challenge: https://github.com/O-clock-Teach/AnalyseEtConception/tree/main/Challenge
+:description: Modèles et BDD
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+// end::deroulement[]

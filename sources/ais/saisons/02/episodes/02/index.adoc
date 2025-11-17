@@ -1,0 +1,52 @@
+:title: Présentation ITIL 2/2
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode est la suite de la présentation d'ITIL. Nous allons voir les différentes phases du cycle de vie des services ITIL v3 et leur interdépendance, ainsi que les processus et les outils permettant une gestion optimale des transitions et de l’exploitation des services.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les différentes phases du cycle de vie des services ITIL v3 et leur interdépendance.
+* Développer une approche stratégique pour aligner les services IT sur les objectifs métiers.
+* Maîtriser les processus et les outils permettant une gestion optimale des transitions et de l’exploitation des services.
+* Optimiser la communication et la collaboration à travers une compréhension approfondie des concepts et terminologies ITIL.
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* **Connaissance approfondie de la méthode ITIL v3** et ses cinq phases principales.
+* **Expérience pratique** dans la gestion de services IT (stratégie, conception, transition et exploitation).
+* **Maîtrise des outils et concepts clés** : gestion des configurations, SLA, FMD, ROI, TCO, etc.
+* **Capacité à expliquer et illustrer des concepts financiers** liés aux services informatiques (ROI, TCO).
+* **Compétences pédagogiques** pour animer des discussions interactives et répondre à des cas pratiques.
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+:correction: 
+:temps: 30 minutes
+:description: Correction du challenge E01
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/itil/conception-services.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/itil/transition-services.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/itil/exploitation-services.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1Kiq9McW21kyKMUIw-IUQCKWBJAbRkxio/view?usp=drive_link
+:description: Conception des services
+:correction: https://drive.google.com/file/d/1fIF4kDwiddYbrr-auGiPGJ_Y3Sf-J_Ix/view?usp=drive_link
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

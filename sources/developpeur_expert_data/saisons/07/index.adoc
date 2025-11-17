@@ -1,0 +1,51 @@
+:title: Projet final
+:number: 07
+:duration: 35
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Réalisation d'un projet concret intégrant toutes les compétences, de l'analyse à la mise en production.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+Intégrer l’ensemble des compétences acquises dans un projet concret
+Travailler en équipe pour résoudre un cas pratique
+Savoir documenter et présenter un projet
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+Planification de projet
+Analyse fonctionnelle et technique
+Développement et intégration continue
+Documentation technique
+Présentation de projet
+Retour d'expérience
+// end::notions[]
+
+
+
+== Prérequis formateur
+
+// tag::prerequis[]
+Compétences avancées en gestion de projet
+Maîtrise des outils et méthodes de développement et documentation
+Expérience en accompagnement de projet pédagogique
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+Cette saison permet aux apprenants de se lancer sereinement dans leur formation. On les aide à installer tous les outils, on leur présente quelques notions d'introduction, on les prépare à savoir cloner les challenges et lancer des DevContainer.
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue kanban]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

@@ -1,0 +1,385 @@
+:titre: Exploration de l'écosystème Terraform
+:module: Virtualisation
+:duree: 120
+:description: Ce module a pour objectif de présenter les providers et ressources Terraform les plus populaires et de revenir sur les étapes essentielles de déclaration et d'utilisation d'un provider ou d'une ressource.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre l'importance des providers dans Terraform
+* Connaître les providers les plus populaires
+* Savoir configurer un provider et ses ressources
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Importance des providers
+
+* Rappel : ce sont des plugins qui permettent à Terraform d'interagir avec des services externes
+* Chaque provider gère un ensemble de ressources spécifiques (VM, réseaux, BDD...)
+
+=== Exemples de fournisseurs populaires
+
+* Cloud : AWS, Azure, Google Cloud, Kubernetes, Alibaba Cloud...
+* Réseau : Cisco, Juniper, F5, Fortinet...
+* Sécurité : Palo Alto, Check Point, Qualys, Tenable...
+* Stockage : NetApp, Pure Storage, Dell EMC, HPE...
+* Monitoring : Datadog, New Relic, Prometheus, Grafana...
+
+[NOTE.speaker]
+--
+Juste après nous allons voir des exemples de configuration pour les providers les plus populaires. Le but n'est pas de les maîtriser mais de savoir qu'ils existent et qu'on peut les utiliser en s'aidant de leur documentation. La variété des providers est un des points forts de Terraform, mais il faut aussi comprendre qu'on ne peut pas tous les maîtriser dés le départ.
+--
+
+== Provider AWS
+
+https://registry.terraform.io/providers/hashicorp/aws/latest[🔗 Provider AWS]
+
+* Le provider AWS est l'un des plus populaires
+* Il permet de gérer un grand nombre de ressources AWS
+* Il est maintenu par AWS, il a donc une bonne conformité avec les services AWS
+
+=== Exemple de configuration AWS
+
+Cette configuration permet de créer une instance EC2 sur AWS. Une instance EC2 est une machine virtuelle qui peut être utilisée pour exécuter des applications.
+
+```hcl
+provider "aws" {
+  region = "us-west-2"
+}
+
+# EC2 Instance
+resource "aws_instance" "example_instance" {
+  ami           = "ami-0c55b159cbfafe1f0" # Amazon Linux 2 AMI (HVM), SSD Volume Type
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "SimpleExampleInstance"
+  }
+}
+```
+
+== Provider Azure
+
+https://registry.terraform.io/providers/hashicorp/azurerm/latest[🔗 Provider Azure]
+
+* Le provider Azure est l'un des plus populaires
+* Il permet de gérer un grand nombre de ressources Azure
+* Il est maintenu par Microsoft, il a donc une bonne conformité avec les services Azure
+
+=== Exemple de configuration Azure
+
+Cette configuration permet de créer une machine virtuelle Linux sur Azure. Cette machine virtuelle peut être utilisée pour exécuter des applications.
+
+```hcl
+provider "azurerm" {
+  features {}
+}
+
+# Virtual Machine
+resource "azurerm_linux_virtual_machine" "example_vm" {
+  name                = "example-vm"
+  resource_group_name = "<YOUR_RESOURCE_GROUP>"
+  location            = "East US"
+  size                = "Standard_B1s"
+  admin_username      = "adminuser"
+
+  admin_ssh_key {
+    username   = "adminuser"
+    public_key = "<YOUR_SSH_PUBLIC_KEY>"
+  }
+
+  network_interface_ids = [azurerm_network_interface.example_nic.id]
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
+  }
+}
+```
+
+== Provider Proxmox
+
+https://registry.terraform.io/providers/bpg/proxmox/latest[🔗 Provider Proxmox]
+
+* Le provider Proxmox permet de gérer des ressources Proxmox
+* Il est maintenu par la communauté, il est donc moins complet que les providers AWS et Azure
+* Il permet de gérer des VMs, des containers, des stockages, des réseaux...
+
+=== Exemple de configuration Proxmox
+
+Cette configuration permet de créer une VM sur un serveur Proxmox. Une VM est une machine virtuelle qui peut être utilisée pour exécuter des applications.
+
+```hcl
+provider "proxmox" {
+  pm_api_url      = "https://<PROXMOX_HOST>:8006/api2/json"
+  pm_user         = "root@pam"
+  pm_password     = "<YOUR_PASSWORD>"
+  pm_tls_insecure = true
+}
+
+resource "proxmox_vm_qemu" "example_vm" {
+  name       = "terraform-vm"
+  target_node = "<PROXMOX_NODE>"
+
+  clone       = "<TEMPLATE_NAME>"
+  os_type     = "cloud-init"
+
+  cores       = 2
+  memory      = 2048
+  scsihw      = "virtio-scsi-pci"
+
+  network {
+    model    = "virtio"
+    bridge   = "vmbr0"
+  }
+
+  disk {
+    size    = "10G"
+    storage = "<STORAGE_NAME>"
+  }
+
+  ipconfig0 = "ip=192.168.1.100/24,gw=192.168.1.1"
+}
+```
+
+== Etapes d'utilisation d'un provider
+
+Quel que soit le provider, les étapes d'utilisation sont les mêmes.
+
+=== Etape 1 : Configuration du provider
+
+* On commence par déclarer le provider que l'on souhaite utiliser
+* On associe le mot-clé `provider` suivi du nom du provider et de ses paramètres
+
+```hcl
+provider "proxmox" {
+  endpoint = "https://localhost:8006/ap2/json"
+}
+```
+
+=== Etape 1bis : Déclaration du provider
+
+* De base, Terraform va chercher lui-même le provider dans Terraform Registry
+* Dans certains cas il ne va pas trouver le provider ou va utiliser le mauvais provider
+* On peut vouloir aussi utiliser une version spécifique d'un provider
+* Dans ce cas, on peut déclarer le provider manuellement :
+
+```hcl
+terraform {
+  required_providers {
+    proxmox = {
+      source = "bpg/proxmox"
+      version = "0.42.0"
+    }
+  }
+}
+```
+
+=== Etape 2 : Informations d'authentification
+
+* Pour se connecter au service externe, Terraform a besoin d'informations d'authentification
+* Ces informations sont spécifiques à chaque provider
+* Elles peuvent être stockées dans des variables d'environnement, des fichiers de configuration, des fichiers secrets...
+
+Exemple avec Proxmox :
+
+```hcl
+provider "proxmox" {
+    endpoint = "https://localhost:8006/ap2/json"
+    api_token = "root@pam!hello=api_key"
+    insecure = true
+    ssh {
+      agent = true
+      username = "root"
+    }
+}
+```
+
+=== Bilan de l'utilisation des providers
+
+* Les étapes pour utiliser un provider sont toujours sensiblement les mêmes
+* Chaque provider a ses spécificités, il faut donc se référer à la documentation du provider
+* Une fois le provider configuré, on peut utiliser les ressources qu'il gère
+
+== Détail des ressources
+
+* Les ressources sont les éléments que l'on va gérer avec Terraform
+* Elles sont spécifiques à chaque provider
+* Elles ont des paramètres spécifiques
+
+=== Exemples de ressources habituelles
+
+* VM : machine virtuelle
+* Network : réseau
+* Security Group : groupe de sécurité
+* Load Balancer : répartiteur de charge
+* Database : base de données
+* Bucket : espace de stockage
+* Key Pair : paire de clés
+
+[NOTE.speaker]
+--
+Juste après nous allons voir des exemples de configuration pour les ressources les plus populaires. Le but n'est pas de les maîtriser mais de savoir qu'elles existent et qu'on peut les utiliser en s'aidant de leur documentation. La variété des ressources est un des points forts de Terraform, mais il faut aussi comprendre qu'on ne peut pas toutes les maîtriser dés le départ.
+--
+
+== Ressources AWS
+
+https://registry.terraform.io/providers/hashicorp/aws/latest/docs[🔗 Ressources AWS]
+
+* AWS Instance : instance EC2
+* AWS Security Group : groupe de sécurité
+* AWS Load Balancer : répartiteur de charge
+* AWS RDS Instance : instance de base de données
+* AWS S3 Bucket : espace de stockage
+* AWS Key Pair : paire de clés
+
+=== Exemple de configuration AWS Instance
+
+Cette configuration permet de créer une instance EC2 sur AWS. Une instance EC2 est une machine virtuelle qui peut être utilisée pour exécuter des applications.
+
+```hcl
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+}
+```
+
+== Ressources Azure
+
+https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs[🔗 Ressources Azure]
+
+* Azure Virtual Machine : machine virtuelle
+* Azure Network Interface : interface réseau
+* Azure Security Group : groupe de sécurité
+* Azure Load Balancer : répartiteur de charge
+
+=== Exemple de configuration Azure Virtual Machine
+
+Cette configuration permet de créer une machine virtuelle Linux sur Azure. Cette machine virtuelle peut être utilisée pour exécuter des applications.
+
+```hcl
+resource "azurerm_linux_virtual_machine" "example" {
+  name                = "example-vm"
+  resource_group_name = "example-resources"
+  location            = "East US"
+  size                = "Standard_B1s"
+}
+```
+
+== Ressources Proxmox
+
+https://registry.terraform.io/providers/bpg/proxmox/latest/docs[🔗 Ressources Proxmox]
+
+* Proxmox Virtual Environment Container : container
+* Proxmox Virtual Environment VM : machine virtuelle
+* Proxmox Virtual Environment Network : réseau
+* Proxmox Virtual Environment Storage : stockage
+
+=== Exemple de configuration Proxmox Virtual Environment Container
+
+Cette configuration permet de créer un container sur un serveur Proxmox. Un container est une machine virtuelle légère qui peut être utilisée pour exécuter des applications.
+
+```hcl
+resource "proxmox_virtual_environment_container" "example" {
+  node_name = "hello-world"
+  cpu {
+    cores = 1
+  }
+  memory {
+    dedicated = 512
+  }
+  disk {
+    datastore_id = "local-lvm"
+    size         = 4
+  }
+}
+```
+
+== Etapes d'utilisation d'une ressource
+
+Quelle que soit la ressource, les étapes d'utilisation sont les mêmes.
+
+=== Etape 1 : Déclaration de la ressource
+
+* On commence par déclarer la ressource que l'on souhaite créer, modifier ou supprimer
+* On utilise le mot-clé `resource` suivi du type de ressource et de ses paramètres
+
+```hcl
+resource "proxmox_virtual_environment_container" "example" {
+  node_name = "hello-world"
+  cpu {
+    cores = 1
+  }
+  memory {
+    dedicated = 512
+  }
+  disk {
+    datastore_id = "local-lvm"
+    size         = 4
+  }
+}
+```
+
+=== Etape 2 : Planification
+
+* Toujours commencer par planifier les actions que Terraform va effectuer
+* Cela permet de vérifier que la configuration est correcte et de voir les actions qui vont être effectuées
+
+```shell
+terraform plan
+```
+
+=== Etape 3 : Application
+
+* Une fois que le plan est correct, on peut appliquer les changements
+
+```shell
+terraform apply
+```
+
+=== Etape 4 : Gérer l'état des ressources
+
+* Terraform stocke l'état des ressources dans un fichier (par défaut `terraform.tfstate`)
+* Il est important de ne pas modifier ce fichier manuellement
+* On peut stocker ce fichier dans un backend pour le partager avec d'autres personnes
+
+=== Etape 5 : Nettoyer les ressources
+
+* Cette étape est facultative
+* Elle permet de supprimer les ressources créées par Terraform
+
+```shell
+terraform destroy
+```
+
+=== Bilan de l'utilisation des ressources
+
+* Les étapes pour utiliser une ressource sont toujours sensiblement les mêmes
+* Chaque ressource a ses spécificités, il faut donc se référer à la documentation du provider
+* Une fois la ressource déclarée, on peut la gérer avec Terraform
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Il existe de nombreuses façons d'utiliser Terraform grâce aux providers et ressources
+* Chaque provider gère un ensemble de ressources spécifiques
+* Chaque ressource a des paramètres spécifiques
+* Les étapes pour utiliser un provider ou une ressource sont toujours sensiblement les mêmes
+* Il est important de se référer à la documentation du provider et de la ressource
+// end::conclusion[]

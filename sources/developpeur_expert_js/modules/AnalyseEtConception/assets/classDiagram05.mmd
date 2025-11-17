@@ -1,0 +1,10 @@
+classDiagram
+    class Entreprise {
+        - nom : string
+        - adresse : string
+    }
+    class Employe {
+        - nom : string
+        - poste : string
+    }
+    Employe "0..*" --> "1" Entreprise : travaille pour

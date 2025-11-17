@@ -1,0 +1,215 @@
+:titre: Gestion des déploiements avec Terraform
+:module: Virtualisation
+:duree: 60
+:description: Ce module permet de découvrir les workspaces, les stratégies de rollback et l'intégration continue avec Terraform.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre l'utilisation des workspaces pour gérer plusieurs environnements
+* Savoir mettre en place des stratégies de rollback pour revenir à un état précédent
+* Découvrir comment intégrer Terraform dans un pipeline CI/CD
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Les workspaces
+
+* utilisés pour gérer plusieurs états distincts d'une même configuration
+* chaque workspace a son propre fichier d'état (`terraform.tfstate`)
+* permet de garder les ressources d'un environnement séparées des autres
+
+=== Séparation des environnements
+
+* les workspaces peuvent à eux seuls gérer plusieurs environnements, il n'y a donc pas besoin de plusieurs configurations
+* chaque workspace peut avoir ses propres valeurs de variables
+* cela permet de personnaliser les déploiements sans altérer la configuration de base
+
+=== Gestion des workspaces
+
+**Créer un nouveau workspace**
+
+`terraform workspace new <workspace-name>`
+
+**Lister les workspaces**
+
+`terraform workspace list`
+
+**Changer de workspace**
+
+`terraform workspace select <workspace-name>`
+
+// tag::demo[]
+
+=== Démonstration
+
+Manipuler les workspaces
+
+[NOTE.speaker]
+--
+**Étape 1** : Créez un nouveau workspace pour un environnement de développement.
+
+`terraform workspace new dev`
+
+**Étape 2** : Listez les workspaces pour vérifier la création.
+
+`terraform workspace list`
+
+**Étape 3** : Sélectionnez le workspace de développement.
+
+`terraform workspace select dev`
+
+**Étape 4** : Appliquez des changements spécifiques à cet environnement.
+
+`terraform apply`
+--
+
+// end::demo[]
+
+=== Avantages et limitations
+
+[cols="1,1"]
+|===
+| Avantages | Limitations
+
+a|
+* **isolation des états** : chaque workspace a son propre fichier d'état
+* **facilité de gestion** : pas besoin de plusieurs configurations
+a|
+* **complexité des variables** : les workspaces ne changent pas automatiquement les valeurs des variables
+* **approches alternatives** : parfois il vaut mieux utiliser les modules ou fichiers `tfvars`
+* **gestion des secrets** : les workspaces ne sont pas adaptés pour gérer des secrets
+|===
+
+== Stratégies de rollback
+
+* les déploiements d'infrastructures peuvent échouer ou causer des problèmes
+* les stratégies de rollback permettent de revenir à un état précédent en cas de problème
+* Terraform ne propose pas de rollback natif, il faut donc se débrouiller 🤓
+
+=== Utiliser un ancien fichier de configuration
+
+* utiliser `terraform apply` avec une version antérieure du fichier de configuration
+* cela suppose d'avoir versionné les fichiers de configuration avec Git par exemple
+
+**Exemple de procédure** :
+
+* identifier le commit Git correspondant à l'état stable précédent
+* utiliser `git checkout <commit-hash>` pour revenir à cet état
+* appliquer les changements avec `terraform apply`
+
+=== Utiliser une sauvegarde de l'état
+
+* le fichier `terraform.tfstate` contient l'état actuel de l'infrastructure
+* pour rappel, il est essentiel de sauvegarder ce fichier
+* en cas de problème, il est possible de restaurer un état précédent
+* il est possible de manipuler l'état avec `terraform state`
+
+**Exemple de procédure** :
+
+* afficher l'état actuel avec `terraform show`
+* déplacer une ressource d'un état à un autre avec `terraform state mv`
+* supprimer une ressource de l'état avec `terraform state rm`
+
+// tag::demo[]
+
+=== Démonstration
+
+Mise en place d'une stratégie de rollback simple
+
+[NOTE.speaker]
+--
+**Étape 1** : Assurez-vous que votre projet Terraform est versionné avec Git.
+
+```sh
+git init
+git add .
+git commit -m "Initial commit"
+```
+
+**Étape 2** : Après avoir appliqué des modifications et rencontré un problème, revenez à un état précédent.
+
+* Identifiez le commit à restaurer.
+* Utilisez Git pour revenir à cette version :
+
+```sh
+git checkout <previous-commit>
+```
+
+**Étape 3** : Appliquez la configuration précédente pour restaurer l'état de l'infrastructure.
+
+```sh
+terraform apply
+```
+--
+
+// end::demo[]
+
+=== Bonnes pratiques
+
+* documenter les versions et les changements appliqués, y compris les raisons des rollbacks
+* tester les changements sur un environnement de test avant de les appliquer en production
+* sauvegarder régulièrement les fichiers d'état et les configurations, notamment avec des scripts ou des outils tiers
+
+== Intégration continue
+
+* l'intégration continue permet de tester et de déployer automatiquement les changements
+* Terraform peut être intégré dans un pipeline CI/CD pour automatiser les déploiements
+* les outils CI/CD populaires comme Jenkins, GitLab CI ou GitHub Actions peuvent être utilisés
+
+=== Exemple de pipeline CI/CD sur GitHub Actions
+
+* créer un fichier `.github/workflows/terraform.yml` dans le dépôt
+
+```yml
+name: Terraform
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+```
+
+[NOTE.speaker]
+--
+* Ce pipeline est déclenché à chaque push sur la branche `main`.
+* Il initialise Terraform, affiche le plan et applique les changements.
+* Il est possible d'ajouter des étapes supplémentaires pour tester ou valider les changements.
+--
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Les workspaces permettent de gérer plusieurs environnements avec une seule configuration Terraform.
+* Les stratégies de rollback sont essentielles pour revenir à un état précédent en cas de problème.
+* L'intégration continue permet d'automatiser les déploiements Terraform dans un pipeline CI/CD.
+// end::conclusion[]

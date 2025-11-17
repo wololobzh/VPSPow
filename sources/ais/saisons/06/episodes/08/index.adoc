@@ -1,0 +1,49 @@
+:title: Bash Introduction, Variables et boucles
+:number: 08
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode est une introduction à Bash, un langage de script utilisé pour l'automatisation de tâches et la gestion de systèmes Unix/Linux. Nous allons voir comment déclarer et utiliser des variables, manipuler des chaînes et des nombres, et utiliser des boucles pour répéter des tâches.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Qu’est ce que Bash
+* Script Bash
+* Rappel Commandes Bash
+* Déclaration et utilisation
+* Variables locales
+* Variables globales
+* Manipulation de chaînes
+* Manipulation de nombres
+* Variables système
+* Boucle For, While, Until et Select
+* utilisation de IF
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* un environnement linux pour pouvoir utiliser Bash
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+include::../../../../modules/scripting/sh-intro.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/scripting/sh-variables.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/scripting/sh-boucles.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1VQc9Dg02f6fuPqjM9p5GCGvPcDbiKrBO/view?usp=drive_link
+:description: Bash introduction, variables et boucles
+:correction: https://drive.google.com/file/d/1WQ9AH5B5E2GyjgyOFUUkoJjlqVw3-F2Y/view?usp=drive_link
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

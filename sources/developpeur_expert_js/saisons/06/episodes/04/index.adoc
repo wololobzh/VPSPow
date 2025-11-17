@@ -1,0 +1,56 @@
+:title: Authentification & Autorisation
+:number: 04
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée de formation permet de maîtriser les mécanismes d'authentification et d'autorisation avec NestJS pour sécuriser vos applications. Vous apprendrez à implémenter des stratégies d'authentification, à gérer les rôles et les permissions, et à protéger efficacement les ressources de votre API.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les concepts d'authentification et d'autorisation
+* Configurer des stratégies d'authentification dans NestJS
+* Implémenter l'authentification par jeton (JWT)
+* Gérer les rôles et permissions pour l'accès aux ressources
+* Protéger les routes et les endpoints avec des gardes
+* Assurer la sécurité des données utilisateurs
+* Intégrer des bonnes pratiques de sécurité
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Maîtrise avancée de NestJS
+* Expérience pratique avec l'authentification et l'autorisation dans des applications backend
+* Connaissance approfondie des techniques d'authentification, notamment JWT, OAuth, et les sessions
+* Compétences en gestion des rôles, permissions et contrôle d'accès
+* Connaissance des bonnes pratiques de sécurité pour protéger les données utilisateur
+* Expérience avec l'implémentation de gardes et middleware de sécurité dans NestJS
+* Compétences pédagogiques
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+*Récupérer les candidats pour l'élection des délégués*
+
+:correction: https://github.com/O-clock-Formations-courtes/NestJSChallenge/blob/main/correctionJ3.md
+:temps: jusqu'à 90 minutes
+:description: Passer du temps à bien corriger le challenge d'hier en commentant bien votre code.
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/nestJs/08Authentification.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/nestJs/09Autorisations.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Formations-courtes/NestJSChallenge
+:description: ÔTarte : Authentification et Autorisation
+:correction: https://github.com/O-clock-Formations-courtes/NestJSChallenge/blob/main/correctionJ4.md
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+// end::deroulement[]

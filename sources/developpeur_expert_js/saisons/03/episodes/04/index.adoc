@@ -1,0 +1,46 @@
+:title: Accompagnement dans le projet DevOps
+:number: 04
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée est la dernière journée de projet DevOps. On attend des apprenants ceci :
+
+**Après-midi :**  
+
+* Présentation des projets :  
+  - Chaque groupe déploie son projet devant les autres.  
+  - Retour d’expérience : ce qui a bien/mal fonctionné, améliorations possibles.
+
+**Livrables attendus**
+
+* Repository GitHub contenant :  
+  - Les Dockerfiles et le fichier `docker-compose.yml`.  
+  - Les workflows GitHub Actions.  
+  - La documentation (`README.md`).  
+* Images Docker publiées sur Docker Hub.  
+* Application déployée sur un serveur accessible via HTTPS.
+
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Appliquer** les concepts DevOps sur un projet concret
+- **Gérer** un workflow de développement en environnement collaboratif
+- **Concevoir** une infrastructure DevOps répondant aux besoins d’un projet spécifique
+- **Déployer et maintenir** une application en production avec un suivi d’intégrité
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Bonnes connaissances de Docker et Docker Compose
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+WARNING: *Accompagner les apprenants en difficultés et les encourager à travailler en groupe.*
+
+// end::deroulement[]

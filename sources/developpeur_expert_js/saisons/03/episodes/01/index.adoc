@@ -1,0 +1,32 @@
+:title: Accompagnement dans le projet DevOps
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée est la seconde journée de projet DevOps. Les apprenants vont mettre en œuvre des pipelines d’intégration continue, optimisent les flux de travail, et assurent le déploiement efficace d’une application.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Appliquer** les concepts DevOps sur un projet concret
+- *Gérer* un workflow de développement en environnement collaboratif
+- **Concevoir** une infrastructure DevOps répondant aux besoins d’un projet spécifique
+- **Déployer et maintenir** une application en production avec un suivi d’intégrité
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Bonnes connaissances de Docker et Docker Compose
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+WARNING: *Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook]*
+
+WARNING: *Il faut trouver le projet dev à deployer et la correction du projet n'est pas faite.*
+
+include::../../../../modules/projet_devops/01Presentation.adoc[options=modules]
+// end::deroulement[]

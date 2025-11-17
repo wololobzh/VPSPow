@@ -1,0 +1,48 @@
+:title: Protocole de routage dynamique 	
+:number: 08
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Comprendre le fonctionnement et la mise en place du routage dynamique avec les protocole RIP et OSPF
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Savoir configurer et mettre en place du routage dynamique en configurant les routeurs avec protocole RIP
+* Savoir configurer et mettre en place du routage dynamique en configurant les routeurs avec protocole OSPF
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Connaissance du logiciel Packet TRACER
+* Savoir configurer des routes dynamiques sur des routeurs avec les protocoles
+** RIP
+** OSPF
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/reseau/protocole-rip.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/reseau/protocole-ospf.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1diZMen4vhMKHX-WYvO-cQCoiPOMZL0-l/view?usp=drive_link
+:description: OSPF +
+Fournir le fichier https://drive.google.com/file/d/1GOU5xdszBEjOPLPKbQJWMpohuRewI8E9/view?usp=drive_link
+:correction: https://docs.google.com/document/d/1fpx20WrPalAhFTekhYYsYO_xeWXzmRMe/edit?usp=drive_link&ouid=106071620069547745756&rtpof=true&sd=true
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

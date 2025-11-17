@@ -1,0 +1,98 @@
+:titre: KeyCloak & Mail O'clock
+:module: Outils
+:duree: 15
+:description: Configuration et utilisation du système d'authentification KeyCloak et de la messagerie O'clock.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** le concept de Single Sign-On (SSO) avec KeyCloak
+* **Appliquer** la procédure de connexion KeyCloak
+* **Utiliser** la messagerie O'clock
+// end::objectifs[]
+
+// tag::deroulement[]
+== KeyCloak - Single Sign-On
+
+* Système d'authentification centralisé (SSO)
+* Un compte unique pour tous les outils O'clock
+* Similaire à la connexion Google ou Facebook
+* Spécifique à l'écosystème O'clock
+
+[NOTE.speaker]
+====
+KeyCloak est notre système de connexion unique.
+Il permet d'accéder à tous les outils O'clock avec un seul compte.
+C'est plus sécurisé et plus pratique qu'avoir plusieurs comptes.
+====
+
+== Configuration du compte
+
+* Email de bienvenue avec les identifiants
+* Format identifiant : `prenom.nom@oclock.school`
+* Mot de passe initial : `azertyuiop1234`
+* Changement obligatoire à la première connexion
+
+[NOTE.speaker]
+====
+Les identifiants sont envoyés par email le matin du premier jour.
+Le changement de mot de passe est une mesure de sécurité obligatoire.
+Le format de l'email est standardisé pour tous les apprenants.
+====
+
+== Messagerie O'clock
+
+* Adresse email : `prenom.nom@oclock.school`
+* Accès : https://mail.oclock.school/
+* Authentification via KeyCloak
+* Conservation des emails limitée à 90 jours
+
+[NOTE.speaker]
+====
+La messagerie est accessible via le navigateur web.
+La limite de 90 jours pour la conservation des emails est importante à noter.
+Il faut sauvegarder les emails importants avant cette échéance.
+====
+
+// tag::demo[]
+== Démonstration
+
+Configuration initiale des accès
+
+[NOTE.speaker]
+====
+1. Connexion à KeyCloak
+2. Changement du mot de passe initial
+3. Accès à la messagerie O'clock
+4. Vérification des emails reçus
+5. Test d'envoi d'email
+====
+// end::demo[]
+
+// tag::exercice[]
+== Exercice
+
+Connexion à la messagerie O'clock
+
+[NOTE.speaker]
+====
+1. Se connecter à https://mail.oclock.school/
+2. Vérifier l'accès à la boîte mail
+3. Confirmer la réussite dans le chat
+====
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* KeyCloak permet une authentification centralisée sécurisée
+* La messagerie O'clock est accessible via le navigateur
+* Important de noter la limite de conservation des emails
+* Le SSO simplifie l'accès à tous les outils O'clock
+// end::conclusion[]

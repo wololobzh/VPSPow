@@ -1,0 +1,56 @@
+:title: Programmer
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée est consacrée à la découverte de la programmation et de JavaScript. Les apprenants vont découvrir les bases de la programmation, les premiers pas en JavaScript, un peu de logique et des conditions.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre ce qu'est la programmation
+* Découvrir les bases de JavaScript
+* Manipuler les premières commandes en JavaScript
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Avoir une connaissance de base de la programmation
+* Avoir une connaissance de base de JavaScript
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook O'Clock,window=_blank]**
+
+// include::../../../../modules/bases-web/010-introduction_au_web.adoc[options=modules]
+
+WARNING: Ne pas aborder : +
+* Conditions `switch` (vu en S5) +
+* Détails de `function` (vu demain) +
+* Types composites `array` et `object` (vu demain)
+
+include::../../../../modules/javascript/intro.adoc[options=modules]
+
+include::../../../../modules/javascript/intro-algo.adoc[options=modules]
+
+include::../../../../modules/javascript/interet-programmation.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/javascript/bases.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/javascript/conditions.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-FS-JS/Quizz-js
+:description: Quizz JS - concerne `const` / `let`, `if...else`, `prompt`
+:correction:
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

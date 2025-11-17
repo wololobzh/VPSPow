@@ -1,0 +1,102 @@
+:titre: Kourou - Notre base de connaissances
+:module: Outils
+:duree: 15
+:description: Découverte de Kourou, la plateforme de ressources et documentation pour la formation O'clock.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** l'utilité et les fonctionnalités de Kourou
+* **Utiliser** les différentes sections de documentation
+* **Appliquer** les bonnes pratiques de recherche d'information
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction à Kourou
+
+* Plateforme de ressources O'clock
+* Accessible via https://kourou.oclock.io/
+* Authentification avec identifiants KeyCloak
+
+[NOTE.speaker]
+====
+Kourou est notre base de connaissances centralisée.
+L'accès se fait avec les mêmes identifiants que les autres plateformes O'clock.
+C'est un outil essentiel tout au long de la formation.
+====
+
+== Les conseils
+
+* Ressources : https://kourou.oclock.io/nos-conseils/
+* Recommandations pour la formation
+* Bonnes pratiques pour les TP
+
+[NOTE.speaker]
+====
+La section conseils contient des informations précieuses pour réussir la formation.
+Les recommandations sont basées sur l'expérience des promotions précédentes.
+Les bonnes pratiques facilitent l'apprentissage et le travail en autonomie.
+====
+
+== Le lexique
+
+* Accessible via https://kourou.oclock.io/ressources/lexique/
+* Définitions des termes techniques
+* Organisation par :
+** Termes de formation
+** Concepts de développement
+* Recherche par mot-clé ou index
+
+[NOTE.speaker]
+====
+Le lexique est un outil précieux pour comprendre la terminologie technique.
+La recherche peut se faire de deux façons : via la barre de recherche ou l'index alphabétique.
+Les définitions sont adaptées au contexte de la formation.
+====
+
+== Les fiches récapitulatives
+
+* URL : https://kourou.oclock.io/ressources/fiches-recap/
+* Résumés techniques détaillés
+* Informations complémentaires aux cours
+* Ressources techniques approfondies
+
+[NOTE.speaker]
+====
+Les fiches récap vont au-delà du contenu des cours.
+Elles offrent des informations techniques plus détaillées.
+C'est une ressource fiable et validée par l'équipe pédagogique.
+====
+
+// tag::demo[]
+== Démonstration
+
+Navigation dans Kourou
+
+[NOTE.speaker]
+====
+1. Connexion à Kourou
+2. Exploration de la section conseils
+3. Recherche d'un terme dans le lexique
+4. Utilisation de l'index du lexique
+5. Consultation d'une fiche récap
+6. Démonstration de la recherche globale
+====
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Kourou est une ressource centrale pour la formation
+* Le lexique aide à maîtriser la terminologie technique
+* Les fiches récap approfondissent les notions du cours
+* La documentation est fiable et maintenue à jour
+
+image::assets/thinking.gif[thinking,400]
+// end::conclusion[]

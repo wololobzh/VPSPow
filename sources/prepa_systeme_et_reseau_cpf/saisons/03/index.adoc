@@ -1,0 +1,53 @@
+:title: Systèmes Windows  
+:number: 03  
+:duration: 35  
+include::../../../../adoc/libs/header-saison.adoc[]  
+
+// tag::intro[]  
+Cette saison se concentre sur l’apprentissage des bases de l’administration des systèmes Windows. Les apprenants explorent la gestion des utilisateurs, des droits d’accès, et des services essentiels dans un environnement Windows. Ils découvrent également les outils spécifiques à cet écosystème pour assurer la configuration et le dépannage des systèmes.  
+// end::intro[]  
+
+== Objectifs pédagogiques  
+
+// tag::objectifs[]  
+* Comprendre les bases de l’administration des systèmes Windows  
+* Gérer les utilisateurs, groupes, et permissions dans un environnement Windows  
+* Configurer et gérer des services essentiels sous Windows  
+* Apprendre à utiliser les outils d’administration Windows tels que PowerShell et le Gestionnaire de serveur  
+* Résoudre les problèmes courants dans un système Windows  
+// end::objectifs[]  
+
+== Notions  
+
+// tag::notions[]  
+* Présentation de l’écosystème Windows (édition, fonctionnalités, licences)  
+* Gestion des comptes utilisateurs et groupes locaux  
+* Configuration des permissions et stratégies locales  
+* Introduction aux services Windows (exploration et configuration)  
+* Utilisation des outils d’administration : PowerShell, Gestionnaire de serveur, et Éditeur de stratégies de groupe  
+* Maintenance et dépannage des systèmes Windows  
+* Gestion des mises à jour et sécurité dans un environnement Windows  
+// end::notions[]  
+
+== Prérequis formateur  
+
+// tag::prerequis[]  
+* Expertise dans l’administration des systèmes Windows  
+* Maîtrise de PowerShell et des outils de gestion Windows  
+* Compétences en dépannage des systèmes Windows  
+* Expérience dans la formation et l’accompagnement de débutants  
+// end::prerequis[]  
+
+== Résumé  
+
+// tag::resume[]  
+Cette saison permet aux apprenants d’acquérir les compétences fondamentales pour administrer un système Windows. En combinant théorie et pratique, ils découvrent comment configurer, gérer, et dépanner des environnements Windows, tout en se familiarisant avec les outils et méthodologies propres à cet écosystème.  
+// end::resume[]  
+
+== Déroulement  
+
+link:./overview.html[Vue kanban]  
+
+// tag::deroulement[]  
+include::episodes/*/*.adoc[opts=episodes]  
+// end::deroulement[]  

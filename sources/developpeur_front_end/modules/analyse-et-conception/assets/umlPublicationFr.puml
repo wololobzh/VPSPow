@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+
+actor Auteur
+actor Correcteur
+actor Éditeur
+actor Lecteur
+
+rectangle "Publier une histoire" {
+   usecase "Rédiger un brouillon" as uc1
+   usecase "Relire" as uc2
+   usecase "Suggérer des modifications" as uc3
+   usecase "Réviser" as uc4
+   usecase "Vendre" as uc5
+}
+usecase "Lire" as uc6
+
+Auteur --> uc1
+Auteur --> uc4
+Correcteur --> uc2
+Correcteur --> uc3
+Éditeur --> uc2
+Éditeur --> uc3
+Éditeur --> uc5
+Lecteur --> uc6
+
+@enduml

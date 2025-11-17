@@ -1,0 +1,51 @@
+:title: Gestion de projet et communication 
+:number: 05
+:duration: 35
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Compétences pour coordonner des projets data et interagir efficacement en équipe.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+Connaître les principes de base de la gestion de projet
+Maîtriser les outils de communication en équipe
+Savoir planifier et coordonner un projet
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+Cycle de vie d’un projet
+Méthodes agiles et Scrum
+Gestion du temps et des ressources
+Communication interpersonnelle
+Outils de gestion de projet (Trello, Jira)
+Gestion des risques
+// end::notions[]
+
+
+
+== Prérequis formateur
+
+// tag::prerequis[]
+Expérience en gestion de projet
+Connaissance des méthodologies agiles
+Compétences en communication et animation d'équipe
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+Cette saison permet aux apprenants de se lancer sereinement dans leur formation. On les aide à installer tous les outils, on leur présente quelques notions d'introduction, on les prépare à savoir cloner les challenges et lancer des DevContainer.
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue kanban]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

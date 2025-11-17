@@ -1,0 +1,48 @@
+:title: Comprendre et prévenir les attaques CSRF
+:number: 03 
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode permet de comprendre les attaques CSRF (Cross-Site Request Forgery), d’explorer les risques liés à ces attaques, et d’apprendre les techniques de prévention et de sécurisation. Les apprenants découvriront comment des requêtes non autorisées peuvent être exécutées au nom d’un utilisateur légitime et comment protéger les applications contre ces vulnérabilités.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre le fonctionnement des attaques CSRF et leurs impacts
+* Identifier les risques spécifiques liés aux attaques CSRF dans une application web
+* Découvrir les méthodes de prévention contre les failles CSRF (jetons CSRF, SameSite cookies)
+* Apprendre à implémenter des mécanismes de protection CSRF dans un projet web
+* Acquérir des réflexes de sécurité pour le traitement des requêtes sensibles
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Bonne compréhension des mécanismes d'authentification et de session
+* Connaissance des failles CSRF et de leurs vecteurs d’attaque
+* Maîtrise des méthodes de sécurisation CSRF (jetons CSRF, SameSite cookies, entêtes HTTP)
+* Expérience en développement web sécurisé et en implémentation de politiques de sécurité
+* Compétences pédagogiques et capacité à expliquer les concepts de sécurité applicative
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[] 
+
+:correction: https://github.com/O-clock-Expert-Dev/Commun-CyberSecurite-Challenge/blob/main/corrections/J2.md
+:temps: jusqu'à 60 minutes
+:description: Passer du temps à bien corriger le challenge d'hier.
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/Cybersecurite/050CSRF.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+TIP: 🍕 Pause déjeuner
+
+:challenge: https://www.root-me.org/fr/Challenges/Web-Client/CSRF-0-protection
+:description: Préparez-vous à explorer les mécanismes et les risques du CSRF, et à acquérir des compétences essentielles pour mieux sécuriser vos futurs projets !
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+// end::deroulement[]

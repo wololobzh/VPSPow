@@ -1,0 +1,123 @@
+:titre: Wiki Correction Challenge oNews
+:module: Flexbox et Layout CSS
+:duree: 4h
+:description: Apprendre à corriger un challenge basé sur un layout complexe avec Flexbox et des techniques avancées en CSS.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Maîtriser les propriétés principales de Flexbox pour organiser un layout complexe.
+* Comprendre l'utilisation de background-image et les options de positionnement.
+* Découvrir les techniques pour améliorer la lisibilité des textes dans un layout.
+* Appliquer des techniques pour gérer les contenus responsives et le défilement.
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Présentation du layout principal
+
+== Structure du layout
+
+* Flexbox simplifie grandement l'organisation.
+* Séparer le layout en blocs distincts :
+** Partie gauche : titre, carré central, menu en bas à droite.
+** Partie droite : liste des articles.
+
+[NOTE.speaker]
+====
+Avant de plonger dans le code, montrez le layout attendu via une maquette ou un exemple simple. Expliquez l'intérêt d'une organisation en blocs pour faciliter le développement et la maintenance.
+====
+
+== Partie gauche du layout
+
+=== Étape 1 : Compréhension des propriétés de Flexbox
+
+1. **justify-content** :
+   * Montrez les différentes options : `flex-start`, `center`, `space-between`, etc.
+2. **align-items** :
+   * Expliquez comment cela positionne les éléments verticalement dans un conteneur.
+
+=== Étape 2 : Organisation des blocs
+- Disposer le titre en haut à gauche : `align-self: flex-start`.
+- Positionner un carré au centre : `justify-content: center` et `align-items: center`.
+- Placer le menu en bas à droite : `align-self: flex-end`.
+
+=== Étape 3 : Utilisation de `justify-content: space-between`
+- Ajuster l'espace entre les éléments pour atteindre le design cible.
+
+[NOTE.speaker]
+--
+Utilisez un outil comme Grommet ou un éditeur de code en direct pour montrer l'impact des propriétés Flexbox. Mettez en évidence comment les changements dans le CSS affectent immédiatement l'apparence.
+--
+
+== Gestion des arrière-plans
+
+- Utilisation de `background-image` :
+  - Positionnement précis avec `background-position`.
+  - Ajustement de la taille avec `background-size` (`cover`, `contain`, etc.).
+- Montrer un exemple simple avec une image d'arrière-plan, puis complexifier avec une combinaison de couleurs.
+
+== Partie droite : Liste des articles
+
+=== Étape 1 : Structure de la liste
+- Utiliser `display: flex` et `flex-wrap: wrap`.
+- Importance de `box-sizing: border-box` pour éviter les débordements.
+- Ajuster la largeur des articles avec `width: 50%`.
+
+=== Étape 2 : Lisibilité
+- Améliorer la visibilité avec des techniques :
+  - Ajout d'ombres sur le texte : `text-shadow`.
+  - Gestion de l’opacité des fonds :
+    - `opacity: 0.5` (pourquoi ce n’est pas idéal).
+    - Utilisation des couleurs : `background-color: rgba(255, 255, 255, 0.5)`.
+
+[NOTE.speaker]
+====
+Expliquez les différences entre les notations hexadécimales et RGBA. Faites un exercice interactif où les apprenants ajustent les valeurs pour observer l’effet en temps réel.
+====
+
+=== Étape 3 : Responsivité
+
+* Montrez rapidement l’intérêt de `min-width` pour préparer le design responsive.
+* Aborder le concept sans s’attarder ; la responsivité sera traitée en détail dans un cours ultérieur.
+
+== Gestion du défilement et de la partie sticky
+
+=== Étape 1 : Défilement
+- Aborder deux solutions pour gérer les contenus plus longs que la page :
+  - `position: sticky` : Nécessite `align-self: flex-start`.
+  - `overflow-y: auto` : Utilisation de `overflow` pour rendre la partie défilable.
+
+=== Étape 2 : Sticky sur le titre
+- Fixer le titre "Latest News" en haut de la partie droite.
+
+[NOTE.speaker]
+====
+Montrez les limitations et les avantages des deux techniques dans un exemple pratique.
+====
+
+== Stylisation finale
+
+- Si le temps le permet :
+  - Ajout de styles pour l’intérieur des articles :
+    - Marges, paddings, et typographie.
+    - Couleurs et ombrages pour rendre le layout plus esthétique.
+
+== Pause café
+
+- 15 minutes : Prévoyez une pause en milieu de session pour permettre aux apprenants de se détendre et digérer les informations.
+
+== Conclusion
+
+// tag::conclusion[]
+* Flexbox est un outil puissant pour organiser un layout de manière rapide et intuitive.
+* La lisibilité et le design sont aussi importants que la structure.
+* La gestion des contenus longs et responsifs nécessite des techniques adaptées.
+* La pratique régulière est essentielle pour maîtriser ces concepts.
+// end::conclusion[]

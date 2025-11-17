@@ -1,0 +1,79 @@
+:title: Box model
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Découvertes des règles CSS pour le dimensionnement des éléments HTML dans une page.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* **Appliquer** les commandes de base de Git
+* **Comprendre** le box model en CSS
+* **Evaluer** la sémantique des éléments HTML
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Créer un lien O'Challenge du support https://github.com/O-clock-FS-JS/Chaussons-box-model[Chaussons box model,window=_blank]
+** Lien vers l'outil https://kourou.oclock.io/wp/wp-admin/admin.php?page=ochallenge[O'Challenge,window=_blank]
+// end::prerequis[]
+
+
+== Déroulement
+
+// tag::deroulement[]
+WARNING: Ne pas aborder `git init`, ni `flex` et `grid` qui sont vus plus tard.
+
+:correction: https://github.com/O-clock-FS-JS/Recette-pancakes/tree/correction
+:temps: 1h45
+:description: Pensez à bien commenter votre code. Vous pouvez ajouter des commentaires pour expliquer vos choix, vos réflexions, ou pour donner des indications sur la structure de votre code.
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+.Indications complémentaires pour la correction
+[%collapsible]
+====
+On commence par cloner le challenge de la veille en expliquant plus en détail cette fois ci.
+On corrige et on explique git status, add, commit, log pendant la correction du challenge avec bonus et mega bonus
+
+* On créé les fichiers en LDC pour montrer de nouveau le terminal (on peut montrer aussi sur vscode ctrl+n)
+* Faire la structure
+* Ajouter des styles basiques (background, etc. sans utiliser de classes)
+* Titres, em, strong
+* Visuel
+* Classes voir ci-dessous
+* On a fait beaucoup de choses, on peut introduire les classes de deux façons : comment styliser différemment un élément ou alors si je veux réutiliser le même style à deux endroits avec des balises différentes...
+
+On présente les classes en insistant sur l'intérêt. C'est LE sélecteur à retenir, parce que c’est réutilisable et modulable, on peut les cumuler et ils ne sont pas lié à la structure, c’est que du visuel ( aucun impact sémantique ) !
+
+Il faut aussi parler de l’ordre des déclaration et de la précision
+
+* Si jamais on met un sélecteur de même niveau aprés un autre, c'est le second qui prends le dessus sur le premier
+* Si on met un sélecteur plus précis, il prends forcément le dessus, même si il est déclaré avant le moins précis
+
+En gros on parle de spécificités, et on peut les illustrés facilement grâce à un outil tel que https://www.codecaptain.io/tools/css-specificity-calculator
+
+Si on nous parle d’id ou si on veut en parler, il faut parler du fait que on peut pas l’appliquer sur plusieurs élément et en profiter pour parler des ancres #.
+====
+
+TIP: ☕ Pause café
+
+include::../../../../modules/bases-web/040-boxmodel.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/bases-web/041-boxmodel-demo.adoc[options=modules]
+
+*Fin du cours*
+
+On peut proposer aux étudiants https://flukeout.github.io/[Bento CSS,window=_blank] pour s'entrainer aux sélecteurs mais on prévient que le challenge est plutôt long !
+
+:challenge: https://github.com/O-clock-FS-JS/Hero-corp-fan-page
+:description: Création et design en utilisant les box-models de la page de fan de Hero-Corp
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+
+// end::deroulement[]

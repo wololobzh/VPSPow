@@ -1,0 +1,115 @@
+:titre: Projet DevOps
+:module: DevOps
+:duree: 4 jours
+:description: Apprenez à conteneuriser, orchestrer, et déployer une application web full-stack tout en automatisant les workflows DevOps.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Renforcer les compétences en conteneurisation, orchestration et déploiement CI/CD.
+* Configurer un serveur web et un reverse proxy sécurisé.
+* Automatiser des workflows DevOps via GitHub Actions.
+* Publier et gérer des images Docker sur Docker Hub.
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Contexte
+
+Votre entreprise fictive, #DevStack Solutions#, souhaite lancer une application web full-stack composée de :
+
+* **Frontend** : Une application React (ou Angular/Vue.js).
+* **Backend** : Une API REST développée en Node.js (ou NestJS).
+* **Base de données** : PostgreSQL.
+
+**Objectif** : Conteneuriser cette application, l’orchestrer avec Docker Compose, la déployer avec un reverse proxy sécurisé grâce à #Caddy#, et intégrer un pipeline CI/CD via #GitHub Actions#.
+
+== Planning détaillé
+
+=== Journée 1 : Mise en place des bases
+
+**Matin :**  
+* Analyse des spécifications du projet.  
+* Architecture de l’application (Frontend, Backend, BDD).  
+* Communication entre les conteneurs.  
+* Création des Dockerfiles pour :  
+  **Backend** : API Node.js.  
+  **Frontend** : Application React/Angular/Vue.js.  
+  **Base de données** : PostgreSQL (image officielle).  
+
+**Après-midi :**  
+* Rédaction du fichier `docker-compose.yml` :  
+  - Configuration des services.  
+  - Gestion des réseaux et volumes pour la persistance.  
+* Tests d’orchestration locale avec Docker Compose.  
+
+=== Journée 2 : Gestion des conteneurs et publication
+
+**Matin :**  
+* Optimisation des images Docker.  
+* Publication des images sur Docker Hub :  
+  - Création d’un compte (si nécessaire).  
+  - Gestion des tags (latest, versionnée).  
+
+**Après-midi :**  
+* Configuration de #Caddy# :  
+  - Reverse proxy pour le frontend et l’API.  
+  - Ajout de TLS avec Let’s Encrypt.  
+* Documentation de la configuration dans un fichier `README.md`.
+
+=== Journée 3 : Automatisation avec GitHub Actions
+
+**Matin :**  
+* Mise en place d’un workflow CI/CD :  
+  - Build et push des images Docker sur Docker Hub.  
+  - Déploiement automatisé avec Docker Compose via SSH (si possible).  
+
+**Après-midi :**  
+* Intégration de tests simples :  
+  - Linter pour le frontend (ESLint ou autre).  
+  - Tests unitaires pour le backend (exemple avec Jest).  
+* Ajout de ces étapes au workflow CI/CD.
+
+=== Journée 4 : Finalisation et présentation
+
+**Matin :**  
+* Sécurisation :  
+  - Vérification des permissions des conteneurs.  
+  - Gestion des variables d’environnement (`.env`).  
+
+**Après-midi :**  
+* Présentation des projets :  
+  - Chaque groupe déploie son projet devant les autres.  
+  - Retour d’expérience : ce qui a bien/mal fonctionné, améliorations possibles.
+
+== Livrables attendus
+
+* Repository GitHub contenant :  
+  - Les Dockerfiles et le fichier `docker-compose.yml`.  
+  - Les workflows GitHub Actions.  
+  - La documentation (`README.md`).  
+* Images Docker publiées sur Docker Hub.  
+* Application déployée sur un serveur accessible via HTTPS.
+
+== Compétences mobilisées
+
+* Conteneurisation et orchestration avec Docker/Docker Compose.  
+* Automatisation avec GitHub Actions.  
+* Configuration et sécurisation d’un reverse proxy avec Caddy.  
+* Collaboration et gestion de version avec GitHub.
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Vous avez appris à concevoir, conteneuriser et déployer une application web full-stack.  
+* Vous êtes capable d’automatiser les workflows DevOps pour un projet collaboratif.  
+* Vous pouvez sécuriser un déploiement grâce à un reverse proxy (Caddy) et CI/CD.
+// end::conclusion[]

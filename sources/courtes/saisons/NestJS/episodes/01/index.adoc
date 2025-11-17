@@ -1,0 +1,58 @@
+:title: Bienvenue dans la formation NestJS !
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée de formation permet de découvrir et de maîtriser l'installation de NestJS ainsi que le développement de premières fonctionnalités. Vous apprendrez à configurer un projet NestJS de manière optimale, à comprendre sa structure et à développer vos premiers modules, contrôleurs et services.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les principes fondamentaux de NestJS
+* Installer et configurer un projet NestJS
+* Comprendre la structure et l’architecture de base de NestJS
+* Créer et utiliser des modules dans un projet NestJS
+* Développer des contrôleurs pour gérer les requêtes HTTP
+* Créer des services pour la logique métier
+* Mettre en place un environnement de développement fonctionnel et productif
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Maîtrise de l'installation et de la configuration de projets NestJS
+* Connaissance approfondie de l’architecture et de la structure de NestJS
+* Expérience pratique dans le développement de modules, contrôleurs et services NestJS
+* Compétences en gestion des dépendances et en configuration d’un environnement de développement
+* Connaissance de base des principes REST et des requêtes HTTP
+* Bonne compréhension de JavaScript et TypeScript
+* Compétences pédagogiques
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+include::../../../../modules/nestJs/01IntroductionNJ.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/nestJs/02Installation.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/nestJs/03CreationDeModules.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Formations-courtes/NestJSChallenge
+:description: Démarrage du projet fil rouge ÔTarte
+:correction: https://github.com/O-clock-Formations-courtes/NestJSChallenge/blob/main/correctionJ1.md
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s06e01]
+--
+// end::deroulement[]

@@ -1,0 +1,49 @@
+:title: ANGLAIS / HTML / CSS / ECF / QS
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Pas de face à face pédagogique sur cette journée, les apprenants travaillent sur des tâches en autonomie.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- Renforcer les compétences en anglais
+- Évaluer la compréhension des savoirs vu pendant la semaine
+- Développer des compétences en HTML CSS
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+Planifier un message Slack aux apprenants pour 8h30 en leur fournissant le programme de la journée et les ressources nécessaires.
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+```
+Bonjour à tous,
+
+Voici le programme de la journée :
+
+- Commencez cette journée par une heure d'anglais : c'est essentiel pour renforcer vos compétences et progresser efficacement.
+- Questionnaire de satisfaction de fin de saison : [LIEN A REMPLACER]
+- Evaluation de fin de saison : [LIEN A REMPLACER]
+
+- Développer vos compétences en HTML et CSS : https://github.com/O-clock-FS-JS/Parcours-html-css (correction : https://github.com/O-clock-FS-JS/Parcours-html-css/tree/correction)
+
+Si vous rencontrez des difficultés, n'hésitez pas contacter votre référent, le référent de promotion est en quelque sorte un mentor et un facilitateur, garant de la bonne expérience des apprenants tout au long de leur parcours de formation.
+
+Bonne journée à toutes et à tous !
+```
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s00e02]
+--
+// end::deroulement[]

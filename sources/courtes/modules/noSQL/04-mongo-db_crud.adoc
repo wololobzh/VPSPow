@@ -1,0 +1,27 @@
+:titre: Introduction au NoSQL
+:module: NoSQL
+:duree: 60
+:description: Découverte des bases de données NoSQL, leurs types et cas d'utilisation.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* Comprendre le “pourquoi” avant le “comment”.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction au NoSQL
+
+Les bases de données NoSQL (Not Only SQL) sont conçues pour gérer des volumes massifs de données non structurées ou semi-structurées. Contrairement aux bases de données relationnelles traditionnelles, elles offrent une flexibilité accrue et une scalabilité horizontale.
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Résumé des concepts clés abordés
+* Importance croissante des bases de données NoSQL dans le paysage technologique actuel
+// end::conclusion[]

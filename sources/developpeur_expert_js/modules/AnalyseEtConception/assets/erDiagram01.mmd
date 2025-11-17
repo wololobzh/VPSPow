@@ -1,0 +1,12 @@
+erDiagram
+    LIVRE {
+        int id PK
+        string titre
+        string genre
+    }
+    AUTEUR {
+        int id PK
+        string nom
+        string prenom
+    }
+    LIVRE ||--o{ AUTEUR : "écrit par"

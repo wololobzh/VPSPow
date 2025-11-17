@@ -1,0 +1,8 @@
+sequenceDiagram
+    participant Utilisateur
+    participant Serveur
+    Utilisateur->>Serveur: Demande de connexion
+    Serveur-->>Utilisateur: Valide l'identité
+    Utilisateur->>Serveur: Requête pour données
+    Note right of Serveur: Traitement de la requête
+    Serveur-->>Utilisateur: Données reçues

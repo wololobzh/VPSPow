@@ -1,0 +1,52 @@
+:title: Introduction à l'analyse et conception avec UML - Diagrammes de cas d'utilisation
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée de formation introduit l'analyse et la conception logicielle, en mettant en lumière l'utilisation des diagrammes de cas d'utilisation UML. Vous découvrirez comment structurer et représenter les exigences fonctionnelles d'un système à travers des acteurs et leurs interactions, facilitant ainsi la communication entre les équipes de développement et les parties prenantes.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les principes de base de l'analyse et conception logicielle
+* Découvrir les fondamentaux d'UML (Unified Modeling Language)
+* Identifier les différents acteurs d'un système et leurs interactions
+* Apprendre à créer et interpréter un diagramme de cas d'utilisation
+* Utiliser les diagrammes de cas d'utilisation pour modéliser les besoins fonctionnels
+* Développer une communication claire autour des exigences système
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Connaissance de base des concepts de modélisation et d'UML
+* Expérience dans l'analyse des exigences fonctionnelles d'un projet
+* Compétences pédagogiques pour enseigner les techniques de modélisation
+* Bonne compréhension des méthodologies de développement logiciel (agile, cycle en V)
+* Maîtrise des outils de création de diagrammes UML (par exemple Lucidchart, Visual Paradigm, ou autres)
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+include::../../../../modules/AnalyseEtConception/010-Introduction_analyse_et_conception.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/AnalyseEtConception/015PresentationUML.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/AnalyseEtConception/016UserStories.adoc[options=modules]
+
+include::../../../../modules/AnalyseEtConception/020DiagrammeDeCas.adoc[options=modules]
+
+TIP: 🎯 Pause de fin de journée
+
+:challenge: https://github.com/O-clock-Teach/AnalyseEtConception/tree/main/Challenge
+:description: Préparer des questions pour éclaircir les zones d'ombres avec le client. Critiquer certains choix pour apporter votre expertise.
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

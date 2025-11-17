@@ -1,0 +1,22 @@
+graph TD;
+    A[Interface Utilisateur Initiale] --> B[Compilation Svelte]
+    B --> C[Interaction Utilisateur]
+    C --> D[Réévaluation de l'État]
+    D --> E[Mise à Jour Directe du DOM]
+    E --> F[Interface Utilisateur Mise à Jour]
+
+    subgraph Processus Svelte
+        B
+        D
+    end
+
+    subgraph Mise à Jour du DOM Réel
+        E
+        F
+    end
+
+    classDef process fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef realdom fill:#bbf,stroke:#333,stroke-width:2px;
+
+    class ProcessusSvelte process;
+    class MiseàJourduDOMRéel realdom;

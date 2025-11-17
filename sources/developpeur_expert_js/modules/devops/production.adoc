@@ -1,0 +1,140 @@
+:titre: Going to production
+:module: Devops
+:duree: 120
+:description: Récapitulation des étapes de mise en production d'une application complète et découverte des pratiques Ops. Simulation d'une mise en production avec Docker Compose.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** les concepts de mise en production (Ops)
+- **Appliquer** la mise en production avec Docker Compose
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction au métier des Ops
+
+* Définition : Processus de déploiement d'une application dans un environnement de production.
+* Importance : Assurer la disponibilité, la sécurité et la scalabilité de l'application.
+
+[NOTE.speaker]
+====
+La mise en production est une étape critique dans le cycle de vie d'une application. Elle doit être réalisée avec soin pour garantir la performance et la sécurité de l'application en environnement réel.
+====
+
+== Concepts clés de la mise en production
+
+=== Outillage
+
+* CI/CD : Github Actions, Jenkins, Gitlab CI.
+* Infrastructure as Code : Terraform, Ansible, CloudFormation.
+* Conteneurisation : Docker, Kubernetes.
+
+[NOTE.speaker]
+====
+La norme actuelle pour le déploiement d'application est l'utilisation de Docker via l'orchestration de conteneurs avec Kubernetes. Cela permet de déployer et de gérer des applications de manière efficace et évolutive.
+
+L'infrastucture as Code permet de définir et de gérer l'infrastructure de manière automatisée. L'idée est de décrire l'infrastructure dans des fichiers de configuration, qui peuvent être versionnés et partagés. Ensuite Ansible et Terraform se charge de converger l'état de l'infrastructure vers l'état décrit dans les fichiers de configuration.
+====
+
+=== Stratégies de déploiement
+
+* Rolling updates : Mise à jour progressive des services.
+* Blue-green deployment : Déploiement parallèle de deux versions.
+* Canary deployment : Test progressif sur un sous-ensemble d'utilisateurs.
+
+[NOTE.speaker]
+====
+Les stratégies de déploiement permettent de minimiser les temps d'arrêt et de réduire les risques lors des mises à jour en production. Elles offrent une flexibilité pour tester et valider les nouvelles versions.
+
+Chaque stratégie a ses avantages et inconvénients, et doit être choisie en fonction des besoins de l'application.
+====
+
+=== Monitoring et logs
+
+* Outils : Prometheus, Grafana, ELK Stack.
+* Bonnes pratiques : Surveillance continue, analyse des logs pour détecter les anomalies.
+
+[NOTE.speaker]
+====
+Le monitoring et l'analyse des logs sont essentiels pour détecter les problèmes en production. Ils permettent une intervention rapide en cas d'anomalies.
+====
+
+=== Recovery
+
+Il existe plusieurs stratégies pour garantir la disponibilité des services en production :
+
+* Backup : Sauvegarde régulière des données.
+* Failover : Bascule automatique vers un serveur de secours.
+* Load balancing : Répartition de la charge pour éviter les surcharges.
+* Disaster recovery : Plan de reprise d'activité en cas de sinistre.
+
+[NOTE.speaker]
+====
+Les stratégies de recovery permettent de garantir la disponibilité des services en cas de panne ou de sinistre. Elles sont essentielles pour maintenir la continuité de service et minimiser les temps d'arrêt.
+
+Divers outils sont disponibles, tel qu'ArgoCD, pour automatiser les mises à jour et garantir la cohérence des environnements de production.
+====
+
+== Simulation d'une mise en production
+
+WARNING: On utilisera Docker Compose pour simuler une mise en production. En pratique, on utilisera des outils plus avancés comme Kubernetes.
+
+Docker Swarm est une alternative pour la production avec une syntaxe similaire à Docker Compose.
+
+[NOTE.speaker]
+====
+Docker compose est une solution simple mais non appropriée pour la production. Elle reste une solution valable lorsque l'on n'a pas besoin de scalabilité et de haute disponibilité.
+
+* Docker compose : Idéal pour un développeur qui veut mettre en ligne simplement son application.
+* Docker Swarm : Idéal si on veut faire les choses un peu plus sérieusement.
+* Kubernetes : Idéal pour une mise en production professionnelle.
+====
+
+// tag::demo[]
+=== Démon configuration
+
+Créer un fichier `production.compose.yml` utilisant les images DockerHub.
+
+[NOTE.speaker]
+====
+. Créer un fichier `production.compose.yml`.
+. Définir des services pour la simulation  :
+* Caddy
+* Frontend sur localhost
+* Adminer sur adminer.localhost
+. Ajout de stratégies de redémarrage des services : `restart: unless-stop` ou `restart: on-failure`.
+====
+// end::demo[]
+
+// tag::demo[]
+=== Démo lancement
+
+Lancer le fichier `production.compose.yml` depuis un serveur.
+
+[NOTE.speaker]
+====
+1. Ouvrir un terminal sur le serveur de production.
+2. Exécuter `docker-compose -f production.compose.yml up -d`.
+3. Vérifier les logs pour s'assurer que les services démarrent correctement.
+4. Accéder aux services pour vérifier leur disponibilité.
+====
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Le metier des Ops est un métier à part entière
+* Le DevOps est une approche qui vise à rapprocher les développeurs et les Ops
+* La mise en production 
+** est une étape critique dans le cycle de vie d'une application
+** doit être réalisée avec soin pour garantir la performance et la sécurité 
+* La méthode et la stratégie de déploiement dépendent des besoins de l'application
+// end::conclusion[]

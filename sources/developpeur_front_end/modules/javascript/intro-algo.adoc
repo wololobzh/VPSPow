@@ -1,0 +1,57 @@
+:titre: Introduction à l'algorithmique
+:module: JavaScript
+:duree: 30
+:description: Ce module est une introduction à l'algorithmique, la base de la programmation.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" != "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre ce qu'est l'algorithmique
+* Découvrir les bases de l'algorithmique
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Support
+
+https://github.com/O-clock-FS-JS/RPG[🔗 RPG]
+
+== Cheminement de pensée d'un algorithme
+
+- Un algorithme est simplement une série d'étapes pour résoudre un problème ou accomplir une tâche.
+- Pensez à décomposer le problème en étapes simples et gérables.
+- Regardez le dépôt de démonstration. Par exemple, comment fait-on pour que le personnage se déplace dans notre jeu RPG ? 
+
+C'est un exemple d'algorithme !
+
+== Plusieurs routes possibles
+
+- Il y a souvent plusieurs façons de résoudre un problème.
+- Chaque méthode a ses avantages et inconvénients.
+- Essayez de réfléchir à différentes solutions pour un même problème et expérimentez avec le code du dépôt.
+
+== Discussion sur vos expériences
+
+- Partagez vos défis et réussites en apprenant la programmation.
+- Discutons ensemble pour mieux comprendre ce qui fonctionne et ce qui ne fonctionne pas pour vous.
+- Utilisez des exemples du dépôt pour illustrer vos idées et questions.
+
+== IA : Comment les outils IA peuvent vous aider ?
+
+- Les outils d'intelligence artificielle peuvent être de précieux alliés pour apprendre à programmer.
+- Ils peuvent vous aider à décomposer et à comprendre des algorithmes.
+- Essayez d'utiliser ces outils pour obtenir des suggestions de code ou visualiser des algorithmes de manière plus intuitive.
+- Exemples d'outils : Chatbots pour poser des questions ou plateformes de codage assisté par IA.
+// end::deroulement[]
+
+// tag::conclusion[]
+* L'algorithmique est la base de la programmation.
+* Décomposez les problèmes en étapes simples.
+* Expérimentez avec différentes solutions.
+// end::conclusion[]

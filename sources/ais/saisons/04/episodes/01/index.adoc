@@ -1,0 +1,50 @@
+:title: Système d’exploitation Microsoft - VMWare Workstation
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Dans ce premier épisode, nous abordons les bases de l’administration Windows avec un focus sur l’environnement Microsoft Serveur et la virtualisation grâce à VmWare Workstation. L'objectif est de comprendre l'écosystème des systèmes d'exploitation Microsoft, leur cycle de vie, les différentes éditions et la gestion des mises à jour et licences. En parallèle, nous introduisons VmWare Workstation, un outil essentiel pour créer et gérer des machines virtuelles, permettant aux participants d’explorer les possibilités de la virtualisation. Ce module est conçu pour offrir une immersion pratique avec des démonstrations et des exercices qui aideront les apprenants à maîtriser les concepts fondamentaux de la virtualisation, tout en se familiarisant avec l’installation et la configuration de systèmes Microsoft au sein de machines virtuelles.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Connaître Microsoft Serveur  et son environnement
+* Prendre en main la virtualisation avec VmWare Workstation
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* VmWare Workstation d’installé
+* Image ISO Windows 11
+* Image ISO Windows 10
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook O'Clock]**
+
+include::../../../../modules/systeme/systeme-microsoft.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/systeme/vmware-workstation.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner à caler pendant le module précédent
+
+:challenge: https://drive.google.com/file/d/1t1kv1rxfGpu8rNyeteAldnc_fEe1Ash9/view
+:description: Prise en main de l’outil Workstation avec l'installation d’une Vm Windows 11 et d’une VM Windows 10
+:correction: https://docs.google.com/document/d/1KQjDbUthkp9-POAJTRRu6VcDj5x_NyP7/edit?usp=sharing&ouid=107045310818748849714&rtpof=true&sd=true
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s04e01]
+--
+
+// end::deroulement[]

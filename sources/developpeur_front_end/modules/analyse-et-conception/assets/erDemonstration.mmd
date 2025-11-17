@@ -1,0 +1,80 @@
+erDiagram
+    categories {
+        int id PK
+        nvarchar(50) nom
+        nvarchar(500) description
+    }
+    
+    clients {
+        int id PK
+        nvarchar(50) prenom
+        nvarchar(50) nom
+        nvarchar(20) telephone
+        nvarchar(50) email
+        nvarchar(50) adresse
+        nvarchar(50) codePostal
+        nvarchar(50) ville
+        nvarchar(50) pays
+    }
+
+    groupes {
+        int id PK
+        nvarchar(50) nom
+        int reduction
+    }
+    
+    groupes_clients {
+        int client FK
+        int groupe FK
+    }
+    
+    lignes {
+        int id PK
+        int numero
+        int panier FK
+        int velo FK
+        datetime dateRendu
+    }
+    
+    paniers {
+        int id PK
+        int client FK
+        datetime dateCreation
+        datetime datePaiement
+    }
+
+    tailles {
+        int id PK
+        nvarchar(50) taille
+        nvarchar(200) description
+    }
+
+    tarifications {
+        int taille FK
+        int categorie FK
+        int tarif
+    }
+
+    tarifs {
+        int id PK
+        nvarchar(50) nom
+        int prix
+    }
+
+    velos {
+        int id PK
+        nvarchar(50) nom
+        int taille FK
+        int categorie FK
+        nvarchar(50) marque
+    }
+
+    categories ||--o{ tarifications : "contains"
+    tailles ||--o{ tarifications : "defines"
+    tarifs ||--o{ tarifications : "applies"
+    clients ||--o{ groupes_clients : "belongs to"
+    groupes ||--o{ groupes_clients : "includes"
+    clients ||--o{ paniers : "creates"
+    paniers ||--o{ lignes : "has"
+    velos ||--o{ lignes : "contains"
+    tarifications ||--o{ velos : "configured by"

@@ -1,0 +1,60 @@
+:title: Introduction à la cybersécurité et aux failles XSS
+:number: 01 
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode permet aux apprenants de découvrir les bases de la cybersécurité, en mettant un accent particulier sur les failles XSS (Cross-Site Scripting). Ils apprendront à identifier et comprendre les différents types de failles XSS, leurs impacts potentiels et les méthodes pour les prévenir.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les concepts fondamentaux de la cybersécurité
+* Identifier et expliquer les différentes formes de failles XSS
+* Connaître les risques associés aux failles XSS et leurs impacts
+* Savoir détecter des failles XSS dans des applications web
+* Appliquer les bonnes pratiques pour se protéger des failles XSS
+* Développer une approche proactive en matière de sécurité
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Connaissances de base en développement web (HTML, JavaScript)
+* Compréhension des requêtes HTTP et des interactions client-serveur
+* Connaissance des concepts de sécurité en développement web
+* Compétence dans l’analyse et la sécurisation des applications
+* Bonne capacité pédagogique pour vulgariser les concepts de sécurité
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[] 
+
+include::../../../../modules/Cybersecurite/01introduction.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/Cybersecurite/02xss.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+* 💬 Ecrire un message
+
+```md
+Hello à tous !
+
+Aujourd’hui, je vous demande de créer un compte sur Root-Me. Si vous ne connaissez pas encore cette plateforme, Root-Me est un excellent outil pour développer vos compétences en cybersécurité et pour pratiquer en profondeur sur des challenges de sécurité informatique.
+
+IMPORTANT : inscrivez-vous avec une adresse email personnelle. Pourquoi ? Cela vous permettra de garder l’accès à votre compte même après la formation. Vous pourrez ainsi continuer à vous entraîner, à monter en compétences et à explorer de nouveaux défis au fil du temps.
+
+En plus, c’est une belle façon de valoriser vos compétences auprès des recruteurs. Vous pourrez mettre en avant votre pseudo Root-Me sur votre CV, ainsi que le nombre de points et votre classement. C’est un vrai plus, surtout si vous postulez dans des postes en sécurité informatique ou en développement sécurisé.
+
+Alors, lancez-vous et faites de Root-Me un atout dans votre parcours ! 
+```
+
+:challenge: https://www.root-me.org/fr/Challenges/Web-Client/XSS-DOM-Based-Introduction
+:description: Pour cette saison sur la sécurité, on va vous proposer plusieurs petits challenges via Root-Me particulièrement reconnue en France nommée "Root-Me". Si vous envisagez de postuler sur des annonces orientées sécurité, il est courant (en France) de demander le score Root-Me - on vous forme pour être des pro après tout 😉.
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+// end::deroulement[]

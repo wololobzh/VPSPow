@@ -1,0 +1,248 @@
+:titre: Hello World!
+:module: Onboarding
+:duree: 30
+:description: Premier contact avec O'clock entre formateur et apprenants.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Accueillir et se lancer dans l'aventure O'clock
+* Expliquer le fonctionnement O'clock
+* Prodiguer quelques premiers conseils
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Ravis d’être avec vous !
+
+=== Ok, mais c'est qui, on ?
+
+On a commencé à 4.
+
+Maintenant on est une petite armée à s'occuper de vous tout au long de votre parcours chez O'clock.
+
+== Accompagnement
+
+* **Formateur** - _Pour vous guider dans votre apprentissage_
+* **Référent** - _Une oreille proche de vous tout au long de la formation_
+* **CPA** - _Si problème personnel, hors pédagogie, pouvant impacter ta progression_
+* **Référent admission** - _si problème administratif (financement, assiduité, factures)_
+
+=== Une journée-type
+
+* **9h - 12h** - _Cours et pratique_
+* **13h - 15h** - _Cours et pratique_
+* **15h - 17h** - _Challenge_
+
+[NOTE.speaker]
+====
+⚠️ Vous devez être présent (devant votre ordi, joignable sur Slack) tous les jours entre 9h et 17h.
+====
+
+=== Vendredis
+
+Tous les vendredis, vous serez en *atelier transverse* !
+
+[NOTE.speaker]
+====
+Profitez de ce temps pour **pratiquer les notions vues en cours**, faire de la **veille**, préparer votre **certification**.
+
+Vous aurez parfois des QCM/quiz, pour vérifier votre progression.
+====
+
+=== Découpage en saisons / épisodes
+
+Comme vos séries Netflix préférées, la formation est découpée en plusieurs saisons.
+
+[NOTE.speaker]
+====
+* une saison = **1 semaine**
+* **l'évaluation** le vendredi via un **QCM/quiz** (+ des exercices pratiques, parfois !)
+====
+
+=== On prépare l'avenir
+
+Le but premier, c'est quand-même de trouver un job dans l'informatique, non ?
+
+* **Certification** - on t'accompagne pour préparer ta soutenance et décrocher ton Titre Professionnel.
+* **Recherche d'emploi** - ton référent pro interviendra à plusieurs occasions lors de ta formation pour te mettre sur la bonne voie car trouver un travail, ok, mais dans l'info, c'est plus sympa quand même.
+
+== Objectifs de la formation
+
+* Être diplômé
+* Être employable
+
+== DWWM - Deux CCP à valider
+
+CCP = Certificat de Compétence Professionnelle
+
+== CCP Front
+
+CCP - Développer la partie front-end d’une application web ou web mobile sécurisée
+
+* Installer et configurer son environnement de travail en fonction du projet web ou web mobile
+* Maquetter des interfaces utilisateur web ou web mobile
+* Réaliser des interfaces utilisateur statiques web ou web mobile
+* Développer la partie dynamique des interfaces utilisateur web ou web mobile
+
+== CCP Back
+
+CCP - Développer la partie back-end d’une application web ou web mobile sécurisée
+
+* Mettre en place une base de données relationnelle
+* Développer des composants d’accès aux données SQL et NoSQL
+* Développer des composants métier côté serveur
+* Documenter le déploiement d’une application dynamique web ou web mobile
+
+On en parle un peu plus tard !
+
+== Évaluations en cours de formation (ECF)
+
+* Nécessaires pour le titre
+
+== La soutenance finale (2h)
+
+* 35 min d'oral
+* 40 min de Q/R
+* 30 min Questionnaire
+* 15 min entretien final
+
+== Le document essentiel !
+
+Le RE (Référentiel d'Évaluation)
+
+== Employabilité
+
+* 35000 € en moyenne
+
+== CCP Front - 245 heures
+
+Pour aller loin... tout en restant chez soi
+
+* Une opportunité mais aussi un défi !
+* Vous allez devenir développeur ou développeuse !
+* Des centaines d'heures de travail en perspective.
+* Un planning, des horaires (à respecter ⚠️)
+
+== 245 heures
+
+Ça va vite !
+
+* **Faites de votre mieux** pour ne pas laisser de retard s'accumuler.
+* Profitez du challenge pour **assimiler les notions de la journée**.
+* Pas de panique, **on va commencer doucement**.
+* **Chacun son rythme**.
+
+== Votre environnement
+
+* VM
+* BBB
+* GitHub
+
+== Le comportement attendu
+
+* Être acteur de sa formation
+  ** Participer
+  ** Curiosité
+  ** Courage
+  ** Collaboration
+
+== Le comportement attendu
+
+* Être professionnel
+  ** Travail de qualité
+  ** Garder l’équilibre concentration / bonne ambiance
+  ** Rester concentré et focus
+  ** Autonomie
+
+== Le comportement attendu
+
+* Être respectueux
+  ** Les paroles
+  ** Les actions
+
+== La fatigue
+
+* Jamais en zone de confort
+* Moments difficiles
+* Droit de ne pas savoir
+* On va être épuisé mentalement
+  ** Pensez à vous préserver (sport, dormir...)
+
+== 6 choses à ne pas oublier
+
+=== 1. N'hésitez jamais à demander
+
+On est là pour ça.
+
+=== 2. Vous êtes largués ?
+
+C'est normal !
+
+[NOTE.speaker]
+====
+Être dev, c'est aussi passer beaucoup de temps devant des choses qu'au départ, on ne comprend pas.
+====
+
+=== 3. Restez concentrés
+
+Pendant 245 heures, faites de O’clock votre priorité.
+
+[NOTE.speaker]
+====
+Attention à ne pas s'éparpiller !
+====
+
+=== 4. Attention à la fatigue
+
+Il faut se ménager !
+
+[NOTE.speaker]
+====
+Une formation ce n'est pas une course de vitesse mais plutôt un marathon.
+====
+
+=== 5. Vous êtes largués ?
+
+C'est normal ! Ok, j'arrête.
+
+=== 6. Gardez le sourire
+
+Don't worry, be happy!
+
+[NOTE.speaker]
+====
+Adopter une attitude positive vous aidera à braver les obstacles.
+====
+
+== FrontControllers
+
+We want you to vote !
+
+* FrontController = délégué
+* Sert d'intermédiaire entre votre promo et nous
+* Manifestez-vous !
+* Un vote aura lieu dans les prochains jours.
+
+== Seul on va plus vite, ensemble on va plus loin.
+
+== Bon, on commence ?!
+
+Prêts ?
+
+Zou, c'est parti !
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Bienvenue dans l'aventure O'clock !
+* Vous n'êtes pas seuls, on est là pour vous accompagner.
+* Prêts ? Let's go!
+// end::conclusion[]

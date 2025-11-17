@@ -1,0 +1,37 @@
+:title: Variables et boucles
+:number: 06
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode est consacré à la manipulation des variables et des boucles en Python.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre la manipulation des éléments suivants :
+** les variables
+** la manipulation des boucles
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* un environnement Windows ou linux selon préférence pour pouvoir installer et utiliser python
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+include::../../../../modules/scripting/py-boucles.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/scripting/py-variables.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1Hid0DOYdAZHyskL20kQNpUldq7YktkiS/view?usp=drive_link
+:description: Variables et boucles Python
+:correction: https://drive.google.com/file/d/19wtAkTu26WE3chej1IqxVLrB-pQlDAXf/view?usp=drive_link
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

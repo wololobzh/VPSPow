@@ -1,0 +1,62 @@
+:title: Présentation ITIL 1/2
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode est consacré à la présentation d'ITIL. Nous allons voir les concepts de base d'ITIL, le rôle d'ITIL dans la gestion des services IT et les différences entre les approches projet et service
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les concepts de base d'ITIL
+* Découvrir le rôle d'ITL dans la gestion des services IT
+* Savoir différencier les approches projet / service
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Connaissance approfondie d'ITIL (versions V3 et V4).
+* Expérience pratique dans la gestion des services IT et l’application d’ITIL.
+* Maîtrise des concepts d'agilité, Lean et DevOps.
+* Compétence pédagogique pour simplifier les concepts complexes.
+* Capacité à animer des discussions et ateliers interactifs.
+* Matériel de support à jour sur ITIL v4 et ses pratiques.
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook O'Clock]**
+
+include::../../../../modules/itil/presentation.adoc[options=modules]
+
+**Ressource supplémentaire** : https://www.axelos.com/[ITIL Foundation Overview - Axelos]
+
+include::../../../../modules/itil/gestion-services.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/itil/concepts-v3.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/itil/concepts-v4.adoc[options=modules]
+
+include::../../../../modules/itil/strategie-services.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1qKGLMAEDvlel4vDZvfNOE9v5CjTLNblX/view?usp=drive_link
+:description: Stratégie des services
+:correction: https://drive.google.com/file/d/1INdWTEpruPQK02Hrds2vae2tAH7djkTs/view?usp=drive_link
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s02e01]
+--
+
+// end::deroulement[]

@@ -1,0 +1,52 @@
+:titre: La Programmation, ça sert à quoi ?
+:module: JavaScript
+:duree: 30
+:description: Introduction à la programmation et exploration de la console navigateur avec une réflexion sur l'impact de l'IA.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" != "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- Comprendre l'utilité de la programmation pour automatiser des tâches.
+- Apprendre à utiliser la console du navigateur pour tester et déboguer du code.
+- Réfléchir à l'impact de l'IA sur le rôle et les tâches des développeurs.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Support
+
+https://github.com/O-clock-FS-JS/RPG[🔗 RPG]
+
+Explorons un peu le code source 👀
+
+== Découvrir la console navigateur
+
+- La console du navigateur est un outil puissant pour les développeurs.
+- Elle vous permet de tester du code JavaScript en temps réel et de déboguer vos applications.
+- Prenez quelques minutes pour explorer la console dans votre navigateur. Tapez `console.log('Hello, world!')` et voyez ce qui se passe !
+
+== Manipuler quelques premières commandes
+
+- Essayez de manipuler quelques commandes de base dans la console.
+- Par exemple, créez une variable avec `let`, modifiez sa valeur et observez les résultats.
+- Utilisez le dépôt de démonstration pour voir comment ces commandes s'intègrent dans un projet plus large.
+
+== Réflexion sur l'impact de l'IA
+
+- L'intelligence artificielle transforme la façon dont nous automatisons les tâches répétitives.
+- Réfléchissez à la manière dont l'IA change le rôle du développeur. Par exemple, moins de temps passé sur des tâches répétitives signifie plus de temps pour la créativité et l'innovation.
+- Discutons ensemble : Comment voyez-vous l'avenir du développement avec l'IA en jeu ?
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+- La programmation est essentielle pour automatiser des tâches et concrétiser des idées.
+- La maîtrise des outils de développement, comme la console du navigateur, est cruciale.
+- L'IA offre de nouvelles opportunités pour les développeurs, en libérant du temps pour la créativité.
+// end::conclusion[]

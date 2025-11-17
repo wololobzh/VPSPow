@@ -1,0 +1,54 @@
+:title: Python intro et syntaxe
+:number: 04
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée est consacrée à la découverte du langage Python. Les apprenants vont découvrir les avantages et inconvénients de ce langage, les conventions générales, la mise en place et le gestionnaire de paquets. Ils vont également découvrir la syntaxe en Python, l'indentation, la sensibilité à la casse, les commentaires, la mise en forme et les variables.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Présentation du langage Python 
+** Présentation
+** Avantage de python
+** Inconvénient de python 
+** Conventions générales
+** Mise en place
+** Gestionnaire de paquets
+* Présentation de la syntaxe en Python 
+** Indentation
+** Sensibilité à la Casse
+** Les commentaires
+** Mise en forme
+** Variables
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* un environnement Windows ou linux selon préférence pour pouvoir installer et utiliser python
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+include::../../../../modules/scripting/py-intro.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/scripting/py-syntaxe.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1B0M8F2oCEso9KeKxKat7kqvJoMifbni1/view?usp=drive_link
+:description: Syntaxe en python
+:correction: https://drive.google.com/file/d/15yAd4fGrtz_nLA815cuzehX-x2LbqScH/view
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s06e04]
+--
+
+// end::deroulement[]
