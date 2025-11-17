@@ -13,7 +13,6 @@ endif::[]
 
 == Objectifs pédagogiques
 // tag::objectifs[]
-
 * **Comprendre** les opérations CRUD dans MongoDB
 * **Créer** une collection et insérer des documents
 * **Lire, mettre à jour et supprimer** des données
