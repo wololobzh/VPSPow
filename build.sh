@@ -164,6 +164,8 @@ cp -r adoc/libs/images build/images
 cp -r adoc/libs/font build/font
 cp adoc/libs/slides.css build
 
+exit 999
+
 # Traiement des fichiers
 if [ "$deploy" ]; then
     # Crée des tableaux vides pour stocker les fichiers à traiter
