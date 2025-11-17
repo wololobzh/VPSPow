@@ -1,7 +1,7 @@
 :titre: Introduction au NoSQL
 :module: NoSQL
 :duree: 60
-:description: Découverte des bases de données NoSQL, leurs types et cas d'utilisation.
+:description: Comprendre les concepts fondamentaux du NoSQL, démystifier les idées reçues et identifier les différents types de bases de données NoSQL.
 include::../../../../adoc/libs/header-module.adoc[]
 
 ifeval::["{visible-on-html}" !=  "yes"]
@@ -9,19 +9,133 @@ ifeval::["{visible-on-html}" !=  "yes"]
 :docinfodir: ../../../adoc/libs
 endif::[]
 
+== Introduction au NoSQL
+
+== Objectifs pédagogiques
 // tag::objectifs[]
-* Comprendre le “pourquoi” avant le “comment”.
+* **Comprendre** ce que signifie réellement "NoSQL"
+* **Démystifier** les préjugés courants autour des bases NoSQL
+* **Identifier** les différents types de bases NoSQL
+* **Distinguer** structure, performance et logique de relation dans le NoSQL
 // end::objectifs[]
 
 // tag::deroulement[]
-== Introduction au NoSQL
+== Not Only SQL
 
-Les bases de données NoSQL (Not Only SQL) sont conçues pour gérer des volumes massifs de données non structurées ou semi-structurées. Contrairement aux bases de données relationnelles traditionnelles, elles offrent une flexibilité accrue et une scalabilité horizontale.
+Le terme "NoSQL" signifie **Not Only SQL** : cela indique simplement qu'il s'agit de systèmes qui n'utilisent pas *uniquement* SQL comme langage d'interaction.
 
+[NOTE.speaker]
+--
+Le NoSQL n'est pas un rejet total du SQL ni du relationnel. C'est une famille de systèmes qui proposent d'autres modèles de stockage, d'autres langages de requêtes et souvent d'autres compromis entre performance, flexibilité et scalabilité.
+--
+
+== Les préjugés courants
+
+On entend souvent ces fausses vérités :
+
+* Le NoSQL, c'est pas relationnel
+* Le NoSQL, ça va plus vite
+* Le NoSQL, c'est pas structuré
+
+[NOTE.speaker]
+--
+Ces affirmations sont très répandues mais souvent simplistes ou incorrectes. Elles viennent généralement d'une mauvaise compréhension du terme "relationnel", des architectures internes ou encore de benchmarks simplifiés.
+--
+
+== SQL : un langage, pas un modèle
+
+SQL signifie : **Structured Query Language**.
+
+SQL est un **langage**, et uniquement cela.
+Donc NoSQL = utilise un **autre langage**. Et c'est tout.
+
+[NOTE.speaker]
+--
+Beaucoup confondent SQL (le langage) et le "modèle relationnel" (le modèle mathématique). Une base qui n'utilise pas SQL pourrait techniquement être relationnelle, même si c'est rare en pratique. L'idée clé : NoSQL n'évoque pas un modèle spécifique, mais simplement un autre moyen d'interagir avec les données.
+--
+
+== "Le NoSQL, c'est pas relationnel" — Vrai, mais...
+
+Selon la définition du modèle relationnel :
+
+> Une « relation » est un ensemble d'attributs décrivant une entité.
+
+Donc une relation = une **table**.
+
+[NOTE.speaker]
+--
+Les bases NoSQL n'utilisent pas de tables, donc elles ne sont pas relationnelles au sens mathématique du terme. Cependant, cela n'empêche pas de créer des liens logiques entre les données.
+--
+
+== Associations vs Relations
+
+Même sans tables, on peut créer des **associations** entre deux enregistrements (par un ID, par exemple).
+
+Mais attention : ce ne sont pas des "relations" au sens du modèle relationnel.
+
+[NOTE.speaker]
+--
+Beaucoup disent "relation" quand ils veulent dire "référence" ou "association". Le terme est un abus de langage dans le contexte NoSQL. Les bases NoSQL permettent souvent de stocker des identifiants, mais ne garantissent pas l'intégrité référentielle comme le fait une base relationnelle.
+--
+
+== "Le NoSQL, ça va plus vite" — Faux ! (mais pas totalement)
+
+Les systèmes NoSQL sont conçus pour :
+
+* gérer des insertions massives
+* lire rapidement de très gros volumes
+
+Dans un scénario "j'écris A puis je relis A", ils peuvent être beaucoup plus rapides.
+
+Mais ils sont souvent **moins efficaces** pour :
+
+* les mises à jour fréquentes
+* les opérations complexes
+* les transactions multi-enregistrements
+
+[NOTE.speaker]
+--
+Les bases NoSQL optimisent généralement la lecture séquentielle et l'écriture rapide, parfois en dénormalisant massivement les données. Cela rend la modification plus coûteuse. L'idée clé : elles ne sont pas "plus rapides" en général, seulement dans certains cas d'usage.
+--
+
+== "Le NoSQL, c'est pas structuré" — Faux !
+
+Cela dépend du **type** de base NoSQL :
+
+* **Hiérarchiques** : très structurées
+* **Orientées colonnes** : très structurées
+* **Orientées documents** : semi-structurées
+* **Graphes** : flexibles, non strictement structurées
+
+[NOTE.speaker]
+--
+La structure est une question de modèle, pas de technologie. Certaines bases NoSQL imposent un schéma strict, d’autres non. Par exemple, BigTable (orientée colonnes) impose un modèle rigide, tandis que MongoDB (documents) est très flexible.
+--
+
+== Typologie des bases NoSQL
+
+Les bases NoSQL se répartissent généralement en 4 grandes familles :
+
+* **Key/Value**
+* **Documentaires**
+* **Orientées colonnes**
+* **Graphes**
+
+[NOTE.speaker]
+--
+Chaque famille répond à des cas d’usage spécifiques :
+
+* Key/Value : lecture ultra rapide, mise en cache (Redis)
+* Documents : données semi-structurées, proches du JSON (MongoDB)
+* Colonnes : gros volumes, analytique (Cassandra, HBase)
+* Graphes : relations complexes et multiples (Neo4j)
+--
 // end::deroulement[]
 
 == Conclusion
 // tag::conclusion[]
-* Résumé des concepts clés abordés
-* Importance croissante des bases de données NoSQL dans le paysage technologique actuel
+* Le NoSQL ne signifie pas "non structuré" ou "plus rapide".
+* Le terme désigne simplement l'usage d'autres modèles que SQL.
+* Les systèmes NoSQL ont des forces et des faiblesses spécifiques.
+* Le choix entre SQL et NoSQL dépend fortement du contexte métier et technique.
 // end::conclusion[]
