@@ -1,7 +1,7 @@
-:titre: Les environnements de travail
-:module: nestJs
-:duree: 30
-:description: Comprendre le concept d'environnement
+:titre: Introduction à MongoDB
+:module: NoSQL
+:duree: 60
+:description: Découvrir les avantages clés de MongoDB, son format BSON, ses mécanismes de réplication et de sharding, ainsi que les concepts de normalisation et dénormalisation dans un contexte NoSQL.
 include::../../../../adoc/libs/header-module.adoc[]
 
 ifeval::["{visible-on-html}" !=  "yes"]
@@ -9,151 +9,166 @@ ifeval::["{visible-on-html}" !=  "yes"]
 :docinfodir: ../../../adoc/libs
 endif::[]
 
-== Objectifs pédagogiques
+== Introduction à MongoDB
 
+== Objectifs pédagogiques
 // tag::objectifs[]
-* **Comprendre** le concept et l'utilité d'un framework backend comme NestJS
-* **Comprendre** l'architecture modulaire de NestJS et ses composants de base
-* **Se rappeler** des différents éléments constituant une application NestJS
+* **Comprendre** les avantages clés de MongoDB
+* **Identifier** la structure et le fonctionnement du format BSON
+* **Découvrir** les mécanismes de réplication et de sharding
+* **Distinguer** normalisation et dénormalisation dans MongoDB
+* **Comprendre** l'approche documentaire et ses implications sur le modèle de données
 // end::objectifs[]
 
 // tag::deroulement[]
+== Les avantages principaux de MongoDB
 
-== NestJs, c'est quoi ?
+MongoDB est un SGBD orienté document offrant plusieurs avantages majeurs :
 
-C'est un framework permettant de construire des applications serveurs (API)
-
-image::./assets/NestJS.svg.png[Logo de NestJs,480]
-
-[NOTE.speaker]
---
-NestJS est un framework Node.js basé sur TypeScript qui facilite le développement de serveurs web robustes et modulaires en s'appuyant sur une architecture inspirée d'Angular et les concepts de programmation orientée objet.
---
-
-== Définition de NestJS
-
-Aide à créer des applications serveur rapides et bien structurées en 
-
-- Utilisant TypeScript
-- en simplifiant la gestion des API
-- en simplifiant la gestion des bases de données
-- en simplifiant la gestion des services
+* Haute performance en lecture
+* Haute disponibilité
+* Mise à l'échelle automatique
+* Stockage orienté documents (JSON-like)
 
 [NOTE.speaker]
 --
-NestJS est conçu pour simplifier le développement de la partie backend (côté serveur) d'une application, qui gère notamment les échanges de données avec le frontend, les bases de données, et l’authentification des utilisateurs.
-
-Voici les points essentiels :
-
-Simplicité et organisation : NestJS organise le code en modules et services, ce qui permet de diviser l’application en sections indépendantes et réutilisables, rendant le développement plus clair et facile à gérer, surtout pour les grandes applications.
-
-TypeScript : Il utilise TypeScript, qui est un sur-ensemble de JavaScript. Grâce à TypeScript, NestJS bénéficie de fonctionnalités comme le typage statique (détecte les erreurs avant même l’exécution), ce qui rend le code plus fiable et réduit les bugs.
-
-API et bases de données : NestJS facilite la création d’API (Application Programming Interface) pour que des applications ou services puissent communiquer entre eux. De plus, il propose des outils pour se connecter facilement à des bases de données, comme PostgreSQL ou MongoDB.
-
-Performance : Étant basé sur Node.js, NestJS est performant, notamment pour gérer des requêtes simultanées, ce qui est idéal pour les applications modernes qui doivent traiter de nombreuses connexions en même temps.
-
-En résumé, NestJS rend le développement backend plus rapide et plus structuré, tout en offrant les avantages de TypeScript et en facilitant la gestion de fonctionnalités complexes.
+ MongoDB est conçu pour des applications nécessitant rapidité, flexibilité et scalabilité. Sa nature orientée document permet de stocker des données complexes dans des formats proches du JSON. Il s'adapte très bien à des contextes de forte croissance ou d'évolution rapide du modèle de données.
 --
 
-== Fonctionnement de NestJS
+== BSON : le format interne de MongoDB
 
-`Nest` utilise `Express`
+MongoDB utilise le format **BSON**, une représentation binaire optimisée du JSON, plus rapide à analyser et adaptée aux types avancés.
+
+Exemple simplifié :
+
+```
+{"hello": "world"} →
+\x16\x00\x00\x00 // total document size
+\x02              // type String
+hello\x00         // field name
+\x06\x00\x00\x00world\x00
+\x00              // end of object
+```
 
 [NOTE.speaker]
 --
-`Nest` utilise `Express` par défaut et fournit aux développeurs différentes méthodes pour simplifier l'utilisation d'express et encourage une architecture ou chaque fonctionnalité est découpé en module (un répertoire : une fonctionnalité). Cette architecture est inspirée d'Angular.
+ BSON permet d'encoder efficacement les données avec des types supplémentaires (Date, BinData, ObjectId, etc.). Cela améliore les performances et réduit l'encombrement des données.
 --
 
-== Fonctionnement de NestJS
+== Flexibilité du schéma et ACID
 
-NestJS fonctionne en structurant le code en modules et contrôleurs pour gérer les requêtes HTTP.
+MongoDB offre :
+
+* Un schéma **optionnel**, permettant une forte flexibilité
+* Le **sharding** pour le scaling horizontal
+* Le support des propriétés **ACID** (transactions multi-documents depuis la version 4)
 
 [NOTE.speaker]
 --
-NestJS fonctionne en structurant le code en modules et contrôleurs pour gérer les requêtes, où chaque module encapsule des fonctionnalités spécifiques, permettant une organisation claire et une gestion efficace des flux de données et des interactions API.
+ La flexibilité du schéma permet à une collection de contenir des documents de formes différentes. Cela est très pratique dans des systèmes évolutifs. Le support ACID assure la fiabilité dans des opérations critiques.
 --
 
-== Un framework dogmatique
+== La réplication dans MongoDB
 
-On retrouvera donc toujours la même organisation.
+La réplication sert à synchroniser les données sur plusieurs serveurs.
+Elle permet :
+
+* La redondance
+* Une disponibilité accrue
+* Une meilleure tolérance aux pannes
 
 [NOTE.speaker]
 --
-Ce framework est donc dogmatique, comprendre : les développeurs qui codent ce framework imposent leurs opinions à propos de l'architecture d'une application aux développeurs qui se servent de ce framework.
-
-D'une application à l'autre, on retrouvera donc toujours la même organisation, et ce, peu importe qui aura développé cette application.
-
-À l'opposé, `ExpressJS` n'est pas dogmatique, ce qui explique la liberté d'organisation qu'on a lorsqu'on l'utilise.
+ MongoDB utilise des **Replica Sets**. En cas de défaillance du primaire, un secondaire prend automatiquement le relais. Cela garantit la continuité de service.
 --
 
-== Pourquoi NestJS
+== Réplication et performances
 
-Une architecture maintenable facilement et avec laquelle on s'y retrouve en un coup d'œil.
+La réplication peut également :
+
+* Améliorer la vitesse de lecture
+* Améliorer la disponibilité dans des environnements géodistribués
+* Fournir des copies supplémentaires pour reporting, audit ou sauvegarde
 
 [NOTE.speaker]
 --
-Grâce à Node.js, JavaScript est devenu le 'langage standard' du web, à la fois pour le front-end et pour le back-end.
-
-Cela a donné naissance à une pléthore de frameworks et autres librairies rapides et efficaces, mais aucune d'entre elle ne résoud le problème de l'architecture.
-
-C'est le challenge que NestJS entend relever : Fournir aux développeurs une architecture maintenable facilement et avec laquelle on s'y retrouve en un coup d'œil.
+ Les nœuds secondaires peuvent être utilisés pour répartir la charge sans pénaliser le nœud principal. Cela améliore l'efficacité des lectures à grande échelle.
 --
 
-== Architecture et composants : la racine
+== Le Sharding dans MongoDB
 
-Dans une application e-commerce, la fonctionnalité du panier sera organisée dans son propre répertoire, avec une structure spécifique pour organiser les différentes parties du code liées au panier.
+Le sharding permet de distribuer des données sur plusieurs serveurs afin de :
 
-== Architecture et composants : la racine
-
-. Un contrôleur
-. Un provider
-. Un middleware
-. Un service
-. Des décorateurs
-. Un Module
+* Gérer des volumes trop importants pour une seule machine
+* Répartir la charge
+* Augmenter la capacité globale du cluster
 
 [NOTE.speaker]
 --
-. Un contrôleur qui gère les requêtes HTTP
-. Un provider : typiquement une classe avec un comportement complexe et qui est injectable. (Injection de dépendances)
-. Un middleware
-. Un service : souvent pour se connecter à la BDD : gérer les données.
-. Des décorateurs qui facilitent la vie du développeur en permettant d'appeler des méthodes en une seule expression et en fournissant un contexte à ces méthodes.
-. Un Module, qui est un peu comme la colle, il est le lien entre les éléments cités précédemment, et permet de mettre en œuvre une fonctionnalité.
+ Le sharding s'effectue au niveau des collections. MongoDB décompose les données en "chunks" répartis sur plusieurs shards. Le tout est orchestré par le routeur `mongos` et les serveurs de configuration.
 --
 
-== Architecture de base
+== Sharded Cluster
 
-[source,bash]
-----
-src/cart/
-├── dto
-│   ├── create-cart.dto.ts
-│   └── update-cart.dto.ts
-├── entities
-│   └── cart.entity.ts
-├── cart.controller.spec.ts
-├── cart.controller.ts
-├── cart.module.ts
-├── cart.service.spec.ts
-└── cart.service.ts
+Un cluster shardé contient :
 
-2 directories, 8 files
-----
+* Des shards
+* Des serveurs de configuration
+* Des routeurs `mongos`
 
 [NOTE.speaker]
 --
-Voici à quoi ressemble cette architecture, dans le cadre d'un composant, si vous ne comprenez pas tout c'est normal, on va détailler chaque élément petit à petit en les recréant un par un :
+ Le routeur `mongos` s'occupe de rediriger les requêtes vers les bons shards. Cela permet au client d'accéder aux données sans connaître leur emplacement.
+--
 
-À propos du répertoire dto : Data Transfer Object, ce qui veut dire grossièrement que les fichiers de ce répertoire permettent la circulation des données en s'assurant de leur conformité à nos specs.
+== Une autre façon de penser les relations
+
+MongoDB ne supporte pas nativement les relations clé primaire / clé étrangère.
+
+Dans MongoDB, on peut :
+
+* **imbriquer** des documents (subdocuments)
+* **référencer** des documents via leur `ObjectId`
+
+[NOTE.speaker]
+-- 
+ L'imbrication améliore fortement les performances en rassemblant dans un seul document les informations connexes. Les références existent mais sont plus coûteuses, car elles nécessitent plusieurs requêtes.
+--
+
+== Normalisation vs Dénormalisation
+
+**Normalisation** : éviter les redondances. Recommandé principalement pour les relations *one-to-many*.
+
+**Dénormalisation** : réplication volontaire de données. Utile pour les relations *many-to-many* ou les modèles hiérarchiques.
+
+[NOTE.speaker]
+--
+ MongoDB privilégie la dénormalisation : elle limite les besoins de jointures, améliore la lecture et permet d’organiser les données selon l’usage réel de l'application.
+--
+
+== Modèle de données hiérarchique
+
+MongoDB permet de représenter des structures hiérarchiques via des documents imbriqués.
+
+[NOTE.speaker]
+--
+ Ce modèle permet des lectures rapides mais peut entraîner des documents volumineux, ce qui peut ralentir certaines opérations.
+--
+
+== Limitations de la normalisation
+
+Normaliser excessivement dans MongoDB peut poser problème, en particulier dans un environnement shardé.
+
+[NOTE.speaker]
+--
+Les opérations de type JOIN sont limitées et parfois impossibles si les documents concernés sont répartis sur plusieurs shards. Cela peut nécessiter de compenser via du code applicatif.
 --
 // end::deroulement[]
 
 == Conclusion
 // tag::conclusion[]
-* Compréhension du rôle et de l'importance de NestJS dans le développement backend
-* Identification des composants clés d'une application NestJS (contrôleurs, services, modules)
-* Familiarisation avec l'approche dogmatique et structurée de NestJS
-* Capacité à reconnaître les avantages d'une architecture standardisée pour le développement d'applications
+* MongoDB est performant, scalable et flexible grâce à son modèle documentaire.
+* BSON permet un stockage efficace et adapté aux types avancés.
+* La réplication et le sharding garantissent disponibilité et mise à l'échelle.
+* La normalisation ou la dénormalisation dépend des contraintes du modèle et de l'usage.
 // end::conclusion[]
