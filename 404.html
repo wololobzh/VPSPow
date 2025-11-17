@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 - Page Introuvable</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: #0b0b0e;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      position: relative;
+      overflow: hidden;
+      color: #e0e0ff;
+      font-family: 'Courier New', monospace;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.05) 0,
+        rgba(255,255,255,0.02) 2px,
+        transparent 4px
+      );
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+
+    @keyframes glitch {
+      0% { text-shadow: 2px 0 #ff00c8, -2px -2px #00eaff; }
+      20% { text-shadow: -2px 2px #ff00c8, 2px -2px #00eaff; }
+      40% { text-shadow: 2px -2px #ff00c8, -2px 2px #00eaff; }
+      60% { text-shadow: -2px 0 #ff00c8, 2px 2px #00eaff; }
+      80% { text-shadow: 2px 2px #ff00c8, -2px 0 #00eaff; }
+      100% { text-shadow: -2px -2px #ff00c8, 2px 0 #00eaff; }
+    }
+
+    .glitch {
+      animation: glitch 1.8s infinite;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center px-4">
+
+  <div class="text-center relative z-10">
+
+    <!-- Icon -->
+    <div class="text-6xl mb-6 glitch">
+      🕳️
+    </div>
+
+    <h1 class="text-7xl font-bold text-cyan-400 glitch mb-4">
+      404
+    </h1>
+
+    <h2 class="text-2xl text-purple-400 mb-6 tracking-widest">
+      RESSOURCE INTROUVABLE
+    </h2>
+
+    <p class="text-gray-300 max-w-xl mx-auto mb-10 leading-relaxed">
+      Le fichier ou la page que vous tentez d'accéder n'existe pas<br>
+      ou a été <span class="text-cyan-400">déplacé dans un autre secteur réseau</span>.<br>
+      <span class="text-purple-400">Trace ID :</span>
+      <span id="trace" class="text-cyan-400"></span>
+    </p>
+
+    <a href="/"
+       class="px-8 py-3 rounded-lg bg-cyan-600 hover:bg-cyan-700
+              shadow-lg shadow-cyan-700/30 text-white font-semibold
+              transition-all">
+      Retour à l'accueil
+    </a>
+
+  </div>
+
+  <script>
+    document.getElementById("trace").textContent =
+      (Math.random().toString(36).substring(2, 12) +
+      Math.random().toString(36).substring(2, 12)).toUpperCase();
+  </script>
+
+</body>
+</html>

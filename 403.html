@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>403 - Accès Interdit</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Background cyberpunk grid */
+    body {
+      background: #0b0b0e;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      position: relative;
+      overflow: hidden;
+      color: #e0e0ff;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Scanline effect */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.05) 0,
+        rgba(255,255,255,0.02) 2px,
+        transparent 4px
+      );
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+
+    /* Glitch text animation */
+    @keyframes glitch {
+      0% { text-shadow: 2px 0 #ff00c8, -2px -2px #00eaff; }
+      20% { text-shadow: -2px 2px #ff00c8, 2px -2px #00eaff; }
+      40% { text-shadow: 2px -2px #ff00c8, -2px 2px #00eaff; }
+      60% { text-shadow: -2px 0 #ff00c8, 2px 2px #00eaff; }
+      80% { text-shadow: 2px 2px #ff00c8, -2px 0 #00eaff; }
+      100% { text-shadow: -2px -2px #ff00c8, 2px 0 #00eaff; }
+    }
+
+    .glitch {
+      animation: glitch 1.5s infinite;
+    }
+  </style>
+
+</head>
+<body class="min-h-screen flex items-center justify-center px-4">
+
+  <div class="text-center relative z-10">
+
+    <!-- Icon -->
+    <div class="text-6xl mb-6 glitch">
+      ⛔
+    </div>
+
+    <h1 class="text-7xl font-bold text-purple-400 glitch mb-4">
+      403
+    </h1>
+
+    <h2 class="text-2xl text-cyan-300 mb-6 tracking-widest">
+      ACCÈS INTERDIT
+    </h2>
+
+    <p class="text-gray-300 max-w-xl mx-auto mb-10">
+      Votre identifiant n'est pas autorisé à accéder à cette ressource sécurisée.<br/>
+      <span class="text-purple-400">Trace ID :</span> <span id="trace" class="text-cyan-400"></span>
+    </p>
+
+    <a href="/"
+       class="px-8 py-3 rounded-lg bg-purple-600 hover:bg-purple-700
+              shadow-lg shadow-purple-700/40 text-white font-semibold
+              transition-all">
+      Retour à l'accueil
+    </a>
+
+  </div>
+
+  <script>
+    // Génère une fausse trace ID style cyber
+    document.getElementById("trace").textContent =
+      (Math.random().toString(36).substring(2, 12) +
+       Math.random().toString(36).substring(2, 12)).toUpperCase();
+  </script>
+
+</body>
+</html>
