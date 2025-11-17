@@ -5,15 +5,3 @@ services:
       - 8282:80
     volumes:
       - ./le-build:/usr/share/nginx/html:ro
-  authelia:
-    image: authelia/authelia:latest
-    container_name: authelia
-    volumes:
-      - ./authelia:/config
-    ports:
-      - 9091:9091
-    restart: unless-stopped
-  redis:
-    image: redis:alpine
-    container_name: redis
-    restart: unless-stopped
