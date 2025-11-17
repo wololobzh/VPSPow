@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-const JWT_SECRET = "CHANGE_ME_SECRET_32_CHARS";
+const JWT_SECRET = "xxxxxxxCHANGE_ME_SECRET_32_CHARS";
 
 app.post("/auth/login", (req, res) => {
     const { username, password } = req.body;
@@ -33,4 +33,4 @@ app.get("/auth/verify", (req, res) => {
     }
 });
 
-app.listen(4000, () => console.log("Auth server running on 5000"));
+app.listen(4000, () => console.log("Auth server running on 4000"));
