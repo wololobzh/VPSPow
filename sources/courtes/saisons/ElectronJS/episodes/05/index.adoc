@@ -1,0 +1,63 @@
+:title: Soutenance
+:number: 05
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée de formation est consacrée à deux aspects pratiques et avancés du développement en Go : la persistance des données avec GORM et PostgreSQL, et la création d'un bot Discord. Vous apprendrez à gérer efficacement une base de données relationnelle dans vos applications Gin, puis à développer un bot Discord interactif, combinant ainsi les compétences acquises pour créer des applications complètes et connectées.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Maîtriser l'intégration de GORM avec PostgreSQL dans une application Gin
+* Implémenter des opérations CRUD complètes avec GORM
+* Gérer les relations entre les modèles de données
+* Optimiser les performances des requêtes database
+* Créer un bot Discord fonctionnel avec Go
+* Implémenter des commandes et des interactions Discord
+* Intégrer une base de données avec un bot Discord
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Expertise approfondie de GORM et PostgreSQL
+* Maîtrise des concepts de base de données relationnelles
+* Expérience significative avec l'API Discord
+* Connaissance des patterns d'intégration de services externes
+* Compréhension des enjeux de sécurité des données
+* Expérience dans le déploiement d'applications Go
+* Maîtrise des outils de développement (pgAdmin, Discord Developer Portal)
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/go/12GORMPostgreSQL.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/go/13DiscordGo.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Formations-courtes/GoChallenge
+:description: Création d'une application de quizz en Go
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+* Vérifier la bonne compréhension des concepts GORM
+* S'assurer de la maîtrise des opérations de base de données
+* Accompagner dans la configuration de l'environnement Discord
+* Veiller à la sécurisation des tokens et données sensibles
+* Guider dans l'optimisation des performances
+* Aider à la résolution des problèmes d'intégration
+--
+// end::deroulement[]

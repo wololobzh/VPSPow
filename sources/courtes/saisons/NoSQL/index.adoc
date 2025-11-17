@@ -1,10 +1,10 @@
 :title: Les fondamentaux
 :number: 02
-:duration: 4
+:duration: 14
 include::../../../../adoc/libs/header-saison.adoc[]
 
 // tag::intro[]
-Cette formation de 4 jours permet d’apprendre à utiliser Go pour développer des applications backend robustes et bien structurées. En explorant les fondamentaux du langage Go, les participants découvriront l'architecture backend avec le framework Gin, les bases du TDD (Test-Driven Development), et les techniques avancées pour créer des API performantes. L'objectif final est de concevoir un bot Discord en Go capable de communiquer avec une API développée pendant le cours.
+Cette formation de 2 jours sur le NoSQL permet d’acquérir les compétences nécessaires pour comprendre et utiliser les bases de données NoSQL dans le développement d’applications modernes. Les participants découvriront les concepts fondamentaux des bases de données NoSQL, les différents types de bases de données (documentaires, clé-valeur, colonnes larges, graphes), ainsi que les cas d’utilisation appropriés pour chaque type. La formation inclut des exercices pratiques pour manipuler des bases de données NoSQL populaires telles que MongoDB, Cassandra et Redis, et aborde également les meilleures pratiques en matière de modélisation des données, de performance et de scalabilité.
 // end::intro[]
 
 == Objectifs pédagogiques

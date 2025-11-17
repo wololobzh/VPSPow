@@ -1,4 +1,4 @@
-:title: Savoir utiliser un framework puissant
+:title: Les fondamentaux
 :number: 01
 :duration: 56
 include::../../../../adoc/libs/header-saison.adoc[]
