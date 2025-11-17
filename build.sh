@@ -163,3 +163,68 @@ mkdir -p build
 cp -r adoc/libs/images build/images
 cp -r adoc/libs/font build/font
 cp adoc/libs/slides.css build
+
+
+# Traiement des fichiers
+if [ "$deploy" ]; then
+    # Crée des tableaux vides pour stocker les fichiers à traiter
+    filesToHTML=""
+    filesToSlides=""
+    filesToPDF=""
+    # Parcours tous les fichiers adoc en partant des sources
+    for file in $(find sources/ -name "*.adoc"); do
+        case "$file" in
+            *"/saisons/"*"/pdf.adoc")
+                filesToPDF="$filesToPDF $file"
+                filesToHTML="$filesToHTML $file"
+                ;;
+            *"/modules/"*"/"*".adoc")
+                filesToSlides="$filesToSlides $file"
+                filesToHTML="$filesToHTML $file"
+                ;;
+            *)
+                filesToHTML="$filesToHTML $file"
+                ;;
+        esac
+    done
+    # Convertit tous les fichiers
+    if [ -z "$only" ] || [ "$only" = "html" ]; then
+        echo "HTML"
+        buildHTML $filesToHTML
+        scanError "HTML" "multiple" true
+    fi
+
+    # Slides
+    if [ -z "$only" ] || [ "$only" = "slides" ]; then
+        echo "Slides"
+        buildSlides $filesToSlides
+        scanError "Slides" "multiple" true
+    fi
+    # PDF
+    # if [ -z "$only" ] || [ "$only" = "pdf" ]; then
+    #     echo "PDF"
+    #     buildPDF $filesToPDF
+    #     scanError "PDF" "multiple" true
+    # fi
+else
+    # Parcours tous les fichiers adoc en partant des sources
+    for file in $(find sources/ -name "*.adoc"); do
+        # Continue if file is not in path
+        case "$file" in
+            *"$path"*)
+                ;;
+            *)
+                continue
+                ;;
+        esac
+        log="$file -> "
+        convertSingleFile "$file"
+        echo "$log"
+    done
+fi
+
+# Gestion des erreurs
+if [ -s debug.log ] && [ "$(cat debug.log)" != "" ]; then
+    printLog
+    exit 1
+fi
