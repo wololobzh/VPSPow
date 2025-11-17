@@ -29,17 +29,8 @@ Journée sur la modélisation NoSQL et les pipelines d’agrégation. Les partic
 :description: 
 include::../../../../../../adoc/libs/intro-correction.adoc[]
 
-include::../../../../modules/go/05Pointeurs.adoc[options=modules]
 
-TIP: ☕ Pause café
 
-include::../../../../modules/go/06MethodesEtInterfaces.adoc[options=modules]
-
-TIP: 🍕 Pause déjeuner
-
-include::../../../../modules/go/07Concurrence.adoc[options=modules]
-
-include::../../../../modules/go/08GestionErreurs.adoc[options=modules]
 
 :challenge: https://github.com/O-clock-Formations-courtes/GoChallenge
 :description: Création d'une application de quizz en Go
@@ -50,11 +41,7 @@ include::../../../../../../adoc/libs/intro-challenge.adoc[]
 [.suivi]
 [sidebar]
 --
-* Veiller à la bonne compréhension des pointeurs et de leurs cas d'usage
-* S'assurer de la maîtrise des concepts de concurrence
-* Accompagner dans la conception d'interfaces appropriées
-* Vérifier la bonne gestion des erreurs dans le code
-* Encourager les bonnes pratiques de programmation concurrente
-* Aider à identifier et résoudre les problèmes de performance
+
+
 --
 // end::deroulement[]

@@ -1,4 +1,4 @@
-:title: Bienvenue dans la formation Go !
+:title: Bienvenue dans la formation NoSQL !
 :number: 01
 include::../../../../../../adoc/libs/header-episode.adoc[]
 
@@ -32,14 +32,13 @@ include::../../../../modules/NoSQL/01-introduction.adoc[options=modules]
 TIP: ☕ Pause café
 
 include::../../../../modules/NoSQL/02-les_familles.adoc[options=modules]
+
 TIP: 🍕 Pause déjeuner
 
 include::../../../../modules/NoSQL/03-mongo_db.adoc[options=modules]
 
-include::../../../../modules/NoSQL/04-mongo_db_crud.adoc[options=modules]
-
 :challenge: 
-:description: Création d'une application de quizz en Go
+:description: CRUD Basique avec Express.js et MongoDB
 include::../../../../../../adoc/libs/intro-challenge.adoc[]
 
 .👨‍🏫 Référent de promo
