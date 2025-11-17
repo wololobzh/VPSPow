@@ -1,0 +1,29 @@
+theme: dark
+
+server:
+  address: "0.0.0.0:9091"
+
+log:
+  level: info
+
+jwt_secret: "CHANGE-MOI-PAR-UNE-LONGUE-STRING"
+
+authentication_backend:
+  file:
+    path: /config/users_database.yml
+
+session:
+  name: authelia_session
+  secret: "UN-TRES-GRAND-SECRET"
+  expiration: 1h
+  inactivity: 15m
+  domain: 51.254.205.63
+  redis:
+    address: redis:6379
+
+access_control:
+  default_policy: deny
+
+  rules:
+    - domain: 51.254.205.63
+      policy: one_factor   # -> login simple
