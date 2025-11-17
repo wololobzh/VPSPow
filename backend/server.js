@@ -14,7 +14,9 @@ app.post("/auth/login", (req, res) => {
     // EXEMPLE : tes utilisateurs en dur (peut être déplacé en DB ensuite)
     const USERS = {
         admin: { password: "test", role: "admin" },
-        alice: { password: "test", role: "user" }
+        alice: { password: "test", role: "user" },
+        roger: { password: "test", role: "user" },
+        bernard: { password: "test", role: "user" }
     };
 
     const user = USERS[username];
