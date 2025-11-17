@@ -163,6 +163,7 @@ mkdir -p build
 cp -r adoc/libs/images build/images
 cp -r adoc/libs/font build/font
 cp adoc/libs/slides.css build
+cp login.html build
 
 
 # Traiement des fichiers
