@@ -209,7 +209,6 @@ myapp/
 --
 Pas de surprise, on peut reprendre le découpage habituel en routes / controllers. Il n'y a pas de model cependant, car MongoDB ne force pas l'utilisation de schémas. C'est par contre le cas quand on utilise un ODM tel que mongoose.
 --
-
 // end::deroulement[]
 
 == Conclusion

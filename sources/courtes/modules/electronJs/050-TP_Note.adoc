@@ -1,0 +1,26 @@
+:titre: TP : Notes
+:module: ElectronJS
+:duree: 60
+:description: 
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Introduction au développement Desktop
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+
+// end::objectifs[]
+
+// tag::deroulement[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+
+// end::conclusion[]

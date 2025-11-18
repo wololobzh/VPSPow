@@ -51,3 +51,7 @@ Les objectifs pédagogique de chaque partie (saisons, épisodes et modules) doiv
 - **Analyser** ; décomposition en éléments, identification de relations et de l'importance de chacun
 - **Évaluer** ; jugement sur la base de critères ou de normes
 - **Créer** ; combinaison d'éléments pour former un tout cohérent et novateur
+
+#### FAQ
+
+l'erreur : build.sh: line 49: syntax error: unexpected word (expecting "in") se resout en remplacant CRLF par LF dans le fichier build.sh 
