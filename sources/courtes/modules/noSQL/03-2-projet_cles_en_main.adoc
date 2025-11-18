@@ -1,4 +1,22 @@
+:titre: Projet clé en main avec MongoDB et Node.js
+:module: NoSQL
+:duree: 60
+:description: Présentation d'un projet clé en main avec Node.js, Express et MongoDB, incluant un CRUD complet pour la ressource users.
+include::../../../../adoc/libs/header-module.adoc[]
 
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Introduction à MongoDB
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Avoir un projet clé en main avec un CRUD complet pour la ressource users.
+// end::objectifs[]
+
+// tag::deroulement[]
 == Introduction 
 
 Présentation d'un projet clé en main avec Node.js, Express et MongoDB
@@ -367,4 +385,11 @@ DELETE http://localhost:3000/users/:id
 
 Tu peux y visualiser `testdb > users`.
 
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+Ce projet clé en main avec un CRUD complet pour la ressource `users` te permettra de démarrer rapidement avec une API RESTful utilisant MongoDB comme base de données. N'hésite pas à l'adapter et à l'étendre selon tes besoins spécifiques !
+// end::conclusion[]
 
