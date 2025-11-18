@@ -10,39 +10,31 @@ Cette formation de 2 jours sur le NoSQL permet d’acquérir les compétences n�
 == Objectifs pédagogiques
 
 // tag::objectifs[]
-- Maîtriser les bases du langage Go et l'installation de l'environnement de développement
-- Comprendre et appliquer le Test-Driven Development (TDD) avec la bibliothèque de tests standard de Go
-- Créer une API RESTful avec le framework Gin
-- Intégrer une base de données avec GORM pour gérer les données en Go
-- Développer un bot Discord en Go capable de communiquer avec une API
-- Mettre en place des tests pour assurer la fiabilité et la maintenabilité du code
+* Comprendre les concepts fondamentaux des bases de données NoSQL et leurs différences avec les bases de données relationnelles.
+* Explorer les différents types de bases de données NoSQL : documentaires, clé-valeur, colonnes larges et graphes.
+* Apprendre à modéliser des données pour les bases de données NoSQL en fonction des cas d’utilisation.
+* Manipuler la bases de données NoSQL populaire MongoDB.
 // end::objectifs[]
 
 == Notions
 
 // tag::notions[]
-- Installation et configuration de Go
-- Syntaxe et structures de base de Go
-- Test-Driven Development avec la bibliothèque de tests standard
-- Concurrence en Go (goroutines et channels)
-- Création d'une API RESTful avec Gin
-- Gestion des middlewares dans Gin
-- Intégration de bases de données avec GORM
-- Développement de bots Discord avec discordgo
-- Communication entre services via API
-- Écriture de tests unitaires et d'intégration pour valider le code
+* NoSQL
+* MongoDB
+* Modélisation des données
+* CRUD
 // end::notions[]
 
 == Prérequis formateur
 
 // tag::prerequis[]
-- Maîtriser le langage Go et les concepts backend
+- Savoir utiliser le language NoSQL
 // end::prerequis[]
 
 == Résumé
 
 // tag::resume[]
-Cette formation de 4 jours permet d’apprendre à utiliser Go pour créer des applications backend robustes et bien structurées. En explorant les fondamentaux du langage Go, les participants découvriront l'architecture backend avec le framework Gin, les bases du TDD, et les techniques avancées pour créer des API performantes. L'objectif final est de concevoir un bot Discord en Go capable de communiquer avec une API développée pendant le cours.
+Cette formation de 14 heures couvre les fondamentaux des bases de données NoSQL, y compris les différents types de bases de données, la modélisation des données et les meilleures pratiques pour leur utilisation dans le développement d'applications modernes.
 // end::resume[]
 
 == Déroulement

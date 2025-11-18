@@ -262,14 +262,17 @@ L’agrégation permet d'éviter des traitements lourds côté application.
 --
 
 == Démonstration
-
+// tag::demonstration[]
 Pokedex
+// end::demonstration[]
 
-// end::deroulement[]
 
 == Exercice
-
+// tag::exercice[]
 Manipulation de MongoDB dans le terminal avec mongosh
+// end::exercice[]
+
+// end::deroulement[]
 
 == Conclusion
 // tag::conclusion[]
