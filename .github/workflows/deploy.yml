@@ -46,6 +46,7 @@ jobs:
         with:
           path: build/
           name: wololo-artifact
+          retention-days: 1
 
   deploy:
     runs-on: ubuntu-latest

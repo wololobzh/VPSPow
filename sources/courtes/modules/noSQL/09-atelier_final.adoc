@@ -1,7 +1,7 @@
-:titre: Introduction au NoSQL
+:titre: Atelier final NoSQL
 :module: NoSQL
 :duree: 60
-:description: Découverte des bases de données NoSQL, leurs types et cas d'utilisation.
+:description: Atelier pratique final pour concevoir et implémenter une base NoSQL complète à partir de zéro, incluant modélisation, CRUD, agrégation et réflexion sur la scalabilité.
 include::../../../../adoc/libs/header-module.adoc[]
 
 ifeval::["{visible-on-html}" !=  "yes"]
@@ -9,19 +9,199 @@ ifeval::["{visible-on-html}" !=  "yes"]
 :docinfodir: ../../../adoc/libs
 endif::[]
 
+== Objectifs pédagogiques
 // tag::objectifs[]
-* Comprendre le “pourquoi” avant le “comment”.
+* **Mettre en pratique** l’ensemble des notions vues pendant les 2 jours
+* **Concevoir** un modèle NoSQL cohérent à partir d’un besoin métier
+* **Construire** une base NoSQL complète à partir d’une feuille blanche
+* **Réaliser** un CRUD, une agrégation et un mécanisme de scalabilité simple
+* **Développer** une réflexion architecturale adaptée aux contraintes NoSQL
 // end::objectifs[]
 
 // tag::deroulement[]
-== Introduction au NoSQL
+== Présentation du TP Final
 
-Les bases de données NoSQL (Not Only SQL) sont conçues pour gérer des volumes massifs de données non structurées ou semi-structurées. Contrairement aux bases de données relationnelles traditionnelles, elles offrent une flexibilité accrue et une scalabilité horizontale.
+Le TP final consiste à concevoir et implémenter une base NoSQL **à partir de zéro**, sans structure initiale.
+Les apprenants partent d’une **feuille blanche**, comme dans un vrai projet d’entreprise.
+
+[NOTE.speaker]
+--
+Ce TP est conçu pour synthétiser toutes les connaissances acquises : modélisation, CRUD, agrégation, scalabilité.
+Le formateur peut rappeler que le but n’est pas uniquement d’écrire du code, mais surtout de penser comme un architecte NoSQL.
+--
+
+== Contexte du TP
+
+Vous êtes l’équipe technique d’une startup qui lance une application : **EventFlow**, une plateforme permettant :
+
+* d’organiser des évènements
+* de gérer les inscriptions
+* de publier des commentaires
+* d’analyser la participation des utilisateurs
+
+Aucune base n’est fournie. À vous de **concevoir la base NoSQL complète**.
+
+[NOTE.speaker]
+--
+Le formateur peut adapter le contexte selon les besoins : e-commerce, réseaux sociaux, IoT, gestion de stocks, etc.
+L’important est que les apprenants puissent imaginer un vrai modèle métier.
+--
+
+== Étape 1 – Comprendre le besoin métier
+
+Les apprenants doivent identifier eux-mêmes :
+
+* les entités essentielles
+* les relations possibles
+* les flux de données
+* les usages principaux
+
+Questions guides :
+
+* Quels sont les objets métier ? (Events, Users, Comments…)
+* Quelles interactions existent ?
+* Quelles données doivent être rapides à lire ?
+* Quelles données évoluent fréquemment ?
+* Quels scénarios nécessitent de la scalabilité ?
+
+[NOTE.speaker]
+--
+Avant d’écrire la moindre ligne de code, faire un brainstorming complet.
+Ce moment est essentiel pour amener les apprenants à comprendre la modélisation NoSQL.
+--
+
+== Étape 2 – Modélisation NoSQL
+
+Créer un modèle sous forme de collections NoSQL.
+
+Exemples possibles :
+
+```
+users
+  - name
+  - email
+  - createdAt
+
+events
+  - title
+  - date
+  - organizerId
+  - participants[]
+
+comments
+  - eventId
+  - userId
+  - content
+  - createdAt
+```
+
+[NOTE.speaker]
+--
+Insister sur la question clé : *Faut-il normaliser ou dénormaliser ?*
+Encourager à justifier les choix, c’est cela qui développe la vraie compétence.
+--
+
+== Étape 3 – Création des collections
+
+Les apprenants doivent créer toutes les collections nécessaires à l’application.
+
+Exemple :
+
+```
+db.createCollection("events")
+db.createCollection("users")
+db.createCollection("comments")
+```
+
+[NOTE.speaker]
+--
+Montrer que MongoDB peut créer les collections automatiquement lors du premier insert, mais qu’une création explicite est utile pour structurer le TP.
+--
+
+== Étape 4 – Implémentation du CRUD
+
+Chaque groupe doit implémenter :
+
+* création d’utilisateurs
+* création d’évènements
+* ajout de participants
+* ajout de commentaires
+* lecture filtrée (par date, par organisateur, etc.)
+* mise à jour (ex : changement de nom d’évènement)
+* suppression (ex : commentaire supprimé)
+
+[NOTE.speaker]
+--
+Le DRU doit être complet : insert, find, update, delete.
+Le formateur peut proposer un jeu de données minimal pour accompagner les apprenants.
+--
+
+== Étape 5 – Agrégation
+
+Créer plusieurs pipelines :
+
+* nombre total d’évènements organisés par utilisateur
+* top 5 des évènements les plus populaires
+* moyenne des participants par type d’évènement
+* nombre de commentaires par utilisateur
+
+Exemple :
+
+```
+db.events.aggregate([
+  { $project: { title: 1, size: { $size: "$participants" } } },
+  { $sort: { size: -1 } },
+  { $limit: 5 }
+])
+```
+
+[NOTE.speaker]
+--
+Insister sur l’importance d’utiliser `$match` en tête pour les pipelines lourds.
+Faire un parallèle avec les analyses de données réelles.
+--
+
+== Étape 6 – Scalabilité
+
+Proposer une réflexion sur la scalabilité :
+
+* Quelle clé de shard serait la plus pertinente ?
+* Quels risques de hotspots ?
+* Quelles opérations doivent être répliquées ?
+
+Exemples de réponses attendues :
+
+* `eventId` pour shard les commentaires
+* `userId` pour répartir les évènements
+* éviter un shard basé sur la date (risque de hotspots en écriture)
+
+[NOTE.speaker]
+--
+Ce n’est pas une mise en place technique de sharding, mais un exercice de réflexion architecturale.
+--
+
+== Étape 7 – Présentation finale
+
+Chaque groupe présente :
+
+* son modèle NoSQL
+* les choix de normalisation / dénormalisation
+* ses pipelines d’agrégation
+* ses justifications techniques
+* ses limites et axes d’amélioration
+
+[NOTE.speaker]
+--
+Le but n’est pas d’avoir tous la même base mais de comprendre les implications de chaque choix.
+Encourager les apprenants à argumenter.
+--
 
 // end::deroulement[]
 
 == Conclusion
 // tag::conclusion[]
-* Résumé des concepts clés abordés
-* Importance croissante des bases de données NoSQL dans le paysage technologique actuel
+* Le TP final synthétise toute la logique NoSQL : modélisation, CRUD, agrégation, scalabilité.
+* Les apprenants apprennent à réfléchir comme des architectes NoSQL.
+* Le projet est suffisamment ouvert pour laisser place à la créativité.
+* Ce TP est un excellent exercice pour simuler un vrai projet en entreprise.
 // end::conclusion[]

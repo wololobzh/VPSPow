@@ -1,7 +1,7 @@
-:titre: Introduction au NoSQL
+:titre: Modelisation NoSQL
 :module: NoSQL
 :duree: 60
-:description: Découverte des bases de données NoSQL, leurs types et cas d'utilisation.
+:description: Modeliser des bases de données NoSQL en se concentrant sur les cas d'usage, la dénormalisation et les bonnes pratiques spécifiques aux systèmes NoSQL.
 include::../../../../adoc/libs/header-module.adoc[]
 
 ifeval::["{visible-on-html}" !=  "yes"]
@@ -9,19 +9,168 @@ ifeval::["{visible-on-html}" !=  "yes"]
 :docinfodir: ../../../adoc/libs
 endif::[]
 
+== Objectifs pédagogiques
 // tag::objectifs[]
-* Comprendre le “pourquoi” avant le “comment”.
+* **Comprendre** les différences entre modélisation SQL et NoSQL
+* **Identifier** les modèles de données courants en NoSQL
+* **Savoir** modéliser une base NoSQL orientée documents
+* **Apprendre** les bonnes pratiques de dénormalisation et d'optimisation
 // end::objectifs[]
 
 // tag::deroulement[]
-== Introduction au NoSQL
+== Introduction à la modélisation NoSQL
 
-Les bases de données NoSQL (Not Only SQL) sont conçues pour gérer des volumes massifs de données non structurées ou semi-structurées. Contrairement aux bases de données relationnelles traditionnelles, elles offrent une flexibilité accrue et une scalabilité horizontale.
+La modélisation NoSQL est centrée sur l'usage, les types de requêtes et la performance.
 
-// end::deroulement[]
+[NOTE.speaker]
+--
+Contrairement au SQL où l'on cherche une structure parfaitement normalisée, la modélisation NoSQL se construit en partant des besoins applicatifs : quelles données sont manipulées ensemble ? quelles requêtes sont les plus fréquentes ? Le but est de maximiser la performance et la simplicité d'accès.
+--
+
+== Pourquoi une modélisation différente ?
+
+* NoSQL favorise la **dénormalisation**
+* Les données sont souvent stockées **ensemble** selon leur usage
+* L'objectif principal : **performance** et **scalabilité horizontale**
+
+[NOTE.speaker]
+
+## Les systèmes NoSQL sont conçus pour le passage à l'échelle. Pour cela, il est essentiel de minimiser les jointures, inexistantes ou coûteuses. On stocke donc les données pré-agrégées ou regroupées pour répondre rapidement aux requêtes les plus critiques.
+
+== Les principaux types de bases NoSQL
+
+* **Clés-valeurs** (Redis)
+* **Colonnes larges** (Cassandra)
+* **Documents** (MongoDB, CouchDB)
+* **Graphes** (Neo4j)
+
+[NOTE.speaker]
+--
+Chaque type de base NoSQL correspond à un usage particulier. Dans la majorité des applications web, les bases orientées documents sont privilégiées pour leur flexibilité et leur capacité à représenter des objets complexes.
+--
+
+== Le modèle orienté documents
+
+Idéal pour représenter des objets applicatifs en JSON.
+
+[NOTE.speaker]
+--
+Les documents sont des structures JSON enrichies, pouvant contenir des tableaux et des sous-documents. Cette approche permet d'éviter la fragmentation des données dans plusieurs tables.
+--
+
+== Exemple de document utilisateur
+
+```json
+{
+  "_id": "u123",
+  "nom": "Dupont",
+  "email": "dupont@example.com",
+  "adresses": [
+    {
+      "rue": "12 rue de Paris",
+      "ville": "Lyon",
+      "principale": true
+    }
+  ]
+}
+```
+
+[NOTE.speaker]
+--
+Ici, les adresses sont intégrées directement dans le document utilisateur, permettant d'accéder à l'utilisateur et ses adresses en une seule requête.
+--
+
+== Approche par les cas d'usage (query-driven)
+
+La modélisation NoSQL se fait en réponse aux opérations :
+
+1. Quelles données sont le plus souvent lues ensemble ?
+2. Quelles requêtes doivent être optimisées ?
+3. Quel volume de données sera manipulé ?
+
+[NOTE.speaker]
+--
+On ne part pas des données, mais des accès aux données. Cette approche permet de structurer les documents pour limiter les lectures multiples.
+--
+
+== Dénormalisation contrôlée
+
+* Réplication de certaines données dans plusieurs documents
+* Permet d'éviter les jointures
+* Réduit le nombre d'accès disque
+
+[NOTE.speaker]
+--
+Contrairement au SQL où la redondance est un problème, en NoSQL elle devient un outil d'optimisation. Il faut néanmoins prévoir des mécanismes de mise à jour cohérents dans le code ou via des triggers applicatifs.
+--
+
+== Embedded vs Référencé
+
+Deux stratégies principales :
+
+* **Embedded** : intégrer directement les sous-documents
+* **Référencé** : stocker l'ID d'un autre document
+
+[NOTE.speaker]
+--
+Embedded = plus rapide pour la lecture, mais documents plus lourds.
+Référencé = structure plus flexible, mais nécessite plusieurs requêtes.
+--
+
+== Exemple : Modélisation d'un panier e-commerce
+
+**Option embedded :**
+
+```json
+{
+  "_id": "cart123",
+  "userId": "u123",
+  "items": [
+    { "productId": "p1", "qty": 2, "price": 19.99 },
+    { "productId": "p8", "qty": 1, "price": 8.99 }
+  ]
+}
+```
+
+[NOTE.speaker]
+--
+Le panier est très souvent lu en entier → modèle embedded pertinent.
+--
+
+== Exemple : Modélisation des commentaires
+
+**Option référencée :**
+
+```json
+{
+  "_id": "post99",
+  "title": "Mon article",
+  "comments": ["c1", "c2", "c3"]
+}
+```
+
+[NOTE.speaker]
+--
+Lorsque le nombre de sous-documents peut croître de façon imprévisible (ex : commentaires), on préfère référencer plutôt qu'intégrer.
+--
+
+== Bonnes pratiques de modélisation NoSQL
+
+* Optimiser les lectures fréquentes
+* Minimiser la taille des documents
+* Anticiper la croissance des collections
+* Choisir entre embedded et référencé selon les cas d’usage
+
+[NOTE.speaker]
+--
+Ces bonnes pratiques garantissent une architecture performante et durable à grande échelle.
+--
+// tag::deroulement[]
 
 == Conclusion
 // tag::conclusion[]
-* Résumé des concepts clés abordés
-* Importance croissante des bases de données NoSQL dans le paysage technologique actuel
+* La modélisation NoSQL est **orientée performance** et **cas d’usage**
+* La dénormalisation est un outil essentiel
+* Le choix entre embedded et référencé est central
+* Une bonne modélisation permet une application scalable et efficace
 // end::conclusion[]

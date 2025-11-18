@@ -29,8 +29,15 @@ Journée sur la modélisation NoSQL et les pipelines d’agrégation. Les partic
 :description: 
 include::../../../../../../adoc/libs/intro-correction.adoc[]
 
+include::../../../../modules/noSQL/05-mongo_express.adoc[options=modules]
 
+include::../../../../modules/noSQL/06-modelisation_no_sql.adoc[options=modules]
 
+include::../../../../modules/noSQL/07-agregation_no_sql.adoc[options=modules]
+
+include::../../../../modules/noSQL/08-scalabilite.adoc[options=modules]
+
+include::../../../../modules/noSQL/09-atelier_final.adoc[options=modules]
 
 :challenge: https://github.com/O-clock-Formations-courtes/GoChallenge
 :description: Création d'une application de quizz en Go
