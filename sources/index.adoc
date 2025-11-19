@@ -6,20 +6,20 @@
 
 * link:./courtes/index.html[Formations courtes]
 
-=== Systèmes et réseaux
+//=== Systèmes et réseaux
 
-* link:./ais/index.html[DAC Bac+4 - Expert Administration d'Infrastructures Sécurisées]
-* link:./devops/index.html[DAC Bac+4 - Expert DevOps]
+//* link:./ais/index.html[DAC Bac+4 - Expert Administration d'Infrastructures Sécurisées]
+//* link:./devops/index.html[DAC Bac+4 - Expert DevOps]
+//
+//=== Développement
 
-=== Développement
+//* link:./developpeur_front_end/index.html[Développeur Front End]
+//* link:./developpeur_back_end/index.html[WIP Développeur Back End]
+//* link:./developpeur_expert_js/index.html[Expert JavaScript avec NestJS]
+//* link:./developpeur_expert_data/index.html[Expert Data]
+//* link:./dwwm/index.html[Bac+2 - Developpeur Web et Web Mobile (DWWM)]
 
-* link:./developpeur_front_end/index.html[Développeur Front End]
-* link:./developpeur_back_end/index.html[WIP Développeur Back End]
-* link:./developpeur_expert_js/index.html[Expert JavaScript avec NestJS]
-* link:./developpeur_expert_data/index.html[Expert Data]
-* link:./dwwm/index.html[Bac+2 - Developpeur Web et Web Mobile (DWWM)]
+//=== Design
 
-=== Design
-
-* link:./cdui/index.html[Bac+4 - CDUI]
+//* link:./cdui/index.html[Bac+4 - CDUI]
 
