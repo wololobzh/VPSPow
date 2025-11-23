@@ -1,50 +1,51 @@
-:title: Bienvenue dans la formation Go !
+:title: Bienvenue dans la formation Electron !
 :number: 01
 include::../../../../../../adoc/libs/header-episode.adoc[]
 
 // tag::intro[]
-Cette première journée de formation vous permettra de découvrir le langage Go et ses fondamentaux. Vous apprendrez les bases de la syntaxe, la manipulation des différents types de données, la gestion des structures de contrôle, et la création de fonctions. Cette journée pose les fondations essentielles pour devenir un développeur Go efficace et productif.
+Bienvenue dans cette formation dédiée à ElectronJS, le framework incontournable pour développer des applications de bureau multiplateformes avec des technologies web. Au cours de cette formation, vous découvrirez les fondamentaux d'ElectronJS, son architecture, et comment créer des applications performantes et attrayantes.
 // end::intro[]
 
 == Objectifs pédagogiques
 
 // tag::objectifs[]
-* Comprendre l'écosystème Go et son approche de la programmation
-* Maîtriser les types de données fondamentaux et composés
-* Manipuler les structures de contrôle (if, for, switch)
-* Créer et utiliser des fonctions efficacement
-* Appliquer les bonnes pratiques de développement Go
-* Organiser son code de manière idiomatique
-* Développer des programmes Go maintenables et performants
+* Comprendre les bases d'ElectronJS et son architecture
+* Savoir initialiser un projet ElectronJS
+* Maîtriser les concepts clés pour développer des applications de bureau
+* Être capable de créer une application simple avec ElectronJS
+* Découvrir les bonnes pratiques de développement avec ElectronJS
+* Apprendre à déboguer et tester des applications ElectronJS
+* Explorer les possibilités d'intégration avec d'autres technologies web
 // end::objectifs[]
 
 == Prérequis formateur
 
 // tag::prerequis[]
-* Maîtrise approfondie du langage Go et de son écosystème
-* Expérience significative dans le développement Go
-* Connaissance des conventions et bonnes pratiques Go
-* Maîtrise des outils de développement (go mod, go fmt, etc.)
-* Compréhension des concepts de programmation structurée
-* Capacité à expliquer les concepts de base de manière claire
-* Expérience dans l'enseignement de langages de programmation
+* Connaissances de base en JavaScript, HTML et CSS
+* Familiarité avec les concepts de développement web
+* Expérience préalable avec Node.js est un plus
+* Ordinateurs avec Node.js et npm installés
 // end::prerequis[]
 
 == Déroulement
 
 // tag::deroulement[]
 
-include::../../../../modules/go/01Introduction.adoc[options=modules]
+include::../../../../modules/electronJs/010-introductionAuDevDesktop.adoc[options=modules]
+
+include::../../../../modules/electronJs/020-decouvrir_les_framework_desktop.adoc[options=modules]
+
+include::../../../../modules/electronJs/030-initialisationDUnProjetElectron.adoc[options=modules]
 
 TIP: ☕ Pause café
 
-include::../../../../modules/go/02TypesDeDonnees.adoc[options=modules]
+include::../../../../modules/electronJs/040-AtelierMachineABlagues.adoc[options=modules]
+
+include::../../../../modules/electronJs/041-CorrectionAtelier.adoc[options=modules]
 
 TIP: 🍕 Pause déjeuner
 
-include::../../../../modules/go/03StructuresDeControle.adoc[options=modules]
-
-include::../../../../modules/go/04Fonctions.adoc[options=modules]
+include::../../../../modules/electronJs/050-TP_Note.adoc[options=modules]
 
 :challenge: https://github.com/O-clock-Formations-courtes/GoChallenge
 :description: Création d'une application de quizz en Go
