@@ -1,4 +1,4 @@
-:title: Introduction aux APIs avec Gin
+:title: Fonctionnalités natives & Sécurité
 :number: 03
 include::../../../../../../adoc/libs/header-episode.adoc[]
 

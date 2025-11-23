@@ -1,9 +1,9 @@
-:title: Go avancé : Pointeurs, Interfaces et Concurrence
+:title: UI & Communication
 :number: 02
 include::../../../../../../adoc/libs/header-episode.adoc[]
 
 // tag::intro[]
-Cette deuxième journée de formation approfondit les concepts avancés de Go. Vous découvrirez la puissance des pointeurs pour la manipulation efficace de la mémoire, la flexibilité des interfaces pour créer du code modulaire, les capacités de concurrence natives de Go, et les meilleures pratiques de gestion des erreurs. Ces concepts sont essentiels pour développer des applications Go robustes et performantes.
+
 // end::intro[]
 
 == Objectifs pédagogiques

@@ -1,4 +1,4 @@
-:title: Soutenance
+:title: Préparation soutenance et soutenance orale
 :number: 05
 include::../../../../../../adoc/libs/header-episode.adoc[]
 

@@ -9,6 +9,12 @@ ifeval::["{visible-on-html}" !=  "yes"]
 :docinfodir: ../../../adoc/libs
 endif::[]
 
+==  🎯 Objectifs pédagogiques  
+// tag::objectifs[]
+* Comprendre les étapes de création d'une application Electron
+* Savoir configurer un projet Electron de base
+// end::objectifs[]
+
 == ✅ Correction détaillée de l’atelier "Machine à Blagues" avec Electron
 
 ==  Étape 1 : Créer un projet Electron

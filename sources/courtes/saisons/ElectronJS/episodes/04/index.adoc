@@ -1,4 +1,4 @@
-:title: Persistance des données et Intégration Discord avec Go
+:title: Packaging & Déploiement
 :number: 04
 include::../../../../../../adoc/libs/header-episode.adoc[]
 
