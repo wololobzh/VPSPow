@@ -43,7 +43,7 @@ TIP: 🍕 Pause déjeuner
 
 include::../../../../modules/noSQL/05-mongo_express.adoc[options=modules]
 
-:challenge: 
+:challenge: https://github.com/wololobzh/NoSQL-TPJ1
 :description: CRUD Basique avec Express.js et MongoDB
 include::../../../../../../adoc/libs/intro-challenge.adoc[]
 

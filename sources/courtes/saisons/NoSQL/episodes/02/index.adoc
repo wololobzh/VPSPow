@@ -24,9 +24,9 @@ Journée sur la modélisation NoSQL et les pipelines d’agrégation. Les partic
 == Déroulement
 
 // tag::deroulement[]
-:correction: 
+:correction: https://github.com/wololobzh/NoSQL-TPJ1
 :temps: 60 minutes
-:description: 
+:description: Corriger le tp du dernier cours NoSQL
 include::../../../../../../adoc/libs/intro-correction.adoc[]
 
 include::../../../../modules/noSQL/05-mongo_express.adoc[options=modules]
