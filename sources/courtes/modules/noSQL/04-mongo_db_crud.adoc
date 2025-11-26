@@ -263,13 +263,13 @@ L’agrégation permet d'éviter des traitements lourds côté application.
 
 == Démonstration
 // tag::demonstration[]
-Pokedex
+Pokedex : https://github.com/wololobzh/NoSQL-Introduction-MongoDB
 // end::demonstration[]
 
 
 == Exercice
 // tag::exercice[]
-Manipulation de MongoDB dans le terminal avec mongosh
+Manipulation de MongoDB dans le terminal avec mongosh : Pokedex
 // end::exercice[]
 
 // end::deroulement[]

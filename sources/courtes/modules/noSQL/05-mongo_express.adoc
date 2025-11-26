@@ -209,6 +209,147 @@ myapp/
 --
 Pas de surprise, on peut reprendre le découpage habituel en routes / controllers. Il n'y a pas de model cependant, car MongoDB ne force pas l'utilisation de schémas. C'est par contre le cas quand on utilise un ODM tel que mongoose.
 --
+
+== Exercice
+// tag::exercice[]
+```md
+# Exercice : Gestion d'un parc d'attractions avec MongoDB
+
+## Contexte
+
+Vous travaillez sur une application de gestion de parc d'attractions en ligne. Vous devez créer et manipuler une base de données MongoDB pour gérer les informations sur les attractions et les tickets.
+
+## Tâches
+
+- Créer la base de données `amusementPark`.
+
+- Créer les collections `attractions` et `tickets`.
+
+- Insérer les documents suivants dans la collection `attractions` :
+
+  - Nom : "Roller Coaster", Type : "Thrill Ride", Capacité : 24, Durée (minutes) : 3
+  - Nom : "Ferris Wheel", Type : "Family Ride", Capacité : 60, Durée (minutes) : 10
+  - Nom : "Haunted House", Type : "Dark Ride", Capacité : 15, Durée (minutes) : 5
+
+- Insérer les documents suivants dans la collection `tickets` :
+
+  - attractionId correspondant à "Roller Coaster", userId : "user1", Date de visite : "2024-06-01", Utilisé : false
+  - attractionId correspondant à "Ferris Wheel", userId : "user2", Date de visite : "2024-06-05", Utilisé : true
+
+- Effectuer les opérations suivantes :
+  - Récupérer toutes les attractions disponibles dans la collection `attractions`.
+  - Récupérer tous les tickets non utilisés (où la propriété `utilisé` est false).
+  - Mettre à jour la capacité de l'attraction "Roller Coaster" pour corriger une erreur.
+  - Marquer le ticket de "user1" comme utilisé.
+  - Supprimer l'attraction "Haunted House" de la collection attractions.
+  - Supprimer tous les tickets de `user2`.
+  - Utiliser un opérateur logique pour trouver les attractions avec une capacité inférieure à 20 ou une durée supérieure à 8 minutes.
+  - Utiliser un opérateur de mise à jour pour augmenter la capacité d'une attraction.
+```
+// end::exercice[]
+
+== Correction de l'exercice
+
+```js
+# MongO'Coaster
+
+## Contexte
+
+Vous travaillez sur une application de gestion de parc d'attractions en ligne. Vous devez créer et manipuler une base de données MongoDB pour gérer les informations sur les attractions et les tickets.
+
+## Tâches
+
+- Créer la base de données `amusementPark`.  
+  ```bash
+  # si besoin, démarrer le serveur Mongo
+  sudo systemctl start mongod
+  # connexion à mongosh
+  mongosh
+  # création de la base de données : on indique que l'on sélectionne la base
+  use amusementPark
+  ```
+
+- Créer les collections `attractions` et `tickets`.  
+  ```bash
+  Les collections sont créées à la première insertion de données.
+  ```
+
+- Insérer les documents suivants dans la collection `attractions` :
+
+  - Nom : "Roller Coaster", Type : "Thrill Ride", Capacité : 24, Durée (minutes) : 3  
+    ```bash
+    db.attractions.insertOne({ Nom: "Roller Coaster", Type: "Thrill Ride", Capacité: 24, Durée: 3 })
+    ```
+
+  - Nom : "Ferris Wheel", Type : "Family Ride", Capacité : 60, Durée (minutes) : 10  
+    ```bash
+    db.attractions.insertOne({ Nom : "Ferris Wheel", Type : "Family Ride", Capacité : 60, Durée : 10 })
+    ```
+  - Nom : "Haunted House", Type : "Dark Ride", Capacité : 15, Durée (minutes) : 5  
+    ```bash
+    db.attractions.insertOne({ Nom : "Haunted House", Type : "Dark Ride", Capacité : 15, Durée : 5 })
+    ```
+
+- Insérer les documents suivants dans la collection `tickets` :
+
+  - attractionId correspondant à "Roller Coaster", userId : "user1", Date de visite : "2024-06-01", Utilisé : false
+  - attractionId correspondant à "Ferris Wheel", userId : "user2", Date de visite : "2024-06-05", Utilisé : true  
+    ```bash
+    # regarder les attractions pour avoir les id
+    db.attractions.find()
+    db.tickets.insertMany([
+      { attractionId: ObjectId('66e03e44ec24456dae5e739c'), userId : "user1", DateVisite : "2024-06-01", Utilisé : false },
+      { attractionId: ObjectId('66e03e92ec24456dae5e739d'), userId : "user2", DateVisite : "2024-06-05", Utilisé : true }
+    ])
+    ```
+
+- Effectuer les opérations suivantes :
+  - Récupérer toutes les attractions disponibles dans la collection `attractions`  
+    ```bash
+    db.attractions.find()
+    ```
+
+  - Récupérer tous les tickets non utilisés (où la propriété `utilisé` est false).  
+    ```bash
+    db.tickets.find({ Utilisé: false })
+    ```
+
+  - Mettre à jour la capacité de l'attraction "Roller Coaster" pour corriger une erreur.
+    ```bash
+    db.attraction.updateOne( { Nom: "Roller Coaster" }, { $set: { Capacité: 10 }} )
+    ```
+    
+  - Marquer le ticket de "user1" comme utilisé.  
+    ```bash
+    db.tickets.updateOne( { userId: "user1"}, { $set: { Utilisé: true}} )
+    ```
+
+  - Supprimer l'attraction "Haunted House" de la collection attractions.  
+    ```bash
+    db.attractions.deleteOne( { Nom: "Haunted House" } )
+    ```
+
+  - Supprimer tous les tickets de `user2`.  
+    ```bash
+    db.tickets.deleteMany( { userId: "user2" } )
+    ```
+
+  - Utiliser un opérateur logique pour trouver les attractions avec une capacité inférieure à 20 ou une durée supérieure à 8 minutes.  
+    ```bash
+    db.attractions.find( {
+      $or: [
+        { Capacité: { $lt: 20 } },
+        { Durée: { $gt: 8 }}
+      ]
+    })
+    ```
+
+  - Utiliser un opérateur de mise à jour pour augmenter la capacité d'une attraction.  
+    ```bash
+    db.attractions.updateOne({Nom: "Roller Coaster"}, { $inc: { Capacité: 2 } })
+    ```
+```
+
 // end::deroulement[]
 
 == Conclusion
