@@ -1,5 +1,0 @@
-:title: Go
-:number: 01
-include::../../../../adoc/libs/header-saison-overview.adoc[]
-
-include::episodes/*/*.adoc[opts=episodes-overview]

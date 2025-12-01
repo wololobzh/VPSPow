@@ -29,19 +29,6 @@ Cette première journée de formation vous permettra de découvrir le noSQL et s
 
 include::../../../../modules/noSQL/01-introduction.adoc[options=modules]
 
-include::../../../../modules/noSQL/02-les_familles.adoc[options=modules]
-
-include::../../../../modules/noSQL/03-1-mongo_db.adoc[options=modules]
-
-include::../../../../modules/noSQL/03-2-projet_cles_en_main.adoc[options=modules]
-
-TIP: ☕ Pause café
-
-include::../../../../modules/noSQL/04-mongo_db_crud.adoc[options=modules]
-
-TIP: 🍕 Pause déjeuner
-
-include::../../../../modules/noSQL/05-mongo_express.adoc[options=modules]
 
 :challenge: https://github.com/wololobzh/NoSQL-TPJ1
 :description: CRUD Basique avec Express.js et MongoDB
