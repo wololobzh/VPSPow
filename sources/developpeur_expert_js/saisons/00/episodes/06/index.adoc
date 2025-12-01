@@ -1,0 +1,53 @@
+:title: Journée asynchrone
+:number: 06
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Pas de face à face pédagogique sur cette journée, les apprenants travaillent sur des tâches en autonomie.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Renforcer les compétences linguistiques en anglais technique, professionnel ou général selon le contexte métier.
+* Acquérir ou consolider le vocabulaire clé lié au domaine de l'informatique et de la technologie.
+* Améliorer l'expression et la compréhension écrite/orale pour mieux communiquer dans un contexte professionnel.
+* Consolider les acquis des modules précédents en se focalisant sur les compétences et savoirs essentiels.
+* Identifier et remédier aux lacunes individuelles grâce à des exercices ciblés et un accompagnement pédagogique.
+* Évaluer la maîtrise des compétences et savoirs conformément aux référentiels pédagogiques.
+* Identifier les points forts et axes d’amélioration pour orienter les apprentissages futurs.
+* Valider les acquis permettant de progresser dans le parcours de formation ou d’obtenir une certification.
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+- Plannifier un message Slack aux apprenants pour 8h30 en leur fournissant le programme de la journée et les ressources nécessaires.
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[] 
+
+
+* Dupliquer https://drive.google.com/drive/folders/10QhvETWwqj22glh5QBE63ayWIX5IoFW1?usp=drive_link[l'ECF] dans le drive de la promo et remplacer le lien dans le message Slack
+* Générer un lien pour le https://inside.oclock.io/pedagogie/qs-formateurs[questionnaire de satisfaction de fin de saison] et le remplacer dans le message Slack
+* Programmer le message suivant pour 8h30 :
+
+*Message Slack :*
+
+```
+Bonjour à tous,
+
+Aujourd'hui, pas de face à face pédagogique, vous avez une journée en autonomie pour travailler sur des tâches connexes à la formation.
+
+Voici le programme de la journée :
+
+- Questionnaire de satisfaction de fin de saison : [LIEN A REMPLACER]
+- Evaluation de fin de saison : [LIEN A REMPLACER]
+- Cours d'anglais avec Altissia
+- Réviser les notions de la saison et refaire les challenges si besoin
+
+Bonne journée à tous !
+```
+// end::deroulement[]

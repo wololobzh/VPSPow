@@ -1,0 +1,545 @@
+:titre: Authentification
+:module: nestJs
+:duree: 30
+:description: Comprendre l'Authentification
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* **Comprendre** le fonctionnement des sessions dans NestJS
+* **Appliquer** l'authentification avec express-session
+* **Créer** des middlewares d'authentification et de gestion d'erreurs
+* **Comprendre** la sécurisation des routes avec les middlewares
+// end::objectifs[]
+
+// tag::deroulement[]
+[background-color="var(--r-oclock-color)"]
+== Session
+
+https://docs.nestjs.com/security/authentication[Doc]
+
+On a nos users, les notes, les rôles et les permissions, il nous manque l'authentification et les authorisations.
+
+On commence par installer les modules nécessaires à la création de la fonctionnalité d'authentification, en suivant la doc : https://docs.nestjs.com/techniques/session[Les sessions avec NestJS]
+
+* Un module pour gérer des sessions utilisateurs, et un module pour hasher les mots de passe.
+
+[source ,bash]
+----
+npm i express-session
+npm i -D @types/express-session
+npm i bcrypt
+npm i -D @types/bcrypt
+----
+
+[background-color="var(--r-oclock-color)"]
+== Ensuite
+
+Toujours en suivant la doc, on met en place les sessions dans `main.ts`, puis on teste dans le contrôleur `NotesController`, avec le deuxième exemple de la doc (décorateur `@Session`),
+
+[NOTE.speaker]
+--
+Sinon, on devra changer la syntaxe `.` pour la syntaxe `[]`.
+--
+
+// tag::demo[]
+== Démonstration 01
+
+Configuration
+
+[NOTE.speaker]
+--
+*Le fichier `src/main.ts`*
+
+[source ,typescript]
+----
+// src/main.ts
+import * as session from 'express-session';
+// somewhere in your initialization file
+app.use(
+  session({
+    secret: 'my-secret',
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
+----
+
+*Le fichier `src/notes/notes.controller.ts`*
+
+[source ,typescript]
+----
+// src/notes/notes.controller.ts
+import { /*...*/, Session } from '@nestjs/common';
+@Get()
+@Render('index')
+async index(@Session() session: Record<string, any>): Promise<object> {
+    session.visits = session.visits ? session.visits + 1 : 1;
+
+    return { notes: await this.notesService.getNotes() };
+}
+----
+--
+// end::demo[]
+
+== Enfin
+
+On `console.log` la session, celle-ci devrait comporter la propriété `visits` incrémentée du nombre de fois qu'on a rechargé la page `/notes`.
+
+== Session : authentification
+
+Avec les sessions en place, on peut attaquer l'authentification, on génère un module complet `auth`, et on suit la https://docs.nestjs.com/security/authentication[doc], en l'adaptant, car la doc propose des raccourcis à fin de démonstration, et on ne fera pas de `jwt`, mais des sessions.
+
+On devra faire attention, il y a plein de détails à ne pas louper.
+
+Dans un terminal, on tape la commande suivante :
+
+`nest g resource auth --no-spec`
+
+== Authentification : la suite
+
+On a un formulaire de création de compte, ainsi qu'un formulaire de connexion, les deux sont déjà configurés pour aller vers les routes `/auth/register` et `auth/login`.
+
+On va pouvoir créer une fonctionnalité d'authentification basée sur les sessions, on garde les choses simples, on se servira des sessions avec `express-session` et les décorateurs de `NestJS`, pas besoin d'ajouter un module du style `passport`.
+
+Voici les étapes à réaliser, dans un ordre qui nous paraît logique :
+
+== Authentification : les étapes
+
+* Créer un utilisateur
+* Faire un login (création de session utilisateur et transfert d'infos aux vues)
+* Implémenter un middleware d'authentification (pour valider ou non l'accès aux routes).
+* Terminer la mise en place des associations entre `User` et `Note`.
+
+// tag::demo[]
+== Démonstration 02
+
+Création d'utilisateurs
+
+[NOTE.speaker]
+--
+*Création d'utilisateurs*
+
+Cette étape n'est pas très différente de la création d'une ressource classique, mais il faut redoubler de vigilance, pour bien `hasher` le mot de passe et vérifier la validité de l'adresse email.
+Voici le code de la méthode `signup` de `auth.controller` :
+
+[source ,typescript]
+----
+// src/auth/auth.controller.ts
+@HttpCode(HttpStatus.OK)
+@Post('register')
+@Redirect('login')
+signUp(@Body() registerDto: registerDto) {
+    return this.authService.register(
+        registerDto.username,
+        registerDto.email,
+        registerDto.password
+    );
+}
+----
+
+*Détail du DTO :*
+
+Ce DTO comme c'est son rôle va participer à la validation des données :
+
+[source ,typescript]
+----
+// src/auth/dto/register.dto.ts
+import { IsEmail, IsNotEmpty } from 'class-validator';
+
+class RegisterDto {
+    @IsNotEmpty()
+    username: string;
+
+    @IsEmail()
+    email: string;
+
+    @IsNotEmpty()
+    password: string;
+}
+export { RegisterDto };
+----
+
+*Et la méthode `register` du `auth.service` :*
+
+[source ,typescript]
+----
+// src/auth/auth.service.ts
+// En haut du fichier
+import * as bcrypt from 'bcrypt';
+import { UserService } from '../users/user.service';
+// ...
+async register(
+    username: string,
+    email: string,
+    pass: string
+): Promise<any> {
+    const user = await this.userService.signUp(email);
+    if (user) {
+        /**
+        * On n'envoie pas de message précis si user existe en BDD
+        */
+        throw new Error("Un truc horrible s'est produit sur notre serveur");
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(pass, salt);
+
+     await this.userService.register({
+        username,
+        email,
+        pass: hash,
+    });
+
+    return true;
+}
+----
+
+À ce stade, l'utilisateur devrait être enregistré, on peut passer au login.
+--
+// end::demo[]
+
+== Authentification : Login
+
+Pour faire un login, les principes restent les mêmes que l'on travaille avec `NestJS` ou un autre outil :
+
+* On vérifie les infos du formulaire (email, password)
+** Validité de l'email
+** Validité du mot de passe
+* Création de la session utilisateur
+* Transfert des infos de la session aux locals.
+* Création d'un middleware d'authentification.
+
+
+== Démonstration 03
+// tag::demo[]
+Login : Vérification des infos du formulaire
+
+[NOTE.speaker]
+--
+*Login : Vérification des infos du formulaire*
+
+On fait comme d'habitude avec le DTO, on s'en sert pour valider les infos du formulaire. Voici le code de la méthode `signIn` du contrôleur :
+
+[source ,typescript]
+----
+// src/auth/auth.controller.ts
+// ...
+import { SignInDto } from './dto/signIn.dto';
+import { AuthService } from './auth.service';
+// ...
+@HttpCode(HttpStatus.OK)
+@Post('login')
+@Redirect('/')
+async signIn(
+    @Body() signInDto: SignInDto,
+    @Session() session: Record<string, any>
+) {
+    const user = await this.authService.signIn(
+        signInDto.email,
+        signInDto.password
+    );
+    // On créé la session utilisateur
+    session.user = session.user ?? user;
+}
+----
+
+*Le DTO :*
+
+[source ,typescript]
+----
+// src/auth/dto/signIn.dto.ts
+import { IsEmail, IsNotEmpty } from 'class-validator';
+class SignInDto {
+    @IsEmail()
+    email: string;
+
+    @IsNotEmpty()
+    password: string;
+}
+export { SignInDto };
+----
+
+*La méthode `signIn` de `auth.service`:*
+
+[source ,typescript]
+----
+// src/auth/auth.service.ts
+async signIn(email: string, pass: string = 'secret'): Promise<any> {
+    const user = await this.userService.signIn(email);
+    if (user) {
+        const ok = await bcrypt.compare(pass, user?.password);
+
+        if (!ok) {
+            throw new UnauthorizedException();
+        }
+        const { password, ...result } = user;
+        // On efface le mot de passe pour être sûr que l'on ne fera pas de bêtises.
+        delete result.dataValues.password;
+
+        return result.dataValues;
+    }
+    // Toujours pas de message précis
+    throw new Error('Something went wrong');
+}
+----
+--
+// end::demo[]
+
+== Middleware d'authentification
+
+La session est démarrée, il nous faut maintenant un middleware qui permet de vérifier si on est authentifié, et qui transmet les informations de session aux vues.
+
+Plusieurs étapes sont nécessaires, notamment un middleware de gestion d'erreur. En effet, si on n'est pas authentifié et qu'on tente d'accéder à certaines routes, on doit provoquer une erreur et afficher une page dédiée, le tout avec le code http correct.
+
+[background-color="var(--r-oclock-color)"]
+== Middleware d'authentification : les étapes
+
+* Mise en place d'un middleware global de gestion d'erreur
+* Branchement de ce middleware dans l'application
+* Mise en place du middleware d'authentification
+* Application de ce middleware sur certaines routes
+
+// tag::demo[]
+== Démonstration 04
+
+Middleware d'authentification
+
+[NOTE.speaker]
+--
+*Middleware d'authentification : gestion d'erreur*
+
+[NOTE.speaker]
+Copypasta le code des middlewares, le lire et l'expliquer plutôt que livecoder
+
+Voici le middleware de gestion d'erreur :
+[source ,typescript]
+----
+import {
+    ExceptionFilter,
+    Catch,
+    ArgumentsHost,
+    HttpException,
+    HttpStatus,
+} from '@nestjs/common';
+import { HttpAdapterHost } from '@nestjs/core';
+
+@Catch()
+export class AllExceptionsFilter implements ExceptionFilter {
+    constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
+
+    catch(exception: unknown, host: ArgumentsHost) {
+        // In certain situations `httpAdapter` might not be available in the
+        // constructor method, thus we should resolve it here.
+        const { httpAdapter } = this.httpAdapterHost;
+        const ctx = host.switchToHttp();
+        const httpStatus =
+            exception instanceof HttpException
+                ? exception.getStatus()
+                : HttpStatus.INTERNAL_SERVER_ERROR;
+
+        const responseBody = {
+            statusCode: httpStatus,
+            timestamp: new Date().toISOString(),
+            path: httpAdapter.getRequestUrl(ctx.getRequest()),
+            error: exception.toString(),
+        };
+
+        const response = ctx.getResponse();
+        return httpAdapter.render(response, 'error', responseBody);
+    }
+}
+----
+
+*Middleware d'authentification : isAuth*
+
+[source ,typescript]
+----
+import {
+    Injectable,
+    NestMiddleware,
+    HttpException,
+    HttpStatus,
+} from '@nestjs/common';
+import { Request, Response, NextFunction } from 'express';
+
+@Injectable()
+export class IsAuthMiddleware implements NestMiddleware {
+    use(req: Request, res: Response, next: NextFunction) {
+        delete req.app.locals.user;
+        if ('user' in req.session) {
+            req.app.locals.user = req.session.user;
+            return next();
+        }
+
+        // * throw ou next ? throw car NestJS
+        throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    }
+}
+----
+
+--
+// end::demo[]
+
+// tag::demo[]
+== Démonstration 05
+
+Middleware d'authentification
+
+[NOTE.speaker]
+--
+*Middleware d'authentification : branchement du middleware auth*
+
+// On applique le middleware sur le contrôleur `notes.controller`
+
+Pour brancher ce middleware, il suffit de modifier le module `app.module`.
+
+On importe le middleware et on configure le module avec :
+
+[source ,typescript]
+----
+// src/app.module.ts
+import { IsAuthMiddleware } from './common/middlewares/isAuth';
+// ...
+export class AppModule implements NestModule {
+    configure(consumer: MiddlewareConsumer) {
+        // On applique le middleware sur le contrôleur `notes.controller`
+        consumer.apply(IsAuthMiddleware).forRoutes('notes');
+    }
+}
+----
+
+*NOTE :* Pour appliquer ce middleware sur plusieurs resources, on pourrait ajouter plusieurs ressources en argument à la methode `forRoutes` : `forRoutes('notes', 'autre')`.
+--
+// end::demo[]
+
+
+== Démonstration 06
+
+// tag::demo[]
+Middleware d'authentification
+
+[NOTE.speaker]
+--
+*Middleware d'authentification : branchement du middleware d'erreur*
+
+Pour brancher le middleware de gestion d'erreur, on ajoute *deux lignes* dans le fichier `main.ts` :
+
+[source ,typescript]
+----
+// src/main.ts
+import { AllExceptionsFilter } from './common/middlewares/ExceptionHander';
+// ...
+// Toutes les erreurs seront gérer par ce middleware
+app.useGlobalFilters(new AllExceptionsFilter(app.get(HttpAdapterHost)));
+----
+
+Et c'est tout.
+--
+// end::demo[]
+
+== On teste
+
+On peut essayer d'accéder aux routes `/notes`, on ne devrait pas pouvoir.
+
+// tag::exercice[]
+== Exercice : Mise en place de l'authentification
+
+*Durée : 10 minutes*
+
+=== Objectif
+Créer un système d'authentification complet avec register, login et logout en utilisant les sessions.
+
+. Créer un module `auth` complet avec la commande :
+```bash
+nest g resource auth --no-spec
+```
+
+=== Étapes
+
+. Implémenter le register :
+* Créer un `RegisterDto` avec validation email et password
+* Créer la route POST `/auth/register`
+* Hasher le mot de passe avec bcrypt
+* Sauvegarder l'utilisateur en base
+
+. Implémenter le login :
+* Créer un `LoginDto` avec validation
+* Créer la route POST `/auth/login`
+* Vérifier les credentials
+* Créer la session utilisateur
+
+. Implémenter le logout :
+* Créer une route GET `/auth/logout`
+* Détruire la session
+
+== Correction
+
+[NOTE.speaker]
+--
+1. Création du module auth :
++
+```bash
+nest g resource auth --no-spec
+```
+
+2. Register (auth.controller.ts) :
++
+```typescript
+@Post('register')
+async register(@Body() registerDto: RegisterDto) {
+  const hashedPassword = await bcrypt.hash(registerDto.password, 10);
+  return this.authService.create({
+    ...registerDto,
+    password: hashedPassword
+  });
+}
+```
+
+3. Login (auth.controller.ts) :
++
+```typescript
+@Post('login')
+async login(
+  @Body() loginDto: LoginDto,
+  @Session() session: Record<string, any>
+) {
+  const user = await this.authService.validateUser(
+    loginDto.email,
+    loginDto.password
+  );
+  if (user) {
+    session.user = user;
+    return user;
+  }
+  throw new UnauthorizedException();
+}
+```
+
+4. Logout (auth.controller.ts) :
++
+```typescript
+@Get('logout')
+async logout(@Session() session: Record<string, any>) {
+  session.destroy();
+  return { message: 'Logged out successfully' };
+}
+```
+--
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Maîtrise de la mise en place des sessions utilisateur dans NestJS
+* Capacité à implémenter un système d'authentification complet
+* Compréhension de la création et utilisation des middlewares
+* Aptitude à sécuriser les routes avec des middlewares d'authentification
+* Maîtrise de la gestion des erreurs avec les filtres d'exception
+// end::conclusion[]

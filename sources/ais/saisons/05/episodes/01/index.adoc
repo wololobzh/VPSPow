@@ -1,0 +1,63 @@
+:title: Prise en main de Linux
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Introduire les participants à Linux et à l’open source, leur apprendre à installer Linux et à utiliser les commandes de base. L'objectif est de fournir une base solide pour que les participants puissent naviguer et utiliser Linux efficacement.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les concepts fondamentaux de Linux et du mouvement open source.
+* Savoir installer une distribution Linux.
+* Apprendre et maîtriser les commandes de base de Linux pour la gestion des fichiers et des systèmes.
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Préparer le cours en parcourant les modules de cet épisode
+* S’entraîner à faire les démonstrations, notamment si l’on risque de ne pas être à l’aise pour les faire en direct
+* On peut aussi prendre le parti de découvrir la démonstration en plein cours, mais il ne faut pas que cela impacte trop le rythme de la journée
+* Préparer des documents ou des ressources de référence sur les commandes de base de Linux, à partager aux apprenants
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook O'Clock]**
+
+include::../../../../modules/systeme/introduction-linux.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/systeme/installer-linux.adoc[options=modules]
+
+=== Mise en place de la VM Linux Debian
+
+**Durée** : 50min
+
+* Chaque apprenant doit avoir une VM fonctionnelle pour pouvoir pratiquer 
+* Si gros problème chez un apprenant, prévoir un dépannage sur le créneau 15h-17h
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/systeme/commandes-linux.adoc[options=modules]
+
+include::../../../../modules/systeme/gestion-utilisateurs-groupes.adoc[options=modules]
+
+:challenge: https://drive.google.com/drive/folders/1AzvSc00B2uxcdA_FjQsXa3uRJ62SIEfM
+:description: Terminer l'installation de la VM Debian si pas terminé. Archiver des dossiers de projet dans une structure de répertoires organisée, tout en assurant la sécurité, la gestion des utilisateurs, des groupes, et la facilité de récupération des informations.
+:correction: https://docs.google.com/document/d/1DBnRNse5IgTsf6RjM1TwysyhZZ-j9jmojZKHKvpoqPE/edit?tab=t.0
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s05e01]
+--
+
+// end::deroulement[]

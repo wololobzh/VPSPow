@@ -1,0 +1,425 @@
+:titre: Test Driven Development
+:module: nestJs
+:duree: 30
+:description: Comprendre le concept de TDD
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* **Comprendre** le concept et les avantages du Test Driven Development (TDD)
+* **Appliquer** les tests unitaires avec Jest dans NestJS
+* **Créer** des tests pour les contrôleurs et services
+* **Comprendre** le cycle de développement "Red-Green-Refactor"
+// end::objectifs[]
+
+// tag::deroulement[]
+*https://docs.nestjs.com/fundamentals/testing[La Doc]*
+
+*https://github.com/O-clock-Teach/DWWM-NestJS-GraphQL-support/tree/TDD[support]*
+
+[background-color="var(--r-oclock-color)"]
+== Prérequis
+
+* _Bonne connaissance de NestJS_
+
+[background-color="var(--r-oclock-color)"]
+== Développement piloté par les tests : Qu-est-ce c'est ?
+
+Le Développement piloté par les tests ou Test Driven Development (TDD)
+est une façon de développer qui consiste à coder des choses qui n'existent pas, dans le but de les tester, de provoquer des erreurs grâces à des tests automatisés, et de laisser les erreurs nous guider pour implémenter nos fonctionnalités.
+
+
+[background-color="var(--r-oclock-color)"]
+=== Développement piloté par les tests ?
+
+*La  théorie :*
+
+* On teste notre code avant de l'avoir écrit.
+* On code des tests pour du code qui n'existe pas.
+
+*La pratique :*
+
+* Bien souvent, on doit commencer à coder quelque chose avant de tester.
+
+[background-color="var(--r-oclock-color)"]
+=== Développement piloté par les tests : Une perte de temps ?
+
+Tester du code qui n'existe pas paraît contre productif et contre intuitif, c'est en réalité une discipline bien rôdé qui même si elle donne l'impression de perdre du temps, en fait gagner sur le moyen/long terme.
+
+En effet, un code source finit toujours par grandir, et parfois prendre de belles proportions, ce qui nous forcent en tant que développeur à réorganiser le code au fur et à mesure pour garder les choses sous contrôle.
+
+[background-color="var(--r-oclock-color)"]
+=== Développement piloté par les tests : Une perte de temps ?
+
+Si on n'a pas de tests quand on effectue cette réorganisation, on risque d'introduire des effets de bord non maîtrisés, et donc produire des bugs non détectés.
+
+Ces bugs prendront du temps à être réparé, car il faudra tester entièrement notre application à la main.
+
+[background-color="var(--r-oclock-color)"]
+=== Développement piloté par les tests : Un gain de temps.
+
+Avec le TDD, on aura des outils de tests automatisés qui permettront d'avoir confiance dans nos factorisations, et de voir immédiatement si on a tout codé correctement.
+
+Les tests nous apportent une sécurité en plus, et une tranquillité d'esprit.
+
+L'objectif  est donc de voir comment mettre en place une solution de tests dans NestJS afin d'acquérir les bons réflexes.
+
+[background-color="var(--r-oclock-color)"]
+== Installation des modules
+
+On vérifie `package.json` à la recherche du module `@nestjs/testing`, et on l'installe s'il n'est pas présent.
+
+Normalement, tous les modules nécessaires au TDD sont inclus quand on crée une application avec la `CLI`, sauf ce module.
+
+[source,bash]
+----
+npm i --save-dev @nestjs/testing
+----
+
+[background-color="var(--r-oclock-color)"]
+== Mise en place d'un test unitaire simple
+
+En guise d'introduction et par souci de simplicité, on va tester une fonction très simple : une addition.
+
+Dans le fichier `package.json`, on a un script `test` qui appelle `jest`, Jest est un framework de tests très utilisé, ce framework est issue de Facebook.
+
+Pour exécuter des tests, on ouvre un terminal et on tape la commande : `npm test`. Cette commande devrait nous dire qu'elle ne trouve aucun test à exécuter.
+
+
+[background-color="var(--r-oclock-color)"]
+== Création d'un module et d'un service
+
+On crée un module et un service, cette fois-ci, on ne précise pas l'option `--no-spec`, on va avoir besoin des fichiers `.spec` pour faire nos tests.
+
+[source,bash]
+----
+nest g module addition
+nest g service addition
+----
+
+Comme d'habitude, le module et le service  ont été créé dans un répertoire addition, et le module `App` a été mis à jour.
+
+On commence par lire le fichier `addition.service.spec.ts` pour comprendre ce qu'il s'y passe.
+
+[background-color="var(--r-oclock-color)"]
+== Les fichiers `spec.ts`
+
+Ce sont les fichiers dans lesquels on va écrire les tests, ils sont créés par NestJS quand on crée un service ou un contrôleur.
+
+On peut déjà refaire la commande `npm test` pour voir qu'un test est exécuté, c'est du code boilerplate qui teste si le service est défini.
+
+[background-color="var(--r-oclock-color)"]
+== La discipline
+
+On part de là, on va implémenter une fonction addition, en respectant le principe du TDD : le test avant le code.
+
+Il faut en profiter pour réfléchir à la manière dont on va vouloir écrire notre code.
+
+Par exemple : va-t-on écrire `service.addition(a, b)` ou plus simplement `addition(a, b)` ou même `add(a, b)` ?
+
+[background-color="var(--r-demonstration)"]
+=== La discipline
+
+On commence par écrire un test, on va écrire le nôtre juste après le celui déjà présent :
+
+[source,typescript]
+----
+// addition.service.spec.ts
+// ..
+it('should add two numbers', () => {
+    expect(service.addition(10, 10)).toEqual(100);
+});
+----
+
+À ce stade, TypeScript devrait déjà nous prévenir que la méthode addition n'existe pas.
+
+On tape tout de même la commande `npm test`, et on voit ce qu'il se passe.
+
+Le résultat est rouge, le message est clair, la méthode addition n'existe pas.
+
+On la crée dans le service, et on re-teste.
+
+[background-color="var(--r-demonstration)"]
+=== La discipline
+
+Cette fois-ci, la méthode existe, mais on a toujours une erreur, en effet, 10 + 10 ne font pas 100, mais 20. C'est donc un point à savoir : on peut tester pour les égalités, mais aussi pour les inégalités, plus généralement, on peut tester toutes choses.
+
+On modifie notre test :
+
+[source,typescript]
+----
+it('should add two numbers', () => {
+    expect(service.addition(10, 10)).not.toEqual(100);
+    expect(service.addition(10, 10)).toEqual(20);
+});
+----
+
+
+[background-color="var(--r-demonstration)"]
+=== La discipline
+
+Cette fois tout est vert, mais on n'en a pas fini pour autant, on modifie encore le test :
+
+[source,typescript]
+----
+it('should add two numbers', () => {
+    // ...
+    expect(service.addition('Mickey', " Minnie")).toEqual("Mickey Minnie");
+});
+----
+
+On passe deux strings, et JavaScript les concatènent. Le test est vert, effectivement, il n'y a aucune erreur.
+
+On sera donc vigilant sur ce point : ce n'est pas parce qu'un test passe au vert que le code fait ce que l'on souhaite. Il faudra ainsi penser à un maximum de cas à tester, pour être sûr de notre coup.
+
+[background-color="var(--r-demonstration)"]
+=== La discipline
+
+On doit donc modifier notre méthode `addition`, pour lui dire de n'accepter que des nombres, et retourner  `null` (par exemple) si elle reçoit autre chose.
+
+Vu qu'on travaille avec TypeScript, on devrait aussi typer les paramètres de la méthode, ainsi que ce qu'elle retourne (ce qui fait que nos tests pour les strings deviendraient obsolète).
+
+Voici à quoi pourrait ressembler cette méthode et les tests sans typer les paramètres :
+
+[source,typescript]
+----
+it('should add two numbers', () => {
+    expect(service.addition(10, 10)).toEqual(20);
+    expect(service.addition(90, '10')).toEqual(100);
+    expect(service.addition(10, 10)).not.toEqual(100);
+  });
+
+  it('should not concatenate strings', () => {
+    expect(service.addition('Mickey', 10)).toBeNull();
+    expect(service.addition('Mickey', ' Minnie')).toBeNull();
+  });
+----
+
+[background-color="var(--r-demonstration)"]
+=== La discipline
+
+Et voici la méthode :
+
+[source,typescript]
+----
+addition(a, b): number {
+    if (Number.isNaN(Number(a)) || Number.isNaN(Number(b))) {
+      return null;
+    }
+
+    return Number(a) + Number(b);
+  }
+----
+
+Si on décide de typer les paramètres, il faudra alors effacer les tests correspondants aux concaténations, sinon TypeScript nous ferait une erreur.
+
+[background-color="var(--r-oclock-color)"]
+== Cas pratique : on teste un contrôleur
+
+On va tester un contrôleur pour être sûr qu'on peut prédire ce que les  méthodes vont nous retourner.
+
+Dans notre cas, ça tombe bien, on n'a pas de contrôleur `movie`, on va donc en faire un, lui donner une fonctionnalité, et le tester.
+
+[background-color="var(--r-demonstration)"]
+=== Cas pratique : on teste un contrôleur
+
+On entre la commande suivante, et le fichier de tests sera créé en même temps.
+
+[source,bash]
+----
+nest g controller movie
+----
+
+On ne va pas re-tester éternellement le service que l'on vient de faire, on fera donc la commande suivante pour tester le contrôleur :
+
+[source,bash]
+----
+npm test movie.controller
+----
+
+[background-color="var(--r-oclock-color)"]
+=== Cas pratique : on teste un contrôleur
+
+On fait une méthode dans ce contrôleur qui va venir nous faire une requête dans la BDD, et qui va nous retourner un tableau de movies.
+
+On ajoute quelque lignes dans le fichier de tests. Dans celui-ci, on remarque la méthode `beforEach()`, elle sert à initialiser un module de test.
+
+C'est en quelque sorte un duplicata du module movie, mais dont le rôle s'arrête à initialiser suffisamment de fonctionnalités de NestJS pour que l'on puisse tester uniquement la partie que l'on veut.
+
+[background-color="var(--r-demonstration)"]
+=== Cas pratique : on teste un contrôleur
+
+[source,typescript]
+----
+import { Test, TestingModule } from '@nestjs/testing';
+import { MovieController } from './movie.controller';
+import { MovieService } from './movie.service';
+import { PrismaService } from '../prisma/prisma.service';
+
+describe('MovieController', () => {
+  let movieController: MovieController;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [MovieController],
+      providers: [MovieService, PrismaService],
+    }).compile();
+
+    movieController = module.get<MovieController>(MovieController);
+  });
+
+  it('should be defined', () => {
+    expect(movieController).toBeDefined();
+  });
+
+  it('should render an array of movies', async () => {
+    const response = await movieController.index();
+
+    expect(response).toBeInstanceOf(Array);
+
+    expect(response).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: 1, // Un ID dont on sait qu'elle existera
+        }),
+      ]),
+    );
+  });
+});
+----
+
+[background-color="var(--r-oclock-color)"]
+=== Cas pratique : on teste un contrôleur
+
+On teste et comme on s'y attend, tout ce beau monde explose, car la méthode index n'existe pas sur le contrôleur, modifions cela.
+
+[background-color="var(--r-demonstration)"]
+=== Cas pratique : on teste un contrôleur
+
+On rend le contrôleur injectable avec le désormais bien connu décorateur `@Injectable`, et on injecte le service `MovieService`.
+
+On fera également attention au typage de cette méthode, on voit qu'elle retourne un tableau devant se conformer au format du type `MovieType`
+
+[source,javascript]
+----
+@Injectable()
+export class MovieController {
+  constructor(private movieService: MovieService) {}
+
+  async index(): Promise<MovieType[]> {
+    return await this.movieService.findAll();
+  }
+}
+----
+
+Les tests sont verts, on peut aller fêter ça.
+
+// tag::exercice[]
+== Les Exos du jour
+
+* Implémenter tous les tests nécessaires pour confirmer que les contrôleurs font leur travail
+
+== Correction
+
+[NOTE.speaker]
+--
+1. Test du contrôleur de produits :
++
+```typescript
+// product.controller.spec.ts
+describe('ProductController', () => {
+  let controller: ProductController;
+  let service: ProductService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [ProductController],
+      providers: [ProductService]
+    }).compile();
+
+    controller = module.get<ProductController>(ProductController);
+    service = module.get<ProductService>(ProductService);
+  });
+
+  it('should return all products', async () => {
+    const result = [
+      { id: 1, name: 'Product 1', price: 10 },
+      { id: 2, name: 'Product 2', price: 20 }
+    ];
+    
+    jest.spyOn(service, 'findAll').mockImplementation(() => Promise.resolve(result));
+
+    expect(await controller.findAll()).toBe(result);
+  });
+
+  it('should return one product', async () => {
+    const result = { id: 1, name: 'Product 1', price: 10 };
+    
+    jest.spyOn(service, 'findOne').mockImplementation(() => Promise.resolve(result));
+
+    expect(await controller.findOne('1')).toBe(result);
+  });
+
+  it('should create a product', async () => {
+    const product = { name: 'New Product', price: 30 };
+    
+    jest.spyOn(service, 'create').mockImplementation(() => Promise.resolve({
+      id: 3,
+      ...product
+    }));
+
+    expect(await controller.create(product)).toEqual({
+      id: 3,
+      ...product
+    });
+  });
+});
+```
+
+2. Test du service de produits :
++
+```typescript
+// product.service.spec.ts
+describe('ProductService', () => {
+  let service: ProductService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [ProductService]
+    }).compile();
+
+    service = module.get<ProductService>(ProductService);
+  });
+
+  it('should validate product price', () => {
+    expect(service.validatePrice(-10)).toBeFalsy();
+    expect(service.validatePrice(0)).toBeTruthy();
+    expect(service.validatePrice(100)).toBeTruthy();
+  });
+
+  it('should format product name', () => {
+    expect(service.formatName('test')).toBe('Test');
+    expect(service.formatName('TEST')).toBe('Test');
+    expect(service.formatName('')).toBe('');
+  });
+});
+```
+--
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Maîtrise des concepts fondamentaux du TDD
+* Capacité à écrire des tests unitaires avec Jest
+* Compréhension de l'importance des tests dans le cycle de développement
+* Aptitude à tester les contrôleurs et services NestJS
+* Maîtrise du processus d'écriture de tests avant le code
+* Capacité à utiliser les tests pour guider le développement
+// end::conclusion[]

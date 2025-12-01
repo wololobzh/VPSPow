@@ -1,0 +1,5 @@
+:title: Projet DevOps
+:number: 03
+include::../../../../adoc/libs/header-saison-overview.adoc[]
+
+include::episodes/*/*.adoc[opts=episodes-overview]

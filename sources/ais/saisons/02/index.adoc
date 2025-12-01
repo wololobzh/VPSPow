@@ -1,0 +1,45 @@
+:title: Centre de services
+:number: 02
+:duration: 35
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Cette saison est consacrée à la gestion des services IT. Nous allons voir comment mettre en place un centre de services, gérer les incidents et les demandes, et comment utiliser l'outil GLPI pour gérer les tickets.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Savoir gérer des services IT avec ITIL
+* Maîtriser l'outil GLPI
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+* ITIL
+* GLPI
+* Centre de services
+* Gestion des incidents
+* Tickets
+// end::notions[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+- Penser à fournir le ebook O'Clock
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+Cette saison est consacrée à la gestion des services IT. Nous allons voir comment mettre en place un centre de services, gérer les incidents et les demandes, et comment utiliser l'outil GLPI pour gérer les tickets.
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue d'ensemble]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

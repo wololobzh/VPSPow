@@ -1,0 +1,61 @@
+:title: Formulaires accessibles
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode traite des techniques pour améliorer la lisibilité d'un site, de l'exploration des balises de formulaire à l'aide de la documentation, du choix du type d'input adapté aux données, et de la personnalisation des styles pour les balises input[type=text] et textarea.
+// end::intro[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Améliorer la lisibilité d'un site
+* Rechercher les différentes balises de formulaire avec l'aide de la documentation
+* Choisir le bon type d'input en fonction de la donnée
+* Styliser les balises input[type=text] et textarea
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* La journée est longue !
+* Correction longue ! Attention à garder du temps pour présenter les formulaires
+
+🛑 Ne pas aborder
+
+* Responsive vu le lendemain
+* La customisation des checkboxes ou radios
+
+🏁 À faire avant le cours
+
+Préparer une correction complète au cas où l'atelier ne serait pas terminé.
+Préparer la feuille de style de oNew Contact pour se concentrer uniquement sur l'intégration.
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+
+
+:correction: https://github.com/O-clock-FS-JS/oNews-homepage/tree/correction
+:temps: 3h
+:description: Attention au débordement : cette correction peut facilement s'étendre sur 4 heures, ce qui risque de fatiguer tout le monde. Il est important de garder du temps pour travailler sur les formulaires.
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+
+include::../../../../modules/ateliers/020-atelier_pp_correction_onews.adoc[options=modules]
+
+
+- Formulaire HTML
+    - La balise form
+    - Les balises de formulaire
+    - Stylisation
+
+
+:challenge: https://github.com/O-clock-FS-JS/oFig-cart
+:description: Création d'un formulaire de contact pour un site de vente en ligne
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+
+// end::deroulement[]

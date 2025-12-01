@@ -1,0 +1,124 @@
+:titre: Variables
+:module: Bash
+:duree: 15
+:description: Utilisation des variables dans un script Bash pour complexifier les tâches.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** les variables dans un script Bash.
+* **Appliquer** des variables.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction aux variables dans Bash
+
+Les variables permettent de stocker des informations et de les réutiliser dans un script, rendant celui-ci plus flexible et dynamique.
+
+=== Déclaration de variables
+
+Une variable est simplement définie par un nom suivi d'un signe égal `=` et de la valeur souhaitée :
+
+[source,shell]
+----
+nom="Jean"
+----
+
+[NOTE.speaker]
+--
+Dans cet exemple, la variable `nom` contient la chaîne de caractères "Jean". Attention à ne pas mettre d'espaces autour du signe égal.
+--
+
+=== Utilisation des variables
+
+Pour accéder à la valeur d'une variable, il suffit de la précéder d'un signe dollar `$` :
+
+[source,shell]
+----
+echo "Bonjour, $nom"
+----
+
+[NOTE.speaker]
+--
+Le symbole `$` permet de récupérer la valeur d'une variable. Ici, la commande affichera "Bonjour, Jean".
+--
+
+=== Variables systèmes
+
+Bash dispose également de variables prédéfinies comme `$HOME`, `$USER`, ou `$PWD`, qui contiennent des informations utiles sur l'environnement de l'utilisateur :
+
+[source,shell]
+----
+echo "Votre dossier personnel est : $HOME"
+----
+
+[NOTE.speaker]
+--
+`$HOME` contient le chemin du répertoire personnel de l'utilisateur courant, ce qui permet d'adapter les scripts à chaque utilisateur sans avoir besoin de personnalisation manuelle.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Création d'un script qui demande le nom de l'utilisateur et affiche un message personnalisé
+
+[NOTE.speaker]
+--
+1. Créer un fichier appelé `salutation.sh`.
+2. Ajouter les lignes suivantes :
+   ```
+   #!/bin/bash
+   nom="Jean"
+   echo "Bonjour, $nom"
+   ```
+3. Sauvegarder et fermer le fichier.
+4. Rendre le script exécutable avec `chmod +x salutation.sh`.
+5. Lancer le script avec `./salutation.sh`. Le script affichera "Bonjour, Jean".
+--
+// end::demo[]
+
+== Variables dans un contexte dynamique
+
+Il est possible d'affecter la valeur d'une variable via l'interaction utilisateur ou les paramètres du script.
+
+[source,shell]
+----
+#!/bin/bash
+echo "Quel est votre nom ?"
+read nom
+echo "Bonjour, $nom"
+----
+
+[NOTE.speaker]
+--
+1. Le script demande à l'utilisateur de saisir son nom grâce à la commande `read`.
+2. La valeur saisie est stockée dans la variable `nom`.
+3. Le script affiche un message personnalisé en fonction du nom fourni.
+--
+
+== Stockage d'un résultat dans une variable
+
+Il est également possible de stocker le résultat d'une commande dans une variable en utilisant la syntaxe `$(commande)` :
+
+[source,shell]
+----
+dossier=$(pwd)
+echo "Vous êtes dans le dossier : $dossier"
+----
+
+[NOTE.speaker]
+--
+La commande `pwd` renvoie le chemin du répertoire courant. Ici, le script stocke ce chemin dans la variable `dossier` et l'affiche ensuite.
+--
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Compréhension des bases des variables dans Bash.
+* Maîtrise de l'utilisation des variables pour rendre les scripts dynamiques et interactifs.
+// end::conclusion[]

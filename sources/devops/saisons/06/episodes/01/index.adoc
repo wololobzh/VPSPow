@@ -1,0 +1,54 @@
+:title: Maîtriser le système
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Début de la saison système, on reviens sur linux pour préciser son importance dans le monde DevOps, puis un installe une VM ubuntu avec VirtualBox pour la bidouiller en SSH.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Se rappeler** des différents OS et distributions Linux
+- **Appliquer** Linux dans une VM
+- **Analyser** les commandes principales
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Connaitre VirtuablBox
+* Avoir l'iso de Debian
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+WARNING: *Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook]*
+
+TIP: ☕ Pause café à intercaler dans le module
+
+include::../../../../modules/systeme/vm.adoc[options=modules]
+
+⬆️ L’exercice peut être long. Il est absolument nécessaire que chaque apprenant ait une VM fonctionnelle (avec config SSH ou pas) pour la suite du cours. Si besoin, faire du dépannage en fin de journée pendant le challenge. S'il reste du temps le matin, présenter rapidement QEMU.
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/systeme/intro-linux.adoc[options=modules]
+
+⬆️ Passer le début du module pour aller directement à la slide "Utilisation". Durée : 30 minutes.
+
+include::../../../../modules/systeme/paquets.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S06-Challenge
+:description: Choisir une distribution adaptée aux besoins de l'équipe de développement, d'installer cette distribution, puis de configurer un environnement de travail moderne, propice au développement de logiciels conteneurisés
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s06e01]
+--
+// end::deroulement[]

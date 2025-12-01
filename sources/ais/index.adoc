@@ -1,0 +1,45 @@
+:title: Administrateur d'Infrastructures Sécurisées (AIS)
+include::../../adoc/libs/header-formation.adoc[]
+
+// tag::links[]
+* link:/modules/dac/presentation.html[Présentation générale]
+* link:https://github.com/O-clock-AIS[GitHub]
+* link:https://oclock.io/formations/https://oclock.io/formations/administrateur-infrastructures-securisees[Site O'Clock - AIS]
+// end::links[]
+
+// tag::intro[]
+La formation Administrateur d'Infrastructures Sécurisées (AIS), de niveau 6 (BAC+4), prépare les apprenants à administrer et sécuriser les infrastructures informatiques locales et Cloud. Dispensée en format 100 % téléprésentiel sur une durée de 6 mois (798 heures théoriques), elle permet d'acquérir des compétences solides pour la gestion, la sécurisation, et l'évolution des infrastructures systèmes et réseaux. Ce parcours est validé par le passage du Titre professionnel RNCP 37680, délivré par le Ministère du Travail.
+// end::intro[]
+
+== Objectifs
+
+.En gras, les compétences obligatoires dans le projet présenté au TP
+// tag::objectifs[]
+* AT1 : Administrer et sécuriser les infrastructures
+** CP1 : **Appliquer les bonnes pratiques dans l’administration des infrastructures**
+** CP2 : **Administrer et sécuriser les infrastructures réseaux**
+** CP3 : **Administrer et sécuriser les infrastructures systèmes**
+** CP4 : **Administrer et sécuriser les infrastructures virtualisées**
+
+* AT2 : Concevoir et mettre en oeuvre une solution en réponse à un besoin d'évolution
+** CP1 : **Concevoir une solution technique répondant à des besoins d’évolution de l'infrastructure**
+** CP2 : **Mettre en production des évolutions de l’infrastructure**
+** CP3 : **Mettre en oeuvre et optimiser la supervision des infrastructures​**
+
+* AT3 : Participer à la gestion de la cybersécurité
+** CP1 : **Participer à la mesure et à l'analyse du niveau de sécurité de l'infrastructure**
+** CP2 : **Participer à l'élaboration et à la mise en oeuvre de la politique de sécurité**
+** CP3 : **Participer à la détection et au traitement des incidents de sécurité**
+
+// end::objectifs[]
+
+== Déroulement
+
+link:/modules[Glossaire des modules]
+
+// tag::deroulement[]
+include::./saisons/*/index.adoc[opts=saisons]
+// end::deroulement[]
+
+
+

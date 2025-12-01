@@ -1,0 +1,253 @@
+:titre: Intro à iptables et nftables
+:module: Flux entrants
+:duree: 60
+:description: Introduction à la gestion des flux entrants avec IPtables et NFTables
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Connaître l'historique et le rôle d'IPtables dans la gestion des flux réseaux
+* Comprendre les limites d'IPtables et les raisons de la transition vers NFTables
+* Connaître les avantages de NFTables par rapport à IPtables
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Introduction à iptables
+
+=== Historique
+
+* introduit en 1998 pour le noyau Linux 2.4
+* conçu pour remplacer ipchains
+* a permis une plus grande flexibilité dans la gestion des flux réseaux
+* est devenu un standard pour la gestion des pare-feux sous Linux
+
+=== Rôle
+
+* permet de définir des règles de filtrage pour les paquets entrants et sortants
+* permet de configurer des règles de NAT, utiles pour masquer les adresses IP internes
+* permet de rediriger le trafic réseau à travers différents chemins
+
+=== Syntaxe
+
+La commande IPtables suit généralement ce format : 
+
+```sh
+iptables [option] [table] [chaîne] [règle]
+```
+
+* `-A` : Ajouter une règle à une chaîne.
+* `-D` : Supprimer une règle d'une chaîne.
+* `-L` : Lister les règles d'une chaîne.
+
+=== Exemple de syntaxe
+
+```sh
+iptables -A INPUT -s 192.168.1.100 -j DROP
+```
+
+* `-A INPUT` : Ajoute une règle à la chaîne `INPUT`.
+* `-s 192.168.1.100` : Spécifie l'adresse source à filtrer.
+* `-j DROP` : Indique l'action à prendre (ici, abandonner le paquet).
+
+// tag::demo[]
+
+== Démonstration
+
+**Manipulation d'iptables**
+
+[NOTE.speaker]
+--
+* **Lister les règles actuelles**
+
+```sh
+iptables -L -v -n
+```
+
+**Explication :**
+
+* `-L` : Liste les règles.
+* `-v` : Affiche des détails supplémentaires, comme le nombre de paquets et d'octets.
+* `-n` : Affiche les adresses et ports sous forme numérique pour accélérer l'affichage.
+
+**But :** Observer les règles actuelles dans chaque chaîne (INPUT, OUTPUT, FORWARD).
+
+* **Ajouter une règle pour bloquer le trafic d'une IP spécifique :**
+
+```sh
+iptables -A INPUT -s 192.168.1.100 -j DROP
+```
+
+**Explication :**
+
+* `-A INPUT` : Ajoute une règle à la chaîne INPUT.
+* `-s 192.168.1.100` : Spécifie l'adresse source à filtrer.
+* `-j DROP` : Indique l'action à prendre (ici, abandonner le paquet).
+
+**But :** Empêcher le trafic entrant en provenance de l'adresse IP 192.168.1.100.
+
+* **Vérifier l'ajout de la règle :**
+
+```sh
+iptables -L -v -n
+```
+
+* **Ajouter une règle pour autoriser le trafic sur un port spécifique (ex. HTTP) :**
+
+```sh
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+```
+
+**Explication :**
+
+* `-p tcp` : Spécifie le protocole TCP.
+* `--dport 80` : Cible le port de destination 80, utilisé pour HTTP.
+* `-j ACCEPT` : Indique que le paquet doit être accepté.
+
+**But :** Autoriser le trafic HTTP entrant.
+
+* **Supprimer une règle spécifique :**
+
+
+
+```sh
+# On cherche la ligne à supprimer
+iptables -L --line-numbers
+
+# On supprime la règle grâce au bon numéro de ligne
+iptables -D INPUT 2
+```
+
+**Explication :**
+
+* `-D INPUT` : Supprime une règle de la chaîne INPUT.
+
+**But :** Retirer une règle spécifique de la configuration.
+
+* **Sauvegarder la configuration :**
+
+```sh
+iptables-save > /etc/iptables/rules.v4
+```
+
+**Explication :**
+
+* `iptables-save` : Génère un fichier de configuration avec les règles actuelles.
+* `> /etc/iptables/rules.v4` : Sauvegarde le fichier pour qu'il soit restauré au démarrage.
+
+**But :** Préserver la configuration actuelle pour qu'elle persiste après un redémarrage.
+
+* **Restaurer la configuration (si nécessaire) :**
+
+```sh
+iptables-restore < /etc/iptables/rules.v4
+```
+
+* **Explication :**
+
+* `iptables-restore` : Recharge les règles à partir d'un fichier de sauvegarde.
+* `< /etc/iptables/rules.v4` : Fichier de configuration à restaurer.
+
+**But :** Remettre en place la configuration sauvegardée après une modification ou un redémarrage.
+
+--
+
+// end::demo[]
+
+// tag::exercice[]
+
+== Exercice
+
+__Penser à désactiver ufw pour éviter les conflits__
+
+* Sur la VM, bloquer le port SSH grâce à iptables (le faire depuis la VM directement et pas depuis une connexion SSH)
+* Bloquer une adresse IP de votre réseau
+* Tester que les deux règles sont bien en place
+
+// end::exercice[]
+
+== Limites d'iptables
+
+=== Complexité de gestion
+
+* Multiples tables et chaînes rendant la configuration complexe
+** Tables : `filter`, `nat`, `mangle`, `raw`, `security`
+** Chaînes : `INPUT`, `OUTPUT`, `FORWARD`, `PREROUTING`, `POSTROUTING`
+
+* Difficulté de visualisation des règles
+** Nécessité de lister les règles pour les comprendre
+** Risque d'oublier des règles ou de les appliquer dans le mauvais ordre
+
+=== Performance limitée
+
+* iptables peut rencontrer des problèmes de performance avec un grand nombre de règles
+* Les règles sont évaluées séquentiellement, ce qui peut ralentir le traitement des paquets
+* une configuration complexe peut entraîner des ralentissements du réseau
+
+=== Incohérences entre les outils
+
+* il existe plusieurs outils pour gérer iptables (iptables, iptables-save, iptables-restore, iptables-persistent)
+** chaque outil a ses propres spécificités et peut entraîner des incohérences dans la configuration
+** nécessite une gestion distincte pour chaque outil
+
+== Transition vers nftables
+
+=== Performance améliorée
+
+* nftables compile les règles en bytecode, ce qui réduit le temps de traitement
+* les règles sont évaluées plus rapidement, ce qui améliore les performances du réseau
+* nftables peut gérer un grand nombre de règles sans perte de performance
+
+=== Flexibilité et unification
+
+* nftables unifie les tables et les chaînes en un seul modèle de données
+* les règles sont plus faciles à gérer et à visualiser
+* nftables permet de définir des règles plus complexes et dynamiques
+* permet d'utiliser des ensembles de cartes pour des règles dynamiques
+
+// tag::demo[]
+
+== Démonstration
+
+**Un avant-goût de NFTables**
+
+[NOTE.speaker]
+--
+* **Lister les règles avec NFTables :**
+
+```sh
+sudo nft list ruleset
+```
+
+**Explication :**
+
+* `nft list ruleset` : Cette commande affiche l'ensemble des règles actuellement configurées dans NFTables.
+* Les règles sont présentées de manière structurée, montrant les tables, chaînes, et règles définies.
+
+* **Ajouter une règle simple :**
+
+```sh
+sudo nft add rule ip filter input tcp dport 22 counter drop
+```
+
+**Explication :**
+
+* **Structure** : add rule ip filter input tcp dport 22 counter drop indique que nous ajoutons une règle dans la table filter et la chaîne input pour bloquer (drop) le trafic TCP entrant sur le port 22 (SSH).
+* **Utilisation de counter** : Permet de compter le nombre de paquets bloqués par cette règle, offrant ainsi une vue analytique sur le trafic.
+--
+
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Connaissance de l'historique et le rôle d'IPtables dans la gestion des flux réseaux
+* Compréhension des limites d'IPtables et les raisons de la transition vers NFTables
+* Connaissance des avantages de NFTables par rapport à IPtables
+// end::conclusion[]

@@ -1,0 +1,368 @@
+:titre: Kubernetes
+:module: Formation Kubernetes
+:duree: --
+:description: Découvrez les fondamentaux de Kubernetes pour gérer vos infrastructures conteneurisées efficacement.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* les concepts de base de Kubernetes.
+* *Appliquer* les commandes kubectl pour gérer un cluster.
+* *Analyser* l'architecture distribuée de Kubernetes.
+* *Évaluer* les mécanismes d'auto-réparation et de scalabilité.
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Introduction
+
+Kubernetes est un outil clé pour la gestion moderne des infrastructures basées sur les conteneurs. Que vous soyez développeur ou administrateur système, comprendre Kubernetes peut transformer votre manière de travailler.
+
+[NOTE.speaker]
+--
+Si vous ne connaissez pas encore Kubernetes, laissez-moi vous proposer de le découvrir. Cet outil, qui peut sembler complexe au premier abord, est en réalité un allié indispensable pour gérer des infrastructures modernes basées sur les conteneurs. Que vous soyez développeur, administrateur système ou adepte du DevSecOps, comprendre Kubernetes peut transformer votre manière de travailler.
+
+Pourquoi est-il si important ? Imaginez devoir gérer des dizaines, voire des milliers de conteneurs, chacun hébergeant une application ou un microservice. Ajouter de nouveaux conteneurs, remplacer ceux qui échouent, ou encore scaler automatiquement pour absorber un pic de trafic, tout cela devient rapidement ingérable sans un orchestrateur comme Kubernetes. Il vous permet de déclarer l’état idéal de vos applications et se charge de tout le reste, grâce à des mécanismes comme le langage déclaratif et les boucles de réconciliation.
+--
+
+== Prérequis pour suivre cette formation
+
+Pour suivre efficacement cette formation, vous devez posséder des connaissances sur les conteneurs.
+
+[NOTE.speaker]
+--
+Vous devez posséder au préalable des connaissances sur les conteneurs avant de vous attaquer à Kubernetes. Si certains mots ne sont pas clairs pour vous, vous pouvez aller faire un tour sur mon lexique DevOps.
+--
+
+== Courbe d'apprentissage
+
+Apprendre Kubernetes peut être intimidant en raison de la variété de concepts, de terminologies et de fichiers YAML.
+
+[NOTE.speaker]
+--
+Découvrir Kubernetes, c’est un peu comme être plongé dans une mer déchaînée : la quantité de concepts, de terminologie et de fichiers YAML peut rapidement donner le vertige. Entre Pods, Deployments, Services, Ingress, ou encore des notions comme les boucles de réconciliation, la première prise en main peut sembler violente, pour ne pas dire décourageante.
+
+Mais, bonne nouvelle : une fois les grands principes assimilés, tout s’imbriquera naturellement. Kubernetes, malgré sa complexité apparente, repose sur des concepts cohérents et prévisibles. Avec un peu de pratique, vous réaliserez que cette plateforme est un outil puissant pour simplifier la gestion de vos infrastructures.
+--
+
+== Historique de Kubernetes
+
+Kubernetes a été développé par Google, inspiré de leur système interne Borg. 
+
+* En 2014, Kubernetes est devenu un projet open-source sous la CNCF.
+* En 2015, Kubernetes a été transféré sous l'égide de la Cloud Native Computing Foundation (CNCF).
+* Depuis, Kubernetes a connu une adoption massive par l'industrie.
+
+[NOTE.speaker]
+--
+Avant de plonger dans l’histoire de Kubernetes, il est important de comprendre l’évolution de la conteneurisation. Les conteneurs, en tant que technologie, permettent d’exécuter des applications de manière isolée sur un même système d’exploitation, offrant ainsi une meilleure utilisation des ressources et une portabilité accrue. La popularité des conteneurs a considérablement augmenté avec l’arrivée de Docker en 2013, qui a simplifié la création, le déploiement et l’exécution des conteneurs.
+
+Kubernetes a été développé initialement par Google, basé sur leur vaste expérience en gestion de conteneurs à grande échelle à travers leur système interne appelé Borg. Google utilisait Borg pour déployer et gérer des milliers d’applications dans leurs data centers, assurant ainsi une haute disponibilité et une gestion efficace des ressources.
+
+En 2014, Google a décidé de partager cette technologie sous la forme d’un projet open-source : Kubernetes. Ce projet a été annoncé lors de la conférence DockerCon de cette même année, marquant le début d’une nouvelle ère pour l’orchestration des conteneurs.
+
+En 2015, Kubernetes a été transféré sous l’égide de la Cloud Native Computing Foundation (CNCF), une fondation dédiée à la promotion de technologies cloud-native. La CNCF a fourni un cadre de gouvernance et un soutien communautaire qui ont permis à Kubernetes de croître rapidement et d’adopter une adoption massive par l’industrie.
+
+Depuis son lancement, Kubernetes a évolué rapidement grâce à une communauté active et une forte adoption par des entreprises de toutes tailles. Les contributions de divers acteurs de l’industrie, y compris des géants de la technologie comme IBM, Microsoft, Red Hat et d’autres, ont enrichi le projet en ajoutant des fonctionnalités avancées et en améliorant sa stabilité et sa performance.
+--
+
+== Kubernetes à quoi sert-il ?
+
+Pour comprendre Kubernetes, il faut d’abord se poser une question simple : pourquoi a-t-on besoin d’un **orchestrateur de conteneurs** ? La réponse réside dans les défis modernes des infrastructures IT. Les systèmes d’aujourd’hui sont de plus en plus complexes, composés de **microservices** répartis sur des dizaines, voire des centaines de conteneurs. Kubernetes est conçu pour relever ces défis et rendre la gestion de ces environnements plus **simple**, **fiable**, et **efficace**.
+
+=== 1. Centraliser la gestion des conteneurs
+
+L’objectif principal de **Kubernetes** est de fournir une **plateforme unifiée** pour orchestrer vos applications conteneurisées. Que vous ayez un cluster de trois machines ou une infrastructure mondiale, **Kubernetes** agit comme une couche d’abstraction qui vous permet de :
+
+- **Déployer** vos conteneurs de manière uniforme.
+- **Surveiller** leur état en continu.
+- **Adapter automatiquement** les ressources en fonction des besoins.
+
+=== 2. Garantir la disponibilité des applications
+
+L’une des promesses fondamentales de **Kubernetes** est de garantir que vos applications restent disponibles, quoi qu’il arrive. Il assure cette **haute disponibilité** grâce à des mécanismes comme :
+
+- **Redondance** : En déployant des répliques de vos applications sur plusieurs nœuds.
+- **Self-healing** : En redémarrant automatiquement les conteneurs défaillants.
+- **Load balancing** : En répartissant intelligemment le trafic entre vos pods.
+
+En somme, **Kubernetes** fait tout pour que votre application reste en ligne, même en cas de panne ou d’incident.
+
+=== 3. Simplifier la scalabilité
+
+**Kubernetes** est un allié de choix pour faire face aux variations de charge. Son objectif est de permettre une **scalabilité simple et rapide**, que ce soit :
+
+- **Verticale** : En augmentant les ressources (CPU, RAM) allouées aux conteneurs.
+- **Horizontale** : En ajoutant ou supprimant des répliques de vos applications en fonction des besoins.
+
+Par exemple, lors d’un pic de trafic, **Kubernetes** peut automatiquement ajouter des pods pour absorber la charge, puis les retirer une fois le calme revenu.
+
+=== 4. Automatiser les déploiements et les mises à jour
+
+Avec **Kubernetes**, fini les déploiements manuels laborieux ! Son objectif est de **simplifier et automatiser** les cycles de vie de vos applications grâce à des fonctionnalités comme :
+
+- **Rolling Updates** : Déployer progressivement une nouvelle version sans interruption.
+- **Rollbacks** : Revenir rapidement à une version stable en cas de problème.
+- **Canary Releases** : Tester une nouvelle version sur une fraction des utilisateurs avant un déploiement complet.
+
+=== 5. Optimiser les ressources
+
+Dans un monde où les infrastructures cloud et on-premises coûtent cher, **Kubernetes** aide à **optimiser l’utilisation des ressources**. Il attribue automatiquement les conteneurs aux nœuds disponibles en tenant compte de leurs ressources (CPU, mémoire) pour éviter les gaspillages.
+
+=== Intégrer la sécurité dans les processus (DevSecOps)
+
+Enfin, **Kubernetes** vise à intégrer la **sécurité** dans vos processus. En tant que plateforme clé pour le **DevSecOps**, il offre :
+
+- **Isolation des workloads** grâce aux namespaces.
+- **Gestion fine des accès** avec les [RBAC](/docs/conteneurs/orchestrateurs/kubernetes/rbac/).
+- **Chiffrement** des communications entre les composants du cluster.
+
+== Fonctionnement général de Kubernetes
+
+Kubernetes repose sur une architecture distribuée avec un plan de contrôle et des nœuds de travail.
+
+[NOTE.speaker]
+--
+Pour comprendre comment Kubernetes fonctionne, il faut d’abord voir cet outil comme une machine bien huilée où chaque pièce a son rôle précis. À la base, Kubernetes est un système distribué conçu pour gérer vos applications conteneurisées. Mais contrairement à une simple plateforme de déploiement, Kubernetes repose sur des concepts robustes qui garantissent que votre infrastructure reste opérationnelle, même en cas de chaos.
+--
+
+=== Architecture du plan de contrôle
+
+Le plan de contrôle inclut l'API Server, le Scheduler, le Controller Manager, et etcd.
+
+[NOTE.speaker]
+--
+Le plan de contrôle est la pièce maîtresse de Kubernetes. Voici ses composants clés et leur rôle :
+1. **API Server** : L’API Server est le point d’entrée principal pour toutes les commandes et communications. Que vous utilisiez la CLI, un tableau de bord ou un autre outil, tout passe par cette API. Elle valide vos requêtes et agit comme un pont vers les autres composants.
+2. **Scheduler** : Ce composant décide où vos applications seront exécutées. Il analyse les ressources disponibles sur les nœuds et choisit le meilleur endroit pour déployer vos pods.
+3. **Controller Manager** : Le Controller Manager est chargé de surveiller en permanence vos ressources. Il s’assure que l’état actuel du cluster correspond à l’état souhaité, défini dans vos fichiers de configuration. Par exemple, si un pod tombe, il déclenche un redémarrage.
+4. **Etcd** : Pensez à Etcd comme la mémoire de Kubernetes. Il s’agit d’une base de données clé/valeur qui stocke toutes les informations sur l’état du cluster. C’est le cœur de Kubernetes : si Etcd est compromis, tout le cluster est affecté.
+--
+
+=== Les nœuds de travail
+
+Les nœuds de travail exécutent les conteneurs grâce au kubelet, kube-proxy et runtime de conteneurs.
+
+[NOTE.speaker]
+--
+Les **nœuds de travail** (worker nodes) sont responsables de l’exécution des conteneurs. Chaque nœud contient plusieurs composants essentiels :
+1. **Kubelet** : Le Kubelet est un agent qui tourne sur chaque nœud. Il est chargé de s’assurer que les conteneurs décrits dans vos fichiers YAML sont en cours d’exécution.
+2. **Kube Proxy** : C’est le gestionnaire réseau. Il configure les règles réseau nécessaires pour permettre aux pods de communiquer entre eux et avec l’extérieur.
+3. **Runtime de conteneurs** : Kubernetes supporte plusieurs moteurs de conteneurs, comme Docker, Podman, ou containerd. Le runtime est responsable de l’exécution réelle des conteneurs sur le nœud.
+--
+
+=== Flux de fonctionnement global
+
+Voici un aperçu du fonctionnement typique d’une requête dans **Kubernetes** :
+
+1. Vous envoyez une requête (par exemple, créer un pod) via l’**API Server**.
+2. L’API Server écrit cette requête dans **Etcd**, où elle est stockée comme un état souhaité.
+3. Le **Scheduler** analyse les ressources disponibles et planifie le pod sur un nœud adapté.
+4. Le **Kubelet** sur le nœud concerné prend la main et s’assure que le conteneur est exécuté.
+5. Si quelque chose ne va pas (ex. : le pod tombe), le **Controller Manager** intervient pour corriger la situation, grâce aux **boucles de réconciliation**.
+
+== Réconciliation et auto-réparation
+
+Kubernetes utilise les boucles de réconciliation pour maintenir l'état souhaité des infrastructures.
+
+* Les boucles de réconciliation : un contrôle constant
+* Langage déclaratif de Kubernetes
+** Etat souhaité
+** Etat actuel
+** Réconciliation
+* Résilience, économie de temps, scalabilité
+
+[NOTE.speaker]
+--
+L’un des aspects les plus impressionnants de Kubernetes est sa capacité à maintenir vos applications dans un état fonctionnel, même en cas d’incidents ou de pannes (bien sûr Kubernetes doit être déployé de manière à ce qu’il soit résilient). Cette magie repose sur deux concepts fondamentaux : les boucles de réconciliation et les mécanismes d’auto-réparation. Ensemble, ils permettent à Kubernetes de garantir que votre cluster reste conforme à vos attentes.
+
+**Les boucles de réconciliation : un contrôle constant**
+Kubernetes est construit autour d’un langage déclaratif, où vous décrivez l’état souhaité de vos ressources (pods, services, déploiements, etc.) dans des fichiers YAML. Une fois cet état déclaré, Kubernetes utilise ses contrôleurs pour s’assurer que la réalité correspond toujours à ce que vous avez demandé.
+
+*Comment ça fonctionne ?*
+1. **L’état souhaité** : Vous indiquez à Kubernetes, via un manifest YAML, par exemple, que vous voulez 5 réplicas d’une application.
+2. **L’état actuel** : Kubernetes surveille en permanence l’état réel des ressources. Si un pod manque ou si un nœud tombe en panne, il détecte une divergence entre l’état actuel et l’état souhaité.
+3. **Réconciliation** : Kubernetes déclenche une boucle pour corriger cette divergence. Par exemple, s’il manque un pod, il en déploie un nouveau.
+
+Ce processus est continu : Kubernetes compare l’état souhaité et l’état réel à intervalles réguliers, et corrige tout écart automatiquement.
+
+*Pourquoi c’est essentiel ?*
+Ces mécanismes offrent plusieurs avantages importants :
+
+- **Résilience** : Vos applications restent disponibles malgré les pannes matérielles ou logicielles.
+- **Économie de temps** : Vous n’avez pas besoin d’intervenir manuellement pour réparer des erreurs.
+- **Scalabilité** : Ces boucles et réparations automatiques permettent de gérer des systèmes complexes à grande échelle.
+
+Avec les boucles de réconciliation, Kubernetes devient un véritable garde-fou pour vos applications, garantissant qu’elles restent opérationnelles, peu importe les imprévus. Cela fait partie de ce qui rend Kubernetes si puissant et indispensable dans les environnements modernes.
+--
+
+== Langage déclaratif de Kubernetes
+
+Kubernetes utilise un langage déclaratif pour définir l'état souhaité des ressources via des fichiers YAML.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mon-pod
+  labels:
+    app: exemple
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.21
+    ports:
+    - containerPort: 80
+```
+
+[NOTE.speaker]
+--
+Kubernetes repose sur un langage déclaratif, un concept qui change la manière dont on gère les infrastructures. Au lieu de donner une série d’instructions étape par étape, *approche impérative*, vous déclarez simplement *l’état souhaité* de vos ressources. Kubernetes se charge ensuite de tout mettre en œuvre pour atteindre cet état, en s’appuyant sur ses boucles de réconciliation.
+
+*Qu’est-ce que le langage déclaratif ?*
+Le langage déclaratif dans Kubernetes consiste à définir *le résultat attendu* plutôt que les actions pour y parvenir. Cela se fait principalement à travers des fichiers de configuration, écrits en *YAML*, qui décrivent l’état idéal des *objets Kubernetes* tels que les pods, services, ou déploiements.
+
+Dans ce fichier, vous dites à Kubernetes que vous voulez un pod appelé *mon-pod*, utilisant l’image *nginx:1.21*, et écoutant sur le port 80. Kubernetes interprète cette déclaration et crée le pod correspondant.
+--
+
+=== Avantages de l’approche déclarative
+
+* Idempotence
+* Simplification
+* Traçabilité
+* Interopérabilité
+
+[NOTE.speaker]
+--
+1. **Idempotence** : Avec un langage déclaratif, appliquer plusieurs fois le même fichier YAML n’a pas d’effet indésirable. Kubernetes vérifie simplement si l’état actuel correspond déjà à l’état souhaité. Si c’est le cas, il ne fait rien. Sinon, il effectue les ajustements nécessaires.
+2. **Simplification** : Vous n’avez pas besoin de définir chaque étape pour atteindre l’état souhaité. Kubernetes gère les détails pour vous. Cela réduit la complexité, notamment dans des environnements distribués.
+3. **Traçabilité** : Les fichiers de configuration YAML peuvent être versionnés dans un système de gestion de code comme *Git*. Cela permet une traçabilité complète de vos modifications et facilite les rollbacks si nécessaire.
+4. **Interopérabilité** : Le langage déclaratif est universel dans Kubernetes, ce qui signifie que tout outil ou framework compatible Kubernetes peut interpréter vos fichiers YAML (ex. : *Helm*, *ArgoCD*).
+--
+
+== Principales Ressources Kubernetes
+
+Dans **Kubernetes**, tout repose sur des **ressources** qui représentent les différents composants d’une infrastructure conteneurisée. Chaque ressource a un rôle spécifique et interagit avec les autres pour **orchestrer** le déploiement et le fonctionnement de vos applications, gérer les réseaux, ou stocker des configurations.
+
+== Ressources Kubernetes Simplifiées
+
+Kubernetes propose une variété de ressources pour gérer vos applications. Nous allons voir ici les ressources les plus courantes et les plus essentielles pour comprendre le fonctionnement de Kubernetes.
+
+=== Ressources de Base
+
+Voici un aperçu des ressources les plus courantes dans Kubernetes :
+
+- **Pods** : Unité de base contenant un ou plusieurs conteneurs partageant le même réseau et stockage.
+- **Services** : Expose des pods avec un point d’entrée stable, facilitant la communication interne et externe.
+- **Deployments** : Gère les ReplicaSets pour assurer le nombre désiré de pods et facilite les mises à jour.
+- **ConfigMaps et Secrets** : Sépare la configuration des applications du code, avec ConfigMaps pour les données non sensibles et Secrets pour les informations sensibles.
+- **Namespaces** : Segmente les ressources dans un cluster pour isoler les environnements ou les équipes.
+
+=== Ressources Avancées
+
+- **Ingress** : Gère le trafic HTTP/HTTPS entrant avec des règles de routage avancées.
+- **PersistentVolume (PV) et PersistentVolumeClaim (PVC)** : Gère le stockage persistant pour les applications nécessitant des données durables.
+- **StatefulSets** : Déploie et gère des applications avec état, garantissant des identifiants stables pour chaque pod.
+- **DaemonSets** : Assure que des pods spécifiques tournent sur tous les nœuds du cluster, souvent utilisé pour le monitoring ou la gestion des logs.
+
+=== Les interactions dans une architecture complète
+
+Dans une architecture typique Kubernetes :
+
+1. Les pods exécutent les microservices.
+2. Les services exposent ces pods pour permettre leur communication et leur accès.
+3. Les ConfigMaps et Secrets injectent les configurations et les données sensibles.
+4. Les Ingress gèrent le trafic externe et les certificats SSL.
+5. Les PersistentVolumes et StatefulSets supportent les applications avec état.
+6. Les DaemonSets assurent le fonctionnement des outils d’administration sur chaque nœud.
+
+=== Premiers pas avec Kubernetes
+
+Commencez avec des environnements simplifiés comme Minikube ou K3s pour expérimenter sans risques.
+
+* Explorer les concepts de base sans se perdre dans des détails complexes.
+* Exécuter un cluster localement, sur un ordinateur portable, avec des ressources limitées.
+* Tester vos premières commandes kubectl : Créer, inspecter et supprimer des ressources Kubernetes.
+
+[NOTE.speaker]
+--
+Se lancer dans Kubernetes peut sembler intimidant, surtout avec l’impression de devoir tout maîtriser d’un coup. Mais avant même de plonger dans l’écriture de vos premiers *manifests YAML*, je vous propose une étape essentielle : explorer des environnements simplifiés, ou “mini Kubernetes”. Ces solutions sont idéales pour se former, expérimenter et comprendre les bases sans avoir à gérer la complexité d’un cluster complet en production.
+
+*Pourquoi commencer avec un Mini Kubernetes ?*
+Un cluster Kubernetes complet nécessite plusieurs machines (virtuelles ou physiques), des configurations réseau avancées et une bonne dose de maintenance. C’est parfait pour la production, mais pas pour débuter. Les *Mini Kubernetes* sont des versions légères et faciles à installer qui permettent de :
+
+- Explorer les concepts fondamentaux sans se perdre dans des détails complexes.
+- Exécuter un cluster localement, sur un ordinateur portable, avec des ressources limitées.
+- Expérimenter librement, sans risque de casser un environnement critique.
+
+*Les principales options de Mini Kubernetes*
+Voici quelques outils populaires pour démarrer :
+
+1. **Minikube** : Plus d’infos sur Minikube.
+2. **K3s** : Plus d’infos sur k3s.
+3. **Kind (Kubernetes in Docker)** : Plus d’infos sur kind.
+
+*Ce que vous allez apprendre avec ces outils*
+En utilisant ces *Mini Kubernetes*, vous pourrez :
+
+- Vous familiariser avec les concepts de base : Pods, Services, Deployments, et plus encore.
+- Tester vos premières commandes *kubectl* : Créer, inspecter et supprimer des ressources Kubernetes.
+- Explorer l’architecture Kubernetes : Comprendre comment le plan de contrôle et les nœuds de travail interagissent.
+- Apprendre sans pression : Avec un cluster local, vous pouvez expérimenter autant que vous le souhaitez.
+--
+
+== `kubectl` : Outil de Gestion Kubernetes
+
+Apprenez à utiliser kubectl pour gérer efficacement vos ressources Kubernetes.
+
+[NOTE.speaker]
+--
+**kubectl** est l’outil en ligne de commande qui vous permet de gérer un cluster **Kubernetes**. C’est l’interface principale pour interagir avec les ressources et effectuer toutes les opérations nécessaires, comme créer, lire, mettre à jour ou supprimer des objets **Kubernetes**.
+--
+
+
+=== Lister les ressources
+
+```bash
+kubectl get pods
+```
+  
+=== Appliquer une configuration
+
+```bash
+kubectl apply -f fichier.yaml
+```
+  
+=== Voir les détails d’un objet
+
+```bash
+kubectl describe pod mon-pod
+```
+  
+=== Afficher les logs
+
+```bash
+kubectl logs mon-pod
+```
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+Kubernetes, avec sa puissance et sa flexibilité, vous aidera à gérer vos applications modernes efficacement.
+
+[NOTE.speaker]
+--
+Kubernetes, avec sa puissance et sa flexibilité, peut sembler intimidant au premier abord, mais une fois les fondamentaux maîtrisés, il devient un outil indispensable pour gérer des applications modernes. Grâce à son approche déclarative, ses mécanismes d’auto-réparation, et sa capacité à s’adapter aux environnements les plus exigeants, Kubernetes offre une solution robuste et évolutive pour orchestrer vos conteneurs.
+
+Dans ce guide, nous avons survolé les concepts clés et les étapes pour vous lancer. L’apprentissage peut paraître dense, mais chaque petite victoire vous rapprochera d’une compréhension solide. Que ce soit en explorant des mini Kubernetes, en écrivant vos premiers manifests, ou en utilisant `kubectl`, chaque étape compte.
+
+Et rappelez-vous, Kubernetes est un écosystème riche et bien documenté. Chaque notion abordée ici pourra être approfondie grâce à des guides dédiés et des cas pratiques. À partir de là, il ne vous reste plus qu’à plonger et à expérimenter. Kubernetes vous réserve un voyage aussi technique qu’enrichissant. Alors, prêt à vous lancer ? 🚀
+--
+// end::conclusion[]

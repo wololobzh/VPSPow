@@ -1,0 +1,103 @@
+:titre: Présentation de la formation
+:module: Programme
+:duree: 60
+:description: Connaître le programme de formation et mieux comprendre le déroulé et la progression attendue
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+// end::objectifs[]
+
+// tag::deroulement[]
+== 📖 La formation AIS
+
+image::https://i.giphy.com/XreQmk7ETCak0.webp[]
+
+== 🚀 Saison 01 : Intégration
+
+* Découverte et mise en place des outils O'Clock
+* Connaissance du programme de formation et du titre professionnel
+* Remises à niveau
+
+== 🎫 Saison 02 : Centre de services
+
+* Incidents / problèmes / ticketing
+* ITIL / SLA
+* GLPI en production
+
+== 🕸️ Saison 03 : Réseaux + Services réseaux de base
+
+* OSI, TCP/IP
+* Protocoles et ports
+* Routage, DNS, DHCP...
+
+== 🪟 Saison 04 : Administration système Windows Server
+
+* Active Directory, LDAP, Kerberos
+* Forêts, Arbres, Domaines
+* Utilisateurs, groupes et permissions
+
+== 🐧 Saison 05 : Administration système Linux
+
+* Open source / Kernel / Unix / Branches
+* Gestion des utilisateurs et des groupes
+* Permissions, propriétés, processus
+
+== 🧑‍💻 Saison 06 : Langage PowerShell, Python, Bash, Scripting
+
+* Automatisation de tâches
+* Variables, boucles, conditions
+* Gestion de processus
+
+== ☁️ Saison 07 : Virtualisation, Cloud Computing
+
+* Stockage, Sauvegarde
+* Conteneurisation, clusters
+* Hyperconvergence, scalabilité
+
+_Proxmox, ESXI, QEMU, Docker, LXC, Kubernetes..._
+
+== ☁️ Saison 08 : Fournisseurs cloud
+
+* OnCloud vs OnPremise
+* Serveurs dédiés, VPS
+* AWS, Azure, Google Cloud
+
+== 🕲 Saison 09 : Sécurité et cybersécurité
+
+* Réseaux avancés
+* Gouvernance et enjeux
+* Forensic
+
+== 🥷 Saison 10 : Immersion Pentest / Audit passif et actif
+
+* Collecte de données OSINT, Google Hacking
+* Kali Linux, Dig, Tor, Wireshark, Sherlock
+* Darkweb, pentest
+
+== 🗓️ Saison 11 : Supervision active, gestion de projet
+
+* Nagios / Zabbix / Centreon
+* Gestion budget / projets
+* Réglementation informatique
+
+== 👔 Projet
+
+* Concevoir et implémenter un projet d'administration réseau et système complet.
+* Utiliser l'ensemble des outils d'administration pour gérer la conception, l’intégration, et la surveillance du projet.
+* Assurer la scalabilité, la sécurité et la résilience du projet final dans un environnement de production.
+
+== ⚙️ Journées asynchrones
+
+* Pas de formateur sur ces journées
+* C’est l’occasion de vous permettre d’avancer sur différents sujets :
+** préparation & obtention de certification
+** progression sur des compétences telles que l’anglais, le retour à l’emploi…
+** révisions
+** repos du cerveau (car pas de nouvelle notion à ingurgiter)
+** … et préparation du titre professionnel 
+// end::deroulement[]

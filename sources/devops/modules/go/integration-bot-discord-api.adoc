@@ -1,0 +1,304 @@
+:titre: Intégration du bot Discord avec l'API Flask
+:module: Go
+:duree: 120
+:description: Création d'un bot Discord interagissant avec une API Flask pour gérer des projets et des tâches.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* *Comprendre* comment faire interagir un bot Discord avec une API externe
+* *Appliquer* les méthodes pour envoyer des requêtes HTTP depuis un bot Discord
+* *Créer* des commandes Discord pour gérer des projets et des tâches via une API
+* *Gérer* les erreurs et les réponses de l'API de manière appropriée
+// end::objectifs[]
+
+// tag::deroulement[]
+== Interagir avec l'API Flask depuis Discord
+
+=== Structure de base pour les requêtes HTTP
+
+Nous utiliserons le package `net/http` de Go pour envoyer des requêtes à notre API Flask.
+
+[source,go]
+----
+import (
+    "net/http"
+    "io/ioutil"
+    "encoding/json"
+)
+
+func makeRequest(method, url string, body []byte) ([]byte, error) {
+    client := &http.Client{}
+    req, err := http.NewRequest(method, url, bytes.NewBuffer(body))
+    if err != nil {
+        return nil, err
+    }
+    req.Header.Set("Content-Type", "application/json")
+
+    resp, err := client.Do(req)
+    if err != nil {
+        return nil, err
+    }
+    defer resp.Body.Close()
+
+    return ioutil.ReadAll(resp.Body)
+}
+----
+
+=== Création de commandes pour gérer les projets et tâches
+
+Nous allons implémenter les commandes suivantes :
+
+1. `!createProject <nom>` : Créer un projet
+2. `!addTask <project_id> <task_title>` : Ajouter une tâche à un projet
+3. `!completeTask <task_id>` : Marquer une tâche comme terminée
+
+.Exemple pour la commande createProject
+[source,go]
+----
+func createProject(s *discordgo.Session, m *discordgo.MessageCreate, args []string) {
+    if len(args) < 1 {
+        s.ChannelMessageSend(m.ChannelID, "Usage: !createProject <nom>")
+        return
+    }
+
+    projectName := args[0]
+    body, _ := json.Marshal(map[string]string{"name": projectName})
+    
+    response, err := makeRequest("POST", "http://localhost:5000/projects", body)
+    if err != nil {
+        s.ChannelMessageSend(m.ChannelID, "Erreur lors de la création du projet: " + err.Error())
+        return
+    }
+
+    var result map[string]interface{}
+    json.Unmarshal(response, &result)
+
+    s.ChannelMessageSend(m.ChannelID, fmt.Sprintf("Projet créé avec l'ID: %v", result["id"]))
+}
+----
+
+== Gestion des erreurs et messages d'état
+
+Il est crucial de gérer correctement les réponses de l'API et de fournir des retours appropriés aux utilisateurs Discord.
+
+[source,go]
+----
+func handleAPIResponse(s *discordgo.Session, m *discordgo.MessageCreate, response []byte, err error) {
+    if err != nil {
+        s.ChannelMessageSend(m.ChannelID, "Erreur lors de la communication avec l'API: " + err.Error())
+        return
+    }
+
+    var result map[string]interface{}
+    err = json.Unmarshal(response, &result)
+    if err != nil {
+        s.ChannelMessageSend(m.ChannelID, "Erreur lors du traitement de la réponse de l'API")
+        return
+    }
+
+    if errorMsg, ok := result["error"]; ok {
+        s.ChannelMessageSend(m.ChannelID, fmt.Sprintf("Erreur: %v", errorMsg))
+    } else {
+        s.ChannelMessageSend(m.ChannelID, fmt.Sprintf("Opération réussie: %v", result["message"]))
+    }
+}
+----
+
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration
+
+Intégration complète
+
+[NOTE.speaker]
+--
+Nous allons créer un bot Discord qui interagit avec notre API Flask pour gérer des projets et des tâches.
+
+1. Créer un fichier `project_bot.go`
+2. Implémenter les commandes !createProject, !addTask, et !completeTask
+3. Gérer les réponses de l'API et les erreurs
+4. Tester le bot avec l'API Flask en cours d'exécution
+
+.project_bot.go
+```go
+package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io/ioutil"
+    "net/http"
+    "os"
+    "os/signal"
+    "strings"
+    "syscall"
+
+    "github.com/bwmarrin/discordgo"
+)
+
+const API_BASE_URL = "http://localhost:5000"
+
+func main() {
+    dg, err := discordgo.New("Bot " + "VOTRE_TOKEN_ICI")
+    if err != nil {
+        fmt.Println("Erreur lors de la création de la session Discord,", err)
+        return
+    }
+
+    dg.AddHandler(messageCreate)
+
+    err = dg.Open()
+    if err != nil {
+        fmt.Println("Erreur lors de l'ouverture de la connexion,", err)
+        return
+    }
+
+    fmt.Println("Bot est en cours d'exécution. Appuyez sur CTRL-C pour quitter.")
+    sc := make(chan os.Signal, 1)
+    signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
+    <-sc
+
+    dg.Close()
+}
+
+func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
+    if m.Author.ID == s.State.User.ID {
+        return
+    }
+
+    args := strings.Split(m.Content, " ")
+    command := strings.ToLower(args[0])
+
+    switch command {
+    case "!createproject":
+        createProject(s, m, args[1:])
+    case "!addtask":
+        addTask(s, m, args[1:])
+    case "!completetask":
+        completeTask(s, m, args[1:])
+    }
+}
+
+func createProject(s *discordgo.Session, m *discordgo.MessageCreate, args []string) {
+    if len(args) < 1 {
+        s.ChannelMessageSend(m.ChannelID, "Usage: !createProject <nom>")
+        return
+    }
+
+    projectName := args[0]
+    body, _ := json.Marshal(map[string]string{"name": projectName})
+    
+    response, err := makeRequest("POST", API_BASE_URL+"/projects", body)
+    handleAPIResponse(s, m, response, err)
+}
+
+func addTask(s *discordgo.Session, m *discordgo.MessageCreate, args []string) {
+    if len(args) < 2 {
+        s.ChannelMessageSend(m.ChannelID, "Usage: !addTask <project_id> <task_title>")
+        return
+    }
+
+    projectID := args[0]
+    taskTitle := strings.Join(args[1:], " ")
+    body, _ := json.Marshal(map[string]string{"title": taskTitle})
+    
+    response, err := makeRequest("POST", fmt.Sprintf("%s/projects/%s/tasks", API_BASE_URL, projectID), body)
+    handleAPIResponse(s, m, response, err)
+}
+
+func completeTask(s *discordgo.Session, m *discordgo.MessageCreate, args []string) {
+    if len(args) < 1 {
+        s.ChannelMessageSend(m.ChannelID, "Usage: !completeTask <task_id>")
+        return
+    }
+
+    taskID := args[0]
+    response, err := makeRequest("PUT", fmt.Sprintf("%s/tasks/%s/complete", API_BASE_URL, taskID), nil)
+    handleAPIResponse(s, m, response, err)
+}
+
+func makeRequest(method, url string, body []byte) ([]byte, error) {
+    client := &http.Client{}
+    req, err := http.NewRequest(method, url, bytes.NewBuffer(body))
+    if err != nil {
+        return nil, err
+    }
+    req.Header.Set("Content-Type", "application/json")
+
+    resp, err := client.Do(req)
+    if err != nil {
+        return nil, err
+    }
+    defer resp.Body.Close()
+
+    return ioutil.ReadAll(resp.Body)
+}
+
+func handleAPIResponse(s *discordgo.Session, m *discordgo.MessageCreate, response []byte, err error) {
+    if err != nil {
+        s.ChannelMessageSend(m.ChannelID, "Erreur lors de la communication avec l'API: " + err.Error())
+        return
+    }
+
+    var result map[string]interface{}
+    err = json.Unmarshal(response, &result)
+    if err != nil {
+        s.ChannelMessageSend(m.ChannelID, "Erreur lors du traitement de la réponse de l'API")
+        return
+    }
+
+    if errorMsg, ok := result["error"]; ok {
+        s.ChannelMessageSend(m.ChannelID, fmt.Sprintf("Erreur: %v", errorMsg))
+    } else {
+        s.ChannelMessageSend(m.ChannelID, fmt.Sprintf("Opération réussie: %v", result["message"]))
+    }
+}
+```
+
+Expliquez chaque partie du code, en particulier :
+- La structure des commandes et leur traitement
+- L'utilisation de la fonction makeRequest pour interagir avec l'API
+- La gestion des réponses et des erreurs avec handleAPIResponse
+--
+
+// end::demo[]
+
+// tag::exercice[]
+== Exercice : Amélioration du bot de gestion de projets
+
+Objectif : Étendre les fonctionnalités du bot pour inclure la liste des projets et des tâches, ainsi que la suppression de projets et de tâches.
+
+1. Ajoutez les commandes suivantes au bot :
+   - `!listProjects` : Liste tous les projets
+   - `!listTasks <project_id>` : Liste toutes les tâches d'un projet spécifique
+   - `!deleteProject <project_id>` : Supprime un projet
+   - `!deleteTask <task_id>` : Supprime une tâche
+2. Implémentez ces commandes en utilisant les endpoints appropriés de l'API Flask
+3. Assurez-vous de gérer correctement les erreurs et les cas où aucun projet ou tâche n'est trouvé
+4. Utilisez des embeds Discord pour formater les listes de projets et de tâches de manière attrayante
+
+[TIP]
+Pour la commande `!listProjects`, vous pouvez utiliser un embed Discord avec des champs pour chaque projet, incluant son ID et son nom.
+
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Vous avez appris à intégrer un bot Discord avec une API externe (Flask dans ce cas).
+* Vous savez maintenant comment créer des commandes Discord qui interagissent avec une API pour gérer des données.
+* Vous êtes capable de gérer les réponses de l'API et de fournir des retours appropriés aux utilisateurs Discord.
+* Vous pouvez étendre les fonctionnalités du bot pour inclure des opérations plus complexes sur les projets et les tâches.
+// end::conclusion[]
+
+[NOTE.speaker]
+--
+Suggestion pensez à d'autres fonctionnalités utiles à ajouter au bot, comme des rappels pour les tâches en retard ou des statistiques sur l'avancement des projets. Explorer la documentation de DiscordGo pour découvrir d'autres fonctionnalités avancées à intégrer.
+--

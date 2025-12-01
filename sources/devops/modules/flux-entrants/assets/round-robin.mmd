@@ -1,0 +1,30 @@
+sequenceDiagram
+    participant Client
+    participant LoadBalancer
+    participant Server1
+    participant Server2
+    participant Server3
+
+    Client->>LoadBalancer: Envoi de requête 1
+    LoadBalancer->>Server1: Redirige vers Server1
+    Note over LoadBalancer: Suivant dans la liste
+    Server1-->>LoadBalancer: Réponse
+    LoadBalancer-->>Client: Réponse
+
+    Client->>LoadBalancer: Envoi de requête 2
+    LoadBalancer->>Server2: Redirige vers Server2
+    Note over LoadBalancer: Suivant dans la liste
+    Server2-->>LoadBalancer: Réponse
+    LoadBalancer-->>Client: Réponse
+
+    Client->>LoadBalancer: Envoi de requête 3
+    LoadBalancer->>Server3: Redirige vers Server3
+    Note over LoadBalancer: Suivant dans la liste
+    Server3-->>LoadBalancer: Réponse
+    LoadBalancer-->>Client: Réponse
+
+    Client->>LoadBalancer: Envoi de requête 4
+    LoadBalancer->>Server1: Redirige vers Server1 (retour au début)
+    Note over LoadBalancer: Suivant dans la liste
+    Server1-->>LoadBalancer: Réponse
+    LoadBalancer-->>Client: Réponse

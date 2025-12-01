@@ -1,0 +1,59 @@
+:title: Admin système Windows Server
+:number: 04
+:duration: 70
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Cette saison est dédiée à l'apprentissage approfondi de l'administration des serveurs Windows. Elle couvre les aspects essentiels de l'installation, de la gestion et de la sécurisation des serveurs Windows, y compris la mise en place d'Active Directory, la gestion des stratégies de groupe, le partage de fichiers et l'utilisation de PowerShell. Les apprenants auront l'occasion de réaliser des travaux pratiques (TP) pour appliquer les concepts théoriques dans un environnement virtuel.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Savoir installer et administrer un serveur Windows
+* Savoir mettre en place un Active Directory, comprendre son fonctionnement et l’administrer et le sécuriser
+* savoir gérer et implémenter les stratégies de groupe
+* savoir mettre en place et administrer les partages de fichiers (SMB NTFS)
+* savoir gérer et mettre en place un serveur de d’impression
+* comprendre et implémenter RDP
+* savoir installer et configurer un serveur RDS
+* connaître les commande de base de l’administration windows via powershell
+
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+* Installation de serveur
+* Active Directory
+* Stratégies de groupe
+* Partages de fichiers
+* Serveur d'impression
+* Remote Desktop Protocol (RDP)
+* Serveur de bureau à distance (RDS)
+* PowerShell
+// end::notions[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Connaissance approfondie des systèmes d'exploitation Windows Serveur
+* Expérience pratique en administration de serveurs et Active Directory
+* Maîtrise des outils et des commandes PowerShell
+* Compétences en virtualisation (ex. : VMware Workstation)
+* Penser à fournir le ebook O'Clock
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+Ce module vise à former des professionnels capables d'installer et d'administrer un serveur Windows. Les participants apprendront à mettre en place Active Directory et à gérer les stratégies de groupe, les partages de fichiers et les serveurs d'impression. Les sessions comprennent des travaux pratiques pour renforcer les compétences, en abordant également des protocoles tels que LDAP, DNS, Kerberos, et en introduisant l'utilisation de PowerShell pour une administration efficace.
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue d'ensemble]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

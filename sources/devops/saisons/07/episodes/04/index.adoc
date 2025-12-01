@@ -1,0 +1,57 @@
+:title: Routage
+:number: 04
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Comprendre les principes du routage
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Maîtriser le routage statique
+* savoir l’implémenter
+* Connaître le routage dynamique
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Connaissance du logiciel Packet TRACER
+* Savoir configurer des routes statiques sur des routeurs*
+* Connaissance des protocoles RIP, OSPF, EIGRP et BGP
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 30 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/reseau/routage-principes.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/reseau/routage-statique.adoc[options=modules]
+
+include::../../../../modules/reseau/routage-dynamique.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/10giME04-d591gftAIEQfQmtet-dECx2T/view?usp=drive_link
+:description: Routage Statique +
+fournir le fichier https://drive.google.com/file/d/1a_cBwMWdEmTbHokHVOFmmwmiDt5Y5j9C/view?usp=drive_link
+:correction: https://drive.google.com/file/d/1a_cBwMWdEmTbHokHVOFmmwmiDt5Y5j9C/view?usp=drive_link
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s07e04]
+--
+
+
+// end::deroulement[]

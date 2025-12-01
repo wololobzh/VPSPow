@@ -1,0 +1,409 @@
+:titre: HTML
+:module: Bases web
+:duree: 60
+:description: Découvrir les bases du HTML pour structurer les informations d'une page web.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs
+// tag::objectifs[]
+* *Comprendre* la structure d'un document HTML
+* *Utiliser* une balise HTML avec des attributs
+* *Comprendre* la notion de sémantique des balises
+* *Appliquer* GitHub Copilot pour accélérer le développement HTML
+// end::objectifs[]
+
+// tag::deroulement[]
+== HTML c’est quoi ?
+
+* Hyper Text Markup Language 
+* C’est un langage de balise pour l'hypertexte, en gros cela permet de créer des pages web.
+* L’extension des fichiers html est .html
+
+> Un document HTML permet de construire le fond, d'apporter la structure à nos pages WEB.
+
+[NOTE.speaker]
+====
+* C’est quoi un langage ( une nouvelle langue qu’on va parler pour le navigateur )
+* Hypertexte ce sont les liens sur une même page ou sur des pages distantes
+
+HTML signifie « HyperText Markup Language » qu'on peut traduire par « langage de balises pour l'hypertexte ». Il est utilisé afin de créer et de représenter le contenu d'une page web et sa structure. D'autres technologies sont utilisées avec HTML pour décrire la présentation d'une page (CSS) et/ou ses fonctionnalités interactives (JavaScript).
+
+L'« hypertexte » désigne les liens qui relient les pages web entre elles, que ce soit au sein d'un même site web ou entre différents sites web. Les liens sont un aspect fondamental du Web. Ce sont eux qui forment cette « toile » (ce mot est traduit par web en anglais). En téléchargeant du contenu sur l'Internet et en le reliant à des pages créées par d'autres personnes, vous devenez un participant actif du World Wide Web.
+====
+
+=== Balise
+
+Permet de construire un élément d’une page web.
+
+```html
+<balise>contenu</balise>
+```
+
+.Imbriquation
+```html
+<balise1>
+	<balise2>Contenu</balise2>
+</balise1>
+```
+
+[NOTE.speaker]
+====
+La structure d'un document HTML est composée de balises avec une syntaxe particulière.
+====
+
+=== Trois types de balises
+
+* Englobante : `<balise>contenu</balise>`
+* Auto fermante : `<balise attr1="contenu">`
+* `<!-- commentaires -\->`
+
+[NOTE.speaker]
+====
+* La première est une balise qui englobe un contenu.  
+* La seconde est auto-fermante et contiendra des attributs.
+* La troisième permet de définir un commentaire.
+====
+
+=== Références
+
+Il existe 123 balises HTML :
+
+https://htmlreference.io/
+
+Elles sont sensible à la casse !
+
+```html
+<balise> =/= <BALISE>
+```
+
+[NOTE.speaker]
+====
+Pas de panique, pas besoin de retenir toutes les balises par coeur. Il est important de comprendre comment elles fonctionnent et de savoir où les trouver.
+
+Il en existe beaucoup car HTML est un langage sémantique, c'est à dire qu'il permet de donner du sens au contenu de chaque balise. Cela permet aux moteurs de recherche de comprendre le contenu de la page et de la référencer correctement.
+====
+
+=== Attributs
+
+* Un attribut permet d’apporter une information à la balise.
+* Il existe des attributs universels et des attributs spécifiques à chaque balise.
+
+```html
+<balise attr1="contenu" attr2="20" attr3>
+```
+
+[NOTE.speaker]
+====
+En HTML, un attribut est une information supplémentaire que l'on peut ajouter à une balise pour définir ses propriétés ou comportements. Les attributs sont toujours définis dans la balise d'ouverture et se présentent sous la forme de paires `nom="valeur"`.
+
+En complément de la sémantique HTML, les attributs peuvent porter des informations supplémentaires afin d'améliorer l'accessibilité du site via les lecteur d'écran.
+====
+
+== Structure d’un document HTML
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <!-- l'entente de la page : les informations de la page elle-même (Metadata) -->
+    <head>
+        <!-- l'encodage des caractères : accents, caractères spéciaux, ...-->
+        <meta charset="UTF-8">
+        <!-- title : titre de la page : visible dans l'onglet -->
+        <title>Modèle HTML</title>
+    </head>
+    <!-- le corps de la page : les informations à destination des visiteurs -->
+	<body>
+        <!-- Le contenu de la page -->
+        <p>Un élément paragraphe de texte courant</p>
+	</body>
+</html>
+```
+
+[NOTE.speaker]
+====
+Bonne pratique : indentation
+
+*Indentation*
+
+Le code est bien indenté ici, ce qui le rend lisible. Apprendre à bien structurer son code dès le départ est essentiel pour travailler efficacement en équipe ou sur de gros projets.
+====
+
+=== `DOCTYPE`
+
+Précise que le type du document est du HTML.
+
+```html
+<!DOCTYPE html>
+```
+
+[NOTE.speaker]
+====
+*role*
+
+La balise `<!DOCTYPE html>` est une déclaration utilisée dans les documents HTML pour indiquer au navigateur le type de document et la version du langage HTML utilisé. Elle n'est pas une balise HTML à proprement parler, mais une directive spéciale pour le navigateur.
+
+*Emplacement*
+
+Elle doit être la toute première ligne dans un document HTML, avant toute autre balise.
+====
+
+=== `html`
+
+Balise racine de la page, elle contient un attribut `lang` pour préciser la langue de la page.
+
+```html
+<html lang="en">
+</html>
+```
+
+[NOTE.speaker]
+====
+*Accessibilité :*
+
+Les technologies d’assistance (comme les lecteurs d’écran pour les personnes malvoyantes) utilisent cet attribut pour adapter leur comportement. Par exemple, un lecteur d’écran utilise une prononciation anglaise si lang="en" est défini.
+
+*Référencement (SEO) :*
+
+Les moteurs de recherche (comme Google) utilisent cet attribut pour comprendre la langue du contenu, ce qui peut influencer le classement du site pour des utilisateurs parlant cette langue.
+
+*Normes web :*
+
+C'est une bonne pratique pour se conformer aux standards web et améliorer l'expérience utilisateur.
+====
+
+=== `head`
+
+Entête de la page, elle n'apparaît pas dans le navigateur mais apporte des informations sur la page :
+
+* Encodage des caractères
+* Titre de la page
+* Liens vers des fichiers CSS ou JavaScript
+* Métadonnées
+* etc.
+
+```html
+<head>
+	<meta charset="UTF-8">
+	<title>Titre de la page</title>
+</head>
+```
+
+[NOTE.speaker]
+====
+UTF-8 est un standard qui permet de représenter la majorité des caractères de toutes les langues. Cela garantit que des caractères spéciaux (comme les accents é, è, ç, ou des symboles comme €) seront affichés correctement dans tous les navigateurs.
+====
+
+=== `body`
+
+Corps de la page, c'est ici que l'on retrouve le contenu visible par les visiteurs.
+
+```html
+<body>
+	<p>Un élément paragraphe de texte courant</p>
+</body>
+```
+
+[NOTE.speaker]
+====
+Comme dans l'exemple, indenter le code facilite la lecture et la compréhension, surtout dans des projets plus complexes.
+====
+
+== Structuration du contenu
+
+Le HTML permet de structurer et d'expliquer le rôle de chaque élément de texte.
+
+[WARNING]
+====
+Ne pas utiliser les balises pour leur style visuel par défaut (strong en gras, em en italique, etc.). Le HTML structure et apporte de la sémantique, pour le style on utilise le CSS.
+====
+
+[NOTE.speaker]
+====
+Les styles par défaut des balises sont différents d'un navigateur à l'autre. Il est important de ne pas se fier à l'apparence visuelle pour choisir une balise, mais plutôt à sa signification sémantique.
+
+Le CSS sera utilisé plus tard pour définir l'apparence visuelle des éléments.
+====
+
+=== Titres `h1` à `h6`
+
+Les balises de titre permettent une hiérarchisation logique du contenu :
+
+[source,html]
+----
+<h1>Titre principal</h1>
+<h2>Sous-titre</h2>
+<h3>Sous-sous-titre</h3>
+----
+
+[NOTE.speaker]
+====
+* Les titres doivent s'enchainer de manière logique
+* Un seul h1 par page
+* Après un h1, on peut avoir plusieurs h2
+* Après chaque h2, on peut avoir plusieurs h3
+* Et ainsi de suite jusqu'à h6
+* C'est la même logique que dans un traitement de texte
+====
+
+=== Paragraphes et emphases
+
+* `<p>` : paragraphe de texte
+* `<em>` : emphase légère (importance modérée)
+* `<strong>` : emphase forte (grande importance)
+
+[source,html]
+----
+<p>Un paragraphe avec du texte <em>mis en valeur</em> et 
+   une partie <strong>très importante</strong>.</p>
+----
+
+[NOTE.speaker]
+====
+* `<p>` est la balise de base pour structurer du texte
+* `<em>` indique une emphase modérée, traditionnellement affichée en italique
+* `<strong>` indique une forte emphase, traditionnellement affichée en gras
+* Le style visuel final sera défini en CSS
+====
+
+=== Listes
+
+==== Liste non ordonnée `ul`
+
+Pour les éléments dont l'ordre n'a pas d'importance.
+
+[source,html]
+----
+<ul>
+    <li>lait</li>
+    <li>éponges</li>
+    <li>céréales</li>
+    <li>cacao</li>
+</ul>
+----
+
+==== Liste ordonnée `ol`
+
+Pour les éléments dont l'ordre est important.
+
+[source,html]
+----
+<ol>
+    <li>Créer un fichier HTML</li>
+    <li>Ajouter le doctype</li>
+    <li>Créer une balise html</li>
+    <li>Créer le head avec le titre</li>
+</ol>
+----
+
+[NOTE.speaker]
+====
+* `ul` (Unordered List) pour les listes sans ordre particulier
+* `ol` (Ordered List) pour les listes où l'ordre est important
+* `li` (List Item) pour chaque élément de la liste
+* Les éléments `li` doivent toujours être à l'intérieur d'un `ul` ou `ol`
+====
+
+// tag::demo[]
+=== Démonstration
+
+ifeval::["{visible-on-html}" !=  "yes"]
+
+[.tips]
+--
+💡 Appuyer sur la touche "*s*" pour le mode speaker
+--
+
+endif::[]
+
+Structure d’un document HTML.
+
+[NOTE.speaker]
+====
+Rédiger lignes par ligne cette structure :
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <!- - l'entente de la page : les informations de la page elle-même (Metadata) - ->
+    <head>
+        <!- - l'encodage des caractères : accents, caractères spéciaux, ...- ->
+        <meta charset="UTF-8">
+        <!- - title : titre de la page : visible dans l'onglet - ->
+        <title>Modèle HTML</title>
+    </head>
+    <!- - le corps de la page : les informations à destination des visiteurs - ->
+	<body>
+        <!- - Le contenu de la page - ->
+        <p>Un élément paragraphe de texte courant</p>
+	</body>
+</html>
+```
+Faire la même chose avec Copilot pour générer la structure :
+
+. Créer un nouveau fichier index.html
+. Ouvrir VS Code avec l'extension GitHub Copilot
+. Montrer comment Copilot génère la structure
+. Expliquer chaque partie générée
+. Montrer comment modifier les suggestions
+====
+// end::demo[]
+
+== GitHub Copilot pour le HTML
+
+GitHub Copilot est un assistant IA qui aide à :
+
+* Générer la structure de base HTML
+* Suggérer des balises sémantiques appropriées
+* Compléter automatiquement les attributs
+* Créer des structures complexes rapidement
+
+[NOTE.speaker]
+====
+* Copilot fonctionne comme un pair programmeur virtuel
+* Il analyse le contexte et propose des suggestions pertinentes
+* Important de vérifier les suggestions pour s'assurer qu'elles correspondent à nos besoins
+====
+
+=== Structure de base avec Copilot
+
+Pour générer une structure HTML de base avec Copilot :
+
+1. Créez un nouveau fichier .html
+2. Tapez `<!-- Page html de base -->` aller à la ligne et attendez la suggestion
+3. Copilot proposera automatiquement la structure complète
+
+[NOTE.speaker]
+====
+* Montrer comment Copilot peut générer différentes variantes de la structure HTML
+* Expliquer l'importance de comprendre le code généré
+* Souligner que Copilot est un outil d'aide, pas un remplacement de la compréhension
+====
+
+=== Utilisation avancée de Copilot
+
+* Commentaires descriptifs pour guider Copilot
+* Génération de structures complexes
+* Suggestions de balises sémantiques
+
+[NOTE.speaker]
+====
+* Les commentaires aident Copilot à comprendre notre intention
+* Plus le commentaire est précis, meilleure sera la suggestion
+* Toujours vérifier la sémantique des suggestions
+====
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* HTML est un langage de balise fondamental pour le web
+* La structure et la sémantique sont essentielles
+* GitHub Copilot peut accélérer le développement
+* Important de comprendre le code généré
+* Copilot est un outil d'aide, pas un remplacement de la compréhension
+// end::conclusion[]

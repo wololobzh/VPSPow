@@ -1,0 +1,193 @@
+:titre: Initialiser un projet Apollo Server avec Docker
+:module: apolloServerDocker
+:duree: 45
+:description: Apprendre à initialiser un projet Apollo Server avec Docker et TypeScript en suivant les meilleures pratiques de configuration.
+
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Initialiser un projet Node.js avec Apollo Server
+* Configurer le projet pour utiliser TypeScript
+* Mettre en place une infrastructure Docker pour Apollo Server
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Étape 1 : Initialisation du projet Node.js avec Apollo Server
+
+Dans cette étape, nous allons initialiser un projet Node.js dans le dossier `apollo-server`, puis ajouter Apollo Server comme dépendance.
+
+[source,bash]
+----
+cd apollo-server
+npm init --yes && npm pkg set type="module"
+npm install @apollo/server graphql
+----
+
+[NOTE.speaker]
+====
+Dans un premier temps, nous créons un dossier `apollo-server` pour le projet et initialisons le projet Node.js avec un `package.json`. Nous installons ensuite Apollo Server et GraphQL pour permettre de créer un serveur GraphQL.
+====
+
+== Étape 2 : Configuration du projet avec TypeScript
+
+Nous configurons maintenant le projet pour utiliser TypeScript. Pour cela, nous allons :
+
+1. Créer un dossier `src` pour organiser le code TypeScript.
+2. Ajouter un fichier `src/index.ts` pour le code de démarrage du serveur.
+3. Installer les dépendances nécessaires pour TypeScript et la compilation.
+
+[source,bash]
+----
+mkdir src
+touch src/index.ts
+npm install --save-dev tsx typescript @types/node
+touch tsconfig.json
+----
+
+**Configuration de `tsconfig.json` :**
+
+[source,json]
+----
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "strict": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+----
+
+[NOTE.speaker]
+====
+Ici, nous structurons notre projet en TypeScript, créons un fichier `tsconfig.json` pour définir les options de compilation, et ajoutons des scripts pour gérer le démarrage et la compilation du serveur Apollo avec TypeScript.
+====
+
+== Étape 3 : Mise en place de Docker pour Apollo Server
+
+Pour déployer Apollo Server dans un conteneur Docker, nous allons commencer par configurer un fichier `docker-compose.yml` pour lancer le serveur Apollo dans un conteneur. Dans cette première étape, nous ajouterons uniquement le service de serveur d’application GraphQL.
+
+== Étape 3 : Mise en place de Docker pour Apollo Server
+
+1: Créer un fichier `docker-compose.yml` à la racine du projet.
+
+== Étape 3 : Mise en place de Docker pour Apollo Server
+
+2: Ajouter un service `apollo-server` dans le fichier Docker Compose.
+
+[source,bash]
+----
+touch docker-compose.yml
+----
+
+**Configuration de `docker-compose.yml` :**
+
+[source,yaml]
+----
+version: '3.8'
+services:
+  apollo-server:
+    build:
+      context: .
+      dockerfile: ./docker-configuration/apollo-server/Dockerfile
+    ports:
+      - "4000:4000"
+----
+
+== Étape 3 : Mise en place de Docker pour Apollo Server
+
+3: Créer le Dockerfile pour Apollo Server.
+
+Créer le dossier `docker-configuration/apollo-server` et ajouter un fichier `Dockerfile` pour configurer l’image Docker d’Apollo Server.
+
+[source,bash]
+----
+mkdir -p docker-configuration/apollo-server
+touch docker-configuration/apollo-server/Dockerfile
+----
+
+**Exemple de configuration de `Dockerfile` :**
+
+[source,Dockerfile]
+----
+# Utiliser une image de base Node.js
+FROM node:18
+
+# Créer et définir le répertoire de travail
+WORKDIR /app
+
+# Copier les fichiers nécessaires
+COPY package.json package-lock.json ./
+
+# Installer les dépendances
+RUN npm install
+
+# Copier le code source
+COPY . .
+
+# Exposer le port 4000
+EXPOSE 4000
+
+# Commande pour lancer l'application
+CMD ["npm", "run", "start"]
+----
+
+[NOTE.speaker]
+====
+Ce Dockerfile est configuré pour copier les dépendances et le code source, et exécuter la commande de démarrage du serveur. Docker permettra de déployer facilement Apollo Server en isolant ses dépendances et sa configuration.
+====
+
+== Étape 4 : Lancer Apollo Server avec Docker
+
+Nous pouvons maintenant démarrer notre application Apollo Server dans un conteneur Docker.
+
+[source,bash]
+----
+docker compose up -d
+----
+
+L'option `-d` permet d'exécuter le conteneur en arrière-plan. Pour voir les logs en temps réel, utilisez la commande suivante :
+
+[source,bash]
+----
+docker compose logs -f
+----
+
+[NOTE.speaker]
+====
+Nous démarrons le conteneur Docker pour Apollo Server, qui est maintenant accessible à l’adresse `http://localhost:4000`.
+====
+
+== Bonus : Utiliser un alias pour exécuter des commandes npm dans le conteneur
+
+Pour simplifier l'installation et l'exécution des commandes npm dans le conteneur, nous pouvons créer un alias pour utiliser npm dans le contexte Docker.
+
+[source,bash]
+----
+alias @npm="docker compose exec apollo-server npm"
+----
+
+[NOTE.speaker]
+====
+Avec cet alias `@npm`, il est possible d’exécuter les commandes npm dans le conteneur Docker sans avoir à entrer manuellement dans le conteneur.
+====
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Vous avez appris à initialiser un projet Apollo Server avec Node.js et Docker.
+* Nous avons configuré TypeScript et utilisé Docker pour isoler le serveur GraphQL.
+* En utilisant Docker, le projet est prêt pour un déploiement facile et flexible.
+* La prochaine étape consiste à ajouter une base de données et à intégrer Apollo Server avec celle-ci.
+// end::conclusion[]

@@ -1,0 +1,8 @@
+sequenceDiagram
+    participant User as Utilisateur
+    participant Browser as Navigateur (SPA)
+    participant Server as Serveur API
+    User->>Browser: Interagit avec l'application
+    Browser->>Server: Requête API (si nécessaire)
+    Server->>Browser: Répond avec des données JSON
+    Browser->>User: Met à jour l'interface sans rechargement

@@ -1,0 +1,12 @@
+erDiagram
+    ENTREPRISE {
+        int id PK
+        string nom
+        string adresse
+    }
+    EMPLOYE {
+        int id PK
+        string nom
+        int entreprise_id FK
+    }
+    EMPLOYE }o--|| ENTREPRISE : "travaille pour"

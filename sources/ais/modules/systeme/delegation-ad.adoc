@@ -1,0 +1,121 @@
+:titre: Délégation Active Directory
+:module: Système
+:duree: 60
+:description: La délégation Active Directory est une fonctionnalité qui permet de déléguer des tâches d'administration à des utilisateurs ou des groupes.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* La délégation Active Directory
+* Délégation et ACL
+* Assistant de délégation
+* Délégation Console personnalisée
+// end::objectifs[]
+
+// tag::deroulement[]
+== Délégation Active Directorys
+
+La gestion d’un annuaire Active Directory peut être une charge de travail importante
+
+image::./assets/delegator.gif[]
+
+=== La délégation permet 
+
+* D'attribuer des permissions spécifiques à des utilisateurs ou des groupes pour gérer seulement certaines tâches 
+* Une gestion plus granulaire et sécurisée des rôles et responsabilités au sein d'une organisation.
+* Réduit les risques de sécurité en limitant les permissions.
+* Facilite la gestion administrative en répartissant les tâches.
+* Améliore l'efficacité en permettant aux utilisateurs de gérer directement leurs domaines de responsabilité.
+
+=== Pour la mise en place d’une délégation des privilèges il faut cibler 
+
+* Les privilèges souhaités, 
+* La ou les entités à qui les déléguer 
+* Le point de délégation (OU) ou le domaine
+* La mise en place d’outils adaptés aux personnes concernées par la délégation
+
+=== Exemple de Tâches à Déléguer :
+
+* Réinitialisation des mots de passe utilisateurs.
+* Création et gestion de comptes d'utilisateurs.
+* Gestion des groupes de sécurité.
+* Ajout de machines au domaine.
+
+== Délégation et ACL
+
+Tout objet de l’annuaire Active Directory dispose d’une ACL
+
+* Onglet “sécurité” dans les propriétés de l’objet, visible uniquement si “fonctionnalités avancées” est activé
+
+La délégation administrative s’appuie
+
+* Sur l’ajout de **privilèges** ciblés à un **groupe de sécurité** donné
+* Sur des **conteneurs** (OU) de l’annuaire Active Directory
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+Utiliser l’assistant **Délégation de contrôle**
+
+* Depuis le menu contextuel d’une OU dans la MMC Utilisateurs et ordinateurs Active Directory
+* Indiquer le groupe de sécurité désigné puis les privilèges à déléguer
+
+== Assistant de délégation
+
+[cols="1,1"]
+|===
+a| image::./assets/03-assistant-1.png[]
+a| image::./assets/03-assistant-2.png[]
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="1,1"]
+|===
+a| 
+La liste des tâches à déléguer proposée est stockée dans C:\Windows\System32\delegwiz.inf 
+
+Le contenu de ce fichier peut être modifié pour que ne soient proposées que les tâches souhaitées.
+a| image::./assets/03-assistant-3.png[]
+|===
+
+== Délégation Console personnalisée
+
+Une fois la délégation en place il faut fournir aux cibles un outils personnalisé pour gérer ses tâches administratives.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+Pour ce faire on pourra suivre les étapes suivantes :
+
+* Créer une console MMC
+* Ajouter le composant **Utilisateurs et ordinateurs AD **
+* Se positionner sur l’OU sur laquelle la délégation a été réalisée et créer une Nouvelle fenêtre à partir d’ici
+* Créer une Nouvelle vue de la liste des tâches
+* Ajouter les tâches déléguées à la liste des tâches
+* Enregistrer la MMC et la rendre accessible aux utilisateurs concernés
+
+// tag::demo[]
+== Démonstration
+
+**Délégation AD**
+
+[NOTE.speaker]
+--
+* Montrer l’assistant de délégation de contrôle
+* mettre une délégation en place sur une des OU
+* montrer l’impact sur la délégation de la modification du fichier delegwiz.inf 
+* créer une console personnalisée à partir d’une vue pour l’utilisation de la délégation sur le poste client a partir de la console MMC
+--
+// end::demo[]
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Vous êtes en mesure de gérer la délégation sur un Active directory afin de sécuriser les actions effectuées par chaque intervenant 
+* mettre à disposition de ces intervenants des console adaptées à leurs besoins sans connexion directe sur le serveur
+// end::conclusion[]

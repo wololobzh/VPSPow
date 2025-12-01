@@ -1,0 +1,132 @@
+:titre: Dockerhub
+:module: Docker
+:duree: 60
+:description: Découverte de la plateforme Dockerhub pour trouver et stocker des images Docker facilement
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+// Sous forme de liste à puce, en utilisant la taxonomie de Bloom
+* *Comprendre* l'intérêt de Dockerhub
+* *Appliquer* la recherche d'images sur Dockerhub
+* *Appliquer* le stockage d'images sur Dockerhub
+// end::objectifs[]
+
+// tag::deroulement[]
+== Présentation
+
+Dockerhub est une plateforme de partage d'images Docker. C'est un peu le Github des images Docker.
+
+https://hub.docker.com/[Dockerhub]
+
+=== Objectifs
+
+DockerHub permet de stocker des images Docker et de les partager avec la communauté. 
+
+Les images que l'on a utilisées dans cette saison sont toutes sur Dockerhub :
+
+* `node:lts-alpine`
+* `directus/directus`
+* `nginx`
+
+Il facilite la mise en production de nos applications car on peut récupérer les images prêtes de nos application directement depuis Dockerhub.
+
+=== Recherche d'images
+
+* Les images peuvent être publiques ou privées
+* Il existe des images officielles et des images de la communauté
+* Une image peut être signée (DCT) pour garantir son intégrité
+
+[NOTE.speaker]
+-- 
+Docker Content Trust (DCT) est une fonctionnalité de sécurité qui permet de garantir l'intégrité des images Docker grâce à une signature numérique. Cela permet de s'assurer qu'une image n'a pas été altérée depuis sa création.
+--
+
+=== Alternatives
+
+* Github Container Registry
+* Gitlab Container Registry
+* AWS Elastic Container Registry
+* Google Container Registry
+* ...
+
+[NOTE.speaker]
+--
+Il existe de nombreuses alternatives à Dockerhub pour stocker des images Docker. Ces services sont souvent intégrés à des plateformes de CI/CD et peuvent être plus adaptés à certains cas d'usage.
+--
+
+== Utilisation
+
+La création d'un compte est gratuite et permet de stocker des images publiques.
+
+=== Commandes
+
+* `docker login` : se connecter à Dockerhub
+* `docker push` : envoyer une image sur Dockerhub
+* `docker pull` : récupérer une image depuis Dockerhub
+
+[NOTE.speaker]
+--
+`docker pull` se fait automatiquement si l'image n'est pas trouvée en local.
+--
+
+=== Exemple
+
+```bash
+docker login
+
+docker build -t myapp .
+
+docker tag myapp myrepo/myapp:latest
+
+docker push myrepo/myapp:latest
+```
+
+[NOTE.speaker]
+--
+Pour publier une image sur Dockerhub, il faut construire l'image avec `docker build`, la tagger avec `docker tag` et enfin la pousser sur Dockerhub avec `docker push`.
+
+Il est important de bien tagger les images pour les retrouver facilement.
+--
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration 1
+
+[NOTE.speaker]
+--
+* Builder l'image du back avec un tag (se rendre dans le dossier `back/`)
+* Publier l'image sur Dockerhub
+--
+
+== Démonstration 2
+
+[NOTE.speaker]
+--
+* Supprimer l'image du back de la machine
+* Récupérer l'image depuis Dockerhub
+* Lancer un conteneur avec l'image
+* Vérifier que tout fonctionne
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice 1
+
+Se créer un compte sur Dockerhub.
+
+== Exercice 2
+
+Publier l'image du front Vite + Vue + TS sur Dockerhub. 
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* On peut partager nos propres images sur Dockerhub
+* On peut récupérer des images prêtes à l'emploi
+// end::conclusion[]

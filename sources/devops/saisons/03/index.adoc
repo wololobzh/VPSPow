@@ -1,0 +1,62 @@
+:title: Dév Frontend et Versioning
+:number: 03
+:duration: 35
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Frontend dans une perspective DevOps, la programmation n'est pas l'objectif.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** les concepts du développement frontend et l'architecture web moderne
+- **Maîtriser** les outils de développement frontend actuels
+- **Appliquer** le versioning avec Git, des bases aux techniques avancées
+- **Analyser** les différences entre développement et production
+- **Évaluer** les stratégies d'optimisation et de déploiement frontend
+- **Créer** et déployer des applications frontend performantes
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+- HTML/CSS/JS
+- Svelte
+- Node.js
+- npm
+- Vite
+- Git
+- GitHub Pages
+- Optimisation perf.
+- Introduction CI/CD
+// end::notions[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+- Expérience en développement frontend moderne
+- Maîtrise de Vite, et Git
+- Connaissance de Svelte
+- Connaissance des pratiques DevOps pour le frontend
+- Expérience en déploiement d'applications web
+- Penser à fournir le ebook O'clock
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+La saison couvre les fondamentaux du web, Svelte, les outils de développement modernes, Git, et les pratiques de déploiement. Elle vise à former des développeurs capables de gérer l'ensemble du processus de développement frontend dans un contexte DevOps.
+
+Cette saison couvre le développement frontend dans une perspective DevOps. Elle aborde les fondamentaux du web, l'utilisation de Svelte, la maîtrise de Git, et la découverte du déploiement. L'objectif est de découvrir les outils du frontend et de mettre en pratique un petit deplloiement sur GitHub Pages. La formation DevOps est avant tout axée sur l’administration et l’infrastructure, sans nécessiter de maîtrise approfondie des technologies front-end. Ainsi, une connaissance limitée du front-end ne constitue en aucun cas un obstacle à la réussite du parcours. L’important est d’avoir une compréhension globale des technologies avec lesquelles DevOps interagit.
+
+Concernant Svelte, bien qu’il s’agisse d’une technologie ambitieuse pour ce programme, elle n’est pas nécessaire pour l'obtention du titre. La priorité est de s’assurer une maîtrise des concepts fondamentaux de DevOps, dont le front-end n'est qu'un complément.
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue kanban]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

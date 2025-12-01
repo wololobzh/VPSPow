@@ -1,0 +1,309 @@
+:titre: Bot Discord avec Go et Gin
+:module: Go
+:duree: 120
+:description: Création d'un bot Discord avec DiscordGo et intégration avec une API Gin.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** le fonctionnement de DiscordGo
+* **Comprendre** l'intégration entre Discord et une API
+* **Appliquer** les bonnes pratiques de développement de bot
+* **Analyser** les besoins en communication entre services
+// end::objectifs[]
+
+// tag::deroulement[]
+== Configuration DiscordGo
+
+Installation et configuration initiale :
+
+[source,go]
+----
+// Installation
+go get github.com/bwmarrin/discordgo
+
+// Configuration de base
+package main
+
+import (
+    "github.com/bwmarrin/discordgo"
+    "os"
+    "os/signal"
+    "syscall"
+)
+
+func main() {
+    // Création d'une nouvelle session Discord
+    dg, err := discordgo.New("Bot " + os.Getenv("DISCORD_TOKEN"))
+    if err != nil {
+        log.Fatal("Erreur création session:", err)
+    }
+
+    // Ajout des handlers d'événements
+    dg.AddHandler(messageCreate)
+
+    // Ouverture de la connexion
+    err = dg.Open()
+    if err != nil {
+        log.Fatal("Erreur connexion:", err)
+    }
+    defer dg.Close()
+
+    // Attente du signal d'arrêt
+    sc := make(chan os.Signal, 1)
+    signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM)
+    <-sc
+}
+----
+
+[NOTE.speaker]
+--
+Le token doit être sécurisé (variables d'environnement).
+Les handlers sont des fonctions qui réagissent aux événements.
+Important de gérer proprement la fermeture de la connexion.
+Les permissions du bot doivent être configurées sur Discord.
+--
+
+// tag::demo[]
+== Démonstration Handlers Discord
+
+[NOTE.speaker]
+--
+1. Créer bot/handlers.go :
++
+```go
+package bot
+
+import (
+    "github.com/bwmarrin/discordgo"
+    "log"
+)
+
+func MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
+    // Ignore les messages du bot
+    if m.Author.ID == s.State.User.ID {
+        return
+    }
+
+    // Commande simple
+    if m.Content == "!ping" {
+        _, err := s.ChannelMessageSend(m.ChannelID, "Pong!")
+        if err != nil {
+            log.Println("Erreur envoi message:", err)
+        }
+    }
+}
+
+func Ready(s *discordgo.Session, r *discordgo.Ready) {
+    log.Printf("Bot est prêt: %v#%v", s.State.User.Username, s.State.User.Discriminator)
+}
+```
+2. Expliquer les différents types d'événements
+3. Montrer la gestion des messages
+4. Démontrer les réponses simples
+--
+// end::demo[]
+
+== Commandes Slash
+
+Implémentation des commandes slash :
+
+[source,go]
+----
+var commands = []*discordgo.ApplicationCommand{
+    {
+        Name: "info",
+        Description: "Obtenir des informations",
+        Options: []*discordgo.ApplicationCommandOption{
+            {
+                Type:        discordgo.ApplicationCommandOptionString,
+                Name:        "sujet",
+                Description: "Le sujet sur lequel obtenir des infos",
+                Required:    true,
+            },
+        },
+    },
+}
+
+func init() {
+    session.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+        if i.Type != discordgo.InteractionApplicationCommand {
+            return
+        }
+        
+        switch i.ApplicationCommandData().Name {
+        case "info":
+            handleInfoCommand(s, i)
+        }
+    })
+}
+
+func handleInfoCommand(s *discordgo.Session, i *discordgo.InteractionCreate) {
+    sujet := i.ApplicationCommandData().Options[0].StringValue()
+    
+    response := &discordgo.InteractionResponse{
+        Type: discordgo.InteractionResponseChannelMessageWithSource,
+        Data: &discordgo.InteractionResponseData{
+            Content: fmt.Sprintf("Info sur %s", sujet),
+        },
+    }
+    
+    s.InteractionRespond(i.Interaction, response)
+}
+----
+
+[NOTE.speaker]
+--
+Les commandes slash sont préférables aux commandes textuelles.
+Elles offrent une meilleure expérience utilisateur.
+Les options peuvent être validées automatiquement.
+Important de gérer les permissions.
+--
+
+== Intégration avec Gin
+
+Communication entre l'API et le bot :
+
+[source,go]
+----
+type BotService struct {
+    session *discordgo.Session
+}
+
+func NewBotService(token string) (*BotService, error) {
+    dg, err := discordgo.New("Bot " + token)
+    if err != nil {
+        return nil, err
+    }
+    
+    return &BotService{session: dg}, nil
+}
+
+// Handler Gin pour envoyer un message via le bot
+func (bs *BotService) SendMessage(c *gin.Context) {
+    var req struct {
+        ChannelID string `json:"channel_id" binding:"required"`
+        Message   string `json:"message" binding:"required"`
+    }
+    
+    if err := c.ShouldBindJSON(&req); err != nil {
+        c.JSON(400, gin.H{"error": err.Error()})
+        return
+    }
+    
+    _, err := bs.session.ChannelMessageSend(req.ChannelID, req.Message)
+    if err != nil {
+        c.JSON(500, gin.H{"error": "failed to send message"})
+        return
+    }
+    
+    c.JSON(200, gin.H{"status": "message sent"})
+}
+----
+
+[NOTE.speaker]
+--
+Le service bot doit être initialisé au démarrage.
+Les requêtes API doivent être validées.
+Important de gérer les erreurs Discord.
+Considérer l'utilisation de files d'attente pour les messages.
+--
+
+// tag::demo[]
+== Démonstration Intégration
+
+[NOTE.speaker]
+--
+1. Créer services/discord.go :
++
+```go
+package services
+
+import (
+    "github.com/bwmarrin/discordgo"
+    "sync"
+)
+
+type DiscordService struct {
+    session *discordgo.Session
+    channels map[string]chan string
+    mu sync.RWMutex
+}
+
+func NewDiscordService(token string) (*DiscordService, error) {
+    dg, err := discordgo.New("Bot " + token)
+    if err != nil {
+        return nil, err
+    }
+
+    ds := &DiscordService{
+        session:  dg,
+        channels: make(map[string]chan string),
+    }
+
+    dg.AddHandler(ds.messageHandler)
+    return ds, nil
+}
+
+func (ds *DiscordService) Subscribe(channelID string) chan string {
+    ds.mu.Lock()
+    defer ds.mu.Unlock()
+    
+    ch := make(chan string, 100)
+    ds.channels[channelID] = ch
+    return ch
+}
+
+func (ds *DiscordService) messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
+    ds.mu.RLock()
+    ch, exists := ds.channels[m.ChannelID]
+    ds.mu.RUnlock()
+    
+    if exists {
+        ch <- m.Content
+    }
+}
+```
+2. Expliquer le système de souscription
+3. Montrer la gestion concurrente
+4. Démontrer l'intégration avec Gin
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice 1 - Système de Notifications
+
+Créer un système qui :
+
+1. Reçoit des événements via l'API
+2. Les formate pour Discord
+3. Les envoie aux bons canaux
+4. Gère les erreurs et retries
+
+[source,go]
+----
+type NotificationSystem struct {
+    // À compléter
+}
+
+func (ns *NotificationSystem) ProcessEvent(event Event) error {
+    // À compléter
+}
+----
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Compréhension de DiscordGo et ses capacités
+* Maîtrise des commandes slash et interactions
+* Capacité à intégrer Discord avec une API
+* Compréhension des patterns de communication
+* Capacité à créer des bots robustes et maintenables
+// end::conclusion[]

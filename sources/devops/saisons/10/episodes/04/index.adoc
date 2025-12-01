@@ -1,0 +1,56 @@
+:title: Répartition de charge et SSL/TLS
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Le but de cette journée est de comprendre comment fonctionne la répartition de charge et comment mettre en place du SSL/TLS sur un serveur web.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre le fonctionnement de la répartition de charge
+* Savoir mettre en place du SSL/TLS sur un serveur web
+* Configurer HAProxy pour gérer la répartition de charge et le SSL/TLS
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* 3 VM Debian prêtes pour les démos (1 CPU / 1GB RAM)
+
+* 1 pour le load balancer
+* 2 pour les serveurs web
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/flux-entrants/load-balancing.adoc[options=modules]
+
+include::../../../../modules/flux-entrants/haproxy.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/flux-entrants/ssl-openssl.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S10-Challenge
+:description: Mise en place de HTTPS
+:correction: https://github.com/O-clock-Devops-Peda/S10-Challenge/tree/correction
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s10e04]
+--
+
+// end::deroulement[]

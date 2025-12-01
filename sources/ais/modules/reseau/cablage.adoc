@@ -1,0 +1,267 @@
+:titre: Câblage Informatique
+:module: Réseau
+:duree: 60
+:description: Le câblage informatique est une étape cruciale dans la mise en place d'un réseau informatique. Il permet de relier les différents équipements entre eux. Il existe plusieurs types de câblages informatiques, chacun ayant ses propres caractéristiques et avantages. Dans ce module, nous allons découvrir les différents types de câblages informatiques et leurs spécificités.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les bases du câblage informatique
+* Explorer les caractéristiques et l'utilisation des câbles en cuivre
+* Maîtriser les concepts et normes de la fibre optique
+* Comparer les différents types de câbles
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Le câblage informatique
+
+* Les câbles jouent un rôle essentiel dans la couche physique des réseaux 
+* facilitent la transmission des signaux entre les dispositifs. 
+* Chaque type de câble possède des caractéristiques spécifiques qui déterminent
+** ses performances, 
+** sa portée,
+** son usage idéal dans différents environnements. 
+* Voici un tour d'horizon des principaux types de câbles réseau et leurs caractéristiques.
+
+== Câble cuivre
+
+Les câbles en cuivre sont couramment utilisés pour les connexions réseau de courte à moyenne distance, en raison de leur coût abordable et de leur facilité d'installation.
+
+=== Câble à Paires Torsadées
+
+Les câbles à paires torsadées sont constitués de plusieurs paires de fils de cuivre torsadés ensemble pour réduire les interférences électromagnétiques.
+
+[cols="1,1"]
+|===
+a| UTP (Unshielded Twisted Pair) : Sans blindage, il est sensible aux interférences et convient pour les environnements à faible EMI.
+a| image::./assets/02-cuivre.png[]
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="1,1"]
+|===
+a| STP (Shielded Twisted Pair) : Équipé d'un blindage qui entoure les paires torsadées, il offre une meilleure protection contre les interférences, adapté aux environnements industriels ou bruyants.
+a| image::./assets/02-cuivre-2.png[]
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="1,1,1,1,1", options="header"]
+|===
+| Catégorie | Débit maxi    | Bande passante | Distance maximale (Ethernet) | Usage principal
+
+| Cat 5     | 100 Mbps      | 100 MHz        | 100 mètres                   | Réseaux locaux basiques, obsolète aujourd’hui.
+| Cat 5e    | 1 Gbps        | 100 MHz        | 100 mètres                   | Amélioration du Cat 5, couramment utilisé pour le Gigabit Ethernet.
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="1,1,1,1,1", options="header"]
+|===
+| Catégorie | Débit maxi    | Bande passante | Distance maximale (Ethernet) | Usage principal
+
+| Cat 6     | 1 Gbps        | 250 MHz        | 100 mètres                   | Réseaux Gigabit Ethernet ; commence à être limité pour les débits de 10 Gbps.
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="1,1,1,1,1", options="header"]
+|===
+| Catégorie | Débit maxi    | Bande passante | Distance maximale (Ethernet) | Usage principal
+
+| Cat 6a    | 10 Gbps       | 500 MHz        | 100 mètres                   | Adapté aux réseaux à haut débit (10 Gbps), avec un meilleur blindage.
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="1,1,1,1,1", options="header"]
+|===
+| Catégorie | Débit maxi    | Bande passante | Distance maximale (Ethernet) | Usage principal
+
+| Cat 7     | 10 Gbps       | 600 MHz        | 100 mètres                   | Utilisé dans les environnements avec fortes interférences, blindage renforcé pour chaque paire torsadée.
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="1,1,1,1,1", options="header"]
+|===
+| Catégorie | Débit maxi    | Bande passante | Distance maximale (Ethernet) | Usage principal
+
+| Cat 8     | 25 à 40 Gbps  | 2000 MHz       | 30 mètres                    | Conçu pour les centres de données, supporte des fréquences très élevées.
+|===
+
+== Câble Coaxial
+
+* Constitué d'un conducteur central en cuivre entouré d'un isolant, 
+* D'un blindage métallique, 
+* D'une gaine externe.
+* Couramment utilisé pour les connexions à large bande, comme la télévision par câble et les connexions Internet 
+
+=== Caractéristiques :
+
+* Débit : Jusqu'à 10 Gbps, en fonction de la norme et de la distance.
+* Portée : Environ 500 mètres pour les réseaux Ethernet coaxiaux.
+* Avantages : Résistant aux interférences électromagnétiques grâce à son blindage.
+* Inconvénients : Moins flexible que les câbles à paires torsadées et moins utilisé dans les réseaux LAN modernes.
+
+== Fibre optique
+
+La fibre optique utilise des impulsions lumineuses pour transmettre des données, permettant des débits élevés et des distances longues avec une très faible atténuation.
+
+=== Types de Fibre Optique
+
+**Fibre Monomode (SMF - Single Mode Fiber) :** 
+
+* Utilise un seul mode de transmission pour un signal lumineux unique
+* Minimise la dispersion 
+* Permet des transmissions sur des distances très longues 
+* Idéale pour les liaisons longue distance comme les connexions backbone et intercontinentales.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Fibre Multimode (MMF - Multi Mode Fiber) :**
+
+* Possède un noyau plus large permettant à plusieurs modes lumineux de se propager simultanément. 
+* Elle est utilisée pour les courtes distances (jusqu’à 2 km), notamment dans les réseaux locaux ou à l'intérieur des bâtiments.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="1,1,1,1,1", options="header"]
+|===
+| Type / Norme | Débit max      | Bande passante  | Distance max       | Usage principal
+
+| OM1          | 1 Gbps         | 200 MHz·km      | 300 mètres         | Réseaux locaux à courte distance, souvent remplacée.
+| OM2          | 1 Gbps         | 500 MHz·km      | 600 mètres         | Réseaux LAN et liaisons de courte à moyenne portée.
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="1,1,1,1,1", options="header"]
+|===
+| Type / Norme | Débit max      | Bande passante  | Distance max       | Usage principal
+
+| OM3          | 10 Gbps        | 2000 MHz·km     | 300 mètres         | Utilisée pour le Gigabit et 10 Gigabit Ethernet, en multimode.
+| OM4          | 40 Gbps        | 4700 MHz·km     | 400 mètres         | Réseaux à haut débit pour centres de données, multimode.
+
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="1,1,1,1,1", options="header"]
+|===
+| Type / Norme | Débit max      | Bande passante  | Distance max       | Usage principal
+
+| OM5          | 100 Gbps       | 28000 MHz·km    | 150 mètres         | Réseaux optiques haute performance, multimode.
+| OS1          | 10 Gbps et plus| N/A             | jusqu'à 10 km      | Liaisons longue distance, idéale pour les réseaux backbone.
+| OS2          | 100 Gbps et +  | N/A             | jusqu'à 10 km      | Réseaux longue distance, y compris les infrastructures intercontinentales.
+|===
+
+== Fibre Optique Avantages / Inconvénients
+
+=== Avantages
+
+* Très haute capacité de débit (jusqu’à plusieurs Tbps avec multiplexage).
+* Excellente résistance aux interférences électromagnétiques.
+* Faible atténuation permettant une transmission sur de longues distances.
+
+=== Inconvénients
+
+* Coût plus élevé que le cuivre, surtout en termes d’installation et de connecteurs.
+* Plus fragile et difficile à manipuler (nécessite un alignement précis des fibres).
+* Nécessite des compétences spécifiques pour le déploiement et la maintenance.
+
+== Câbles spécifiques
+
+=== Câbles DAC (Direct Attach Copper)
+
+* Câbles en cuivre de courte portée (moins de 10 mètres) avec des connecteurs intégrés.
+* Utilisés pour des connexions directes dans les centres de données
+* **Débit** : Jusqu’à 100 Gbps en fonction de la version.
+* **Avantages** : Latence très faible, coûts réduits pour les courtes distances, faible consommation d’énergie.
+* **Inconvénients** : Limité en portée, inadapté pour les longues distances.
+
+=== Câbles AOC (Active Optical Cable)
+
+* Fibre optique avec des émetteurs-récepteurs intégrés aux deux extrémités. 
+* Connexions haut débit sur des distances plus longues que les DAC
+* **Débit** : Jusqu’à 400 Gbps.
+* **Distance** : Typiquement jusqu’à 100 mètres.
+* **Usage** : Réseaux de centres de données pour des connexions performante entre équipements.
+
+== Comparatif types de câbles
+
+[cols="1,1,1,1,1", options="header"]
+|===
+| Type                           | Débit max        | Distance Max   | Avantages                                    | Inconvénients
+
+| UTP Cat 5e à Cat 8             | 1 Gbps à 40 Gbps | 30 à 100 mètres| Installation facile, coût abordable          | Sensible aux interférences
+| Coaxial                        | Jusqu'à 10 Gbps  | 500 mètres     | Résistant aux interférences                  | Moins flexible, usage limité
+| Fibre Optique Multimode (OM)   | Jusqu'à 100 Gbps | 400 mètres     | Haute capacité de débit, résistante EMI      | Fragile, coûteuse
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="1,1,1,1,1", options="header"]
+|===
+| Type                           | Débit max        | Distance Max   | Avantages                                    | Inconvénients
+
+| Fibre Optique Monomode (OS)    | 100 Gbps et plus | Jusqu’à 40 km  | Très longue portée, adaptée aux longues distances | Installation et maintenance coûteuses
+| DAC                            | Jusqu’à 100 Gbps | 10 mètres      | Faible latence, installation facile          | Limité aux courtes distances
+| AOC                            | Jusqu’à 400 Gbps | 100 mètres     | Haute performance et portée moyenne          | Coût élevé, fragilité de la fibre
+|===
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+**Câbles en Cuivre (UTP/STP, Cat 5e à Cat 8)**
+
+* Utilisés pour les réseaux locaux (LAN) sur courtes à moyennes distances (jusqu'à 100 m).
+* Débits jusqu’à 40 Gbps (Cat 8), économiques et faciles à installer.
+* Sensibles aux interférences électromagnétiques, surtout les UTP (non blindés).
+
+**Câble Coaxial**
+
+* Bonne résistance aux interférences grâce à son blindage.
+* Principalement utilisé pour la télévision et certains réseaux internet câblés ; peu présent dans les réseaux LAN modernes.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Fibre Optique (Monomode et Multimode)**
+
+* Très haute capacité de débit (jusqu'à plusieurs Tbps) et longue portée (jusqu'à 40 km pour monomode).
+* Faible atténuation et immunité aux interférences électromagnétiques.
+* Plus coûteuse et fragile, utilisée pour backbone et connexions longue distance.
+
+**Câbles DAC (Direct Attach Copper)**
+
+* Haute performance et faible latence pour les connexions courtes (<10 m) en centres de données.
+* Moins coûteux que la fibre pour les liaisons de proximité.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Câbles AOC (Active Optical Cable)**
+
+* Connexions optiques à haute performance pour des distances jusqu’à 100 m.
+* Idéal pour des connexions rapides et fiables dans les datacenters, mais plus coûteux.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Le choix du câble dépend **
+
+* de la distance,
+* du débit requis, 
+* de la tolérance aux interférences 
+* du budget. 
+
+Le cuivre convient aux réseaux LAN, la fibre aux longues distances et hautes performances, tandis que les DAC/AOC s’imposent dans les environnements de centres de données.
+// end::conclusion[]

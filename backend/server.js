@@ -16,8 +16,7 @@ app.post("/auth/login", (req, res) => {
         admin: { password: "test", role: "admin" },
         alice: { password: "test", role: "user" },
         roger: { password: "test", role: "user" },
-        jfv: { password: "jfv2025", role: "user" },
-        bernard: { password: "test", role: ["user", "courtes"] }
+        bernard: { password: "test", role: "user" }
     };
 
     const user = USERS[username];

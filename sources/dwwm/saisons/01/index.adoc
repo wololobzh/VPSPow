@@ -1,0 +1,43 @@
+:title: Journées Asynchrones
+:number: 00
+:duration: 140
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Contient toutes les journées asynchrones pouvant être donné aux apprenants.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- Proposer des activités tous les vendredis.
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+- Anglais
+- 
+// end::notions[]
+
+
+
+== Prérequis formateur
+
+// tag::prerequis[]
+- Aucun
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+Contient toutes les journées asynchrones pouvant être donné aux apprenants.
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue kanban]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

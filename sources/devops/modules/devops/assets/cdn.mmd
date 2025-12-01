@@ -1,0 +1,6 @@
+graph LR
+    A[Utilisateur] -->|Requête| B[CDN]
+    B -->|Cache Hit| A
+    B -->|Cache Miss| C[Serveur d'origine]
+    C -->|Contenu| B
+    B -->|Mise en cache| B

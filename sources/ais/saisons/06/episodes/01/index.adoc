@@ -1,0 +1,51 @@
+:title: Scripting et rappel powershell
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode est consacré à la découverte de PowerShell, un langage de script développé par Microsoft. Nous verrons comment il est possible de l'utiliser pour automatiser des tâches répétitives et gagner en efficacité. Nous aborderons également les bonnes pratiques pour écrire des scripts de qualité.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* notion générique sur le scripting
+* comprendre l’algo en langage naturel et pseudo code 
+* rappel pour une remise à sur les commandes Powershell de base
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+- un environnement Windows pour lancer les commandes Powershell
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook O'Clock]**
+
+include::../../../../modules/scripting/intro-scripting.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/scripting/algorithmes.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/scripting/ps-rappel.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1L9zS6a5CZKYGvDxH2H18vTISlFM-FJpn/view?usp=sharing
+:description: Algorithme en langage naturel et commandes de base en PowerShell
+:correction: https://drive.google.com/file/d/1-dNV8SjUvVt6SFCKY08echYtpDlFx4Wa/view
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s06e01]
+--
+
+// end::deroulement[]

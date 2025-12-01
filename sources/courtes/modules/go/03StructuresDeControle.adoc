@@ -1,0 +1,317 @@
+:titre: Structures de Contrôle en Go
+:module: Go
+:duree: 90
+:description: Exploration des structures de contrôle en Go : if, for, switch et leurs spécificités.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** les spécificités des structures de contrôle en Go
+* **Comprendre** les différentes formes de boucles
+* **Appliquer** les patterns idiomatiques de contrôle
+* **Analyser** les cas d'usage des différentes structures
+// end::objectifs[]
+
+// tag::deroulement[]
+== Structure if
+
+Les if en Go ont quelques particularités :
+
+* Pas de parenthèses obligatoires
+* Accolades obligatoires
+* Possibilité d'initialisation
+
+[source,go]
+----
+// Simple if
+if x > 0 {
+    return y
+}
+
+// If avec initialisation
+if err := operation(); err != nil {
+    return err
+}
+----
+
+[NOTE.speaker]
+--
+Les accolades sont toujours obligatoires, même pour une seule instruction.
+L'initialisation permet de limiter la portée des variables.
+Le style Go évite les else inutiles après un return.
+--
+
+// tag::demo[]
+== Démonstration Gestion d'Erreurs
+
+[NOTE.speaker]
+--
+1. Créer un fichier `error_handling.go`
+2. Ajouter le code suivant :
++
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func processFile(filename string) error {
+    f, err := os.Open(filename)
+    if err != nil {
+        return fmt.Errorf("ouverture impossible: %w", err)
+    }
+    defer f.Close()
+
+    info, err := f.Stat()
+    if err != nil {
+        return fmt.Errorf("stat impossible: %w", err)
+    }
+
+    if info.Size() == 0 {
+        return fmt.Errorf("fichier vide")
+    }
+
+    return nil
+}
+
+func main() {
+    err := processFile("test.txt")
+    if err != nil {
+        fmt.Printf("Erreur: %v\n", err)
+        return
+    }
+    fmt.Println("Succès!")
+}
+```
+3. Expliquer le pattern de gestion d'erreurs
+4. Montrer l'élégance du code sans else
+--
+// end::demo[]
+
+== Boucles for
+
+Go n'a qu'une seule structure de boucle : for
+
+* Boucle classique style C
+* Boucle condition (while)
+* Boucle infinie
+* Boucle range
+
+[source,go]
+----
+// Style C
+for i := 0; i < 10; i++ {
+    // ...
+}
+
+// Style while
+for condition {
+    // ...
+}
+
+// Boucle infinie
+for {
+    // ...
+}
+
+// Range
+for index, value := range slice {
+    // ...
+}
+----
+
+[NOTE.speaker]
+--
+for est très flexible en Go.
+range est particulièrement utile pour les collections.
+Pas de while ou do-while comme en C.
+L'identifiant blanc _ permet d'ignorer des valeurs.
+--
+
+// tag::demo[]
+== Démonstration Range
+
+[NOTE.speaker]
+--
+1. Créer un fichier `range_demo.go`
+2. Ajouter le code suivant :
++
+```go
+package main
+
+import "fmt"
+
+func main() {
+    // Slice
+    nombres := []int{1, 2, 3, 4, 5}
+    for i, n := range nombres {
+        fmt.Printf("Index: %d, Valeur: %d\n", i, n)
+    }
+
+    // Map
+    ages := map[string]int{
+        "Alice": 25,
+        "Bob":   30,
+        "Charlie": 35,
+    }
+    for nom, age := range ages {
+        fmt.Printf("%s a %d ans\n", nom, age)
+    }
+
+    // String (UTF-8)
+    for i, c := range "Hello, 世界" {
+        fmt.Printf("position %d: %c\n", i, c)
+    }
+}
+```
+3. Expliquer les différentes utilisations de range
+4. Montrer le traitement UTF-8 automatique
+--
+// end::demo[]
+
+== Switch
+
+Le switch en Go est plus flexible qu'en C :
+
+* Pas limité aux constantes
+* Pas de fall-through automatique
+* Peut être utilisé sans expression
+* Type switch pour les interfaces
+
+=== Switch
+
+[source,go]
+----
+// Switch classique
+switch valeur {
+case 1:
+    // ...
+case 2, 3, 4:
+    // ...
+default:
+    // ...
+}
+
+// Switch sans expression
+switch {
+case condition1:
+    // ...
+case condition2:
+    // ...
+}
+
+// Type switch
+switch v := interface{}.(type) {
+case int:
+    // v est un int
+case string:
+    // v est une string
+}
+----
+
+[NOTE.speaker]
+--
+Le switch est très utilisé en Go.
+Remplace souvent les chaînes if-else.
+Le type switch est unique à Go.
+Pas de break nécessaire.
+--
+
+// tag::demo[]
+== Démonstration Switch
+
+[NOTE.speaker]
+--
+1. Créer un fichier `switch_demo.go`
+2. Ajouter le code suivant :
++
+```go
+package main
+
+import "fmt"
+
+func decribeType(v interface{}) {
+    switch x := v.(type) {
+    case nil:
+        fmt.Println("x est nil")
+    case int:
+        fmt.Printf("x est un entier: %d\n", x)
+    case bool:
+        fmt.Printf("x est un booléen: %v\n", x)
+    case string:
+        fmt.Printf("x est une chaîne: %q\n", x)
+    default:
+        fmt.Printf("x est de type: %T\n", x)
+    }
+}
+
+func main() {
+    decribeType(42)
+    decribeType("hello")
+    decribeType(true)
+    decribeType(3.14)
+}
+```
+3. Expliquer le type switch
+4. Montrer la flexibilité du switch
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice 1 - Traitement de Collection
+
+Créer une fonction qui :
+
+1. Prend une slice d'entiers
+2. Utilise range pour parcourir
+3. Applique différents traitements selon les valeurs
+4. Retourne des statistiques
+
+[source,go]
+----
+func analyseNombres(nombres []int) (pairs, impairs, positifs int) {
+    // À compléter
+}
+----
+// end::exercice[]
+
+// tag::exercice[]
+== Exercice 2 - Parser Simple
+
+Créer un parser qui :
+
+1. Lit une chaîne caractère par caractère
+2. Utilise un switch pour identifier les tokens
+3. Gère les nombres et opérateurs
+4. Retourne une structure de données
+
+[source,go]
+----
+type Token struct {
+    Type string
+    Value string
+}
+
+func parse(input string) []Token {
+    // À compléter
+}
+----
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Maîtrise des structures de contrôle spécifiques à Go
+* Compréhension des patterns idiomatiques
+* Capacité à utiliser range efficacement
+* Maîtrise du switch et de ses variantes
+* Capacité à écrire du code Go idiomatique
+// end::conclusion[]

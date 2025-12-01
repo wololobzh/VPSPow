@@ -1,0 +1,148 @@
+:titre: Boucles
+:module: Bash
+:duree: 30
+:description: Utilisation des boucles dans un script Bash pour ajouter de l'algorithmie et automatiser des tâches répétitives.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** les boucles dans un script Bash.
+* **Appliquer** des boucles.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction aux boucles dans Bash
+
+Les boucles permettent d'exécuter des commandes plusieurs fois de manière automatisée, selon des critères définis.
+
+== Boucle `for`
+
+La boucle `for` parcourt une liste d'éléments et exécute les commandes pour chaque élément :
+
+[source,shell]
+----
+for i in 1 2 3 4 5; do
+  echo "Itération $i"
+done
+----
+
+[NOTE.speaker]
+--
+Dans cet exemple, la boucle `for` parcourt les nombres de 1 à 5 et exécute la commande `echo` à chaque itération, affichant ainsi "Itération 1", "Itération 2", etc.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Créer un script qui parcourt et affiche les fichiers d'un répertoire
+
+[NOTE.speaker]
+--
+1. Créer un fichier appelé `liste_fichiers.sh`.
+2. Ajouter les lignes suivantes :
+   ```
+   #!/bin/bash
+   for fichier in *; do
+     echo "Fichier : $fichier"
+   done
+   ```
+3. Sauvegarder et fermer le fichier.
+4. Rendre le script exécutable avec `chmod +x liste_fichiers.sh`.
+5. Lancer le script avec `./liste_fichiers.sh`. Le script affichera la liste des fichiers du répertoire courant.
+--
+// end::demo[]
+
+== Boucle `while`
+
+La boucle `while` exécute les commandes tant qu'une condition reste vraie :
+
+[source,shell]
+----
+compteur=1
+while [ $compteur -le 5 ]; do
+  echo "Compteur : $compteur"
+  compteur=$((compteur+1))
+done
+----
+
+[NOTE.speaker]
+--
+La boucle `while` continue d'exécuter tant que la condition `[ $compteur -le 5 ]` est vraie. À chaque itération, la variable `compteur` est incrémentée jusqu'à atteindre 5.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Créer un script qui compte de 1 à 5 avec une boucle `while`
+
+[NOTE.speaker]
+--
+1. Créer un fichier appelé `compteur.sh`.
+2. Ajouter les lignes suivantes :
+   ```
+   #!/bin/bash
+   compteur=1
+   while [ $compteur -le 5 ]; do
+     echo "Compteur : $compteur"
+     compteur=$((compteur+1))
+   done
+   ```
+3. Sauvegarder et fermer le fichier.
+4. Rendre le script exécutable avec `chmod +x compteur.sh`.
+5. Lancer le script avec `./compteur.sh`. Le script affichera les nombres de 1 à 5.
+--
+// end::demo[]
+
+== Boucle `until`
+
+La boucle `until` est similaire à la boucle `while`, mais elle s'exécute tant qu'une condition est fausse :
+
+[source,shell]
+----
+compteur=1
+until [ $compteur -gt 5 ]; do
+  echo "Compteur : $compteur"
+  compteur=$((compteur+1))
+done
+----
+
+[NOTE.speaker]
+--
+La boucle `until` fonctionne de manière inverse à `while`. Elle s'exécute jusqu'à ce que la condition `[ $compteur -gt 5 ]` devienne vraie.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Créer un script qui attend qu'un fichier apparaisse
+
+[NOTE.speaker]
+--
+1. Créer un fichier appelé `attente_fichier.sh`.
+2. Ajouter les lignes suivantes :
+   ```
+   #!/bin/bash
+   fichier="attendu.txt"
+   until [ -f $fichier ]; do
+     echo "Le fichier $fichier n'est pas encore là..."
+     sleep 1
+   done
+   echo "Le fichier $fichier est présent."
+   ```
+3. Sauvegarder et fermer le fichier.
+4. Rendre le script exécutable avec `chmod +x attente_fichier.sh`.
+5. Lancer le script avec `./attente_fichier.sh`. Le script attendra que le fichier `attendu.txt` soit créé avant de s'arrêter.
+--
+// end::demo[]
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Compréhension des différents types de boucles (`for`, `while`, `until`) dans Bash.
+* Capacité à automatiser des tâches répétitives avec des boucles.
+// end::conclusion[]

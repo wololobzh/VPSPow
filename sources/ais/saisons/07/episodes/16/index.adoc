@@ -1,0 +1,43 @@
+:title: Introduction à l'Infrastructure as Code (IaC)
+:number: 16
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée est une découverte de l'Infrastructure as Code (IaC) et de Terraform. Nous allons voir quel est l'intérêt d'acquérir ces outils et comment les utiliser pour déployer des ressources de manière automatisée.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre ce qu'est l'Infrastructure as Code
+* Découvrir Terraform et ses fonctionnalités
+* Connaître les principales commandes Terraform
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Docker + docker compose installés et fonctionnels
+* Terraform installé et fonctionnel
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+include::../../../../modules/virtualisation/iac.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/virtualisation/terraform-intro.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/virtualisation/terraform-plus.adoc[options=modules]
+
+:challenge: https://docs.google.com/document/d/1POmTNQL6Ys6ikEUVxARJvDK-5xjyV6FsyfBTHSTg4K8/edit?usp=drive_link
+:description: Se lancer dans l’utilisation de Terraform
+:correction: https://docs.google.com/document/d/1olqQEhsdzUXjGpoTxta1nVkDjGiIPCcCEVZLXi7pHHM/edit?usp=drive_link
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

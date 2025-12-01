@@ -1,0 +1,398 @@
+:titre: Bash les Variables
+:module: Scripting
+:duree: 90
+:description: Types de variables, manipulation de chaînes et de nombres en Bash
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Déclaration et utilisation
+* Variables locales
+* Variables globales
+* Manipulation de chaînes
+* Manipulation de nombres
+* Variables système
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Déclaration et utilisation
+
+Les variables en Bash permettent de stocker des données temporaires qui peuvent être utilisées et manipulées au sein d'un script.
+
+Elles sont essentielles pour créer des scripts dynamiques et interactifs. 
+
+Contrairement à certains langages, les variables en Bash ne nécessitent pas de déclaration de type et sont traitées comme des chaînes de caractères par défaut.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple de déclaration et utilisation**
+
+```sh
+variable="valeur"
+echo $variable
+```
+
+**Explication**
+
+* `variable="valeur"` : Cette ligne crée une variable nommée variable et lui attribue la valeur "valeur".
+* `echo $variable` : Cette ligne affiche la valeur de la variable variable à l'écran.
+
+== Variable locale
+
+Les variables locales sont déclarées à l'intérieur d'une fonction et ne sont accessibles qu'à l'intérieur de cette fonction. Elles disparaissent lorsque la fonction se termine.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple :**
+
+```sh
+ma_fonction() {
+    local variable_locale="Je suis local"
+    echo $variable_locale
+}
+ma_fonction
+echo $variable_locale  # Ne fonctionne pas car variable_locale est local
+```
+
+**Explication :**
+
+* `local variable_locale="Je suis local"` : Déclare une variable locale accessible uniquement au sein de `ma_fonction`.
+* `echo $variable_locale` : Affiche la valeur de `variable_locale` uniquement à l'intérieur de la fonction.
+* La tentative d'accès à `$variable_locale` en dehors de la fonction échoue, car elle est hors de portée.
+
+== Variable globale
+
+Les variables globales sont accessibles partout dans le script, y compris dans les fonctions, sauf si une variable locale de même nom les masque. Elles sont déclarées en dehors des fonctions.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple :**
+
+```sh
+variable_globale="Je suis global"
+echo $variable_globale
+
+ma_fonction() {
+    echo $variable_globale  # Accessible car globale
+}
+ma_fonction
+```
+
+**Explication :**
+
+* `variable_globale="Je suis global"` : Déclare une variable globale accessible partout dans le script.
+* `echo $variable_globale` : Affiche la valeur de `variable_globale`.
+* `ma_fonction()` : Une fonction qui peut accéder et afficher la valeur de `variable_globale` car elle est globale.
+
+== Manipulation de chaînes
+
+Les chaînes peuvent être concaténées, divisées et modifiées 
+
+
+=== Concaténation de chaînes**
+
+La concaténation consiste à joindre deux ou plusieurs chaînes pour former une seule chaîne.
+
+**Exemple :**
+
+```sh
+prenom="Alice"
+nom="Dupont"
+nom_complet="$prenom $nom"
+echo $nom_complet
+```
+
+**Explication :**
+
+* `nom_complet="$prenom $nom"` : Crée une nouvelle chaîne nom_complet en concaténant prenom et nom avec un espace entre eux.
+* `echo $nom_complet` : Affiche la chaîne résultante "Alice Dupont".
+
+=== Modification de chaînes
+
+Les chaînes peuvent être modifiées pour extraire des sous-chaînes, remplacer des segments, ou transformer le texte.
+
+**Exemple :**
+
+```sh
+texte="Bonjour tout le monde"
+extrait=${texte:8:4}
+echo $extrait
+```
+
+**Explication :**
+
+* `${texte:8:4}` : Extrait une sous-chaîne de 4 caractères à partir du 8ème caractère de texte. Résultat : "tout".
+
+=== Remplacement de sous-chaînes :
+
+**Exemple :**
+
+```sh
+phrase="Les chats sont mignons"
+nouvelle_phrase=${phrase/chats/chiens}
+echo $nouvelle_phrase
+```
+
+**Explication :**
+
+* `${phrase/chats/chiens}` : Remplace la première occurrence de "chats" par "chiens" dans phrase. Résultat : "Les chiens sont mignons".
+
+=== Transformation de texte (majuscule/minuscule) :
+
+**Exemple :**
+
+```sh
+mot="Bash"
+echo ${mot^^}  # Majuscules
+echo ${mot,,}  # Minuscules
+```
+
+**Explication :**
+
+* `${mot^^}` : Convertit tout le texte en majuscules. Résultat : "BASH".
+* `${mot,,}` : Convertit tout le texte en minuscules. Résultat : "bash".
+
+=== Division de chaînes
+
+La division de chaînes consiste à séparer une chaîne en plusieurs parties basées sur un séparateur spécifique.
+
+**Exemple avec IFS :**
+
+```sh
+liste="pomme,banane,orange"
+IFS=',' read -r -a fruits <<< "$liste"
+echo "Premier fruit : ${fruits[0]}"
+echo "Deuxième fruit : ${fruits[1]}"
+echo "Troisième fruit : ${fruits[2]}"
+```
+
+**Explication :**
+
+* `IFS=','` : Définit le séparateur de champ interne (Internal Field Separator) à la virgule.
+* `read -r -a fruits <<< "$liste"` : Divise liste en éléments, en utilisant la virgule comme séparateur, et stocke les parties dans le tableau fruits.
+* `echo "Premier fruit : ${fruits[0]}"` : Affiche le premier élément du tableau, "pomme".
+
+== Manipulation de nombres
+
+Les opérations arithmétiques sur les nombres peuvent être effectuées en utilisant la syntaxe ((expression)) ou expr.
+
+=== Exemple avec double-parenthèses :
+
+```sh
+a=5
+b=3
+somme=$((a + b))
+echo "La somme de a et b est : $somme"
+```
+
+**Explication :**
+
+* `somme=$((a + b))` : Calcule la somme de `a` et `b` et stocke le résultat dans `somme`.
+* `echo "La somme de a et b est : $somme"` : Affiche le résultat de l'opération.
+
+=== Exemple avec expr :
+
+```sh
+a=5
+b=3
+somme=$(expr $a + $b)
+echo "La somme de a et b est : $somme"
+```
+
+**Explication :**
+
+* `somme=$(expr $a + $b)` : Utilise `expr` pour évaluer l'expression et stocke le résultat dans `somme`.
+
+== Variables système
+
+Les variables système sont des variables prédéfinies fournies par l'environnement système et le shell Bash. Elles contiennent des informations importantes sur l'utilisateur, le système et l'environnement d'exécution.
+
+=== Liste des variables système courantes :
+
+* `$HOME` : Contient le chemin vers le répertoire personnel de l'utilisateur courant.
+* `$USER` : Nom de l'utilisateur courant.
+* `$PATH` : Liste des répertoires où le système cherche les exécutables.
+* `$PWD` : Répertoire de travail actuel.
+* `$?` : Code de retour de la dernière commande exécutée (0 pour succès, autre pour échec).
+* `$#` : Nombre d'arguments passés à un script.
+* `$@` : Liste de tous les arguments passés à un script.
+
+=== Exemple d'utilisation :
+
+* `echo "Utilisateur : $USER"` =>  Affiche le nom de l'utilisateur courant.
+* `echo "Dossier personnel : $HOME"` =>  chemin du répertoire personnel.
+* `echo "Répertoire actuel : $PWD"` =>  Affiche le répertoire de travail actuel.
+* `echo "Dernier code de retour : $?"` =>  Affiche le code de retour de la dernière commande exécutée.
+
+// tag::demo[]
+
+== Démonstration
+
+[NOTE.speaker]
+--
+* **Déclaration et Utilisation des Variables**
+
+Commencez par montrer comment déclarer une variable en Bash et comment l'utiliser :
+
+```sh
+#!/bin/bash
+# Déclaration d'une variable
+nom="Alice"
+
+# Utilisation de la variable
+echo "Bonjour, $nom!"
+```sh
+
+**Explication :**
+
+* La variable nom est définie avec la valeur "Alice".
+* La commande echo affiche la valeur de la variable en utilisant $nom.
+
+* **Variables Locales et Globales**
+
+Montrez la différence entre une variable globale et locale en utilisant une fonction :
+
+```sh
+#!/bin/bash
+# Variable globale
+message="Bonjour tout le monde"
+
+# Fonction avec une variable locale
+afficher_message() {
+  local message="Bonjour à tous"
+  echo "Dans la fonction : $message"
+}
+
+# Appel de la fonction
+afficher_message
+
+# Affichage de la variable globale après l'appel de la fonction
+echo "En dehors de la fonction : $message"
+```
+
+**Explication :**
+
+* La variable message à l'extérieur de la fonction est globale.
+* La variable message à l'intérieur de la fonction est locale, grâce au mot-clé local.
+* La sortie montre que la modification de la variable locale n'affecte pas la variable globale.
+
+* **Manipulation de Chaînes**
+
+Montrez quelques opérations de base sur les chaînes :
+
+```sh
+#!/bin/bash
+chaine="Hello World"
+
+# Longueur de la chaîne
+echo "Longueur de la chaîne : ${#chaine}"
+
+# Extraire une sous-chaîne
+echo "Sous-chaîne : ${chaine:6:5}"
+
+# Remplacer une partie de la chaîne
+nouvelle_chaine=${chaine/World/Bash}
+echo "Nouvelle chaîne : $nouvelle_chaine"
+```
+
+**Explication :**
+
+* `#chaine` donne la longueur de la chaîne.
+* `${chaine:6:5}` extrait une sous-chaîne de 5 caractères à partir du 6ème caractère.
+* `${chaine/World/Bash}` remplace "World" par "Bash" dans la chaîne.
+
+* **Manipulation de Nombres**
+
+Démonstration de calculs simples avec des variables numériques :
+
+```sh
+#!/bin/bash
+a=10
+b=5
+
+# Addition
+somme=$((a + b))
+echo "Somme : $somme"
+
+# Soustraction
+difference=$((a - b))
+echo "Différence : $difference"
+
+# Multiplication
+produit=$((a * b))
+echo "Produit : $produit"
+
+# Division
+quotient=$((a / b))
+echo "Quotient : $quotient"
+```
+
+**Explication :**
+
+* Les variables numériques sont manipulées en utilisant l'opérateur `$(())` pour les calculs arithmétiques.
+* L'exemple montre des opérations d'addition, de soustraction, de multiplication et de division.
+
+* **Utilisation des Variables Système**
+
+Présentez quelques-unes des variables système les plus couramment utilisées :
+
+```sh
+#!/bin/bash
+
+# Nom de l'utilisateur
+echo "Utilisateur courant : $USER"
+
+# Répertoire personnel
+echo "Répertoire personnel : $HOME"
+
+# Répertoire de travail actuel
+echo "Répertoire actuel : $PWD"
+
+# Chemin des répertoires de commande
+echo "Chemin de recherche des commandes : $PATH"
+
+# Nom du script
+echo "Nom du script : $0"
+
+# Nombre d'arguments passés au script
+echo "Nombre d'arguments : $#"
+
+# Tous les arguments passés au script
+echo "Arguments : $@"
+
+# PID du script en cours
+echo "PID du script : $$"
+
+# Code de retour de la dernière commande
+echo "Code de retour de la dernière commande : $?"
+```
+
+**Explication :**
+
+* `$USER` affiche le nom de l'utilisateur courant.
+* `$HOME` donne le chemin du répertoire personnel de l'utilisateur.
+* `$PWD` montre le répertoire de travail actuel.
+* `$PATH` affiche la liste des répertoires où Bash recherche les exécutables des commandes.
+* Les autres variables comme `$0`, `$#`, `$@`, `$$`, et `$?` sont également utilisées pour afficher des informations importantes sur le script et son exécution.
+
+
+--
+
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* **Déclaration et utilisation des variables** : Fondamentaux pour stocker et manipuler des données.
+* **Types de variables** : Distinction entre variables locales et globales pour une gestion efficace de la portée.
+* **Manipulation des données** : Concaténation de chaînes et calculs arithmétiques.
+* **Variables système** : Outils intégrés pour accéder aux informations du système et de l'utilisateur.
+* **Importance des variables** : Essentielles pour créer des scripts dynamiques et flexibles en Bash.
+// end::conclusion[]

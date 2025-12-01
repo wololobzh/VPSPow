@@ -1,0 +1,66 @@
+:titre: Premiers pas avec Git
+:module: Git
+:duree: 45
+:description: Configuration et commandes de base
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* Savoir configurer git sur une machine
+* Connaître les commandes de base de git pour versionner un projet
+// end::objectifs[]
+
+// tag::deroulement[]
+== Configurer une clé SSH pour GitHub
+
+* créer une clé ssh sur sa machine
+** Sur Linux & Mac OS : via la commande `ssh-keygen -t ed25519 -C "votre-email@exemple.fr"`
+** Sur Windows : via un outil tel que https://www.puttygen.com/[PuttyGen]
+
+* copier le contenu de la clé publique
+
+* Sur GitHub, se rendre dans Settings > SSH and GPG keys > New SSH key
+
+
+== Configuration initiale
+
+Afin d'identifier les contributions, il est nécessaire de renseigner 2 infos :
+
+* `git config --global user.name "Votre Nom"`
+* `git config --global user.email "votre@email.com"`
+
+=== Créer un nouveau dépôt
+
+Il faut déclarer que l'on veut utiliser `git` dans un nouveau projet 
+
+`git init` initialise un nouveau dépôt dans le dossier courant
+
+=== Vérifier l'état
+
+* `git status` : Affiche l'état actuel des fichiers dans la zone de travail et la zone de préparation.
+* `git log` : Affiche l'historique des commits avec les détails.
+* `git log --oneline` : Affiche l'historique de manière concise.
+
+=== Récupérer depuis un dépôt distant
+
+* `git clone URL` : Clone un dépôt distant sur votre machine.
+* `git pull` : Récupère les changements depuis le dépôt distant.
+
+=== Envoyer son travail
+
+* `git add nom_du_fichier` : Ajoute un fichier modifié à la zone de préparation.
+* `git add .` : Ajoute tous les fichiers modifiés à la zone de préparation.
+* `git commit -m "Message de Commit"` : Valide les modifications avec un message descriptif.
+* `git push nom_de_branche` : Pousse vos modifications vers le dépôt distant.
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Capacité à configurer git sur une machine
+* Connaissance les commandes de base de git pour versionner un projet
+// end::conclusion[]

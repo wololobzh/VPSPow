@@ -1,0 +1,309 @@
+:titre: GORM et PostgreSQL avec Gin
+:module: Go
+:duree: 120
+:description: Intégration de GORM et PostgreSQL dans une application Gin.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** l'utilisation de GORM avec PostgreSQL
+* **Comprendre** la gestion des migrations et relations
+* **Appliquer** les opérations CRUD avec GORM
+* **Analyser** les patterns de base de données
+// end::objectifs[]
+
+// tag::deroulement[]
+== Configuration GORM
+
+Installation et configuration initiale :
+
+[source,go]
+----
+// Installation
+go get -u gorm.io/gorm
+go get -u gorm.io/driver/postgres
+
+// Configuration
+type Config struct {
+    Host     string
+    Port     string
+    User     string
+    Password string
+    DBName   string
+    SSLMode  string
+}
+
+func NewDatabase(config *Config) (*gorm.DB, error) {
+    dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+        config.Host, config.Port, config.User, 
+        config.Password, config.DBName, config.SSLMode)
+        
+    db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+    if err != nil {
+        return nil, err
+    }
+    
+    return db, nil
+}
+----
+
+[NOTE.speaker]
+--
+GORM est un ORM populaire pour Go.
+La configuration doit être sécurisée (variables d'environnement).
+Important de gérer les connexions proprement.
+Les options de configuration permettent d'optimiser les performances.
+--
+
+// tag::demo[]
+== Démonstration Modèles
+
+[NOTE.speaker]
+--
+1. Créer models/user.go :
++
+```go
+package models
+
+import (
+    "gorm.io/gorm"
+    "time"
+)
+
+type User struct {
+    ID        uint           `gorm:"primarykey"`
+    CreatedAt time.Time
+    UpdatedAt time.Time
+    DeletedAt gorm.DeletedAt `gorm:"index"`
+    
+    Email     string         `gorm:"uniqueIndex;not null"`
+    Name      string         `gorm:"size:255"`
+    Age       uint8         
+    
+    // Relations
+    Posts     []Post         `gorm:"foreignKey:UserID"`
+}
+
+type Post struct {
+    ID        uint           `gorm:"primarykey"`
+    CreatedAt time.Time
+    UpdatedAt time.Time
+    DeletedAt gorm.DeletedAt `gorm:"index"`
+    
+    Title     string         `gorm:"not null"`
+    Content   string         `gorm:"type:text"`
+    UserID    uint          
+    User      User           `gorm:"foreignKey:UserID"`
+}
+```
+2. Expliquer les tags GORM
+3. Montrer les relations
+4. Démontrer le soft delete
+--
+// end::demo[]
+
+== Migrations
+
+Gestion des migrations avec GORM :
+
+[source,go]
+----
+func Migrate(db *gorm.DB) error {
+    // Auto-migration
+    err := db.AutoMigrate(
+        &User{},
+        &Post{},
+        &Comment{},
+    )
+    if err != nil {
+        return fmt.Errorf("erreur migration: %w", err)
+    }
+    
+    // Migration manuelle si nécessaire
+    err = db.Exec(`
+        CREATE INDEX IF NOT EXISTS idx_users_email 
+        ON users(email);
+    `).Error
+    
+    return err
+}
+----
+
+[NOTE.speaker]
+--
+AutoMigrate est pratique mais attention en production.
+Les migrations manuelles offrent plus de contrôle.
+Important de versionner les migrations.
+Penser aux rollbacks.
+--
+
+== Relations GORM
+
+Types de relations supportées :
+
+* Has One
+* Has Many
+* Belongs To
+* Many To Many
+
+[source,go]
+----
+type User struct {
+    gorm.Model
+    Name      string
+    Profile   Profile     `gorm:"foreignKey:UserID"`  // Has One
+    Posts     []Post      `gorm:"foreignKey:UserID"`  // Has Many
+    Languages []Language  `gorm:"many2many:user_languages"` // Many To Many
+}
+
+type Profile struct {
+    gorm.Model
+    UserID    uint
+    Bio       string
+}
+----
+
+[NOTE.speaker]
+--
+Les relations sont définies via des tags.
+GORM gère automatiquement les clés étrangères.
+Possibilité de personnaliser les jointures.
+Attention aux chargements eager vs lazy.
+--
+
+// tag::demo[]
+== Démonstration Requêtes
+
+[NOTE.speaker]
+--
+1. Créer repository/user.go :
++
+```go
+package repository
+
+import (
+    "gorm.io/gorm"
+    "myapp/models"
+)
+
+type UserRepository struct {
+    db *gorm.DB
+}
+
+func NewUserRepository(db *gorm.DB) *UserRepository {
+    return &UserRepository{db: db}
+}
+
+func (r *UserRepository) Create(user *models.User) error {
+    return r.db.Create(user).Error
+}
+
+func (r *UserRepository) FindByID(id uint) (*models.User, error) {
+    var user models.User
+    err := r.db.Preload("Posts").First(&user, id).Error
+    if err != nil {
+        return nil, err
+    }
+    return &user, nil
+}
+
+func (r *UserRepository) Update(user *models.User) error {
+    return r.db.Save(user).Error
+}
+
+func (r *UserRepository) Delete(id uint) error {
+    return r.db.Delete(&models.User{}, id).Error
+}
+
+func (r *UserRepository) List(page, size int) ([]models.User, error) {
+    var users []models.User
+    err := r.db.Offset((page - 1) * size).
+        Limit(size).
+        Preload("Posts").
+        Find(&users).Error
+    return users, err
+}
+```
+2. Expliquer les différentes requêtes
+3. Montrer le preloading
+4. Démontrer la pagination
+--
+// end::demo[]
+
+== Transactions
+
+Gestion des transactions avec GORM :
+
+[source,go]
+----
+func (r *UserRepository) CreateWithPosts(user *models.User) error {
+    return r.db.Transaction(func(tx *gorm.DB) error {
+        // Créer l'utilisateur
+        if err := tx.Create(user).Error; err != nil {
+            return err
+        }
+        
+        // Créer les posts
+        for _, post := range user.Posts {
+            post.UserID = user.ID
+            if err := tx.Create(&post).Error; err != nil {
+                return err
+            }
+        }
+        
+        return nil
+    })
+}
+----
+
+[NOTE.speaker]
+--
+Les transactions garantissent l'intégrité des données.
+GORM gère automatiquement commit/rollback.
+Important pour les opérations complexes.
+Attention aux deadlocks.
+--
+
+// tag::exercice[]
+== Exercice 1 - Blog System
+
+Créer un système de blog avec :
+
+1. Modèles User, Post, Comment, Category
+2. Relations appropriées
+3. Migrations
+4. Repository pattern
+
+[source,go]
+----
+// Définir les modèles
+type Post struct {
+    // À compléter
+}
+
+type Comment struct {
+    // À compléter
+}
+
+// Implémenter le repository
+type BlogRepository struct {
+    // À compléter
+}
+----
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Compréhension approfondie de GORM
+* Maîtrise des migrations et relations
+* Capacité à implémenter des requêtes complexes
+* Compréhension des transactions
+* Capacité à structurer le code base de données
+// end::conclusion[]

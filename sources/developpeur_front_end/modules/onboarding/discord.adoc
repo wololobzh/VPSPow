@@ -1,0 +1,117 @@
+:titre: Discord - Notre outil de communication vocale
+:module: Outils
+:duree: 20
+:description: Découverte de Discord, notre plateforme de communication vocale pour les travaux de groupe et les échanges informels.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs
+// tag::objectifs[]
+* **Comprendre** les fonctionnalités essentielles de Discord
+* **Appliquer** la procédure d'inscription au Discord O'clock
+* **Utiliser** les salons vocaux pour la collaboration
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction à Discord
+
+* Logiciel de VoIP (Voice over Internet Protocol)
+* Communication vocale, vidéo et textuelle
+* Principalement utilisé pour les échanges oraux
+* Gratuit et accessible
+
+[NOTE.speaker]
+====
+Discord est notre outil principal pour la communication vocale.
+Il est particulièrement adapté pour les travaux de groupe et les échanges informels.
+L'aspect vocal est privilégié par rapport au texte.
+====
+
+== Rejoindre le Discord O'clock
+
+* Inscription via https://oclock.io/discord
+* Installation de l'application desktop requise
+
+[NOTE.speaker]
+====
+L'inscription est obligatoire pour accéder aux salons.
+L'application desktop offre une meilleure expérience que la version web.
+====
+
+== Activation des droits étudiants
+
+Pour obtenir l'accès complet :
+
+1. Localiser le bot _Big Brother_ 🤖 dans la liste des membres
+2. Lui envoyer le message `!chaussons` suivi du mot de passe
+
+[NOTE.speaker]
+====
+Les droits étudiants donnent accès aux salons spécifiques de la promotion.
+Le bot _Big Brother_ gère automatiquement l'attribution des droits.
+Le mot de passe est fourni pendant la formation.
+====
+
+== Organisation des salons
+
+=== Salons publics
+* Nombreux salons disponibles
+* Dédiés au travail de groupe
+* Utilisés pour :
+** Ateliers
+** Challenges
+** Projets
+
+=== Salons privés
+* Réservés aux membres de la promotion
+* Accès restreint
+* Communication plus confidentielle
+
+[NOTE.speaker]
+====
+Les salons sont organisés selon leur usage.
+Les salons publics permettent la collaboration entre différentes promotions.
+Les salons privés sont réservés aux échanges au sein d'une même promotion.
+====
+
+== Astuce de navigation
+
+Raccourci pour trouver rapidement un salon :
+`CTRL + K` puis `!NOM_DU_SALON`
+
+[NOTE.speaker]
+====
+Ce raccourci permet une navigation rapide entre les salons.
+Particulièrement utile quand il y a beaucoup de salons disponibles.
+====
+
+// tag::demo[]
+== Démonstration
+
+Prise en main de Discord
+
+[NOTE.speaker]
+====
+1. Installation de Discord
+2. Connexion au serveur O'clock
+3. Activation des droits avec le bot
+4. Navigation dans les différents salons
+5. Test d'un salon vocal
+6. Utilisation du raccourci de recherche
+====
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Discord est notre plateforme principale pour la communication vocale
+* L'accès est configuré via le bot _Big Brother_
+* Les salons sont organisés selon les besoins (publics/privés)
+* La communication vocale facilite le travail collaboratif
+// end::conclusion[]

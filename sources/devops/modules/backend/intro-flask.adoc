@@ -1,0 +1,195 @@
+:titre: Création d'une mini API avec Flask
+:module: Backend
+:duree: 90
+:description: Apprenez à créer une API simple avec Flask en utilisant uniquement la méthode GET et des données en mémoire.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* *Comprendre* les bases d'une API REST
+* *Configurer* un environnement Flask simple
+* *Créer* des endpoints API avec la méthode GET
+* *Manipuler* des données en mémoire pour simuler une base de données
+* *Tester* une API avec des outils comme cURL ou Postman
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction aux API REST
+
+Une API REST (Representational State Transfer) est un style d'architecture pour la création de services web. Elle utilise les méthodes HTTP standard (GET, POST, PUT, DELETE) pour interagir avec les ressources.
+
+== Configuration de l'environnement
+
+=== Installation de Flask
+
+[source,bash]
+----
+pip install flask
+----
+
+== Création d'une mini API
+
+=== Structure du projet
+
+[source,bash]
+----
+mini_api/
+│
+├── app.py
+└── README.md
+----
+
+=== Code de base (app.py)
+
+[source,python]
+----
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+# Données en mémoire pour simuler une base de données
+books = [
+    {"id": 1, "title": "To Kill a Mockingbird", "author": "Harper Lee"},
+    {"id": 2, "title": "1984", "author": "George Orwell"},
+    {"id": 3, "title": "Pride and Prejudice", "author": "Jane Austen"}
+]
+
+@app.route('/')
+def home():
+    return jsonify({"message": "Bienvenue dans l'API de livres!"})
+
+@app.route('/api/books', methods=['GET'])
+def get_books():
+    return jsonify({"books": books})
+
+@app.route('/api/books/<int:book_id>', methods=['GET'])
+def get_book(book_id):
+    book = next((book for book in books if book["id"] == book_id), None)
+    if book:
+        return jsonify(book)
+    return jsonify({"message": "Livre non trouvé"}), 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
+----
+
+== Explication du code
+
+1. Nous importons Flask et la fonction `jsonify` pour formater nos réponses en JSON.
+2. Nous créons une instance de l'application Flask.
+3. Nous définissons une liste `books` pour simuler une base de données en mémoire.
+4. Nous créons trois routes :
+   - `/` : Page d'accueil
+   - `/api/books` : Pour obtenir tous les livres
+   - `/api/books/<int:book_id>` : Pour obtenir un livre spécifique par son ID
+
+== Lancement de l'application
+
+Pour lancer l'application, exécutez :
+
+[source,bash]
+----
+python app.py
+----
+
+L'API sera accessible à l'adresse `http://localhost:5000`.
+
+== Test de l'API
+
+Vous pouvez tester l'API en utilisant cURL ou un outil comme Postman.
+
+=== Exemples avec cURL
+
+. Obtenir tous les livres :
++
+[source,bash]
+----
+curl http://localhost:5000/api/books
+----
+. Obtenir un livre spécifique :
++
+[source,bash]
+----
+curl http://localhost:5000/api/books/1
+----
+
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration en direct
+
+[NOTE.speaker]
+--
+1. Montrez comment créer le fichier `app.py` et expliquez chaque partie du code.
+2. Lancez l'application et montrez comment elle fonctionne dans le navigateur.
+3. Utilisez cURL pour démontrer les différents endpoints :
+   - Accueil : `curl http://localhost:5000/`
+   - Tous les livres : `curl http://localhost:5000/api/books`
+   - Un livre spécifique : `curl http://localhost:5000/api/books/2`
+   - Un livre inexistant : `curl http://localhost:5000/api/books/99`
+4. Expliquez la structure de la réponse JSON pour chaque requête.
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice pratique : Étendre l'API de livres
+
+=== Objectif
+Étendez l'API de livres pour inclure de nouvelles fonctionnalités en utilisant uniquement des méthodes GET.
+
+[NOTE.speaker]
+--
+* Étapes
+
+1. Ajoutez un nouvel endpoint pour obtenir tous les livres d'un auteur spécifique.
+   - Route suggérée : `/api/books/author/<author_name>`
+
+2. Créez un endpoint pour obtenir des statistiques sur la bibliothèque.
+   - Route suggérée : `/api/stats`
+   - Retournez le nombre total de livres et le nombre d'auteurs uniques.
+
+3. Implémentez un endpoint de recherche simple.
+   - Route suggérée : `/api/books/search?query=<search_term>`
+   - Recherchez dans les titres et les noms d'auteurs.
+
+4. Ajoutez quelques livres supplémentaires à la liste `books` pour tester vos nouvelles fonctionnalités.
+--
+
+=== Exemple de structure pour l'exercice
+
+[source,python]
+----
+@app.route('/api/books/author/<author_name>', methods=['GET'])
+def get_books_by_author(author_name):
+    # Votre code ici
+
+@app.route('/api/stats', methods=['GET'])
+def get_stats():
+    # Votre code ici
+
+@app.route('/api/books/search', methods=['GET'])
+def search_books():
+    # Votre code ici
+----
+
+=== Questions de réflexion
+
+1. Comment géreriez-vous la pagination si la liste de livres devenait très grande ?
+2. Quelles limitations voyez-vous dans l'utilisation de données en mémoire plutôt qu'une vraie base de données ?
+3. Comment pourriez-vous améliorer la recherche pour la rendre plus flexible ou performante ?
+
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Vous avez appris à créer une API simple avec Flask en utilisant la méthode GET.
+* Vous comprenez comment structurer une API REST basique et gérer différents endpoints.
+* Vous avez expérimenté l'utilisation de données en mémoire pour simuler une base de données.
+* Ces compétences constituent une base solide pour développer des APIs plus complexes à l'avenir.
+* La prochaine étape serait d'explorer d'autres méthodes HTTP et l'intégration d'une vraie base de données.
+// end::conclusion[]

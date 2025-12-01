@@ -1,0 +1,11 @@
+erDiagram
+    PERSONNE {
+        int id PK
+        string nom
+    }
+    PASSEPORT {
+        int id PK
+        date expiration
+        int personne_id FK
+    }
+    PERSONNE ||--|| PASSEPORT : "possède"

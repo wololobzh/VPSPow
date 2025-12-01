@@ -1,0 +1,122 @@
+:titre: Reverse proxy best practices
+:module: Docker
+:duree: 90
+:description: Bonnes pratiques pour la configuration et la gestion des reverse proxies en matière de sécurité, scalabilité et surveillance.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* les principes de sécurité pour les reverse proxies.
+* *Appliquer* les techniques de scalabilité pour gérer les charges.
+* *Analyser* les outils et techniques de surveillance pour les reverse proxies.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Traefik VS Caddy
+
+[cols="1,1, 1", options="header"]
+|===
+| Scénarios | Traefik | Caddy
+
+| Intégration avec Docker et Kubernetes
+| Traefik est particulièrement adapté grâce à son support natif des labels Docker et des annotations Kubernetes pour une configuration dynamique.
+| Caddy peut être utilisé avec Docker et Kubernetes, mais nécessite souvent des plugins ou des configurations supplémentaires pour des intégrations avancées.
+
+| Configuration automatique du HTTPS
+| Traefik gère automatiquement les certificats SSL avec Let's Encrypt, mais nécessite une configuration initiale plus complexe.
+| Caddy excelle dans la gestion automatique des certificats SSL, avec une configuration très simple via le Caddyfile.
+
+| Environnements nécessitant un équilibrage de charge avancé
+| Traefik offre des fonctionnalités avancées d'équilibrage de charge et de routage, ce qui le rend idéal pour des architectures complexes.
+| Caddy propose un équilibrage de charge basique, suffisant pour des configurations plus simples.
+
+| Besoin de fonctionnalités de monitoring intégrées
+| Traefik dispose de tableaux de bord intégrés et d'outils de monitoring, ce qui facilite la surveillance des services.
+| Caddy nécessite des outils externes pour le monitoring, car il n'intègre pas de fonctionnalités de tableau de bord.
+
+| Support pour HTTP/3
+| Traefik a un support limité pour HTTP/3, généralement nécessitant des configurations manuelles.
+| Caddy offre un support natif pour HTTP/3, le rendant avantageux pour les applications nécessitant les dernières technologies de protocole.
+
+| Scénarios nécessitant une personnalisation extensible
+| Traefik permet une personnalisation avancée via ses middlewares et plugins, adapté pour des besoins très spécifiques.
+| Caddy est également extensible, mais sa simplicité d'utilisation est souvent privilégiée pour des configurations moins complexes.
+|===
+
+== Sécurité
+
+=== Configuration HTTPS avec Let's Encrypt
+
+* Obtention et renouvellement automatique des certificats
+** Caddy et Traefik offrent une intégration native avec Let's Encrypt
+** Utilisation de Certbot pour automatiser le processus
+
+[NOTE.speaker]
+--
+Let's Encrypt offre des certificats SSL/TLS gratuits pour sécuriser les connexions. Utilisez des outils comme Certbot pour automatiser l'obtention et le renouvellement des certificats, garantissant ainsi des connexions sécurisées en permanence.
+--
+
+=== Autres bonnes pratiques de sécurité
+
+* Configuration des en-têtes de sécurité HTTP
+** Content-Security-Policy : contrôle les sources autorisées pour les ressources
+** X-Frame-Options : empêche l'inclusion de votre site dans des frames
+* Protection contre les attaques courantes (DDoS, etc.)
+
+[NOTE.speaker]
+--
+Configurez les en-têtes de sécurité HTTP comme Content-Security-Policy et X-Frame-Options pour protéger votre application. Utilisez des techniques de rate limiting et des pare-feu pour vous protéger contre les attaques DDoS.
+--
+
+== Scalabilité
+
+=== Gestion des charges et équilibrage
+
+* Techniques d'équilibrage de charge
+** Round-robin : répartition équitable des requêtes
+** Load-based : répartition en fonction de la charge des serveurs
+** Session-based : répartition basée sur les sessions utilisateur
+** IP-based : répartition basée sur les adresses IP
+** Random : répartition aléatoire des requêtes
+* Configuration d'un cluster de serveurs
+
+[NOTE.speaker]
+--
+L'équilibrage de charge répartit le trafic entre plusieurs serveurs pour améliorer la disponibilité et la réactivité. Configurez un cluster de serveurs pour gérer efficacement les pics de trafic et augmenter la résilience du système.
+--
+
+// tag::exercice[]
+=== Exercice
+
+https://github.com/kevinganthy/poc-caddy-load-balancer[poc-caddy-load-balancer]
+
+Faire fonctionner un équilibrage de charge simple 
+
+// end::exercice[]
+
+== Débogage et surveillance
+
+Utilisez Prometheus pour collecter des métriques de performance et Grafana pour visualiser ces données. 
+
+Configurez la journalisation pour capturer les requêtes et les erreurs, ce qui facilite le débogage et l'analyse des problèmes.
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Importance de sécuriser les reverse proxies avec HTTPS et des en-têtes de sécurité.
+* Techniques de scalabilité pour gérer efficacement les charges.
+* Surveillance et débogage pour assurer la performance et la disponibilité.
+
+[NOTE.speaker]
+--
+En appliquant ces bonnes pratiques, vous pouvez améliorer la sécurité, la scalabilité et la fiabilité de vos reverse proxies, assurant ainsi une meilleure expérience utilisateur et une protection renforcée pour vos services backend.
+--
+// end::conclusion[]

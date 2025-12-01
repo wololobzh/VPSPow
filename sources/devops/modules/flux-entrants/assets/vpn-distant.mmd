@@ -1,0 +1,13 @@
+graph TD
+    Internet -->|Chiffrement| VPN_Client
+    VPN_Client -->|Connexion sécurisée| Entreprise_Reseau
+    Utilisateur -->|Accès distant| VPN_Client
+
+    subgraph Utilisateur
+        U1[Employé à distance]
+    end
+
+    subgraph Entreprise_Reseau
+        R1[Serveur de fichiers]
+        R2[Applications internes]
+    end

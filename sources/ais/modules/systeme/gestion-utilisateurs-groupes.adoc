@@ -1,0 +1,142 @@
+:titre: Gestion des utilisateurs et des groupes
+:module: Système
+:duree: 60
+:description: Découvrir comment gérer les utilisateurs et les groupes sur un système Linux.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les concepts de base de la gestion des utilisateurs et des groupes.
+* Savoir utiliser les commandes de gestion des utilisateurs et des groupes.
+* Connaître les principaux fichiers de configuration associés.
+* Appliquer les connaissances pour gérer les utilisateurs et les groupes dans un système Linux
+// end::objectifs[]
+
+// tag::deroulement[]
+== Concepts de base
+
+* Utilisateurs et groupes permettent la gestion de la sécurité et des permissions dans Linux
+* Chaque utilisateur a un identifiant unique (UID) et chaque groupe a un identifiant unique (GID).
+* Les utilisateurs peuvent appartenir à plusieurs groupes
+* Les permissions sont gérées via des commandes telles que `chmod`, `chown` et `chgrp`
+
+== superuser do (sudo)
+
+* `sudo` permet d'exécuter des commandes avec les privilèges d'un autre utilisateur, par défaut le superutilisateur (root).
+* `sudo` est essentiel pour les tâches administratives nécessitant des permissions élevées sans que l'utilisateur se connecte en tant que root.
+* La configuration de `sudo` est gérée par le fichier `/etc/sudoers`, qui doit être modifié avec précaution en utilisant la commande `visudo` pour éviter les erreurs de syntaxe.
+* On peut attribuer des privilèges spécifiques à des utilisateurs ou des groupes via des alias de commandes et des règles définies dans `/etc/sudoers`.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+Exécution d'une commande avec `sudo` :
+
+```shell
+sudo commande
+```
+
+Exemple d'édition du fichier `/etc/sudoers` :
+
+```shell
+# Syntaxe de base pour accorder l'accès sudo à un utilisateur 
+
+utilisateur ALL=(ALL:ALL) ALL
+```
+
+// tag::demo[]
+== Démonstration
+
+**Utilisation de sudo**
+
+[NOTE.speaker]
+--
+* Tenter la commande `visudo` -> command not found
+* Tenter la commande `sudo visudo` -> it works!
+* Ajouter la ligne suivante pour donner des privilèges sudo à un utilisateur nommé `testuser` :
+
+```shell
+	testuser ALL=(ALL:ALL) ALL
+```
+--
+// end::demo[]
+
+== Commandes de gestion des utilisateurs et des groupes
+
+[cols="1,1"]
+|===
+a|
+* `adduser` : ajouter un nouvel utilisateur.
+* `usermod` : modifier un utilisateur existant.
+* `userdel` : supprimer un utilisateur.
+* `groupadd` : ajouter un nouveau groupe.
+a|
+* `groupmod` : modifier un groupe existant.
+* `groupdel` : supprimer un groupe.
+* `passwd` : changer le mot de passe d'un utilisateur.
+* `su` : changer d’utilisateur
+|===
+
+// tag::demo[]
+== Démonstration
+
+**Gestion d’utilisateurs et de groupes**
+
+[NOTE.speaker]
+--
+* Ajouter un nouvel utilisateur avec `useradd`
+* Modifier un utilisateur existant avec `usermod`
+* Supprimer un utilisateur avec `userdel`
+* Ajouter un nouveau groupe avec `groupadd`
+* Modifier un groupe existant avec `groupmod`
+* Supprimer un groupe avec `groupdel`
+* Changer le mot de passe d’un utilisateur avec `passwd`
+* Se connecter à l’utilisateur créé avec la commande `su`
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice
+
+* Créer un nouvel utilisateur appelé `testuser` et lui assigner un mot de passe
+* Se connecter en tant que `testuser` et tester la commande `sudo apt update`
+* Ajouter l’utilisateur au groupe `sudo`
+* Se connecter en tant que `testuser`
+* La commande `sudo apt update`  devrait à présent fonctionner
+// end::exercice[]
+
+== Fichiers de configuration
+
+* `/etc/passwd` : fichier contenant les informations de base sur les utilisateurs.
+* `/etc/shadow` : fichier contenant les mots de passe chiffrés des utilisateurs.
+* `/etc/group` : fichier contenant les informations sur les groupes.
+* `/etc/gshadow` : fichier contenant les mots de passe des groupes chiffrés.
+
+// tag::demo[]
+== Démonstration
+
+**Fichiers de configuration**
+
+[NOTE.speaker]
+--
+* Montrer le contenu des fichiers suivants avec la commande `cat`
+** `/etc/passwd`
+** `/etc/shadow`
+** `/etc/group`
+** `/etc/gshadow`
+--
+// end::demo[]
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Compréhension des concepts de base de la gestion des utilisateurs et des groupes.
+* Maîtrise des principales commandes pour gérer les utilisateurs et les groupes.
+* Connaissance des fichiers de configuration essentiels et de leur rôle.
+* Capacité à appliquer ces connaissances dans un environnement Linux.
+// end::conclusion[]

@@ -1,0 +1,48 @@
+:title: Diagrammes de Classe en UML
+:number: 03 
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée est dédiée aux diagrammes de classe en UML. Elle permet d'apprendre à structurer les éléments d'un système en identifiant les classes, leurs attributs, leurs méthodes, et les relations entre elles. Les apprenants acquerront une vision claire des dépendances et des interactions entre classes et comprendront comment modéliser des structures complexes.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les bases des diagrammes de classe en UML
+* Identifier et définir les classes, attributs, et méthodes dans un système
+* Modéliser les relations entre classes (associations, dépendances, agrégations, et compositions)
+* Comprendre l'héritage et la généralisation dans les diagrammes de classe
+* Concevoir des diagrammes de classe qui représentent fidèlement une structure logicielle
+* Savoir traduire un besoin métier en diagramme de classe
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Maîtrise des concepts de base de l'UML et de l'orientation objet
+* Expérience pratique dans la conception de diagrammes de classe pour des applications
+* Compétences en analyse et modélisation de systèmes
+* Connaissance des bonnes pratiques pour organiser et structurer des diagrammes de classe lisibles
+* Compétences pédagogiques pour enseigner les concepts d'abstraction, d'héritage et de polymorphisme
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[] 
+
+:correction: https://github.com/O-clock-Teach/AnalyseEtConception/blob/main/Challenge/docs/corrections/J3.adoc
+:temps: jusqu'à 45 minutes
+:description: Passer du temps à bien corriger le challenge d'hier.
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/AnalyseEtConception/050DiagrammeDeClasse.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+TIP: 🍕 Pause déjeuner
+
+:challenge: https://github.com/O-clock-Teach/AnalyseEtConception/tree/main/Challenge
+:description: Modélisation du projet
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+// end::deroulement[]

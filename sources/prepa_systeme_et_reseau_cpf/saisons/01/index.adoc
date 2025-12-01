@@ -1,0 +1,54 @@
+:title: Intégration et Linux  
+:number: 01  
+:duration: 35  
+include::../../../../adoc/libs/header-saison.adoc[]  
+
+// tag::intro[]  
+Cette saison pose les bases indispensables pour une immersion dans le monde du numérique et de l’administration système. Les apprenants découvrent l’environnement Linux, s’initient à la ligne de commande et apprennent à comprendre les concepts fondamentaux des systèmes d’exploitation.  
+// end::intro[]  
+
+== Objectifs pédagogiques  
+
+// tag::objectifs[]  
+* Comprendre les bases du numérique et des systèmes d’exploitation  
+* Découvrir et utiliser l’environnement Linux  
+* Apprendre les commandes essentielles de la ligne de commande  
+* Être capable de naviguer dans un système de fichiers et d’exécuter des scripts simples  
+* Maîtriser les principes de base de l’installation et de la configuration d’un système Linux  
+// end::objectifs[]  
+
+== Notions  
+
+// tag::notions[]  
+* Introduction aux systèmes d’exploitation (Linux vs autres OS)  
+* Commandes fondamentales de la ligne de commande (ls, cd, mv, cp, rm, etc.)  
+* Gestion des fichiers et des répertoires  
+* Introduction à la gestion des utilisateurs et des permissions  
+* Exploration des processus et de la gestion des services de base  
+* Installation et mise à jour des logiciels sous Linux  
+* Scripts Shell simples pour automatiser des tâches courantes  
+* Configuration réseau de base sous Linux  
+// end::notions[]  
+
+== Prérequis formateur  
+
+// tag::prerequis[]  
+* Connaissance approfondie des systèmes Linux  
+* Maîtrise de la ligne de commande et des outils de gestion de fichiers  
+* Compétence en script Shell pour l’automatisation  
+* Expérience en initiation ou formation aux outils numériques pour débutants  
+// end::prerequis[]  
+
+== Résumé  
+
+// tag::resume[]  
+Cette saison constitue une entrée en matière idéale pour les novices. Elle initie les apprenants à l’univers du numérique en leur fournissant les outils et les notions nécessaires pour évoluer dans un environnement Linux. Grâce à une approche pratique et progressive, ils acquièrent une compréhension solide des bases techniques et organisationnelles.  
+// end::resume[]  
+
+== Déroulement  
+
+link:./overview.html[Vue kanban]  
+
+// tag::deroulement[]  
+include::episodes/*/*.adoc[opts=episodes]  
+// end::deroulement[]  

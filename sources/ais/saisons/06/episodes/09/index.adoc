@@ -1,0 +1,52 @@
+:title: Bash Fonction et automatisation
+:number: 09
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Les fonctions
+* Passage de paramètres
+* Code de retour
+* Gestion des erreurs
+* Fonction avancée
+* Modularisation
+* Automatisations ?
+* Exemple de commandes automatisables
+* Planification avec cron
+* Gestion crontab
+* Planification avec anacron
+* Planification avec at
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* un environnement linux pour pouvoir utiliser Bash
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+include::../../../../modules/scripting/sh-fonctions.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/scripting/sh-automatisation.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1F0ZhmlVJFLsKthLby8ALyNVFOuKu_LJL/view?usp=drive_link
+:description: Bash Fonction et automatisation
+:correction: https://drive.google.com/file/d/1AV7V0DksfN5i6itpYXOFYaVdmJMxGiMA/view
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s06e09]
+--
+
+// end::deroulement[]

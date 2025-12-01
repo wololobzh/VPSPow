@@ -1,0 +1,53 @@
+:title: 🌐 HTML/CSS
+:number: 02
+:duration: 35
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Découverte des fondamentaux du développement web avec HTML et CSS, enrichie par l'utilisation d'outils modernes comme GitHub Copilot. Une approche pratique pour créer des interfaces web structurées et stylisées.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* la structure d'une page web avec HTML
+* *Maîtriser* les bases du CSS pour la mise en forme
+* *Appliquer* les bonnes pratiques de développement web
+* *Utiliser* les outils modernes d'assistance au code
+* *Créer* des pages web responsives et accessibles
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+* Structure HTML et sémantique
+* Styles CSS et sélecteurs
+* Outils de développement
+* Bonnes pratiques d'intégration
+* GitHub Copilot pour HTML/CSS
+// end::notions[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Maîtrise HTML5/CSS3
+* Connaissance des outils de développement
+* GitHub Copilot configuré
+* Accès à l'organisation GitHub
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+Formation aux fondamentaux du web avec une approche progressive et pratique. L'accent est mis sur la compréhension plutôt que la mémorisation, avec des démonstrations interactives et l'utilisation d'outils modernes pour faciliter l'apprentissage.
+
+Les corrections sont participatives pour maintenir l'engagement et renforcer la compréhension. L'objectif est de construire des bases solides tout en gardant la motivation d'apprendre.
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue kanban]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

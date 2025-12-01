@@ -1,0 +1,267 @@
+:titre: Plannification de tâches
+:module: Système
+:duree: 60
+:description: Explication des différentes méthodes de planification de tâches sous Linux, incluant cron, at, batch, systemd et Rundeck. Ajout d'une partie sur la gestion des logs d'exécution.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** les concepts de planification de tâches sous Linux.
+* **Appliquer** les commandes `cron`, `at` et `batch` pour planifier des tâches.
+* **Analyser** les différences entre les méthodes de planification (`cron`, `at`, `batch`, `systemd`).
+* **Utiliser** Rundeck pour automatiser des tâches complexes.
+* **Analyser** les logs des tâches planifiées pour assurer leur bon déroulement.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction à la planification de tâches
+
+La planification de tâches sous Linux permet d'exécuter des scripts ou des commandes à des moments précis, sans intervention manuelle.
+
+.Les principales méthodes pour planifier des tâches sont :
+* `cron`
+* `at`
+* `batch`
+* Les services `systemd`
+* Rundeck pour la gestion avancée
+
+[NOTE.speaker]
+--
+Il est essentiel de bien choisir la méthode de planification en fonction de la tâche à accomplir. Les tâches récurrentes se font souvent via cron, tandis que les tâches ponctuelles peuvent être gérées via at ou batch. Systemd est une alternative moderne et flexible à cron, tandis que Rundeck permet une gestion centralisée et automatisée des tâches dans des environnements complexes.
+--
+
+== Cron
+
+.Cron permet de planifier des tâches récurrentes à des intervalles réguliers
+```bash
+# minute (0-59) heure (0-23) jour-du-mois (1-31) mois (1-12) jour-de-la-semaine (0-7) commande
+0 5 * * * /chemin/vers/script.sh
+```
+
+Les tâches planifiées avec cron sont gérées dans des fichiers appelés crontab. Il existe :
+
+* Des crontabs utilisateurs
+* Des crontabs système
+
+[NOTE.speaker]
+--
+Cron est utilisé pour exécuter des tâches à des intervalles réguliers comme quotidiennement, chaque heure ou chaque semaine. Les tâches planifiées sont configurées dans un fichier crontab, propre à chaque utilisateur ou au système.
+
+La syntaxe des crontabs est composée de cinq champs représentant les minutes, heures, jours du mois, mois et jours de la semaine.
+--
+
+=== Exemple
+
+.Planifier un script pour s'exécuter tous les jours à 5h du matin
+```
+0 5 * * * /chemin/vers/script.sh
+```
+
+// tag::demo[]
+=== Démonstration
+
+Planifier une tâche avec cron
+
+[NOTE.speaker]
+--
+1. Ouvrir le fichier crontab pour l'utilisateur courant : `crontab -e`
+2. Ajouter une ligne pour exécuter un script le lundi à 6h du matin : `0 6 * * 1 /chemin/vers/mon_script.sh`
+3. Sauvegarder et vérifier avec `crontab -l`
+--
+// end::demo[]
+
+== At et Batch
+
+.At permet de planifier une tâche unique à exécuter à un moment précis
+```bash
+echo "/chemin/vers/script.sh" | at now + 1 hour
+```
+
+.Batch permet de planifier des tâches à exécuter lorsque la charge du système est faible
+```bash
+echo "/chemin/vers/script.sh" | batch
+```
+
+[NOTE.speaker]
+--
+Contrairement à cron, at permet de planifier des tâches ponctuelles, qui ne se répètent pas. Batch planifie des tâches qui ne s'exécuteront que lorsque la charge du système est suffisamment basse.
+
+La commande at utilise des expressions comme "now + 2 hours" pour spécifier le moment de l'exécution.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Planifier une tâche avec at et batch
+
+[NOTE.speaker]
+--
+1. Utiliser `at` pour planifier une tâche qui s'exécutera dans une minute : `echo "/chemin/vers/script.sh" | at now + 1 minute`
+2. Utiliser `batch` pour planifier une tâche à exécuter lorsque la charge du système est faible : `echo "/chemin/vers/script.sh" | batch`
+--
+// end::demo[]
+
+== Services systemd pour la planification
+
+Systemd peut être utilisé pour planifier des services ou des tâches à des intervalles réguliers
+
+```bash
+sudo systemctl enable mon_service.service
+```
+
+Systemd peut remplacer cron et offre des options avancées comme la gestion d'unité de service et de temporisation (timer).
+
+* Créer une unité de service (.service)
+* Créer un timer associé pour planifier son exécution
+
+[NOTE.speaker]
+--
+Systemd permet de planifier des tâches plus complexes que cron. Avec des fichiers .service et .timer, vous pouvez définir précisément quand et comment un service ou une commande doit s'exécuter. Cela permet une gestion plus fine des dépendances et des temps d'exécution.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Créer un service systemd planifié
+
+[NOTE.speaker]
+--
+1. Créer un fichier `mon_service.service` dans `/etc/systemd/system/`
+2. Ajouter la configuration du service (commande à exécuter)
+3. Créer un fichier `mon_service.timer` pour définir l'intervalle de planification
+4. Activer le timer avec `sudo systemctl enable mon_service.timer`
+5. Vérifier le statut avec `systemctl list-timers`
+--
+// end::demo[]
+
+== Logs d'exécution des tâches
+
+La gestion des logs est essentielle pour vérifier que les tâches planifiées s'exécutent correctement. Voici quelques commandes utiles :
+
+.Obtenir les logs d'un service systemd
+```bash
+journalctl -u nom_du_service
+```
+
+.Obtenir les logs des tâches cron
+```bash
+cat /var/log/syslog | grep CRON
+```
+
+[NOTE.speaker]
+--
+Pour les tâches planifiées via cron, les logs sont souvent écrits dans `/var/log/syslog`. Pour systemd, la commande `journalctl` permet de vérifier les logs d'un service ou d'un timer.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Vérifier les logs d'une tâche cron ou systemd
+
+[NOTE.speaker]
+--
+1. Utiliser `cat /var/log/syslog | grep CRON` pour vérifier les logs des tâches cron
+2. Utiliser `journalctl -u nom_du_service` pour voir les logs d'un service systemd
+--
+// end::demo[]
+
+== Rundeck
+
+Rundeck est un outil open-source qui permet d'automatiser et de gérer des tâches sur plusieurs serveurs. 
+
+Il offre une interface web et des fonctionnalités avancées comme la gestion des logs, la planification de tâches, et la gestion des accès utilisateurs.
+
+.Installation de Rundeck
+```bash
+sudo apt install rundeck
+```
+
+[NOTE.speaker]
+--
+Rundeck permet d'automatiser des tâches complexes sur plusieurs serveurs avec une interface web. Il est idéal pour les environnements de production où des tâches doivent être centralisées et tracées.
+--
+
+// tag::demo[]
+=== Démonstration
+
+Utiliser Rundeck pour planifier une tâche
+
+[NOTE.speaker]
+--
+1. Installer Rundeck avec `sudo apt install rundeck`
+2. Configurer un projet et ajouter un noeud (localhost)
+3. Créer une tâche via l'interface Rundeck pour l'exécuter
+4. Vérifier les logs d'exécution directement dans l'interface
+--
+// end::demo[]
+
+== Comparaison entre cron, at, batch, systemd et Rundeck
+
+.Cron
+* Planification simple et récurrente
+* Peu de gestion des logs
+
+.At et Batch
+* Planification ponctuelle (at)
+* Planification basée sur la charge du système (batch)
+
+.Systemd
+* Gestion plus avancée des tâches et services
+* Centralisation des logs avec `journalctl`
+
+.Rundeck
+* Outil puissant pour la gestion et l’automatisation de tâches sur plusieurs serveurs
+* Gestion des logs, des accès et des permissions
+
+[NOTE.speaker]
+--
+La différence majeure entre ces outils réside dans leur flexibilité et leur capacité à gérer des tâches complexes. Cron est utile pour des tâches simples et récurrentes, tandis que systemd offre une meilleure gestion des dépendances et des services. Rundeck est l'outil idéal pour la gestion centralisée dans des environnements complexes avec plusieurs serveurs.
+--
+// end::deroulement[]
+
+// tag::exercice[]
+== Exercice 1
+
+Planifier cette tâche avec cron pour tous les jours du mois de novembre à 6h12 du matin.
+
+[source,shell]
+----
+echo "$(date) >> ~/logs/mon_script.log"
+----
+// end::exercice[]
+
+// tag::exercice[]
+== Exercice 2
+
+Utiliser at pour planifier cette tâche dans 4 heures.
+
+[source,shell]
+----
+echo "$(date) >> ~/logs/mon_script.log"
+----
+// end::exercice[]
+
+// tag::exercice[]
+== Exercice 3
+
+Créer un service systemd qui s'exécute une fois par jour : 
+
+* Créer un fichier .service avec la commande à exécuter
+* Créer un fichier .timer pour le planifier chaque jour
+* Activer et vérifier avec `systemctl`
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Compréhension des bases de la planification de tâches avec cron, at, batch, systemd
+* Capacité à planifier des tâches simples et récurrentes avec cron
+* Maîtrise des commandes at et batch pour les tâches ponctuelles
+* Connaissance de l'utilisation des services systemd pour la planification avancée
+* Familiarité avec l'outil Rundeck pour l'automatisation et la gestion des logs
+* Capacité à analyser les logs pour vérifier le bon déroulement des tâches
+// end::conclusion[]

@@ -1,0 +1,50 @@
+:title: DNS / DHCP
+:number: 13
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Comprendre le fonctionnement et la mise en place des services DNS et DHCP sur Windows Server
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Maîtriser l’installation et la configuration des zones DNS sur Windows Server, assurant une résolution de noms précise et efficace.
+* Voir la configuration et de la gestion du service DHCP pour optimiser la connectivité réseau.
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* avoir de pré configuré pour les démonstrations 
+** une vm linux (Serveur)
+** une vm linux (client)
+** une vm Windows serveur
+** une vm Windows client
+* Savoir configurer un serveur DNS
+
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+:correction: 
+:temps: 90 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/reseau/dns-windows.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/reseau/dhcp-windows.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1npqp1bn91s_93ldh1Y5ePXgfiqfJwxmd/view?usp=drive_link
+:description: DHCP / DNS Windows
+:correction:
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

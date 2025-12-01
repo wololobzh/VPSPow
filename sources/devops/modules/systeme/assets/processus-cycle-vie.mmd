@@ -1,0 +1,9 @@
+flowchart TD
+    start{.} --> Nouveau
+    Nouveau --> Exécutable
+    Exécutable --> EnCours
+    EnCours -- "Evénement survenu" --> Bloqué
+    EnCours --> Suspendu
+    EnCours --> Terminé
+    Suspendu -- "Arrêté" --> Terminé
+    Suspendu -- "Reprise" --> Exécutable

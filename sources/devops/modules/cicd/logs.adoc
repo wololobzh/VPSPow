@@ -1,0 +1,50 @@
+:titre: ModuleName
+:module: GroupName
+:duree: 30
+:description: Lorem ipsum dolor sit amet.
+// A décommenter
+// include::../../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+// Sous forme de liste à puce, en utilisant la taxonomie de Bloom (Se rappeler, Comprendre, Appliquer, Analyser, Évaluer, Créer)
+* 
+// end::objectifs[]
+
+// tag::deroulement[]
+== Slide de niveau 1
+
+Contenu visible et synthétique
+
+* avec des listes à puces si possible
+* ...
+
+[NOTE.speaker]
+--
+Et des notes pour le speaker qui l'aideront dans son discours. Ces notes sont visibles dans les pdf partagés avec les étudiants.
+--
+
+=== Slide de niveau 1.1
+
+// tag::demo[]
+// == Démonstration (facultatif)
+// end::demo[]
+
+// tag::exercice[]
+// == Exercice (facultatif)
+// end::exercice[]
+
+// end::deroulement[]
+
+
+== Conclusion
+
+// tag::conclusion[]
+* ...
+// end::conclusion[]

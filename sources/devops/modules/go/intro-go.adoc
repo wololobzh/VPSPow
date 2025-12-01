@@ -1,0 +1,282 @@
+:titre: Introduction à Go et différences clés avec Python
+:module: Go
+:duree: 120
+:description: Découverte du langage Go et comparaison avec Python pour les développeurs Python souhaitant apprendre Go.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* *Comprendre* les concepts de base du langage Go
+* *Comparer* les principales différences entre Go et Python
+* *Appliquer* les connaissances acquises pour écrire des programmes simples en Go
+// end::objectifs[]
+
+// tag::deroulement[]
+== Présentation du langage Go
+
+image::https://media.tenor.com/zCXJ_qKDlgkAAAAC/golang-golang-halloween.gif[]
+
+=== Historique et usage
+
+Go est un langage de programmation open-source développé par Google en 2007 et rendu public en 2009. Il a été conçu pour être simple, efficace et adapté à la programmation système et réseau.
+
+[NOTE.speaker]
+--
+Go a été créé pour résoudre des problèmes spécifiques rencontrés chez Google, notamment la gestion de grands systèmes distribués.
+--
+
+=== Avantages de Go dans les systèmes distribués et le DevOps
+
+* Compilation rapide
+* Exécution efficace
+* Gestion de la concurrence intégrée
+* Bibliothèque standard riche
+
+=== Comparaison avec Python
+
+[cols="1,1,1"]
+|===
+|Aspect |Go |Python
+
+|Typage
+|Statique
+|Dynamique
+
+|Compilation
+|Compilé
+|Interprété
+
+|Syntaxe
+|Accolades
+|Indentation
+
+|Orienté objet
+|Basé sur les structs et interfaces
+|Basé sur les classes
+
+|Gestion des erreurs
+|Retours multiples et type `error`
+|Exceptions
+|===
+
+== Installation et mise en place de l'environnement Go
+
+=== Installation de Go
+
+1. Télécharger Go depuis le site officiel : https://golang.org/dl/
+2. Suivre les instructions d'installation pour votre système d'exploitation
+3. Vérifier l'installation en ouvrant un terminal et en tapant :
+
+[source,bash]
+----
+go version
+----
+
+=== Structure d'un projet Go
+
+[source]
+----
+monprojet/
+├── go.mod
+├── main.go
+├── file1.go
+├── file2.go
+└── file3.go
+----
+
+* `go.mod` : Fichier de configuration du module
+* `main.go` : Point d'entrée du programme
+* `filex.go` : Séparation logique du code dans des fichiers séparés
+
+== Syntaxe de base Go
+
+=== Variables et types de base
+
+[source,go]
+----
+var i int = 42
+var f float64 = 3.14
+var s string = "Hello, Go!"
+var b bool = true
+
+// Déclaration courte
+x := 10
+----
+
+=== Différences avec Python
+
+1. Typage statique vs typage dynamique
+2. Pas de classes (structs au lieu de classes)
+3. Fonction `main()` obligatoire
+
+=== Premier programme "Hello, World!" en Go
+
+[source,go]
+----
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}
+----
+
+Exécuter le code
+[source,bash]
+----
+go run main.go
+----
+
+Initialiser le projet
+
+[source,bash]
+----
+go mod init oclock.school/montest
+----
+
+Initiliser les dépendances
+
+[source,bash]
+----
+go mod tidy
+----
+
+=== Compiler son programme
+
+On génère l'exécutable
+
+[source,bash]
+----
+go build
+----
+
+Et on l'exécute
+
+[source,bash]
+----
+./montest
+----
+
+
+== Les fonctions en Go
+
+=== Déclaration et appel de fonctions
+
+[source,go]
+----
+func add(a, b int) int {
+    return a + b
+}
+
+func main() {
+    result := add(5, 3)
+    fmt.Println(result)
+}
+----
+
+=== Différences avec Python
+
+1. Typage explicite des paramètres et du retour
+2. Retours multiples possibles
+
+[source,go]
+----
+func divide(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, errors.New("division by zero")
+    }
+    return a / b, nil
+}
+----
+
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration : Comparaison de fonctions Go et Python
+
+[NOTE.speaker]
+--
+Nous allons créer une fonction simple en Go et la comparer avec son équivalent en Python.
+
+1. Créer un fichier `math_funcs.go`
+2. Implémenter une fonction d'addition en Go
+3. Créer un fichier `math_funcs.py`
+4. Implémenter la même fonction en Python
+5. Comparer les deux implémentations
+--
+
+.math_funcs.go
+[source,go]
+----
+package main
+
+import "fmt"
+
+func add(a, b int) int {
+    return a + b
+}
+
+func main() {
+    result := add(5, 3)
+    fmt.Printf("5 + 3 = %d\n", result)
+}
+----
+
+.math_funcs.py
+[source,python]
+----
+def add(a, b):
+    return a + b
+
+if __name__ == "__main__":
+    result = add(5, 3)
+    print(f"5 + 3 = {result}")
+----
+
+[NOTE.speaker]
+--
+On note plusieurs différences :
+
+- Typage explicite en Go
+- Fonction `main()` obligatoire en Go
+- Syntaxe des fonctions
+- Impression formatée
+--
+
+// end::demo[]
+
+// tag::exercice[]
+== Exercice : Implémentation de fonctions mathématiques
+
+Objectif : Créer des fonctions mathématiques simples en Go et les comparer avec leurs équivalents en Python.
+
+1. Créez un fichier `math_operations.go`
+2. Implémentez les fonctions suivantes en Go :
+   - `multiply(a, b int) int`
+   - `divide(a, b float64) (float64, error)`
+3. Créez un fichier `math_operations.py`
+4. Implémentez les mêmes fonctions en Python
+5. Comparez les implémentations et notez les différences
+
+[TIP]
+N'oubliez pas de gérer le cas de la division par zéro dans la fonction `divide` !
+
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Vous avez découvert les bases du langage Go et ses principales différences avec Python.
+* Vous êtes capable de créer un projet Go simple et d'implémenter des fonctions de base.
+* Vous comprenez les avantages de Go pour certains types de projets, notamment dans les domaines des systèmes distribués et du DevOps.
+// end::conclusion[]
+
+[NOTE.speaker]
+--
+Il est bon de continuer à explorer Go en implémentant des algorithmes déjà fait en Python. Cela les aidera à mieux comprendre les différences syntaxiques et conceptuelles entre les deux langages.
+--

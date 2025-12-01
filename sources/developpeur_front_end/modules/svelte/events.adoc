@@ -1,0 +1,361 @@
+:titre: Les événements dans Svelte
+:module: Frontend Svelte
+:duree: 90
+:description: Découvrir et maîtriser la gestion des événements dans Svelte.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* Comprendre le fonctionnement des événements DOM dans Svelte
+* Appliquer différentes méthodes de gestion des événements
+* Analyser le flux des événements avec les phases de capture et de bouillonnement
+* Créer des composants interactifs avec des événements
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction aux événements DOM
+
+=== Syntaxe de base
+
+* Utilisation de la directive `on:` suivie du nom de l'événement
+* Format: `on<eventname>={handler}`
+* Version courte si le nom correspond: `{oneventname}`
+
+[NOTE.speaker]
+====
+* La syntaxe est très intuitive dans Svelte
+* Montrer que c'est similaire aux événements natifs du DOM
+* Insister sur la simplicité de la syntaxe par rapport à d'autres frameworks
+====
+
+=== Événements courants
+
+* `onclick` - Clic souris
+* `onkeydown` - Touche pressée
+* `onsubmit` - Soumission formulaire
+* `onpointermove` - Mouvement pointeur
+* `oninput` - Saisie dans un champ
+
+[NOTE.speaker]
+====
+* Ces événements sont les plus utilisés au quotidien
+* Ils correspondent aux événements natifs du DOM
+* Svelte ne fait qu'ajouter une couche de simplification
+====
+
+// tag::demo[]
+=== Démonstration : Événements simples
+
+[NOTE.speaker]
+====
+* Créer un nouveau composant Svelte
+* Ajouter un bouton avec un événement click :
+```svelte
+<script>
+  let count = $state(0);
+  
+  function handleClick() {
+    count++;
+  }
+</script>
+
+<button onclick={handleClick}>
+  Clics: {count}
+</button>
+```
+* Montrer le résultat et expliquer le flux
+* Ajouter un champ texte avec événement input
+====
+// end::demo[]
+
+== Gestion des événements
+
+=== Handlers inline vs externes
+
+* **Handlers externes** : définis dans le bloc `<script>`
+* **Handlers inline** : directement dans l'attribut
+* Avantages/inconvénients de chaque approche
+
+[NOTE.speaker]
+====
+* Les handlers externes sont plus maintenables et réutilisables
+* Les handlers inline sont pratiques pour les cas simples
+* Recommander d'utiliser des handlers externes pour du code complexe
+====
+
+=== L'objet Event
+
+* Contient toutes les informations sur l'événement
+* Propriétés principales:
+** `event.target` - élément source
+** `event.currentTarget` - élément courant
+** `event.preventDefault()` - empêche le comportement par défaut
+
+[NOTE.speaker]
+====
+* L'objet event est automatiquement passé aux handlers
+* Il contient de nombreuses informations utiles
+* Important pour la gestion fine des événements
+====
+
+// tag::demo[]
+=== Démonstration : Types de handlers
+
+[NOTE.speaker]
+====
+* Créer un composant avec les deux approches :
+```svelte
+<script>
+  let text = $state('');
+  
+  function handleInput(event) {
+    text = event.target.value.toUpperCase();
+  }
+</script>
+
+<!-- Handler externe -->
+<input oninput={handleInput} />
+
+<!-- Handler inline -->
+<input oninput={(e) => text = e.target.value.toLowerCase()} />
+
+<p>Texte: {text}</p>
+```
+* Montrer la différence entre les deux approches
+* Expliquer l'accès à l'objet event
+====
+// end::demo[]
+
+== Phases des événements
+
+=== Phase de Bubbling
+
+* L'événement "remonte" de l'élément cible vers ses parents
+* Comportement par défaut
+* Permet la délégation d'événements
+
+[NOTE.speaker]
+====
+* Analogie : comme une bulle qui remonte à la surface de l'eau
+* Chaque élément parent peut "attraper" l'événement
+* Utile pour gérer plusieurs éléments similaires
+====
+
+=== Phase de Capture
+
+* L'événement "descend" des parents vers l'élément cible
+* Activée avec le modificateur `capture`
+* Moins courante mais utile dans certains cas
+
+[NOTE.speaker]
+====
+* Analogie : comme l'eau qui coule du haut vers le bas
+* Permet d'intercepter les événements avant qu'ils n'atteignent leur cible
+* Utile pour des cas spécifiques de contrôle
+====
+
+// tag::demo[]
+=== Démonstration - Phases d'événements
+
+[NOTE.speaker]
+====
+* Créer un exemple montrant les deux phases :
+
+```svelte
+<div 
+  onclickcapture={() => alert('Capture externe')}
+  onclick={() => alert('Bubble externe')}
+  style="padding: 20px; background: #eee;"
+>
+  <button 
+    onclickcapture={() => alert('Capture interne')}
+    onclick={() => alert('Bubble interne')}
+  >
+    Cliquez-moi
+  </button>
+</div>
+```
+
+* Expliquer l'ordre d'exécution
+* Montrer la différence avec et sans capture
+====
+// end::demo[]
+
+== Événements composants
+
+=== Passage d'événements
+
+* Les événements peuvent être passés comme props
+* Utilisation des props pour définir les handlers
+* Propagation à travers les composants
+
+[NOTE.speaker]
+====
+* Les événements sont des props comme les autres
+* Permet de créer des composants réutilisables
+* Facilite la communication entre composants
+====
+
+=== Event forwarding
+
+* Transmission des événements vers le parent
+* Utilisation du spread operator `{...$$props}`
+* Simplification du code
+
+[NOTE.speaker]
+====
+* Le forwarding permet de remonter les événements
+* Très utile pour les composants wrapper
+* Évite de redéfinir tous les handlers
+====
+
+// tag::demo[]
+=== Démonstration - Composants et événements
+
+[NOTE.speaker]
+====
+* Créer un composant enfant :
+
+```svelte
+// Button.svelte
+<script>
+  let { onclick } = $props();
+</script>
+
+<button {onclick}>
+  <slot />
+</button>
+```
+
+* Utiliser le composant dans un parent :
+
+```svelte
+// App.svelte
+<script>
+  import Button from './Button.svelte';
+  
+  function handleClick() {
+    alert('Bouton cliqué !');
+  }
+</script>
+
+<Button onclick={handleClick}>
+  Cliquez-moi
+</Button>
+```
+
+* Montrer comment les événements sont transmis
+* Expliquer l'intérêt de cette approche
+====
+// end::demo[]
+
+// tag::exercice[]
+== Exercice
+
+Voici un compteur simple. Modifiez-le pour :
+
+[cols="1,1"]
+|===
+a|
+1. Ajouter un bouton de réinitialisation (reset)
+2. Changer la couleur du texte en rouge si le compteur est négatif
+3. Désactiver le bouton "-" quand le compteur est à 0
+4. Bonus : Ajouter un événement au clavier pour incrémenter avec "+" et décrémenter avec "-"
+a|
+Code de base :
+```svelte
+<script>
+  let count = $state(0);
+</script>
+
+<div class="counter">
+  <button onclick={() => count--}>-</button>
+  <span>{count}</span>
+  <button onclick={() => count++}>+</button>
+</div>
+
+<style>
+  .counter {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  span {
+    min-width: 2rem;
+    text-align: center;
+  }
+</style>
+```
+|===
+
+[NOTE.speaker]
+====
+Solution attendue :
+```svelte
+<script>
+  let count = $state(0);
+  
+  function handleKeydown(event) {
+    if (event.key === '+') count++;
+    if (event.key === '-' && count > 0) count--;
+  }
+</script>
+
+<svelte:window onkeydown={handleKeydown}/>
+
+<div class="counter">
+  <button 
+    onclick={() => count--}
+    disabled={count === 0}
+  >-</button>
+  
+  <span style:color={count < 0 ? 'red' : 'inherit'}>
+    {count}
+  </span>
+  
+  <button onclick={() => count++}>+</button>
+  
+  <button onclick={() => count = 0}>Reset</button>
+</div>
+
+<style>
+  .counter {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  span {
+    min-width: 2rem;
+    text-align: center;
+  }
+  
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+</style>
+```
+
+Points à vérifier :
+* Ajout correct du bouton reset
+* Gestion de la couleur conditionnelle
+* Désactivation du bouton avec disabled
+* Gestion des événements clavier
+====
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Maîtrise de la syntaxe des événements dans Svelte 
+* Compréhension des différentes approches de gestion des événements
+* Capacité à gérer le flux des événements
+* Savoir créer des composants interactifs
+// end::conclusion[]

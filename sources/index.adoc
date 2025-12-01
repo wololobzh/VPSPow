@@ -2,24 +2,47 @@
 
 == Formations
 
-=== Modules de formations indépendants
+=== Systèmes et réseaux
+
+* Bac+2 TSSR
+* link:./ais/index.html[DAC Bac+4 - Expert Administration d'Infrastructures Sécurisées]
+* link:./devops/index.html[DAC Bac+4 - Expert DevOps]
+* link:/devops/index.html[TEST]
+
+=== Développement
+
+==== ABC
+
+* link:https://jubilant-disco-m6g355o.pages.github.io[Développeur Front End]
+* link:https://jubilant-disco-m6g355o.pages.github.io[Développeur Back End]
+* link:https://jubilant-disco-m6g355o.pages.github.io[Expert JS]
+
+==== Others
+
+* link:https://laughing-disco-2kr9olr.pages.github.io/#/[Bac +2 DWWM 2023/2024]
+* link:./developpeur_front_end/index.html[DAC A Développeur Front End Boosté à l'IA]
+* link:https://sturdy-guacamole-73wgql7.pages.github.io/[DAC Bac+4 - CDA Init & Alt]
+* link:./developpeur_expert_js/index.html[DAC Expert JavaScript option NestJS]
+
+* link:https://animated-guacamole-m52g4w7.pages.github.io/[DAC Première version]
+
+== WIP
+
+=== Systèmes et réseaux
+
+* Bac+5 Master Cybersécurité
+
+=== Développement
+
+* link:./dwwm/index.html[Bac+2 - Developpeur Web et Web Mobile (DWWM)]
+* link:./developpeur_front_end/index.html[Développeur Back End]
+* link:./developpeur_expert_data/index.html[Expert Data]
+* Bac+5 Master Data Engineer
+
+=== Design
+
+* link:./cdui/index.html[Bac+4 - CDUI]
+
+=== Autres
 
 * link:./courtes/index.html[Formations courtes]
-
-//=== Systèmes et réseaux
-
-//* link:./ais/index.html[DAC Bac+4 - Expert Administration d'Infrastructures Sécurisées]
-//* link:./devops/index.html[DAC Bac+4 - Expert DevOps]
-//
-//=== Développement
-
-//* link:./developpeur_front_end/index.html[Développeur Front End]
-//* link:./developpeur_back_end/index.html[WIP Développeur Back End]
-//* link:./developpeur_expert_js/index.html[Expert JavaScript avec NestJS]
-//* link:./developpeur_expert_data/index.html[Expert Data]
-//* link:./dwwm/index.html[Bac+2 - Developpeur Web et Web Mobile (DWWM)]
-
-//=== Design
-
-//* link:./cdui/index.html[Bac+4 - CDUI]
-

@@ -1,0 +1,273 @@
+:titre: Types de Données en Go
+:module: Go
+:duree: 60
+:description: Introduction aux types de données fondamentaux et composés en Go.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** les différents types de données en Go
+* **Comprendre** la différence entre les types composés
+* **Appliquer** les opérations de base sur les données
+* **Analyser** les cas d'usage des différents types
+// end::objectifs[]
+
+// tag::deroulement[]
+== Types de Base
+
+Go propose plusieurs types de base :
+
+* Nombres entiers : `int`, `int8`, `int16`, `int32`, `int64`, `uint8`, etc.
+* Nombres flottants : `float32`, `float64`
+* Booléens : `bool`
+* Chaînes : `string`
+* Complexes : `complex64`, `complex128`
+
+[source,go]
+----
+var (
+    age int = 25
+    pi float64 = 3.14159
+    estValide bool = true
+    message string = "Hello, Go!"
+)
+----
+
+[NOTE.speaker]
+--
+int est dépendant de l'architecture (32 ou 64 bits).
+Les chaînes sont immuables et encodées en UTF-8.
+Les conversions entre types numériques doivent être explicites.
+Les valeurs zéro sont 0, 0.0, false, "" respectivement.
+--
+
+== Arrays et Slices
+
+Arrays :
+
+* Taille fixe
+* Partie du type
+* Passés par copie
+
+Slices :
+
+* Taille dynamique
+* Référence à un array
+* Plus flexibles et plus utilisés
+
+=== Arrays et Slices
+
+[source,go]
+----
+// Array
+var nombres [5]int = [5]int{1, 2, 3, 4, 5}
+
+// Slice
+nombres := []int{1, 2, 3}
+nombres = append(nombres, 4, 5)
+----
+
+[NOTE.speaker]
+--
+Les arrays sont rarement utilisés directement.
+Les slices sont des vues sur des arrays.
+append peut réallouer l'array sous-jacent.
+make permet de préallouer la capacité.
+--
+
+// tag::demo[]
+== Démonstration Slices
+
+[NOTE.speaker]
+--
+1. Créer un fichier `slices_demo.go`
+2. Ajouter le code suivant :
++
+```go
+package main
+
+import "fmt"
+
+func main() {
+    // Création et initialisation
+    nombres := make([]int, 0, 5)
+    fmt.Printf("len=%d cap=%d %v\n", len(nombres), cap(nombres), nombres)
+
+    // Ajout d'éléments
+    nombres = append(nombres, 1)
+    nombres = append(nombres, 2, 3, 4)
+    fmt.Printf("len=%d cap=%d %v\n", len(nombres), cap(nombres), nombres)
+
+    // Slicing
+    partie := nombres[1:3]
+    fmt.Printf("Partie: %v\n", partie)
+
+    // Modification via slice
+    partie[0] = 20
+    fmt.Printf("Original modifié: %v\n", nombres)
+}
+```
+3. Expliquer la différence entre len et cap
+4. Montrer comment les slices partagent la mémoire
+--
+// end::demo[]
+
+== Maps
+
+Les maps sont des collections clé-valeur :
+
+* Clés doivent être comparables
+* Accès et modification O(1)
+* Ordre d'itération non garanti
+
+[source,go]
+----
+// Déclaration et initialisation
+scores := map[string]int{
+    "Alice": 100,
+    "Bob":   85,
+}
+
+// Accès et vérification
+score, exists := scores["Alice"]
+----
+
+[NOTE.speaker]
+--
+make peut être utilisé pour créer une map.
+L'accès retourne la valeur zéro si la clé n'existe pas.
+Le deuxième retour indique si la clé existe.
+delete supprime une entrée.
+--
+
+// tag::demo[]
+== Démonstration Maps
+
+[NOTE.speaker]
+--
+1. Créer un fichier `maps_demo.go`
+2. Ajouter le code suivant :
++
+```go
+package main
+
+import "fmt"
+
+func main() {
+    // Création
+    utilisateurs := make(map[string]int)
+
+    // Ajout d'entrées
+    utilisateurs["Alice"] = 25
+    utilisateurs["Bob"] = 30
+
+    // Vérification d'existence
+    age, present := utilisateurs["Charlie"]
+    if !present {
+        fmt.Println("Charlie n'existe pas")
+    }
+
+    // Suppression
+    delete(utilisateurs, "Bob")
+
+    // Itération
+    for nom, age := range utilisateurs {
+        fmt.Printf("%s a %d ans\n", nom, age)
+    }
+}
+```
+3. Expliquer la gestion des clés inexistantes
+4. Montrer les opérations courantes
+--
+// end::demo[]
+
+== Structures
+
+Les structures permettent de grouper des données :
+
+* Types personnalisés
+* Champs nommés
+* Méthodes associables
+
+[source,go]
+----
+type Personne struct {
+    Nom    string
+    Age    int
+    Actif  bool
+}
+
+p := Personne{
+    Nom: "Alice",
+    Age: 30,
+    Actif: true,
+}
+----
+
+[NOTE.speaker]
+--
+Les champs exportés commencent par une majuscule.
+L'initialisation peut être ordonnée ou nommée.
+Les champs non initialisés prennent leur valeur zéro.
+Les structures peuvent être imbriquées.
+--
+
+// tag::exercice[]
+== Exercice 1 - Manipulation de Slices
+
+Créer des fonctions qui :
+
+1. Filtrent les nombres pairs d'un slice
+2. Trouvent le plus grand élément
+3. Suppriment les doublons
+4. Fusionnent deux slices triés
+
+[source,go]
+----
+func filtrerPairs(nombres []int) []int {
+    // À compléter
+}
+
+func plusGrand(nombres []int) (int, error) {
+    // À compléter
+}
+----
+// end::exercice[]
+
+// tag::exercice[]
+== Exercice 2 - Gestion de Contacts
+
+Créer un gestionnaire de contacts avec :
+
+1. Une structure Contact
+2. Une map de contacts
+3. Fonctions CRUD
+4. Recherche par critères
+
+[source,go]
+----
+type Contact struct {
+    // À compléter
+}
+
+type GestionnaireContacts struct {
+    // À compléter
+}
+----
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Compréhension des types de base et leurs spécificités
+* Maîtrise des slices et leurs opérations
+* Capacité à utiliser les maps efficacement
+* Compréhension des structures et leur utilisation
+* Capacité à choisir le type approprié selon le besoin
+// end::conclusion[]

@@ -1,0 +1,181 @@
+:titre: Préparation à la rédaction du dossier professionnel pour le titre DWWM
+:module: DossierPro-DWWM
+:duree: 60
+:description: Comprendre le dossier professionnel, son importance, sa structure et la méthodologie de rédaction.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" != "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre ce qu'est le dossier professionnel (DP) pour le titre DWWM.
+* Appréhender l'importance du DP dans l'obtention du titre.
+* Identifier la structure du DP et ses éléments constitutifs.
+* Savoir rédiger chaque partie du DP de manière claire et efficace, avec des exemples concrets.
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Qu'est-ce que le dossier professionnel ?
+
+Le dossier professionnel (DP) est un document officiel que chaque candidat doit remplir pour valider ses compétences professionnelles. Il sert à démontrer, à travers des exemples concrets, que les compétences requises par le référentiel du titre DWWM ont été acquises.
+
+[NOTE.speaker]
+--
+Le DP est indispensable car :
+1. **C'est une preuve** : Il montre que vous avez appliqué les compétences du référentiel dans des situations réelles.
+2. **Il guide le jury** : Le jury s'appuie sur le DP pour évaluer vos capacités techniques et comportementales.
+3. **Il reflète votre rigueur** : La qualité de rédaction et la structure sont prises en compte dans l’évaluation.
+
+Pour le titre **Développeur Web et Web Mobile (DWWM)**, le DP couvre des compétences comme :
+- Développer une application web dynamique.
+- Créer une interface utilisateur adaptée.
+- Gérer des bases de données.
+--
+
+== Importance du dossier professionnel
+
+### Pourquoi le DP est-il important ?
+1. Il est lu par le jury.
+2. Il est utilisé par le jury en cas de doute.
+3. Il témoigne de votre **expérience professionnelle et de votre capacité à répondre aux besoins du marché**.
+
+[NOTE.speaker]
+--
+En termes d'importance :
+- **Un DP bien rédigé peut compenser d'éventuelles lacunes techniques lors de la soutenance orale.**
+- C'est un **outil de valorisation** : les employeurs potentiels peuvent y voir une preuve de votre professionnalisme.
+--
+
+== Structure du dossier professionnel
+
+Le DP est divisé en plusieurs parties principales :
+1. **Introduction** : Présentation de votre parcours et du contexte.
+2. **Activités professionnelles ou de formation** : Description des projets réalisés.
+3. **Compétences mises en œuvre** : Analyse des compétences mobilisées.
+
+=== Exemple de structure détaillée
+
+[source,text]
+----
+1. Introduction
+   - Présentation du candidat.
+   - Parcours de formation et/ou professionnel.
+   - Objectifs du dossier.
+
+2. Activités professionnelles
+   - Projet 1 : Développement d'un site e-commerce.
+   - Projet 2 : Création d'une application de gestion de tâches.
+
+3. Compétences mises en œuvre
+   - Décrire les compétences techniques utilisées.
+   - Expliquer les méthodologies appliquées (Scrum, Kanban, etc.).
+
+4. Analyse critique
+   - Points forts des projets.
+   - Leçons apprises et axes d'amélioration.
+----
+
+[NOTE.speaker]
+--
+Chaque partie joue un rôle précis :
+1. **Introduction** : Donne un aperçu général de votre profil.
+2. **Activités** : Mettez en avant vos réalisations concrètes. Le jury doit visualiser votre implication.
+3. **Compétences** : Montrez que vous maîtrisez le référentiel.
+--
+
+== Rédiger chaque partie du DP
+
+=== 1. Introduction
+
+*Présentez-vous de manière concise et professionnelle.*  
+Exemple :  
+[source,text]
+----
+Je m'appelle Alice Dupont, diplômée d'une formation DWWM. J'ai toujours été passionnée par les technologies web et leur impact sur la communication. Ce dossier professionnel retrace mon parcours et présente les compétences acquises à travers des projets variés, réalisés en formation et en alternance.
+----
+
+[NOTE.speaker]
+--
+Conseils :
+- Soyez précis et allez droit au but.
+- Évitez les détails inutiles, comme des descriptions trop personnelles.
+--
+
+=== 2. Activités professionnelles ou de formation
+
+*Décrivez un projet de manière détaillée.*  
+Exemple pour un site e-commerce :  
+[source,text]
+----
+Projet : Développement d'un site e-commerce pour une boutique de vêtements.
+
+Objectif : Créer une plateforme intuitive pour présenter les produits et permettre un achat sécurisé en ligne.
+
+Compétences mobilisées :
+- Création d'une base de données MySQL pour stocker les produits et les commandes.
+- Développement du back-end en PHP avec le framework Symfony.
+- Intégration d'un système de paiement via Stripe.
+
+Résultat : Une augmentation de 30% des ventes en ligne sur 6 mois.
+----
+
+[NOTE.speaker]
+--
+Focus sur :
+- Les résultats mesurables (augmentation des ventes, réduction des temps de chargement, etc.).
+- Les défis rencontrés et comment vous les avez surmontés.
+--
+
+=== 3. Compétences mises en œuvre
+
+*Analysez les compétences utilisées dans vos projets.*  
+Exemple :  
+[source,text]
+----
+Pour le projet de gestion de tâches, j'ai utilisé les compétences suivantes :
+1. Développement front-end : Création d'une interface utilisateur responsive avec HTML5, CSS3, et Bootstrap.
+2. Gestion des données : Implémentation d'un modèle CRUD (Create, Read, Update, Delete) pour les tâches.
+3. Méthodes agiles : Utilisation de la méthode Scrum pour planifier et suivre les sprints de développement.
+----
+
+[NOTE.speaker]
+--
+Détaillez chaque compétence en expliquant son application pratique.
+- Montrez votre maîtrise technique.
+- Utilisez un langage professionnel mais accessible.
+--
+
+== Questions à se poser en rédigeant
+
+- Ai-je bien couvert toutes les compétences du référentiel ?
+- Est-ce que mes exemples sont clairs et pertinents ?
+
+== Exemples à votre disposition
+
+* link:https://docs.google.com/document/d/1jp3RhROhGUDxN8RjCUg0EOS2WzQHtmyS/edit?usp=drive_link&ouid=106071620069547745756&rtpof=true&sd=true[Dossier Professionnel au format Docx]
+* link:https://drive.google.com/file/d/1wJjyKKaDhXtdwUTBRAw1hr4tdMLgkcq5/view?usp=drive_link[Dossier Professionnel au format PDF]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+*Le DP est un outil clé pour valider vos compétences.*  
+
+* Le dossier professionnel est une étape essentielle pour le titre DWWM.
+* Une rédaction claire, structurée et précise est la clé du succès.
+* Préparez-vous tout au long de la formation pour éviter de travailler dans l’urgence.
+
+[NOTE.speaker]
+--
+Récapitulatif des points essentiels :
+1. Commencez la rédaction dès le début de la formation.
+2. Organisez vos activités dans un tableau pour ne rien oublier.
+3. Appuyez-vous sur des exemples concrets pour chaque compétence.
+4. Relisez et faites corriger votre DP par un formateur ou un pair.
+--
+// end::conclusion[]

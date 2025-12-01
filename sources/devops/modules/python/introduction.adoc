@@ -1,0 +1,202 @@
+:titre: Introduction
+:module: Python
+:duree: 120
+:description: Découverte du langage Python, montrer aux apprenants l’installation de Python, savoir configurer leur environnement et s’assurer que tous les apprenants affichent un “Hello World”
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+// Sous forme de liste à puce, en utilisant la taxonomie de Bloom
+* Comprendre les avantages et inconvénients de Python
+* Appréhender les conventions générales de codage en Python.
+* Savoir mettre en place un environnement de développement Python.
+* Utiliser un gestionnaire de paquets pour installer et gérer des dépendances Python.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Python
+
+Langage de programmation interprété :
+
+* Python est interprété, ce qui signifie que le code est exécuté ligne par ligne.
+* Pas besoin de compilation préalable.
+* Facilité de débogage et de test.
+
+=== Haut niveau
+
+* Abstraction des détails complexes des systèmes sous-jacents.
+* Permet de se concentrer sur la logique de programmation plutôt que sur la gestion de la mémoire.
+
+[NOTE.speaker]
+--
+.Simplicité et lisibilité
+* Syntaxe conçue pour être lisible et facile à écrire.
+* Favorise le développement rapide et la maintenance du code.
+--
+
+=== Historique
+
+Créé par Guido van Rossum :
+
+* Débuté en 1989, publié pour la première fois en 1991.
+* Inspiré par ABC, un langage de programmation conçu pour l’enseignement.
+
+== Avantages
+
+* Facilité d'apprentissage et d'utilisation :
+** Syntaxe simple et intuitive.
+** Code facilement lisible et compréhensible.
+* Large bibliothèque standard :
+** Modules pour gérer les fichiers, le web, la base de données, etc.
+** Offre des solutions prêtes à l'emploi pour de nombreuses tâches courantes.
+* Portabilité :
+** Fonctionne sur différents systèmes d'exploitation (Windows, macOS, Linux).
+** Code portable entre ces plateformes sans modification majeure.
+* Communauté active et support :
+** Grande communauté d'utilisateurs et de développeurs.
+** Nombreux forums, tutoriels et ressources en ligne.
+
+== Inconvénients
+
+* Performance :
+** Python est plus lent que les langages compilés comme C ou C++.
+** Non recommandé pour les applications nécessitant une haute performance.
+* Consommation de mémoire :
+** Peut consommer plus de mémoire que d'autres langages, surtout pour les grandes applications.
+* Mobilité limitée sur le web :
+** Moins populaire pour le développement frontend web par rapport à JavaScript.
+* Global Interpreter Lock (GIL) :
+** Limite l'exécution des threads Python en parallèle dans un même processus, ce qui peut être un obstacle pour certaines applications concurrentes.
+
+== Conventions de codage
+
+* Utilisez 4 espaces pour les indentations (pas de tabulation).
+* Ne pas faire des lignes de plus de 79 caractères (pas obligatoire).
+* Utiliser les lignes vides pour séparer les fonctions et les classes.
+* Mettre les commentaires sur leur propre ligne.
+* Utiliser des docstrings pour les fonctions.
+* Utiliser des espaces autour des opérateurs et après les virgules.
+* Utiliser le PascalCase "MyClass" (majuscule au début) pour les classes… 
+* …Et le snake_case "my_function" pour les fonctions et les variables.
+* Toujours utiliser le nom de variable `self`` pour le premier argument des méthodes.
+
+[NOTE.speaker]
+--
+Le python utilise le snake_case pour les noms de variables et de fonctions, et le PascalCase pour les noms de classes.
+--
+
+== Mise en place
+
+Nous utiliserons les devcontainers pour configurer un environnement de développement Python.
+
+L'image docker `python:3.9.20-alpine`contient Python et les outils nécessaires.
+
+=== Pip
+
+* https://pip.pypa.io/en/stable/[pip] est le gestionnaire de paquets par défaut pour Python.
+* Permet d'installer, mettre à jour et désinstaller des bibliothèques Python.
+* Livré par défaut avec Python à partir de la version 3.4.
+
+.Installer un paquet
+```bash
+pip install <nom_du_paquet>
+```
+
+.Mettre à jour un paquet
+```bash
+pip install --upgrade <nom_du_paquet>
+```
+
+.Désinstaller un paquet
+```bash
+pip uninstall <nom_du_paquet>
+```
+
+=== Gestion des paquets
+
+Lister les bibliothèques installées :
+
+* Pour voir toutes les bibliothèques installées et leurs versions, utilisez la commande `pip list`.
+
+Fichier `requirements.txt` :
+
+* Utilisé pour lister les bibliothèques nécessaires à un projet.
+* Contient les noms des paquets et éventuellement leurs versions.
+
+[NOTE.speaker]
+--
+.Exemple de fichier `requirements.txt` :
+```
+numpy==1.19.5
+pandas>=1.1.0
+```
+--
+
+Pour installer les bibliothèques listées dans `requirements.txt`, utilisez :
+
+`pip install -r requirements.txt`
+
+=== Exemples de commandes
+
+```bash
+# Installation de pandas
+pip install pandas
+
+# Mise à jour de pandas
+pip install --upgrade pandas
+
+# Désinstallation de pandas
+pip uninstall pandas
+
+# Lister les paquets installés
+pip list
+
+# Installation des paquets depuis un fichier requirements.txt
+pip install -r requirements.txt
+```
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration
+
+[NOTE.speaker]
+--
+* Initialiser un environnement de développement Python avec Visual Studio Code et les devcontainers.
+* Ajouter les extensions VsCode nécessaires.
+* Reprendre les commandes PIP vues précédemment.
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice
+
+À vous de jouer ! 
+
+* Initialiser un environnement de développement Python avec Visual Studio Code et les devcontainers.
+* Ajouter les extensions VsCode nécessaires.
+* Tester les commandes PIP vues précédemment.
+
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Python :
+** Langage polyvalent et apprécié pour sa simplicité et lisibilité.
+** Facile à apprendre pour les débutants, puissant pour les experts.
+* Avantages :
+** Syntaxe claire et intuitive.
+** Grande bibliothèque standard avec de nombreux modules.
+** Forte communauté de soutien.
+** Portabilité entre les systèmes d'exploitation.
+* Inconvénients :
+** Performances parfois inférieures aux langages compilés.
+** Gestion des threads limitée par le GIL (Global Interpreter Lock).
+* Mise en place :
+** Installation facile sur divers systèmes d'exploitation.
+** pip pour la gestion des paquets, simplifiant l'installation de bibliothèques.
+// end::conclusion[]

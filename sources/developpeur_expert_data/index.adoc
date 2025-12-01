@@ -1,0 +1,48 @@
+:title: Expert Data
+include::../../adoc/libs/header-formation.adoc[]
+
+// tag::links[]
+* link:https://github.com/O-clock-Devops-Peda[GitHub]
+* link:https://oclock.io/formations/devops[Site O'Clock - DevOps]
+* link:https://github.com/O-clock-Devops-Peda/.github-private/blob/main/profile/REAC.pdf[REAC]
+// end::links[]
+
+---
+
+// tag::intro[]
+La formation Concepteur Développeur d'Applications (CDA) de **niveau 6** - Expert Data est axée sur le développement et l’analyse de données, pour former des experts capables de manipuler et exploiter des ensembles de données complexes. Le programme combine des modules techniques et méthodologiques pour maîtriser les compétences nécessaires en data.
+// end::intro[]
+
+* link:./suivi.html[Référent de promo]
+* link:./modules/index.html[Glossaire des modules]
+
+== Objectifs
+
+// tag::objectifs[]
+.En gras, les compétences obligatoires dans le projet présenté au TP
+** Développer une application sécurisée :
+ * Installer et configurer son environnement de travail en fonction du projet.
+ * *Développer des interfaces utilisateur*
+ * *Développer des composants métier*
+ * *Contribuer à la gestion d'un projet informatique*
+
+** Concevoir et développer une application sécurisée organisée en couches :
+ * *Analyser les besoins et maquetter une application*
+ * *Définir l'architecture logicielle d'une application*
+ * *Concevoir et mettre en place une base de données relationnelle*
+ * *Développer des composants d'accès aux données SQL et NoSQL*
+
+** Préparer le déploiement d'une application sécurisée :
+ * *Préparer et exécuter les plans de tests d'une application*
+ * Préparer et documenter le déploiement d'une application
+ * Contribuer à la mise en production dans une démarche DevOps
+// end::objectifs[]
+
+== Déroulement
+
+// tag::deroulement[]
+include::./saisons/*/index.adoc[opts=saisons]
+// end::deroulement[]
+
+
+

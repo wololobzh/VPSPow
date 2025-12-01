@@ -1,0 +1,149 @@
+:titre: DockerHub
+:module: Devops
+:duree: 120
+:description: Découverte de DockerHub, ses fonctionnalités, avantages et cas d'utilisation. Mise en pratique des commandes pour envoyer des images sur DockerHub. Intégration du build du backend dans la pipeline CI/CD et publication sur DockerHub.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* **Comprendre** les concepts de DockerHub
+* **Appliquer** les commandes Docker hub
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+* Définition : Service d'hébergement de conteneurs Docker.
+* Utilité : Stocker, partager et automatiser la gestion des images.
+* Fonctionnalités : Dépôt d'images, partage, CI/CD.
+
+https://hub.docker.com/
+
+[NOTE.speaker]
+====
+DockerHub est une plateforme centrale pour les conteneurs Docker, permettant de stocker et partager des images. Il joue un rôle clé dans l'automatisation et la gestion des déploiements.
+====
+
+// tag::demo[]
+== Démo : Connexion
+
+Créer un compte sur DockerHub
+
+[NOTE.speaker]
+====
+1. Accéder à https://hub.docker.com/.
+2. Cliquer sur "Sign Up" pour créer un nouveau compte.
+3. Utiliser GitHub de préférence pour une connexion simplifiée.
+====
+// end::demo[]
+
+== Repositories et images
+
+* Repositories : Organisation et gestion des images.
+* Images : Stockage, versionnage et partage.
+
+https://hub.docker.com/_/node
+
+[NOTE.speaker]
+====
+Un repository sur DockerHub est un espace de stockage pour les images Docker, similaire à un dépôt Git pour le code source. Les images peuvent avoir plusieurs versions ou tags.
+====
+
+== Concurrents de DockerHub
+
+* GitHub Container Registry : Intégration facile avec les repos GitHub.
+* Google Container Registry : Sécurité et intégration avec Google Cloud.
+* Amazon ECR : Intégration avec AWS et gestion des permissions avancée.
+
+[NOTE.speaker]
+====
+Il existe plusieurs alternatives à DockerHub, chacune offrant des fonctionnalités spécifiques selon l'écosystème utilisé. Le choix du service dépend des besoins du projet et de l'infrastructure.
+====
+
+== Commandes DockerHub essentielles
+
+* `docker login` : Authentification au DockerHub.
+* `docker push` : Envoi d'images vers DockerHub.
+* `docker pull` : Récupération d'images depuis DockerHub.
+
+[NOTE.speaker]
+====
+Ces commandes sont essentielles pour interagir avec DockerHub. `docker login` connecte votre terminal à DockerHub, `docker push` envoie des images, et `docker pull` récupère des images pour les utiliser localement.
+
+On peut récupérer des images publiques sans authentification, mais l'envoi d'images nécessite une connexion.
+====
+
+// tag::demo[]
+=== Démo push
+
+Envoyer une image sur DockerHub
+
+[NOTE.speaker]
+====
+1. S'assurer d'être connecté avec `docker login`.
+2. Créer une image Docker localement avec `docker build`.
+3. Taguer l'image avec votre nom d'utilisateur DockerHub.
+4. Utiliser `docker push` pour envoyer l'image sur DockerHub.
+====
+// end::demo[]
+
+// tag::demo[]
+=== Démon pull
+
+Utiliser l'image précédemment envoyée sur DockerHub.
+
+[NOTE.speaker]
+====
+1. Utiliser `docker pull <nom_image>` pour récupérer l'image.
+2. Exécuter l'image avec `docker run`.
+3. Vérifier le bon fonctionnement du conteneur.
+====
+// end::demo[]
+
+== Utilisation des images DockerHub
+
+* Intégration dans tous les projets :
+** Node
+** Postgres
+** ...
+* Pipelines CI/CD
+** Automatisation du build et push des images.
+** Déploiement simplifié avec le pull des images.
+
+[NOTE.speaker]
+====
+DockerHub facilite l'intégration des images dans divers projets. L'utilisation dans les pipelines CI/CD, permet d'automatiser le push et simplifier les déploiements.
+====
+
+// tag::exercice[]
+== Exercice
+
+Créer un template Vite, faire une image Docker incluant les tests et le build, et envoyer l'image sur DockerHub.
+
+[NOTE.speaker]
+====
+1. Créer un projet avec Vite.
+2. Écrire un Dockerfile pour construire l'image incluant les tests et le build.
+3. Construire l'image avec `docker build`.
+4. Taguer et pousser l'image sur DockerHub.
+====
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* DockerHub est essentiel pour la gestion et le partage des images Docker.
+* 3 commandes principales :
+** `docker login` pour l'authentification.
+** `docker push` pour envoyer des images.
+** `docker pull` pour récupérer des images.
+* Connaître les alternatives permet de choisir le service le plus adapté aux besoins.
+* L'automatisation via CI/CD améliore l'efficacité des déploiements.
+// end::conclusion[]

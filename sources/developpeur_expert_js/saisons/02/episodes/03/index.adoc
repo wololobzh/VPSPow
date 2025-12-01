@@ -1,0 +1,45 @@
+:title: Continuous Deployment
+:number: 03
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Une des briques fondamentales du DevOps est le déploiement continu des application. Les apprenants découvriront la surface des Github actions afin de comprendre le fonctionnement et mettre en place un pipeline CI/CD simple.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Comprendre** le concept CI/CD
+- **Appliquer** un pipeline Github Actions
+- **Déployer** un frontend en ligne
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Connaissances sur les GitHub actions
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: https://github.com/O-clock-Expert-Dev/Commun-DevOps-Challenge/blob/main/corrections/J02.md
+:temps: jusqu'à 60 minutes
+:description: Passer du temps à bien corriger le challenge d'hier.
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/devops/cicd.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/devops/github-action.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/devops/github-action-avance.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Expert-Dev/Commun-DevOps-Challenge
+:description: Mettre le fontend en ligne automatiquement avec Github Actions et Surge.sh
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+// end::deroulement[]

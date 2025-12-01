@@ -1,0 +1,154 @@
+:titre: Plugins et callbacks
+:module: Ansible
+:duree: 60
+:description: Utilisation de callbacks pour modifier l'affichage et envoyer des notifications Slack.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* le concept de callbacks dans Ansible
+* *Voir* la liste des callbacks disponibles et leur activation
+* *Appliquer* un callback pour changer l'affichage en JSON
+* *Configurer* un callback pour envoyer des notifications Slack
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+
+Les plugins Ansible permettent d'ajouter des fonctionnalités supplémentaires à Ansible en personnalisant son comportement. Il existe plusieurs types de plugins dans Ansible :
+
+* Modules
+* Inventories
+* Callbacks
+* Filters
+* Lookups
+* Vars
+* ...
+
+https://docs.ansible.com/ansible/latest/collections/community/general/index.html[Plugins Community.General]
+
+[NOTE.speaker]
+--
+Il existe une multitude de plugins disponibles pour Ansible, mais il est également possible de créer ses propres plugins pour répondre à des besoins spécifiques. 
+--
+
+=== Callbacks
+
+Les callbacks dans Ansible permettent de :
+
+* Personnaliser l'exécution des playbooks
+* Ajoute des fonctionnalités supplémentaires sans modifier le code des playbooks
+
+Ils s'activent facilement en modifiant le fichier de configuration d'Ansible.
+
+https://docs.ansible.com/ansible/latest/plugins/callback.html[Documentation Ansible Callbacks]
+
+[NOTE.speaker]
+--
+Les callbacks sont pratiques pour améliorer la lisibilité des résultats ou automatiser des actions comme l'envoi de notifications.
+--
+
+== Exploration des callbacks disponibles
+
+Pour voir la liste complète des callbacks disponibles par défaut avec Ansible, utilisez la commande suivante :
+
+```bash
+ansible-doc -t callback -l
+```
+
+// tag::demo[]
+=== Démonstration : JSON
+
+Afficher les résultats des playbooks en format JSON
+
+[NOTE.speaker]
+--
+* Ouvrir le fichier de configuration Ansible `ansible.cfg`
+* Ajouter la section suivante pour activer le callback JSON :
+
+```ini
+[defaults]
+callback_whitelist = json
+stdout_callback=json
+```
+
+* Lancer un playbook pour voir les résultats au format JSON.
+
+--
+// end::demo[]
+
+=== Notifications avec Callback Slack
+
+Les callbacks peuvent aussi être configurés pour envoyer des notifications à des services externes comme Slack. Il suffit de configurer le callback avec les informations nécessaires.
+
+* Assurez-vous d'avoir installé et configuré le module Slack pour Ansible.
+* Créez un webhook Slack et utilisez-le dans la configuration du callback.
+
+https://docs.ansible.com/ansible/latest/collections/community/general/slack_callback.html[Documentation Ansible Slack Callback]
+
+[NOTE.speaker]
+--
+Le callback Slack permet d'envoyer des notifications directement dans un canal Slack. C'est pratique pour recevoir des alertes ou des résumés de l'exécution des playbooks.
+--
+
+// tag::demo[]
+=== Démonstration : Slack
+
+[NOTE.speaker]
+--
+
+Configurer le webhook Slack et ajouter la configuration suivante dans `ansible.cfg` :
+
+```ini
+[defaults]
+callback_whitelist = slack
+
+[callback_slack]
+webhook_url = .../.../...
+channel = #mychannel
+```
+
+Testez la configuration en lançant un playbook et vous verrez une notification envoyée au canal Slack spécifié.
+
+Si la création du webhook Slack n'est pas possible, vous pouvez utiliser un flux de trabail avec un webhook simple et ajouter une tâche dans le playbook :
+
+```yaml
+- name: Webhook Slack
+      uri:
+        url: "https://hooks.slack.com/triggers..."
+        method: POST
+        headers:
+          Content-Type: "application/json"
+        body_format: json
+        body:
+          message: "Le playbook policies.yml a été exécuté avec succès sur {{ inventory_hostname }}."
+          host: "{{ inventory_hostname }}"
+          status: "success"
+```
+--
+// end::demo[]
+
+// tag::exercice[]
+== Exercice
+
+Avec un playbook Ansible, réalisez les actions suivantes :
+
+. Activez le callback `minimal` pour voir une version simplifiée des résultats.
+. Configurez le en sortie JSON + pretty pour une meilleure lisibilité.
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Ansible propose une variété de plugins pour personnaliser son comportement et ajouter des fonctionnalités supplémentaires.
+* Les callbacks permettent de personnaliser et d'automatiser l'exécution des playbooks dans Ansible.
+* La configuration des plugins est simple.
+// end::conclusion[]

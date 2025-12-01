@@ -1,0 +1,290 @@
+:titre: Kubernetes RBAC : Le contrôle d'accès basé sur les rôles
+:module: Sécurité Kubernetes
+:duree: --
+:description: Découvrez comment sécuriser votre cluster Kubernetes avec le contrôle d'accès basé sur les rôles (RBAC). Apprenez à gérer les permissions de manière centralisée et granulaire.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* *Comprendre* la nécessité de RBAC dans un environnement Kubernetes.
+* *Appliquer* les concepts de Role, ClusterRole, RoleBinding et ClusterRoleBinding.
+* *Créer* un environnement de test avec Minikube pour expérimenter RBAC.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+
+* Système de contrôle d'accès par rôles.
+* Restreint les accès aux ressources selon les besoins.
+
+[NOTE.speaker]
+--
+Lorsque vous gérez un cluster Kubernetes, la sécurité est cruciale. RBAC permet de définir qui peut faire quoi sur quelles ressources, similaires à la gestion des accès en entreprise.
+--
+
+=== Historique de la gestion des accès Kubernetes
+
+* Les premières méthodes utilisaient des certificats et des fichiers JSON statiques.
+* RBAC introduit en 2017, version 1.6, pour une gestion centralisée et granulaire.
+
+[NOTE.speaker]
+--
+RBAC a été introduit pour surmonter les limitations des mécanismes précédents, tels que le manque de flexibilité et la complexité de la gestion dans les grands clusters.
+--
+
+== Fonctionnement et Concepts clés
+
+* Role et ClusterRole : définissent les permissions.
+** Role : Permissions limitées à un namespace. Exemple: lectures de pods dans "default".
+** ClusterRole : Permissions s'appliquant à tout le cluster, idéal pour les ressources globales comme les volumes persistants.
+* RoleBinding et ClusterRoleBinding : associent les rôles aux utilisateurs ou groupes.
+** RoleBinding : Lie un Role à un utilisateur dans un namespace.
+** ClusterRoleBinding : Lie un ClusterRole à un utilisateur pour tout le cluster.
+
+=== Role
+
+
+```yaml
+// TIP : Exemple YAML pour un Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+```
+
+[NOTE.speaker]
+--
+Ce Role permet de lire les pods uniquement dans le namespace "default".
+--
+
+=== ClusterRole
+
+```yaml
+// TIP : Exemple YAML pour un ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pod-reader-cluster
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+```
+
+[NOTE.speaker]
+--
+Le ClusterRole ci-dessus offre des permissions globales sur les pods.
+--
+
+=== RoleBinding
+
+```yaml
+// TIP : Exemple YAML pour un RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bind-pod-reader
+  namespace: default
+subjects:
+- kind: User
+  name: "johndoe"
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+[NOTE.speaker]
+--
+RoleBinding pour donner accès à "johndoe" de lire les pods dans "default".
+--
+
+=== ClusterRoleBinding
+
+```yaml
+// TIP : Exemple YAML pour un ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-pod-reader-binding
+subjects:
+- kind: User
+  name: "admin-user"
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: pod-reader-cluster
+  apiGroup: rbac.authorization.k8s.io
+```
+
+[NOTE.speaker]
+--
+ClusterRoleBinding pour attribuer des permissions globales à "admin-user".
+--
+
+=== Les Verbs : Préciser les actions possibles
+
+* `get`, `list`, `create`, `update`, `delete`, `watch` : Verbs les plus utilisés pour définir les actions possibles.
+
+[NOTE.speaker]
+--
+Les verbs sont essentiels pour définir précisément ce qu'un utilisateur peut faire sur les ressources Kubernetes.
+--
+
+== Créer un Lab Minikube pour Expérimenter RBAC
+
+* Utilisation de Minikube pour simuler un cluster Kubernetes local.
+
+=== Pré-requis
+
+* Minikube, kubectl, OpenSSL, et un terminal (Bash ou PowerShell).
+
+=== Étape 1
+
+. **Démarre un cluster Minikube**: `minikube start` et vérifier avec `kubectl get nodes`.
+. **Créer un Namespace**: Organisez les ressources avec `kubectl create namespace rbac-lab`.
+. **Déployer des Pods**: Utilisez un fichier YAML pour déployer.
+
+```yaml
+// Fichier: nginx-pods.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  namespace: rbac-lab
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+```
+
+=== Étape 2
+
+. **Configurer un Role et RoleBinding**: Permettez de lire les pods.
+
+```yaml
+// Fichier: role-pod-reader.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: rbac-lab
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+```
+
+=== Étape 3
+
+. **Appliquer et tester**: Appliquez avec `kubectl apply -f role-pod-reader.yaml`.
+
+[NOTE.speaker]
+--
+Le Role "pod-reader" est appliqué au namespace "rbac-lab" pour lister et lire les pods.
+--
+
+. **Lier un utilisateur fictif et tester ses permissions**: Configurez un utilisateur `test-user`.
+
+=== Etape 4
+
+1. **Exporter la CA de Minikube**: Minikube utilise sa propre CA pour gérer les certificats. Récupérez les fichiers nécessaires.
+   ```bash
+   minikube ssh -- sudo cat /var/lib/minikube/certs/ca.crt > ca.crt
+   minikube ssh -- sudo cat /var/lib/minikube/certs/ca.key > ca.key
+   ```
+
+2. **Générer une clé privée pour `test-user`**: Créez une clé privée.
+   ```bash
+   openssl genrsa -out test-user.key 2048
+   ```
+
+3. **Générer une demande de signature de certificat (CSR)**: Créez un fichier CSR pour `test-user`.
+   ```bash
+   openssl req -new -key test-user.key -out test-user.csr -subj "/CN=test-user"
+   ```
+
+4. **Signer le certificat**: Utilisez la CA pour signer le certificat de `test-user`.
+   ```bash
+   openssl x509 -req -in test-user.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out test-user.crt -days 365
+   ```
+
+=== Etape 5
+
+[start=5]
+. **Ajouter l'utilisateur dans le kubeconfig**:
+
+  * Configurer les informations d’authentification de `test-user`.
+   ```bash
+   kubectl config set-credentials test-user \
+     --client-certificate=test-user.crt \
+     --client-key=test-user.key
+   ```
+  * Créer un contexte pour `test-user` dans le namespace `rbac-lab`.
+   ```bash
+   kubectl config set-context test-user-context \
+     --cluster=minikube \
+     --namespace=rbac-lab \
+     --user=test-user
+   ```
+  * Basculer vers le contexte de `test-user`.
+   ```bash
+   kubectl config use-context test-user-context
+   ```
+
+=== Etape 6
+
+[start=6]
+. **Tester les permissions de `test-user`**:
+
+   * Lister les pods dans le namespace `rbac-lab` (autorisé).
+   ```bash
+   kubectl get pods
+   ```
+   * Tenter de créer un pod (interdit).
+   ```bash
+   kubectl run unauthorized-pod --image=nginx
+   ```
+
+=== Nettoyer le Lab
+
+1. **Supprimer le namespace et les rôles lié**.
+   ```bash
+   kubectl config use-context minikube
+   kubectl delete namespace rbac-lab
+   kubectl config delete-context test-user-context
+   kubectl config unset users.test-user
+   ```
+
+2. **Arrêter Minikube**.
+   ```bash
+   minikube stop
+   ```
+
+== Conclusion
+
+// tag::conclusion[]
+* RBAC est un composant clé de la sécurité Kubernetes, offrant une gestion précise des autorisations.
+* Les labs avec Minikube aident à comprendre et appliquer ces concepts dans un environnement pratique.
+
+[NOTE.speaker]
+--
+RBAC améliore la sécurité dans les clusters Kubernetes en offrant une façon flexible et efficace de gérer les autorisations. Expérimentez avec les exemples fournis pour mieux comprendre ses capacités.
+--
+// end::conclusion[]

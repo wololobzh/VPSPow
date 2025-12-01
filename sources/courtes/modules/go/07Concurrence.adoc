@@ -1,0 +1,270 @@
+:titre: Concurrence en Go
+:module: Go
+:duree: 90
+:description: Découverte de la programmation concurrente en Go avec les goroutines et les canaux.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** la différence entre parallélisme et concurrence
+* **Comprendre** le fonctionnement des goroutines et des canaux
+* **Appliquer** la concurrence dans des programmes Go
+* **Analyser** les cas d'usage appropriés pour la programmation concurrente
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction à la concurrence
+
+[quote, Rob Pike]
+____
+Parallelisme est à propos de la performance; Concurrence est à propos du design de programme.
+____
+
+La concurrence permet l'exécution de plusieurs tâches de manière indépendante :
+
+* Différent du parallélisme qui exécute réellement des tâches simultanément
+* Idéal pour gérer plusieurs opérations asynchrones
+* Particulièrement utile pour les serveurs web et les applications réseau
+
+[NOTE.speaker]
+--
+La concurrence est un modèle de conception qui permet de gérer plusieurs tâches qui semblent s'exécuter simultanément.
+Le parallélisme concerne l'exécution réelle simultanée sur plusieurs processeurs.
+Un serveur web est un excellent exemple : il doit gérer plusieurs requêtes clients simultanément.
+--
+
+== Goroutines
+
+Une goroutine est une fonction capable de s'exécuter de manière concurrente :
+
+* Légère et peu coûteuse en ressources
+* Syntaxe simple avec le mot-clé `go`
+* Gérée automatiquement par le runtime Go
+
+[source,go]
+----
+// Lancement d'une goroutine
+go maFonction()
+----
+
+[NOTE.speaker]
+--
+Les goroutines sont beaucoup plus légères que les threads système.
+Go peut gérer des milliers de goroutines simultanément.
+Le runtime Go s'occupe de la planification et de l'exécution des goroutines.
+--
+
+// tag::demo[]
+== Démonstration des goroutines
+
+[NOTE.speaker]
+--
+1. Créer un fichier `demo.go`
+2. Ajouter le code suivant :
++
+```go
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func afficher(message string) {
+    for i := 0; i < 5; i++ {
+        fmt.Println(message)
+        time.Sleep(time.Millisecond * 500)
+    }
+}
+
+func main() {
+    go afficher("Hello")
+    afficher("World")
+}
+```
+3. Expliquer que la première goroutine s'exécute en arrière-plan
+4. Montrer que les messages s'affichent de manière entrelacée
+--
+// end::demo[]
+
+== Canaux (Channels)
+
+Les canaux permettent la communication entre goroutines :
+
+* Type de données spécifique au canal
+* Communication synchronisée
+
+[source,go]
+----
+// Création d'un canal
+ch := make(chan int)
+
+// Envoi de données
+ch <- 42
+
+// Réception de données
+valeur := <-ch
+----
+
+[NOTE.speaker]
+--
+Les canaux sont le mécanisme principal de communication entre goroutines.
+Ils permettent d'éviter les problèmes de synchronisation.
+L'envoi et la réception sont bloquants par défaut.
+--
+
+// tag::demo[]
+== Démonstration des canaux
+
+[NOTE.speaker]
+--
+1. Créer un fichier `channels.go`
+2. Ajouter le code suivant :
++
+```go
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func worker(id int, jobs <-chan int, results chan<- int) {
+    for j := range jobs {
+        fmt.Printf("worker %d starting job %d\n", id, j)
+        time.Sleep(time.Second)
+        fmt.Printf("worker %d finished job %d\n", id, j)
+        results <- j * 2
+    }
+}
+
+func main() {
+    jobs := make(chan int, 5)
+    results := make(chan int, 5)
+
+    for w := 1; w <= 3; w++ {
+        go worker(w, jobs, results)
+    }
+
+    for j := 1; j <= 5; j++ {
+        jobs <- j
+    }
+    close(jobs)
+
+    for a := 1; a <= 5; a++ {
+        <-results
+    }
+}
+```
+3. Expliquer le fonctionnement des workers
+4. Montrer la communication via les canaux
+--
+// end::demo[]
+
+== Select
+
+`select` permet de gérer plusieurs canaux simultanément :
+
+* Similaire à `switch` mais pour les canaux
+* Attend qu'une opération soit possible
+* Utile pour les timeouts et l'annulation
+
+[source,go]
+----
+select {
+case msg1 := <-ch1:
+    fmt.Println("Reçu de ch1:", msg1)
+case msg2 := <-ch2:
+    fmt.Println("Reçu de ch2:", msg2)
+case <-time.After(time.Second):
+    fmt.Println("Timeout")
+}
+----
+
+[NOTE.speaker]
+--
+select est crucial pour gérer plusieurs canaux.
+Permet d'implémenter des timeouts et des annulations.
+Sélectionne aléatoirement un cas si plusieurs sont prêts.
+--
+
+== Parallélisme avec GOMAXPROCS
+
+Le parallélisme réel est possible en Go avec `runtime.GOMAXPROCS` :
+
+* Définit le nombre de threads OS utilisés
+* Par défaut égal au nombre de CPU
+* Utile pour les calculs intensifs
+
+[source,go]
+----
+runtime.GOMAXPROCS(4) // Utilise 4 threads
+----
+
+[NOTE.speaker]
+--
+GOMAXPROCS contrôle le parallélisme réel.
+Augmenter sa valeur n'améliore pas toujours les performances.
+À utiliser avec précaution et après des tests.
+--
+
+// tag::exercice[]
+== Exercice 1 - Goroutines simples
+
+Créer un programme qui lance plusieurs goroutines affichant des messages différents :
+
+1. Créer une fonction qui affiche un message avec un délai aléatoire
+2. Lancer cette fonction dans 3 goroutines différentes
+3. Assurer que le programme attend la fin des goroutines
+
+[source,go]
+----
+// Structure de base
+func afficherMessage(msg string) {
+    // À compléter
+}
+
+func main() {
+    // À compléter
+}
+----
+// end::exercice[]
+
+// tag::exercice[]
+== Exercice 2 - Canaux
+
+Créer un programme de calcul distribué simple :
+
+1. Créer un canal pour envoyer des nombres
+2. Créer un canal pour recevoir les résultats
+3. Implémenter des workers qui calculent le carré des nombres
+4. Envoyer 10 nombres et afficher leurs carrés
+
+[source,go]
+----
+// Structure de base
+func calculateur(entrees <-chan int, sorties chan<- int) {
+    // À compléter
+}
+
+func main() {
+    // À compléter
+}
+----
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Compréhension de la différence entre concurrence et parallélisme
+* Maîtrise des goroutines pour la programmation concurrente
+* Utilisation des canaux pour la communication entre goroutines
+* Capacité à implémenter des patterns concurrents simples
+* Connaissance des outils de synchronisation en Go
+// end::conclusion[]

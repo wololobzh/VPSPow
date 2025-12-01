@@ -1,0 +1,640 @@
+:titre: Les variables Python
+:module: Scripting
+:duree: 150
+:description: Comprendre le fonctionnement des variables en Python
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+[cols="1,1"]
+|===
+a|
+* Variables Numérique
+** Int
+** Float
+* Variables Texte : STR
+* Variables Booléennes
+* Variable Sequence 
+** List
+** Tuple
+** Range
+a|
+* Variable Mappage Dict
+* Variables Ensemble
+** Set
+** FrozenSet
+* Variables None
+* Variables Tableau Récapitulatif
+|===
+// end::objectifs[]
+
+// tag::deroulement[]
+== Variables numériques
+
+=== Variables Int
+
+* **Type** : `int` (entiers)
+* **Description** : Représente des nombres entiers, positifs ou négatifs, sans partie décimale.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple de Déclaration :**
+
+```python
+entier = 42
+```
+
+**Exemple d'Utilisation :**
+
+```python
+entier_double = entier * 2
+print(entier_double)  # 84
+```
+
+**Explication :**
+
+* `entier = 42` : Déclare une variable entier de type int avec la valeur 42.
+* `entier_double = entier * 2` : Multiplie entier par 2 et stocke le résultat dans entier_double.
+* `print(entier_double)` : Affiche la valeur de entier_double, soit 84.
+
+=== Variables float
+
+* **Type** : float (flottants)
+* **Description** : Représente des nombres à virgule flottante, incluant une partie décimale.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple de Déclaration :**
+
+```python
+flottant = 3.14159
+```
+
+**Exemple d'Utilisation :**
+
+```python
+demi = flottant / 2
+print(demi)  # 1.570795
+```
+
+**Explication :**
+
+* `flottant = 3.14159` : Déclare une variable flottant de type float avec la valeur 3.14159.
+* `demi = flottant / 2` : Divise flottant par 2 et stocke le résultat dans demi.
+* `print(demi)` : Affiche la valeur de demi, soit 1.570795.
+
+== Variables texte Str
+
+* **Type** : str (chaînes de caractères)
+* **Description** : Représente une séquence de caractères, utilisée pour stocker et manipuler du texte.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple de Déclaration :**
+
+```python
+message = "Bonjour, Python!"
+```
+
+**Exemple d'Utilisation :**
+
+```python
+premier_caractere = message[0]
+print(premier_caractere)  # B
+```
+
+**Explication :**
+
+* `message = "Bonjour, Python!"` : Déclare une variable message de type str avec la valeur "Bonjour, Python!".
+* `premier_caractere = message[0]` : Accède au premier caractère de la chaîne message et le stocke dans premier_caractere.
+* `print(premier_caractere)` : Affiche la valeur de premier_caractere, soit B.
+
+== Variables Booléennes - bool
+
+* **Type** : bool (booléen)
+* **Description** : Représente une valeur de vérité, soit True (vrai) ou False (faux).
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple de Déclaration :**
+
+```python
+est_vrai = True
+```
+
+**Exemple d'Utilisation :**
+
+```python
+est_faux = not est_vrai
+print(est_faux)  # False
+```
+
+**Explication :**
+
+* `est_vrai = True` : Déclare une variable est_vrai de type bool avec la valeur True.
+* `est_faux = not est_vrai` : Utilise l'opérateur not pour inverser la valeur de est_vrai et la stocke dans est_faux.
+* `print(est_faux)` : Affiche la valeur de est_faux, soit False.
+
+== Variables Séquence
+
+===  Variables de Séquence - list
+
+* **Type** : list (liste)
+* **Description** : Représente une collection ordonnée de valeurs, modifiable (mutable).
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple de Déclaration :**
+
+```python
+nombres = [1, 2, 3, 4, 5]
+```
+
+**Exemple d'Utilisation :**
+
+```python
+nombres.append(6)
+print(nombres)  # [1, 2, 3, 4, 5, 6]
+```
+
+**Explication :**
+
+* `nombres = [1, 2, 3, 4, 5]` : Déclare une variable nombres de type list avec les valeurs [1, 2, 3, 4, 5].
+* `nombres.append(6)` : Ajoute la valeur 6 à la fin de la liste nombres.
+* `print(nombres)` : Affiche la liste nombres après l'ajout, soit [1, 2, 3, 4, 5, 6].
+
+=== Variables de Séquence - tuple
+
+* **Type** : tuple 
+* **Description** : Représente une collection ordonnée de valeurs, immuable (inchangeable après création).
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple de Déclaration :**
+
+```python
+coordonnees = (10, 20)
+```
+
+**Exemple d'Utilisation :**
+
+```python
+x, y = coordonnees
+print(f"X: {x}, Y: {y}")  # X: 10, Y: 20
+```
+
+**Explication :**
+
+* `coordonnees = (10, 20)` : Déclare une variable coordonnees de type tuple avec les valeurs (10, 20).
+* `x, y = coordonnees` : Décompose les éléments du tuple coordonnees et les assigne aux variables x et y.
+* `print(f"X: {x}, Y: {y}")` : Affiche les valeurs des variables x et y, soit X: 10, Y: 20.
+
+=== Variables de Séquence - range
+
+* **Type** : range (intervalle)
+* **Description** : Représente une séquence d'entiers, souvent utilisée dans les boucles.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple de Déclaration :**
+
+```python
+intervalle = range(0, 10, 2)
+```
+
+**Exemple d'Utilisation :**
+
+```python
+for nombre in intervalle:
+    print(nombre)
+# 0, 2, 4, 6, 8
+```
+
+**Explication :**
+
+* `intervalle = range(0, 10, 2)` : Déclare une variable intervalle de type range représentant la séquence d'entiers de 0 à 10 (exclu), avec un pas de 2.
+* `for nombre in intervalle:` : Démarre une boucle qui itère sur chaque valeur dans intervalle.
+* `print(nombre)` : Affiche chaque nombre dans intervalle, soit 0, 2, 4, 6, 8.
+
+== Variables de mappage - dict
+
+* **Type** : dict (dictionnaire)
+* **Description** : Représente une collection de paires clé-valeur, permettant un accès rapide aux données par clé.
+* Les clés doivent être uniques et immuables, tandis que les valeurs peuvent être de tout type.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple de Déclaration :**
+
+```python
+dictionnaire = {"nom": "Alice", "age": 25, "ville": "Paris"}
+```
+
+**Exemple d'Utilisation :**
+
+```python
+dictionnaire["pays"] = "France"
+print(dictionnaire)  # {'nom': 'Alice', 'age': 25, 'ville': 'Paris', 'pays': 'France'}
+```
+
+**Explication :**
+
+* `dictionnaire = {"nom": "Alice", "age": 25, "ville": "Paris"}` : Déclare une variable dictionnaire de type dict avec les paires clé-valeur {"nom": "Alice", "age": 25, "ville": "Paris"}.
+* `dictionnaire["pays"] = "France"` : Ajoute une nouvelle paire clé-valeur "pays": "France" dans le dictionnaire dictionnaire.
+* `print(dictionnaire)` : Affiche le dictionnaire mis à jour.
+
+== Variable de type Set - `set`
+
+* **Type** : set (ensemble)
+* **Description** : Représente une collection non ordonnée d'éléments uniques.
+* La différence avec la variable liste c’est que l’on ne peut pas avoir de doublon
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple de Déclaration :**
+
+```python
+ensemble = {1, 2, 3, 4}
+```
+
+**Exemple d'Utilisation :**
+
+```python
+ensemble.add(5)
+print(ensemble)  # {1, 2, 3, 4, 5}
+```
+
+**Explication :**
+
+* `ensemble = {1, 2, 3, 4}` : Déclare une variable ensemble de type set avec les éléments uniques `{1, 2, 3, 4}`.
+* `ensemble.add(5)` : Ajoute l'élément 5 à l'ensemble ensemble.
+* `print(ensemble)` : Affiche l'ensemble ensemble après l'ajout, soit `{1, 2, 3, 4, 5}`.
+
+== Variable de type Set - `frozenset`
+
+* **Type** : frozenset (ensemble immuable)
+* **Description** : Représente une collection immuable d'éléments uniques.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple de Déclaration :**
+
+```python
+ensemble_gele = frozenset([1, 2, 3, 4])
+```
+
+**Exemple d'Utilisation :**
+
+```python
+# ensemble_gele.add(5) # Cela provoquerait une erreur, car frozenset est immuable
+print(ensemble_gele)  # frozenset({1, 2, 3, 4})
+```
+
+**Explication :**
+
+* `ensemble_gele = frozenset([1, 2, 3, 4])` : Déclare une variable ensemble_gele de type frozenset avec les éléments `[1, 2, 3, 4]`.
+* `print(ensemble_gele)` : Affiche le frozenset `ensemble_gele`, soit `frozenset({1, 2, 3, 4})`.
+
+== Variable de type None - `NoneType`
+
+* Type : NoneType
+* Description : Représente l'absence de valeur ou une valeur nulle.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Exemple de Déclaration :**
+
+```python
+variable_vide = None
+```
+
+**Exemple d'Utilisation :**
+
+```python
+if variable_vide is None:
+    print("La variable est vide.")
+```
+
+**Explication :**
+
+* `variable_vide = None` : Déclare une variable variable_vide de type NoneType avec la valeur None.
+* `if variable_vide is None` : Vérifie si variable_vide est None.
+* `print("La variable est vide.")` : Affiche le message "La variable est vide." si la condition précédente est vraie.
+
+== Tableau Récapitulatif
+
+[cols="1,4,4,4"]
+|===
+
+a| **Type**
+a| **Description**
+a| **Exemple de Déclaration**
+a| **Exemple d'Utilisation**
+
+a| `int`
+a| Nombres entiers
+a| `entier = 42`
+a| `print(entier * 2)`
+
+a| `float`
+a| Nombres réels
+a| `flottant = 3.14`
+a| `print(flottant / 2)`
+
+a| `complex`
+a| Nombres complexes
+a| `complexe = 1 + 2j`
+a| `print(complexe.imag)`
+
+a| `str`
+a| Chaînes de caractères
+a| `message = "Bonjour"`
+a| `print(message[0])`
+
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="2,4,4,4"]
+|===
+
+a| **Type**
+a| **Description**
+a| **Exemple de Déclaration**
+a| **Exemple d'Utilisation**
+
+a| `bool`
+a| Valeurs de vérité
+a| `vrai = True`
+a| `print(not vrai)`
+
+a| `list`
+a| Liste ordonnée, modifiable
+a| `nombres = [1, 2, 3]`
+a| `nombres.append(4)`
+
+a| `tuple`
+a| Liste ordonnée, immuable
+a| `coordonnees = (10, 20)`
+a| `x, y = coordonnees`
+
+a| `range`
+a| Séquence d'entiers
+a| `intervalle = range(5)`
+a| `for i in intervalle`
+
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="2,4,4,4"]
+|===
+
+a| **Type**
+a| **Description**
+a| **Exemple de Déclaration**
+a| **Exemple d'Utilisation**
+
+a| `dict`
+a| Paires clé-valeur
+a| `dictionnaire = {"nom": "Alice"}`
+a| `dictionnaire["age"] = 30`
+
+a| `set`
+a| Ensemble non ordonné d'éléments uniques
+a| `ensemble = {1, 2, 3}`
+a| `ensemble.add(4)`
+
+a| `frozenset`
+a| Ensemble immuable
+a| `ensemble_gele = frozenset([1, 2, 3])`
+a| `print(ensemble_gele)`
+|===
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+[cols="2,4,4,4"]
+|===
+
+a| **Type**
+a| **Description**
+a| **Exemple de Déclaration**
+a| **Exemple d'Utilisation**
+
+a| `NoneType`
+a| Absence de valeur
+a| `variable_vide = None`
+a| `if variable_vide is None`
+
+|===
+
+// tag::demo[]
+
+== Démonstration
+
+[NOTE.speaker]
+--
+* **Variables Numériques**
+** Type `int`
+
+**Définition**: Les entiers (`int`) sont des nombres sans partie décimale.
+
+**Exemple**:
+
+```python
+a = 42
+print(f"Valeur de a: {a}, Type: {type(a)}")
+```
+
+** Type `float`
+
+**Définition**: Les flottants (`float`) sont des nombres avec une partie décimale.
+
+**Exemple:**
+
+```python
+b = 3.14
+print(f"Valeur de b: {b}, Type: {type(b)}")
+````
+
+* **Variables Texte **: 
+
+** Type `str`
+
+**Définition**: Les chaînes de caractères (`str`) permettent de manipuler du texte.
+
+**Boucle**: On peut parcourir chaque caractère d'une chaîne de caractères.
+
+**Exemple**:
+
+```python
+c = "Bonjour, Python!"
+print(f"Valeur de c: {c}, Type: {type(c)}")
+
+# Parcourir chaque caractère
+for char in c:
+    print(char)
+```
+
+* **Variables Booléennes** : 
+
+** Type `bool`
+
+**Définition**: Les booléens (`bool`) ne prennent que deux valeurs : `True` ou `False`.
+
+**Exemple:**
+
+```python
+d = True
+e = False
+print(f"Valeur de d: {d}, Type: {type(d)}")
+print(f"Valeur de e: {e}, Type: {type(e)}")
+```
+
+* **Variables Séquence**
+
+** Liste : Type `list`
+
+**Définition**: Les listes sont des collections ordonnées et modifiables d'éléments.
+
+**Boucle**: Les listes peuvent être parcourues élément par élément.
+
+**Exemple**:
+
+```python
+f = [1, 2, 3, 4, 5]
+print(f"Valeur de f: {f}, Type: {type(f)}")
+
+# Ajouter un élément
+f.append(6)
+print(f"Après ajout: {f}")
+
+# Parcourir chaque élément
+for item in f:
+    print(item)
+```
+
+** Tuple : Type `tuple`
+
+**Définition**: Les tuples sont des collections ordonnées mais non modifiables.
+
+**Boucle**: Les tuples peuvent être parcourus de manière similaire aux listes.
+
+**Exemple**:
+
+```python
+g = (1, 2, 3)
+print(f"Valeur de g: {g}, Type: {type(g)}")
+
+# Parcourir chaque élément
+for item in g:
+    print(item)
+```
+
+** Range : Type `range`
+
+**Définition**: range génère une séquence d'entiers.
+
+**Boucle**: Les objets range sont souvent utilisés directement dans les boucles for.
+
+**Exemple**:
+
+```python
+h = range(0, 10)
+print(f"Valeur de h: {list(h)}, Type: {type(h)}")
+
+# Parcourir chaque valeur générée
+for num in h:
+    print(num)
+```
+
+* **Variables Mappage : **
+
+** Type `dict`
+
+**Définition**: Les dictionnaires (dict) sont des collections non ordonnées de paires clé-valeur.
+
+**Boucle**: Les dictionnaires peuvent être parcourus par clés, valeurs, ou les deux.
+
+**Exemple**:
+
+```python
+i = {'nom': 'Alice', 'âge': 25}
+print(f"Valeur de i: {i}, Type: {type(i)}")
+
+# Parcourir les clés
+for key in i:
+    print(f"Clé: {key}, Valeur: {i[key]}")
+
+# Parcourir les paires clé-valeur
+for key, value in i.items():
+    print(f"Clé: {key}, Valeur: {value}")
+```
+
+* **Variables Ensemble**
+
+** Ensemble : Type `set`
+
+**Définition**: Les ensembles (`set`) sont des collections non ordonnées d'éléments uniques.
+
+**Boucle**: Les ensembles peuvent être parcourus pour accéder à chaque élément.
+
+**Exemple**:
+
+```python
+j = {1, 2, 3, 4}
+print(f"Valeur de j: {j}, Type: {type(j)}")
+
+# Ajouter un élément
+j.add(5)
+print(f"Après ajout: {j}")
+
+# Parcourir chaque élément
+for item in j:
+    print(item)
+```
+
+** FrozenSet : Type `frozenset`
+
+**Définition**: Les frozenset sont des ensembles immuables.
+
+**Boucle**: Les frozenset peuvent également être parcourus comme les set.
+
+**Exemple**:
+
+```python
+k = frozenset([1, 2, 3])
+print(f"Valeur de k: {k}, Type: {type(k)}")
+
+# Parcourir chaque élément
+for item in k:
+    print(item)
+```
+
+* **Variables None**
+
+**Définition**: None représente l'absence de valeur ou une valeur nulle.
+
+**Exemple**:
+
+```python
+l = None
+print(f"Valeur de l: {l}, Type: {type(l)}")
+```
+--
+
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Les variables sont des composants fondamentaux en Python pour stocker et manipuler les données. 
+* Chaque type de variable offre des fonctionnalités spécifiques adaptées à des besoins variés, qu'il s'agisse de manipuler des nombres, du texte, des séquences ou des collections de données uniques. 
+* La compréhension des différents types de variables et de leurs utilisations est cruciale pour écrire du code Python efficace, clair et maintenable.
+// end::conclusion[]

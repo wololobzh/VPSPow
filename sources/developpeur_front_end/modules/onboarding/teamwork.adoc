@@ -1,0 +1,115 @@
+:titre: Teamwork
+:module: Onboarding
+:duree: 45
+:description: Importance des soft skills et de l'entraide
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre l'importance des soft skills dans un environnement DevOps
+* Apprendre à travailler efficacement en équipe pour résoudre des problèmes complexes
+* Développer des compétences en communication, collaboration, et gestion des conflits
+* Favoriser l'entraide et le partage de connaissances au sein d'une équipe technique
+// end::objectifs[]
+
+// tag::deroulement[]
+== Les soft skills
+
+* des compétences interpersonnelles et comportementales qui influencent la manière dont une personne interagit avec les autres
+
+* contrairement aux hard skills, ce sont des compétences transversales qui peuvent s’appliquer dans différents contextes professionnels
+
+=== Quelques exemples
+
+** **communication** (exprimer des idées, écouter, échanger)
+** **gestion du temps** (prioriser les tâches, gérer son temps efficacement, respecter les délais)
+** **empathie** (compréhension et reconnaissance des émotions)
+** **résolution de conflits** (gérer et résoudre les désaccords de manière constructive)
+** **travail d’équipe** (collaboration efficace avec les autres)
+** **adaptabilité** (s’ajuster aux changements et gérer des situations imprévues avec flexibilité)
+
+=== Rôle des soft skills dans le DevOps
+
+* **Communication efficace**
+** bonne compréhension des besoins, problèmes et solutions proposées
+** outils comme les tableaux de bord partagés ainsi que des points d'équipe rapides
+
+* **Collaboration et travail d'équipe**
+** coopération entre les équipes de développement, d'exploitation et sécurité
+** alignement des objectifs, partage des responsabilités
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+* **Adaptabilité et gestion du changement**
+** apprentissage de nouvelles compétences ou adoption de nouveaux outils
+** ajustement des processus et acquisition de nouvelles méthodologies
+
+* **Résolution de problèmes et pensée critique**
+** identification, analyse et résolution de problèmes complexes
+** prise de décision rapide pour éviter les interruptions et minimiser les temps d'arrêt
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+* **Gestion du stress et équilibre travail-vie**
+** résilience face à la pression, rester concentré
+** équilibre entre vie pro et vie perso
+
+* **Leadership et mentorat**
+** capacité à motiver l'équipe et cultiver un esprit de collaboration
+** partage des connaissances pour favoriser la croissance professionnelle
+
+== Principe de l'entraide
+
+* **partage des connaissances** :
+** documentation des processus
+** organisation de sessions de formation interne
+
+* **écoute active** :
+** écouter les problèmes soulevés sans jugement
+** proposer des solutions constructives
+
+* **assistance mutuelle** :
+** aider à résoudre un problème ou collaborer à la mise en place de nouvelles solutions
+** objectif commun : la réussite collective, cela implique de mettre de côté les priorités individuelles
+
+=== Techniques de collaboration efficace
+
+* **méthodes agiles** (interactions fréquentes, ajustements rapides en fonction des besoins, rétroaction constante)
+* **réunions régulières** (courtes et fréquentes, partage des progrès réalisés, obstacles rencontrés, tâches à venir)
+* **outils de collaboration** (gestion de projet avec Jira, Trello ou Asana, messagerie d’équipe)
+* **transparence** (compréhension de la part de chaque membre des objectifs, priorités et responsabilités afin d’éviter les malentendus)
+
+image::./assets/entraide.png[]
+
+=== Mettez ces conseils en pratique dés aujourd'hui !
+
+* O’Clock vous met à disposition les outils pour collaborer et vous entraider, malgré la distance. Utilisez-les !
+
+* Les soft skills sont très recherchés par les entreprises, parfois même plus que les hard skills ! Il est en effet plus facile de former quelqu’un aux hard skills qu’aux soft skills
+
+* Plus vous vous investirez professionnellement dans votre formation, plus vous avez de chances de réussir dans le milieu professionnel !
+
+== Rôle du délégué de promo
+
+* soutien moral et point de contact de la promo
+
+* fait le relais auprès d’O’clock en cas de besoin
+
+* il s’agit avant tout d’une obligation légale, cela ne doit pas prendre le pas sur le parcours d’apprentissage et la progression perso
+
+**Alors, qui veut candidater ? 😊**
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Compréhension des soft skills essentielles dans un environnement d'administration d'infrastructures sécurisées
+* Compréhension de la nécessité de collaborer efficacement en équipe, même dans des situations de stress ou de crise
+* Connaissance  de techniques de communication et d'entraide pour améliorer la dynamique de groupe
+// end::conclusion[]

@@ -1,0 +1,62 @@
+:title: Services et partages réseau
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+On couvre trois modules essentiels pour la gestion des systèmes informatiques et réseaux. Découverte des services web, des bases de données, ainsi que les services DNS, DHCP et les partages de ressources.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Savoir installer et configurer un serveur web.
+* Installer et configurer un serveur de base de données.
+* Configurer un serveur DNS et DHCP.
+* Mettre en place des partages de fichiers et de ressources.
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Préparer le cours en parcourant les modules de cet épisode
+* 2 Machines virtuelles Debian prêtes à l’emploi (2 VM sont nécessaires pour la démo du partage de fichier)
+* S’entraîner à faire les démonstrations, notamment si l’on risque de ne pas être à l’aise pour les faire en direct
+
+_On peut aussi prendre le parti de découvrir la démonstration en plein cours, mais il ne faut pas que cela impacte trop le rythme de la journée_
+
+* Préparer des documents ou des ressources de référence sur les services et partages réseau, à partager aux apprenants
+// end::prerequis[]
+
+== Déroulement
+// tag::deroulement[]
+
+:correction: 
+:temps: 30 minutes
+:description: Correction du challenge E03
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/systeme/services-web.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/systeme/bases-de-donnees.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/systeme/dns-dhcp-partages.adoc[options=modules]
+
+WARNING: Journée async demain, programmer les activités.
+
+:challenge: https://drive.google.com/drive/folders/132vy_7FjgAUCxluxvt2w0eMbS276m7Ro
+:description: Installer WordPress avec Nginx
+:correction: https://docs.google.com/document/d/1bC_DijC77QIuH-PtJo3Z71Uh2KFe7u5Cd-tQUlYoty0/edit?usp=drive_web&ouid=106071620069547745756
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+include::../../../../suivi.adoc[tags=s05e04]
+--
+
+// end::deroulement[]

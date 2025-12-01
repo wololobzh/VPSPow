@@ -1,0 +1,43 @@
+:title: Langage et Configuration Terraform
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette journée permet d'approfondir Terraform en abordant la syntaxe HCL, la gestion de l'état et l'utilisation du provider AWS.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre la syntaxe HCL
+* Comprendre le principe de state dans Terraform
+* Savoir utiliser Terraform avec AWS
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Terraform installé et fonctionnel
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+:correction: 
+:temps: 30 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/iac/hcl-syntaxe.adoc[options=modules]
+
+include::../../../../modules/iac/terraform-state.adoc[options=modules]
+
+include::../../../../modules/iac/terraform-aws-provider.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S12-Challenge
+:description: 
+:correction: https://github.com/O-clock-Devops-Peda/S12-Challenge/tree/correction
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

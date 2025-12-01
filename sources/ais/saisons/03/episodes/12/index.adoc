@@ -1,0 +1,49 @@
+
+:title: DNS
+:number: 11
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode est consacré à la résolution de noms de domaine (DNS). Nous aborderons les principes de fonctionnement du DNS, les types de requêtes, et les bonnes pratiques pour garantir la disponibilité et la sécurité du système de résolution de noms.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre  la structure, les types de requêtes, et les pratiques de gestion DNS pour assurer la précision et l'efficacité du système de résolution de noms.
+* Voir les étapes essentielles de l’installation, de la configuration, et du test de BIND sur un système Linux pour assurer une résolution DNS fonctionnelle et stable.
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* avoir de pré-configuré pour les démonstrations 
+** une vm linux (Serveur)
+** une vm linux (client)
+** une vm Windows serveur
+** une vm Windows client
+* Savoir configurer un serveur DNS
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 90 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/reseau/dns.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/reseau/dns-linux.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1ZPVBOJqf8VlAUVhqwtW6cYJc0ZAuYOeb/view?usp=drive_link
+:description: DNS Linux
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

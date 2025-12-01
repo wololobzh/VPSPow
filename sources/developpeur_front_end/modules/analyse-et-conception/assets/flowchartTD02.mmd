@@ -1,0 +1,10 @@
+flowchart TD
+    Start[Début] --> A[Préparer commande]
+    A --> B{Stock suffisant ?}
+    B -->|Oui| C[Valider commande]
+    C --> F[Fin]
+    B -->|Non| D[Informer client]
+    C --> G[Envoyer commande]
+    C --> H[Mettre à jour stock]
+    G --> Join((Fin))
+    H --> Join

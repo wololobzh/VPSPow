@@ -1,0 +1,64 @@
+:title: Windows Server
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+L’objectif de cet épisode est de faire un focus sur Windows serveur, de son installation aux outils de gestion. 
+
+Comprendre la différence entre un rôle, une fonctionnalité et un service 
+
+Voir la structure et les premiers concepts de Active Directory 
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les méthodes d’installation de windows serveur
+* intérêt du mode Core
+* intérêt du mode graphique expérience de bureau
+* les outils de gestion
+* Comprendre la différence entre rôle, fonctionnalités et services
+* rôles principaux pour un serveur windows
+* Fonctionnalités de Windows serveur
+* Les services Windows serveur
+* Gestion des rôles et Fonctionnalités Graphiquement 
+* Gestion des rôles et Fonctionnalités en Powershell
+* Comprendre ce qu’est Active directory 
+* Comprendre les notions de Domaine, arbre, Forêt et sites Active directory
+* Appréhender la structure d’un contrôleur de domaine
+* voir la structure logique de la base Active Directory
+* Le contrôleur de domaine en lecture seule
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Connaître l'environnement Windows serveur  
+* Pour les besoins de la démonstration avoir un serveur Windows 2022 d’installé 
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+:correction: 
+:temps: 30 minutes
+:description: Faire le point pour s’assurer que tout le monde a réussi le TP
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/systeme/windows-server-install.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/systeme/windows-roles.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner 
+
+include::../../../../modules/systeme/ad-fondamentaux.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1ARuLCn71mxAQIY89Vdtg5N8RnVWEwQX_/view?usp=sharing
+:description: Installation de systèmes Microsoft Serveur et manipulation des outils de gestion
+:correction: https://docs.google.com/document/d/1T_W82HWIEpHJ_cLSoJiQNAwePgHiIbnZ/edit?usp=sharing&ouid=107045310818748849714&rtpof=true&sd=true
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

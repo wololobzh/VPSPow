@@ -1,0 +1,120 @@
+:titre: Présentation ITIL
+:module: Centre de services
+:duree: 30
+:description: Ce module est une introduction à ITIL
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Découvrir les bases d'ITIL
+* Examiner les étapes marquantes de l'évolution d'ITIL
+* Comprendre les objectifs d'ITIL dans l'optimisation des services IT
+* Comprendre les transformations apportées par ITIL en termes de gestion des services IT
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== ITIL
+
+ITIL : Information Technology Infrastructure Library. = Bibliothèque pour l’infrastructure des technologies de l’information.
+
+ITIL définit les bonnes pratiques informatiques afin d’avoir un Système d’Information le plus efficace et efficient possible.
+
+ITIL donne un cadre de travail et des recommandations, ce n’est pas un standard ni une norme.
+
+=== Les normes
+
+**ISO 9001**
+
+Norme, pour tous les secteurs d’activité, définit un système de gestion de qualité par le processus.
+
+**ISO 20000**
+
+Norme internationale, spécifique à la gestion des SI, définie par treize processus eux-mêmes définis dans ITIL.
+
+== Historique
+
+**Fin des années 80**
+
+* Développée par la Central Computer and Telecommunications Agency (CCTA) au Royaume-Uni
+* Création d’une bibliothèque de 42 livres baptisée « ITIL »
+* Le système d’information est un fournisseur de moyens
+
+=== 1991
+
+Mise en place d’un forum permettant aux utilisateurs d’ITIL d’échanger les idées et leurs expériences. Il deviendra l’ITSMF (IT Service Management Forum).
+
+=== 2004
+
+* Évolution vers ITIL v2 qui repose maintenant sur 9 livres centraux
+* Apparition de processus orientés sécurité et des SLAs
+* Le système d’information est un fournisseur de services
+** Livre Service Delivery
+** Livre Service Support
+
+=== 2007 - ITIL v3
+
+* Changement significatif en introduisant le concept de cycle de vie du service
+* ITIL v3 repose sur 5 livres centraux basés sur les 5 phases
+** Stratégie de service
+** Conception de service
+** Transition de service
+** Exploitation de service
+** Amélioration continue du service
+* Ajout de la notion de « cycle de vie des services »
+
+=== 2020 - ITIL v4
+
+* ITIL 4 n’est pas une version mais une mise à jour de la version 3
+* Ajoute la notion d’agilité, adaptabilité, flexibilité, une meilleure collaboration et une orientation sur la co-création de valeur.
+* Référentiel international de gestion des services informatiques
+
+== Objectifs d'ITIL
+
+* **Améliorer l'efficacité** : Optimiser les processus IT pour fournir des services plus efficaces et efficients.
+* **Augmenter la satisfaction client** : S'assurer que les services IT répondent mieux et plus précisément aux besoins des utilisateurs et des clients.
+* **Réduire les coûts** : Minimiser les coûts de fourniture de services IT en améliorant l'utilisation des ressources.
+* **Gérer les risques** : Identifier et gérer les risques liés à la fourniture de services IT.
+* **Stabiliser l'environnement IT** : Assurer un environnement IT stable et prévisible pour supporter les opérations d'affaires.
+
+== Impact d'ITIL
+
+* **Approche Systématique et Professionnelle** : Développement d'une gestion structurée des services IT.
+* **Satisfaction des Utilisateurs** : Amélioration grâce aux pratiques recommandées par ITIL.
+* **Performances des Services IT** : Augmentation résultant d'une gestion efficace.
+* **Compétitivité de l'Entreprise** : Renforcement face aux concurrents grâce à une meilleure gestion des services IT.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+* **Adaptabilité Organisationnelle** : Les organisations deviennent plus flexibles et aptes à s'adapter aux changements commerciaux et technologiques.
+* **Agilité** : ITIL contribue à rendre les processus plus agiles, favorisant une réponse rapide aux nouvelles opportunités et défis.
+* **Réceptivité aux Changements** : Amélioration de la capacité à gérer et répondre aux évolutions du marché et de la technologie.
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+**ITIL est un cadre structurant :**
+
+* Offre une méthodologie efficace pour gérer et améliorer les services IT.
+
+**Un cadre évolutif :**
+
+* Son historique montre comment il s’est adapté aux besoins changeants des organisations.
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+**Des objectifs stratégiques clairs :**
+
+* ITIL vise à maximiser la valeur des services IT en alignant la technologie avec les besoins métier.
+
+**Un impact significatif :**
+
+* Son application permet de standardiser les processus, de renforcer la satisfaction client et d’améliorer la performance globale des entreprises.
+// end::conclusion[]

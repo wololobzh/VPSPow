@@ -1,0 +1,263 @@
+:titre: Data Transfer Object
+:module: nestJs
+:duree: 60
+:description: Comprendre les DTO
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* **Comprendre** le concept et l'utilité des Data Transfer Objects (DTO)
+* **Appliquer** la validation des données avec les DTOs
+* **Créer** des DTOs pour gérer le transfert de données
+* **Comprendre** l'intégration des DTOs avec les contrôleurs NestJS
+// end::objectifs[]
+
+// tag::deroulement[]
+== Les Data Transfer Objects (DTOs)
+
+C'est simplement une classe permettant de stocker les données à transférer.
+
+== Les DTO : Exemple
+
+[source,typescript]
+----
+// create-user.dto.ts
+import { IsString, IsInt, IsEmail, MinLength } from 'class-validator';
+
+export class CreateUserDto {
+  @IsString()
+  @MinLength(3)
+  readonly username: string;
+
+  @IsString()
+  @MinLength(6)
+  readonly password: string;
+
+  @IsEmail()
+  readonly email: string;
+
+  @IsInt()
+  readonly age: number;
+}
+----
+
+[NOTE.speaker]
+--
+
+*__Définition :__*
+
+Les DTO sont des objets qui gèrent les données et leur conformité et les transfèrent entre chaque process dans un but défini (création de ressources par exemple), nous épargnant ainsi la mise à jour de notre code dans plusieurs endroits en cas de modifications du modèle, on a donc dans le code une 'single source of truth' (SSOT).
+
+https://fr.wikipedia.org/wiki/Objet_de_transfert_de_données[Data Transfert Object]
+
+Pris dans la doc de NestJS https://docs.nestjs.com/controllers#request-payloads :
+
+
+:tip-caption: 💡
+[TIP]
+====
+*__
+A DTO is an object that defines how the data will be sent over the network
+__*
+====
+
+Ces DTO peuvent être utilisés comme des types avec TypeScript, il faut toutefois faire attention à ne pas confondre les DTOs avec les modèles.
+
+La documentation de NestJS recommande d'utiliser les classes pour définir des DTOs.
+
+--
+
+== Les Data Transfer Objects (DTOs) : suite
+
+On peut avoir plusieurs DTOs pour gérer une ressource, dans notre cas, si on souhaite créer une note, on pourrait avoir un DTO différent de celui qui nous sert à les mettre à jour, même si celui-ci ne diffère que par la date de mise à jour d'une note, on pourrait le faire étendre le DTO servant à créer une note.
+
+On n'est pas obligé de se servir de DTO pour faire une application avec NestJS, toutefois, c'est l'approche recommandée, car ils permettent de maintenir le code plus facilement.
+
+// tag::demo[]
+== Démonstration 01
+
+Création d'un DTO
+
+[NOTE.speaker]
+--
+On commence par créer un répertoire `dto` dans le répertoire `src/notes`.
+
+Ensuite, on suit la convention de nommage NestJS, dans le répertoire fraîchement créé, on fait un fichier nommé `create-note.dto.ts`.
+
+Et on en exporte une classe :
+
+[source,typescript]
+====
+// create-note.dto.ts
+export class CreateNoteDto {
+    //
+}
+====
+
+Pour savoir quoi mettre dans le DTO, on doit analyser notre modèle `Note`, et réfléchir à ce dont on a besoin pour créer une note.
+--
+// end::demo[]
+
+== DTOs : conception
+
+Dans ce modèle, on a deux propriétés : `title` et `content`, a-t-on besoin d'autre chose pour créer une note ? Oui, on a au minimum besoin de l'ID d'un utilisateur, celui qui créé la note.
+
+La question suivante est : Doit-on mettre à jour notre modèle avec cette information ?
+
+____
+Tout dépend du type d'association que l'on va avoir entre note et utilisateur, s'agit-il d'une application de prise de note personnelle ? ou d'un outil collaboratif ?
+____
+
+// tag::demo[]
+== Démonstration 02
+
+Création d'un DTO : Son contenu
+
+[NOTE.speaker]
+--
+Pour une fois, faisons compliqué :) et on va choisir l'outil collaboratif, et donc, on aura une association de type `many-to-many` pour faire en sorte que plusieurs utilisateurs puissent éditer plusieurs notes. On ne modifiera ainsi pas notre modèle, et on créera les associations plus tard.
+
+Voici le DTO à jour :
+
+[source, typescript]
+====
+// create-note.dto.ts
+export class CreateNoteDto {
+    title: string;
+    content: string;
+}
+====
+
+Allons tester ça dans `NotesController`, on va créer une méthode pour recueillir les données et, en utilisant Typescript avec le DTO, on va voir si on peut faire en sorte que nos données soient conforme à ce que l'on attend.
+
+*DTOs : le contrôleur*
+
+On ajoute une méthode `store`, c'est celle qui nous servira à persister les données, cette méthode répondra à une route POST. On y va petit à petit, on va déjà gérer sans le DTO, et on y ajoute le DTO ensuite.
+
+Pour récupérer les données d'un formulaire, avec `Express` on utilise `req.body`, avec NestJS, on a le décorateur `@Body()` disponible, on type les paramètres de la méthode, et l'objet qu'elle retourne. Enfin, on n'oublie pas de se servir du service `notes`
+
+[source ,typescript]
+====
+// notes.controller.ts
+@Post()
+store(
+    @Body('title') title: string,
+    @Body('content') content: string
+): Note {
+    const note = { title, content };
+    return this.notesService.create(note);
+}
+====
+
+*DTOs : le contrôleur*
+
+NOTE : Ne pas oublier d'importer les décorateurs `Post` et `Body` ainsi que le modèle `Note`.
+--
+// end::demo[]
+
+// tag::demo[]
+== Démonstration 03
+
+Utilisation du DTO
+
+[NOTE.speaker]
+--
+*DTOs : le service*
+
+Allons dans le service pour faire la méthode `create()`, pas la peine de trop typer pour l'instant, on veut juste faire la plomberie et connecter nos éléments :
+
+[source ,typescript]
+====
+// notes.service.ts
+create(noteBody) {
+    return this.noteModel.build(noteBody);
+}
+====
+
+On crée une nouvelle requête avec insomnia, on teste et si on reçoit la note en retour, tout est ok.
+
+*DTOs : le service*
+
+On note le retour avec le code 201 created, NestJS a renvoyé le code http correct, vraiment pratique :)
+
+Également, pour la démo, on ne persiste pas les notes en BDD pour l'instant, pas la peine de s'encombrer.
+--
+
+== Démonstration 04
+
+Utilisation du DTO
+
+[NOTE.speaker]
+--
+*DTOs : le test*
+
+Mettons en œuvre le DTO, ça nous permettra une validation plus poussée, sans encombrer le contrôleur :
+
+[source,typescript]
+====
+@Post()
+store(@Body() createNoteDto: CreateNoteDto): Note {
+    const notesObj = this.notesService.create(createNoteDto);
+    console.log(typeof notesObj);
+    return notesObj;
+}
+====
+
+On a modifié le typage du paramètre, on a maintenant une variable `createNoteDto` du type du DTO qu'on vient de faire, on le préfixe avec le décorateur `@Body()` et on l'envoie directement dans le service. On teste avec insomnia et rien ne devrait changer.
+
+On peut aller améliorer notre DTO, pour s'assurer que le format des données soient validées a minima.
+
+*DTOs : Validation de donnees*
+
+*__
+Installer `class-validator` et `class-transformer` comme le préconise https://docs.nestjs.com/techniques/validation#using-the-built-in-validationpipe[la documentation].
+`class-validator` est un module de validation de données.
+__*
+
+[source ,typescript]
+====
+// create-note.dto.ts
+import { IsNotEmpty } from 'class-validator';
+
+export class CreateNoteDto {
+    @IsNotEmpty()
+    title: string;
+    @IsNotEmpty()
+    content: string;
+}
+====
+
+On s'assure que les données de l'objet ne sont pas des strings vides, c'est en quelque sorte un middleware de validation.
+
+On peut tester ça en modifiant le body de la requête avec insomnia, et là... c'est le drame, nos validateurs ne fonctionnent pas...
+
+*DTOs : validation*
+
+C'est parce qu'il faut activer le pipeline de validation globale de `NestJS` :
+
+[source ,typescript]
+====
+//main.ts
+// ...
+import { ValidationPipe } from '@nestjs/common';
+// ...
+app.useGlobalPipes(new ValidationPipe());
+====
+
+On teste avec insomnia et on devrait recevoir des messages d'erreurs en réponse si on ne remplit pas bien les champs.
+--
+// end::demo[]
+// end::deroulement[]
+
+// tag::conclusion[]
+* Maîtrise du concept des DTOs et leur rôle dans une application NestJS
+* Capacité à implémenter des validations de données avec class-validator
+* Compréhension de l'importance des DTOs pour maintenir la cohérence des données
+* Aptitude à utiliser les DTOs pour sécuriser les transferts de données
+* Maîtrise de l'intégration des DTOs avec les pipes de validation NestJS
+// end::conclusion[]

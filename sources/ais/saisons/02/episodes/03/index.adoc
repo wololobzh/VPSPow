@@ -1,0 +1,61 @@
+:title: Administration GLPI 1/2
+:number: 03
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cet épisode a pour but d'installer GLPI et de le configurer pour qu'il soit opérationnel.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre le but de GLPI
+* Installer GLPI
+* Configurer GLPI
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Expertise en administration système et réseau.
+* Maîtrise de l’environnement Linux (installation et configuration de serveurs).
+* Connaissance des bases de données (MariaDB/MySQL).
+* Expérience avec les serveurs web (Apache2, PHP-FPM).
+* Connaissance fonctionnelle de GLPI (notions d’entités, profils et permissions).
+
+**POUR LES DÉMONSTRATIONS UNE VM SRV-GLPI est à disposition : https://drive.google.com/file/d/15flhngmq57nLPhBLDTHTlBRQxQ5MqcSv/view?usp=drive_link[SRV-GLPI.ova]**
+
+* os : debian 12
+* GLpi 10
+* utilisateur : 
+* user1 / Pa$$w0rd
+* root / Pa$$w0rd
+
+LA vm contient deux snapshot :
+
+* snap1 : juste le serveur debian avec l’ip 192.168.10.200 de configurer
+* Snap2 : application Glpi fraichement installée
+
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+:correction: 
+:temps: 30 minutes
+:description: Correction du challenge E02
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/itil/presentation-glpi.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/itil/config-glpi.adoc[options=modules]
+
+:challenge: https://drive.google.com/file/d/1uCgA4GsUhK73BSXbP9nrtUlT4XWiPBzZ/view?usp=drive_link
+:description: Entités, lieux et profils GLPI
+:correction: https://drive.google.com/file/d/1_KL-ggH9uDnYOwIgow4c-fRPQU4AuEFI/view?usp=drive_link
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+// end::deroulement[]

@@ -1,0 +1,352 @@
+:titre: Les boucles
+:module: Python
+:duree: 120
+:description: Les boucles permettent de répéter des instructions un certain nombre de fois, ou jusqu'à ce qu'une condition soit remplie.
+// A décommenter
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+// Sous forme de liste à puce, en utilisant la taxonomie de Bloom
+* Identifier les différents types de boucles en Python (`for` et `while`)
+* Comprendre les bonnes pratiques
+* Utiliser les boucles imbriquées
+// end::objectifs[]
+
+// tag::deroulement[]
+== Boucle for
+
+.Syntaxe
+```python
+for element in sequence:
+    # instructions
+```
+
+*Fonctionnement* : La boucle `for` itère sur chaque élément d'une séquence (liste, tuple, chaîne de caractères, etc.) et exécute le bloc de code associé pour chaque élément.
+
+```python
+amis = ["Alice", "Bob", "Charlie"]
+for ami in amis:
+    print(ami)
+```
+
+[NOTE.speaker]
+--
+* `amis = ["Alice", "Bob", "Charlie"]` Crée une liste de noms.
+* `for ami in amis:` Démarre une boucle qui passe en revue chaque élément de la liste amis. La variable ami représente l'élément actuel de l'itération.
+* `print(ami)` Affiche la valeur de ami, c'est-à-dire le nom de l'ami à chaque itération.
+--
+
+=== For + sequence
+
+*Séquences possibles* : Les boucles for peuvent être utilisées pour parcourir des listes, tuples, chaînes de caractères, ensembles, et dictionnaires.
+
+*Avantages* : Permet de traverser des séquences de manière systématique sans avoir à gérer explicitement un compteur.
+
+```python
+phrase = "Bonjour tout le monde"
+mots = phrase.split()
+for mot in mots:
+    print(f"Le mot '{mot}' a {len(mot)} caractères")    
+```
+
+[NOTE.speaker]
+--
+* `phrase = "Bonjour tout le monde"` Crée une chaîne de caractères et la stocke dans la variable phrase.
+* `mots = phrase.split()` Divise la chaîne de caractères en une liste de mots (ici en fonction des espaces).
+* `for mot in mots:` Démarre une boucle qui passe en revue chaque élément de la liste `mots`. La variable `mot` représente le mot actuel de l'itération.
+* `print(f"Le mot '{mot}' a {len(mot)} caractères")` Affiche le mot et sa longueur à chaque itération.
+--
+
+=== For + range
+
+*Fonction range* : Génère une séquence de nombres, souvent utilisée pour itérer un nombre fixe de fois. Utile pour créer des boucles avec un nombre d'itérations défini.
+
+.Syntaxe
+```python
+for i in range(start, stop[, step]):
+    # instructions
+```
+
+.Exemple
+```python
+for i in range(0, 5):
+    print(i)
+```
+
+[NOTE.speaker]
+--
+* `for i in range(0, 5):` Démarre une boucle qui passe en revue les nombres de 0 à 4 (`stop` est non inclus). La variable `i` représente le nombre actuel de l'itération.
+* `print(i)` Affiche la valeur de `i` à chaque itération.
+--
+
+== While
+
+*Fonction* : La boucle while répète un bloc de code tant qu'une condition est vraie. Utile pour des scénarios où le nombre d'itérations n'est pas connu à l'avance.
+
+.Syntaxe
+```python
+while condition:
+    # instructions
+```
+
+.Exemple
+```python
+essais = 0
+while essais < 3:
+    print("Essai numéro", essais + 1)
+    essais += 1
+```
+
+[NOTE.speaker]
+--
+* `essais = 0` Initialise une variable essais à 0.
+* `while essais < 3:` Démarre une boucle qui se répète tant que le nombre d'essais est inférieur à 3.
+* `print("Essai numéro", essais + 1)` Affiche le numéro de l'essai.
+* `essais += 1` Incrémente le nombre d'essais.
+--
+
+=== Cas typiques
+
+* Répéter une action jusqu'à ce qu'une condition spécifique soit remplie (ex. : obtention d'une entrée valide de l'utilisateur).
+* Utilisée dans les jeux pour attendre une action de l'utilisateur ou pour traiter des données tant qu'une condition de fin n'est pas atteinte.
+
+.Exemple
+```python
+reponse = ""
+while reponse not in ["oui", "non"]:
+    reponse = input("Voulez-vous continuer? (oui/non) : ")
+print("Merci pour votre réponse :", reponse)
+```
+
+[NOTE.speaker]
+--
+* `reponse = ""` Initialise une variable reponse à une chaîne vide.
+* `while reponse not in ["oui", "non"]:` Démarre une boucle qui se répète tant que la réponse n'est ni "oui" ni "non".
+* `reponse = input("Voulez-vous continuer? (oui/non) : ")` Demande à l'utilisateur de saisir une réponse.
+* `print("Merci pour votre réponse :", reponse)` Affiche la réponse de l'utilisateur.
+--
+
+== Bonnes pratiques
+
+* *Noms de variables explicites* : Utiliser des noms de variables clairs et significatifs pour une meilleure lisibilité du code.
+* *Commentaires* : Expliquer les blocs de code complexes ou les choix de conception avec des commentaires.
+* *Éviter les boucles infinies* : Assurez-vous que les boucles ont des conditions d'arrêt claires et vérifiables.
+* *Optimisation* : Utiliser des structures de données et des techniques appropriées pour minimiser les temps de calcul.
+
+
+=== Exemple
+
+```python
+# Mauvaise pratique : boucle infinie sans condition d'arrêt claire
+while True:
+    print("Boucle infinie")
+
+# Bonne pratique : boucle avec condition d'arrêt
+compteur = 0
+while compteur < 5:
+    print("Compteur :", compteur)
+    compteur += 1
+```
+
+[NOTE.speaker]
+--
+* `while True:` Crée une boucle infinie qui affiche "Boucle infinie" à chaque itération car la condition est toujours vraie.
+
+---
+
+* `compteur = 0` Initialise une variable compteur à 0.
+* `while compteur < 5:` Démarre une boucle qui se répète tant que le compteur est inférieur à 5.
+* `print("Compteur :", compteur)` Affiche la valeur du compteur.
+* `compteur += 1` Incrémente le compteur à chaque itération.
+--
+
+== Break
+
+break : Utilisé pour sortir immédiatement d'une boucle, même si la condition de la boucle n'est pas encore devenue fausse.
+
+.Exemple
+```python
+for nombre in range(10):
+    if nombre == 5:
+        break
+    print(nombre)
+```
+
+[NOTE.speaker]
+--
+* `for nombre in range(10):` Démarre une boucle qui passe en revue les nombres de 0 à 9.
+* `if nombre == 5:` Vérifie si le nombre est égal à 5.
+* `break` Sort de la boucle si le nombre est égal à 5.
+* `print(nombre)` Affiche le nombre à chaque itération.
+--
+
+== Continue
+
+continue : Passe à l'itération suivante de la boucle sans exécuter les lignes restantes dans le bloc de code.
+
+.Exemple
+```python
+for nombre in range(10):
+    if nombre % 2 == 0:
+        continue
+    print(nombre)
+```
+
+[NOTE.speaker]
+--
+* `for nombre in range(10):` Démarre une boucle qui passe en revue les nombres de 0 à 9.
+* `if nombre % 2 == 0:` Vérifie si le nombre est pair.
+* `continue` Passe à l'itération suivante si le nombre est pair.
+* `print(nombre)` Affiche le nombre si ce n'est pas pair.
+--
+
+== Boucle imbriquées
+
+Une boucle à l'intérieur d'une autre boucle, souvent utilisée pour parcourir des structures de données multi-dimensionnelles.
+
+*Cas d'utilisation* : Parcours de matrices, traitement d'ensembles de données complexes, génération de combinaisons, etc.
+
+.Exemple
+```python
+matrice = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+for ligne in matrice:
+    for element in ligne:
+        print(element, end=" ")
+    print()
+```
+
+[NOTE.speaker]
+--
+* `matrice = [...]` Crée une matrice de nombres sous forme de liste de listes.
+* `for ligne in matrice:` Démarre une boucle qui passe en revue chaque ligne de la matrice.
+* `for element in ligne:` Démarre une boucle imbriquée qui passe en revue chaque élément de la ligne.
+* `print(element, end=" ")` Affiche l'élément en remplaçant le saut de ligne à la fin par une espace.
+* `print()` Passe à la ligne suivante après avoir affiché tous les éléments de la ligne.
+--
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration
+
+[NOTE.speaker]
+--
+*La boucle for*
+
+La boucle for est utilisée pour itérer sur une séquence (comme une liste, une chaîne de caractères, un range, etc.). Voici un exemple de base :
+
+```python
+# Exemple simple : itérer sur une liste de nombres
+nombres = [1, 2, 3, 4, 5]
+
+for nombre in nombres:
+    print(f"Nombre: {nombre}")
+```
+
+Explication : Ici, la boucle for itère sur chaque élément de la liste nombres et imprime chaque valeur.
+
+*La boucle while*
+
+La boucle while continue de s'exécuter tant qu'une condition est vraie. Voici un exemple simple :
+
+```python
+# Exemple simple : compter jusqu'à 5
+compteur = 1
+
+while compteur <= 5:
+    print(f"Compteur: {compteur}")
+    compteur += 1
+```
+
+Explication : La boucle continue tant que compteur est inférieur ou égal à 5. À chaque itération, compteur est incrémenté de 1.
+
+Bonnes pratiques
+
+* Utiliser des noms de variables significatifs : Cela rend le code plus lisible.
+* Limiter la profondeur des boucles imbriquées : Trop de boucles imbriquées peuvent rendre le code difficile à comprendre et à maintenir.
+* Commenter le code lorsque c'est nécessaire : Les commentaires aident à comprendre le raisonnement derrière certains blocs de code.
+* Éviter les boucles infinies : Toujours s'assurer que les conditions de sortie d'une boucle sont bien définies.
+
+*Commandes break et continue*
+
+Ces commandes sont très utiles pour contrôler le flux de la boucle :
+
+* `break` : Interrompt la boucle et sort de celle-ci immédiatement.
+* `continue` : Saute à l'itération suivante de la boucle, en évitant d'exécuter le code suivant dans la boucle.
+
+Exemple avec break :
+
+```python
+# Chercher un nombre spécifique dans une liste
+nombres = [1, 2, 3, 4, 5]
+
+for nombre in nombres:
+    if nombre == 3:
+        print("Nombre 3 trouvé, arrêt de la boucle.")
+        break
+    print(f"Nombre: {nombre}")
+```
+
+Explication : Dès que le nombre 3 est trouvé, la boucle s'arrête grâce à `break`.
+
+Exemple avec continue :
+
+```python
+# Imprimer tous les nombres sauf 3
+nombres = [1, 2, 3, 4, 5]
+
+for nombre in nombres:
+    if nombre == 3:
+        continue  # Sauter l'itération si le nombre est 3
+    print(f"Nombre: {nombre}")
+````
+
+Explication : Lorsque la boucle rencontre le nombre 3, elle passe directement à l'itération suivante grâce à `continue`.
+
+*Boucles imbriquées*
+
+Les boucles imbriquées sont utiles lorsque vous travaillez avec des structures de données plus complexes comme les matrices. Voici un exemple d'utilisation :
+
+```python
+# Exemple : affichage d'une matrice
+matrice = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+for ligne in matrice:
+    for element in ligne:
+        print(f"Élément: {element}", end=" ")
+    print()  # Nouvelle ligne après chaque ligne de la matrice
+```
+
+Explication : Ici, nous avons une boucle `for` qui itère sur chaque ligne de la matrice, et une autre boucle `for` imbriquée qui itère sur chaque élément de la ligne.
+--
+// end::demo[]
+
+// tag::exercice[]
+// == Démonstration (facultatif)
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+Les boucles sont des structures essentielles en Python pour automatiser les tâches répétitives et gérer des collections de données. Elles permettent une exécution efficace et systématique du code.
+
+*Recommandations :*
+
+* Utilisation appropriée des boucles : Choisir entre `for` et `while` selon les besoins spécifiques (nombre d'itérations connu ou non).
+* Optimisation : Utiliser les compréhensions de listes et les générateurs pour des boucles plus concises et efficaces.
+* Pratique régulière : Expérimenter et pratiquer les différentes structures de boucles pour maîtriser leur utilisation et leurs particularités.
+// end::conclusion[]

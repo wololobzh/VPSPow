@@ -1,0 +1,14 @@
+graph TD
+    Site1 -->|Label MPLS| ISP_Network
+    Site2 -->|Label MPLS| ISP_Network
+    ISP_Network -->|Label MPLS| Site3
+
+    subgraph Réseaux_Entreprises
+        Site1[Site 1]
+        Site2[Site 2]
+        Site3[Site 3]
+    end
+
+    subgraph Fournisseur_Service
+        ISP_Network[Infrastructure MPLS]
+    end

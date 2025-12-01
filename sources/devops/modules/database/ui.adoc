@@ -1,0 +1,106 @@
+:titre: Interface utilisateur
+:module: BDD
+:duree: 60
+:description: Découvrir les interfaces graphiques pour parcourir les bases de données et mettre en place un adminer via Nginx.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* **Comprendre** les interfaces graphiques pour interagir avec les bases de données.
+* **Appliquer** la configuration d'un Adminer avec Nginx.
+// end::objectifs[]
+
+// tag::deroulement[]
+== Introduction
+
+* *Définition* : Outils graphiques permettant de manipuler les bases de données sans utiliser de commandes SQL en ligne de commande.
+* *Exemples d'outils* : Adminer, phpMyAdmin, DBeaver.
+* *Avantages* :
+  ** Simplicité pour les utilisateurs non-techniques.
+  ** Gain de temps pour les tâches administratives (ajout de tables, requêtes, backups).
+
+[NOTE.speaker]
+--
+Les interfaces graphiques pour bases de données permettent de simplifier les interactions avec les bases de données en fournissant une interface utilisateur intuitive. Adminer est l'une des solutions légères et rapides qui peut être facilement déployée avec Nginx.
+--
+
+== Adminer
+
+* Un outil léger pour gérer les bases de données via une interface web.
+* Pourquoi Adminer ?
+  ** Simplicité d'installation et de configuration.
+  ** Interface minimaliste mais puissante.
+  ** Supporte plusieurs types de bases de données (MySQL, PostgreSQL, SQLite).
+
+[NOTE.speaker]
+--
+Adminer est un choix populaire pour ceux qui cherchent un outil léger mais puissant pour administrer des bases de données, en particulier dans des environnements où la performance est cruciale.
+--
+
+=== Installation avec Nginx
+
+* Téléchargement et placement du fichier Adminer dans `/var/www/adminer`.
+* Configuration Nginx pour exposer Adminer sur un sous-domaine ou un chemin dédié.
+
+```bash
+# Téléchargement d'Adminer
+sudo mkdir -p /var/www/adminer
+sudo wget https://www.adminer.org/latest.php -O /var/www/adminer/index.php
+sudo chown -R www-data:www-data /var/www/adminer
+
+# Exemple de configuration Nginx
+server {
+    listen 80;
+    server_name adminer.exemple.com;
+    root /var/www/adminer;
+    index index.php;
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+
+[NOTE.speaker]
+--
+Adminer est distribué sous la forme d'un fichier PHP unique. Il suffit de placer ce fichier dans le répertoire web et de configurer Nginx pour y accéder via une URL.
+--
+
+=== Sécurisation
+
+Plusieurs façon sont envisageables pour sécuriser l'accès à Adminer :
+
+* Ajout de HTTPS à la configuration Nginx.
+* Limitation d'accès à Adminer par restriction d'IP ou mot de passe.
+* Utilisation de Let’s Encrypt pour un certificat SSL.
+
+[NOTE.speaker]
+--
+Il est essentiel de sécuriser l'accès à Adminer, surtout dans un environnement de production. Cela peut se faire via HTTPS, une authentification basique et des restrictions IP.
+--
+// end::deroulement[]
+
+// tag::exercice[]
+== Exercice
+
+. Installer Adminer sur votre serveur.
+. Configurer Nginx pour exposer Adminer sur un sous-domaine `adminer.localhost`.
+. Tester l'accès à Adminer via un navigateur.
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Compréhension des interfaces graphiques pour bases de données.
+* Capacité à installer et configurer Adminer via Nginx.
+* Connaissance des méthodes de sécurisation d'Adminer.
+// end::conclusion[]

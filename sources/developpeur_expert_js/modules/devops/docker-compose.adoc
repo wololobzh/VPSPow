@@ -1,0 +1,251 @@
+:titre: Docker compose
+:module: Devops
+:duree: 120
+:description: Mise en place d'un environnement de dev local avec une application multi-conteneurs full stack (directus, redis, pgsql, front)
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* **Se rappeler** des concepts de docker compose
+* **Appliquer** les commandes docker compose
+// end::objectifs[]
+
+// tag::deroulement[]
+== Rappels
+
+* Docker Compose est un outil pour définir et gérer des applications multi-conteneurs.
+* La syntaxe est basée sur un fichier YAML.
+
+[NOTE.speaker]
+====
+Docker Compose permet de définir et gérer des environnements multi-conteneurs. Les configurations sont stockées dans un fichier YAML, simplifiant le déploiement et la gestion des applications complexes.
+====
+
+=== Concepts clés
+
+* **Services** : Définissent les conteneurs à exécuter.
+* **Volumes** : Permettent de persister les données.
+* **Réseaux** : Facilitent la communication entre conteneurs.
+
+```yaml
+services:
+  front:
+    image: nginx
+    ports:
+      - 80:80
+      
+  db:
+    image: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  directus:
+    image: directus/directus
+    ports:
+      - 8055:8055
+    depends_on:
+      - db
+    networks:
+      - backend
+
+networks:
+  - backend:
+volumes:
+    db_data:
+```
+
+[NOTE.speaker]
+====
+Un service dans Docker Compose est une abstraction de conteneur. Les volumes permettent de conserver les données, même après l'arrêt des conteneurs. Les réseaux sont utilisés pour connecter les conteneurs entre eux.
+
+On reviendra plus en détails dans le module suivant.
+====
+
+=== Commandes principales
+
+* `docker compose up` : Démarre les services.
+* `docker compose up -d service_name` : Démarre un service en arrière-plan.
+* `docker compose down` : Arrête les services.
+* `docker compose down -v` : Arrête les services et supprime les volumes.
+* `docker compose logs` : Affiche les logs des services.
+* `docker compose build service_name --no-cache` : Construit un service sans utiliser le cache (optionnel).
+
+== Configuration d'un environnement
+
+On va créer un environnement de développement local pour une application full stack comprenant :
+
+* Un back-end Directus
+* Une base de données PostgreSQL
+* Un cache Redis
+* Un front-end (template Vite)
+
+https://docs.directus.io/self-hosted/docker-guide.html#example-docker-compose[Exemple Docker Compose Directus]
+
+[NOTE.speaker]
+====
+Dans le fichier `compose.yml`, chaque service est défini avec son image, ses ports exposés, et ses volumes.
+
+Le fichier d'exemple définit trois services : 
+  * une base de données PostgreSQL, 
+  * un cache Redis 
+  * un back-end Directus. 
+  
+Les services dépendent les uns des autres, assurant un démarrage ordonné.
+====
+
+// tag::demo[]
+=== Démonstration
+
+Lancer l'application avec Docker Compose.
+
+[NOTE.speaker]
+====
+. Créer le fichier `docker-compose.yml`
+. Intégrer l'exemple de configuration Directus.
+
+.Contenu du 17/03/2025
+```yaml
+services:
+    directus:
+        image: directus/directus:11.3.2
+        ports:
+            - 8055:8055
+        volumes:
+            - ./database:/directus/database
+            - ./uploads:/directus/uploads
+            - ./extensions:/directus/extensions
+        environment:
+            SECRET: "replace-with-random-value"
+            ADMIN_EMAIL: "admin@example.com"
+            ADMIN_PASSWORD: "d1r3ctu5"
+            DB_CLIENT: "sqlite3"
+            DB_FILENAME: "/directus/database/data.db"
+            WEBSOCKETS_ENABLED: "true"
+```
+
+. Exécuter `docker compose up`.
+. Observer les logs pour vérifier le bon démarrage des services.
+. Accéder à directus via le navigateur sur `http://localhost:8055`.
+====
+// end::demo[]
+
+// tag::exercice[]
+=== Exercice 
+
+Créez vous un docker-compose afin d'avoir un service directus et configurez le afin de vous connecter à l'interface d'administration de directus.
+
+[NOTE.speaker]
+====
+
+.Correction
+```yaml
+services:
+    # Définition du service Directus
+    directus:
+        # Utilisation de l'image Docker de Directus version 11.3.2
+        image: directus/directus:11.3.2
+        # Mappage du port 8055 de l'hôte au port 8055 du conteneur
+        ports:
+            - 8055:8055
+        # Définition des volumes pour persister les données
+        volumes:
+            # Volume pour la base de données
+            - ./database:/directus/database
+            # Volume pour les fichiers uploadés
+            - ./uploads:/directus/uploads
+            # Volume pour les extensions
+            - ./extensions:/directus/extensions
+        # Variables d'environnement pour configurer Directus
+        environment:
+            # Clé secrète pour Directus (à remplacer par une valeur aléatoire)
+            SECRET: "replace-with-random-value"
+            # Email de l'administrateur
+            ADMIN_EMAIL: "anthony.cosson@oc// filepath: c:\Users\Anthony\Documents\_MesRepositories\ApprentissageDocker\E01\Demonstration01\docker-compose.yml
+services:
+    # Définition du service Directus
+    directus:
+        # Utilisation de l'image Docker de Directus version 11.3.2
+        image: directus/directus:11.3.2
+        # Mappage du port 8055 de l'hôte au port 8055 du conteneur
+        ports:
+            - 8055:8055
+        # Définition des volumes pour persister les données
+        volumes:
+            # Volume pour la base de données
+            - ./database:/directus/database
+            # Volume pour les fichiers uploadés
+            - ./uploads:/directus/uploads
+            # Volume pour les extensions
+            - ./extensions:/directus/extensions
+        # Variables d'environnement pour configurer Directus
+        environment:
+            SECRET: "replace-with-random-value"
+            ADMIN_EMAIL: "anthony.cosson@oclock.io"
+            ADMIN_PASSWORD: "wololo"
+            DB_CLIENT: "sqlite3"
+            DB_FILENAME: "/directus/database/data.db"
+            WEBSOCKETS_ENABLED: "true"
+```
+====
+// end::exercice[]
+
+== Initialiser avec des données
+
+Pour initialiser la base de données avec des données de test, on peut utiliser un script SQL et le fournir au service PostgreSQL.
+
+.Volume de données d'initialisation
+```yaml
+db:
+  ...
+  volumes:
+    - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  ...
+```
+
+.Script SQL
+```sql
+CREATE TABLE tests (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL
+);
+
+INSERT INTO tests (name) VALUES ('Alice'), ('Bob');
+```
+
+// tag::demo[]
+=== Démonstration
+
+Initialiser la base de données avec des données de test.
+
+[NOTE.speaker]
+====
+. Créer un fichier `init.sql` avec le script SQL vu précédemment.
+. Créer un compose avec pgsql et adminer uniquement
+. Ajouter le volume de données d'initialisation.
+. Exécuter `docker compose up`.
+. Accéder à Adminer via le navigateur sur `http://localhost:8080`.
+====
+// end::demo[]
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Docker Compose simplifie la gestion des applications multi-conteneurs.
+* Configurer des services, utiliser des volumes pour la persistance des données, et configurer des réseaux sont des opérations courantes.
+* Les commandes principales permettent de démarrer, arrêter et gérer les services.
+
+[NOTE.speaker]
+====
+On sait utiliser dans les grandes lignes Docker Compose pour gérer des applications multi-conteneurs. Les modules suivant permettront d'approfondir la configuration des services et des réseaux, ainsi que la gestion des images.
+====
+// end::conclusion[]

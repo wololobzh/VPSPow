@@ -1,0 +1,186 @@
+:titre: Introduction à l'Intelligence Artificielle dans le Développement Web
+:module: Utilisation de ChatGPT et Copilot
+:duree: 60
+:description: Découverte des concepts fondamentaux de l'intelligence artificielle et cadrage des outils IA utilisés dans la formation (ChatGPT et Copilot).
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" != "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* **Comprendre** les concepts fondamentaux de l'intelligence artificielle
+* **Différencier** les types d'IA (faible vs forte) et les cas d’usage
+* **Découvrir** les principales technologies IA utilisées aujourd'hui
+* **Savoir utiliser** ChatGPT et Copilot comme outils d’aide au développement
+// end::objectifs[]
+
+// tag::deroulement[]
+== Qu'est-ce que l'Intelligence Artificielle ?
+
+* L’IA désigne la capacité d'un système informatique à simuler des comportements intelligents.
+* Objectif : automatiser des tâches complexes nécessitant normalement une intervention humaine.
+
+[NOTE.speaker]
+====
+L'Intelligence Artificielle (IA) est un domaine en pleine expansion. Elle permet aux machines d'accomplir des tâches comme la reconnaissance vocale, l'analyse de données, la traduction automatique ou encore la génération de code.
+
+Dans cette formation, nous allons utiliser deux outils IA majeurs : **ChatGPT** et **Copilot**, pour vous accompagner dans vos tâches de développeur front.
+====
+
+=== Types d'Intelligence Artificielle
+
+* **IA faible (ou étroite)** : spécialisée dans une tâche précise.
+* **IA forte (ou générale)** : capable de reproduire des comportements humains de manière autonome (encore théorique).
+
+[NOTE.speaker]
+====
+L'IA faible est celle que nous utilisons aujourd'hui : des systèmes très performants sur des tâches spécifiques, mais limités en dehors de leur domaine de spécialisation.
+
+Exemple d’IA faible : les assistants vocaux comme Siri, Alexa, ou encore les générateurs de code comme ChatGPT et Copilot.
+====
+
+== Les technologies IA essentielles
+
+* **Machine Learning (ML)** : les systèmes apprennent à partir de données pour reconnaître des patterns.
+* **Deep Learning** : sous-ensemble du ML utilisant des réseaux de neurones pour des tâches complexes comme la vision par ordinateur ou le traitement du langage naturel.
+
+[NOTE.speaker]
+====
+Le Machine Learning est la technologie au cœur de nombreux outils d'IA, y compris ChatGPT et Copilot. Ils utilisent de grandes quantités de données pour s'améliorer.
+
+L'IA devient un assistant qui permet aux développeurs de gagner du temps sur les tâches répétitives.
+====
+
+== Applications de l’IA dans le développement web
+
+* **Assistants de code** : ChatGPT, GitHub Copilot
+* **Analyse de code et debug** : détection d'erreurs et suggestions d’améliorations
+* **Automatisation** : génération de contenu, tests, documentation
+* **Personnalisation utilisateur** : recommandations basées sur les préférences
+
+[NOTE.speaker]
+====
+Dans le contexte du développement web, l'IA peut être utilisée pour :
+- Générer du code rapidement
+- Détecter et corriger des erreurs
+- Documenter les projets
+- Proposer des solutions d’optimisation
+====
+
+== Pourquoi utiliser l'IA dans cette formation ?
+
+* **Accélérer le développement** : gain de temps sur les tâches répétitives
+* **Améliorer la qualité du code** : suggestions, corrections, bonnes pratiques
+* **Apprendre plus vite** : expliquer des concepts complexes de manière adaptée
+* **Favoriser l’autonomie** : un support accessible 24/7
+
+[NOTE.speaker]
+====
+Dans cette formation, l'IA sera votre assistante personnelle pour coder plus vite, mieux comprendre les concepts et devenir plus autonome.
+
+Cependant, il est crucial de garder en tête que **l’IA ne remplace pas vos compétences humaines**. Vous devez toujours vérifier et comprendre le code généré.
+====
+
+== Focus : ChatGPT
+
+ChatGPT est un modèle de langage capable de :
+
+* **Générer** du code (HTML, CSS, JavaScript)
+* **Expliquer** des concepts techniques
+* **Trouver des solutions** aux problèmes rencontrés
+* **Générer du contenu** (textes, documentation)
+
+=== Démonstration ChatGPT
+
+[NOTE.speaker]
+====
+Quelques exemples concrets d’utilisation de ChatGPT pour le développement web :
+. *Génération de code HTML simple*  
++
+   Prompt : "Crée-moi une page HTML basique avec un titre centré 'Mon premier site web' et un paragraphe de texte."
+
+. *Détection d'erreur*  
++
+   Prompt : "Pourquoi ce code ne fonctionne pas ?  
+   <h1 style='text-align: center'>Mon titre</h2>"
+
+. *Explications simples*  
++
+   Prompt : "Explique-moi simplement ce qu'est une API REST."
+
+Conseils :
+- Soyez précis dans vos prompts
+- Vérifiez toujours le code généré
+- Demandez des explications si besoin
+====
+
+== Focus : GitHub Copilot
+
+GitHub Copilot est un assistant de codage intégré directement dans votre éditeur (comme Visual Studio Code).
+
+* **Complétion automatique du code**
+* **Suggestions contextuelles** basées sur ce que vous êtes en train de coder
+* **Gain de temps** sur les tâches répétitives
+
+[NOTE.speaker]
+====
+Copilot vous accompagne directement pendant que vous codez. Il vous propose des morceaux de code complets en fonction de ce que vous écrivez.
+
+Attention :  
+- Ne pas accepter les suggestions sans comprendre leur fonctionnement.  
+- Toujours vérifier la sécurité et la pertinence du code généré.
+====
+
+== Limites de l’utilisation de l’IA
+
+* Les réponses ne sont **pas toujours parfaites**.
+* L'IA peut **suggérer du code obsolète** ou non sécurisé.
+* Il est crucial de **comprendre ce que vous utilisez**.
+
+[NOTE.speaker]
+====
+L'IA est une aide précieuse, mais elle ne doit pas devenir une béquille. Vous devez comprendre le code généré et être capable de l’adapter à vos besoins.
+
+L’objectif est de **vous rendre autonome**, pas dépendant d’un outil.
+====
+
+== Cadrage de l'utilisation de l'IA
+
+Dans cette formation, nous utiliserons principalement **ChatGPT** et **GitHub Copilot** comme outils d’aide au développement.  
+
+Les règles d'or :
+
+* **Comprenez ce que vous utilisez.**
+* **Ne copiez pas sans réfléchir.**
+* **Vérifiez toujours les suggestions.**
+
+== En résumé :
+
+* ChatGPT : pour obtenir des réponses, générer du contenu et apprendre plus vite.
+* GitHub Copilot : pour accélérer votre écriture de code.
+
+L’IA est là pour **vous épauler**, pas pour remplacer vos compétences.
+
+[NOTE.speaker]
+====
+L’objectif de cette formation est de vous montrer comment utiliser **deux IA spécifiques** de manière efficace et responsable :  
+- ChatGPT pour poser des questions, générer des idées et explorer des concepts.  
+- Copilot pour écrire du code plus rapidement.
+
+Vous allez apprendre à **utiliser ces outils de façon critique**, en gardant toujours le contrôle de votre travail.
+====
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Compréhension des concepts clés de l'IA
+* Identification des cas d’usage dans le développement web
+* Première expérience avec ChatGPT et Copilot
+* Cadrage clair de l’utilisation des outils IA dans la formation
+// end::conclusion[]

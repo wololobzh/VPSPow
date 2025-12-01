@@ -1,0 +1,233 @@
+:titre: Syntaxe de base
+:module: Frontend Svelte
+:duree: 120
+:description: Ce module a pour objectif de présenter la syntaxe de base de Svelte.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre la syntaxe de base de Svelte
+* Savoir utiliser les expressions, les boucles et les conditions
+* Découvrir comment définir des styles et des fonctions
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Interpolation et expressions
+
+* utiliser des accolades `{}` pour insérer des expressions JavaScript dans le code HTML
+* les expressions sont évaluées et le résultat est affiché dans le DOM
+
+[source,html]
+----
+<script>
+    let name = 'Alice';
+</script>
+
+<p>{`Hello, ${name}!`}</p>
+----
+
+* le code ci-dessus affiche `Hello, Alice!` dans le DOM
+
+== Boucles
+
+* utiliser `{#each}` pour parcourir un tableau et afficher chaque élément
+
+[source,html]
+----
+<script>
+    let names = ['Alice', 'Bob', 'Charlie'];
+</script>
+
+<ul>
+    {#each names as name}
+        <li>{name}</li>
+    {/each}
+</ul>
+----
+
+== Conditions
+
+* utiliser `{#if}` pour afficher un élément si une condition est vraie
+
+[source,html]
+----
+<script>
+    let loggedIn = true;
+</script>
+
+{#if loggedIn}
+    <p>Welcome back!</p>
+{/if}
+----
+
+=== `else` et `else if`
+
+* utiliser `{:else}` pour afficher un élément si la condition est fausse
+
+[source,html]
+----
+<script>
+    let loggedIn = false;
+</script>
+
+{#if loggedIn}
+    <p>Welcome back!</p>
+{:else}
+    <p>Please log in</p>
+{/if}
+----
+
+include::../../../../adoc/libs/slide-notitle.adoc[]
+
+* utiliser `{:else if}` pour ajouter une condition supplémentaire
+
+[source,html]
+----
+<script>
+    let role = 'admin';
+</script>
+
+{#if role === 'admin'}
+    <p>Welcome, admin!</p>
+{:else if role === 'user'}
+    <p>Welcome, user!</p>
+{:else}
+    <p>Access denied</p>
+{/if}
+----
+
+// tag::demo[]
+
+== Démonstration
+
+Syntaxe de base
+
+[NOTE.speaker]
+====
+
+* Tester les exemples :
+** d'affichage de variable
+** de boucle
+** de condition
+
+====
+
+// end::demo[]
+
+== Styles
+
+* les styles peuvent être définis dans une balise `<style>`
+* les styles sont encapsulés dans le composant
+
+[source,html]
+----
+<style>
+    p {
+        color: red;
+    }
+</style>
+
+<p>Red text</p>
+----
+
+=== Styles globaux
+
+* utiliser `:global()` pour définir des styles globaux
+
+[source,html]
+----
+<style>
+    :global(p) {
+        color: red;
+    }
+</style>
+
+<p>Red text</p>
+----
+
+=== Styles conditionnels
+
+* utiliser des classes conditionnelles pour appliquer des styles
+* la classe sera ajoutée si la condition est vraie
+
+[source,html]
+----
+<script>
+    let error = true;
+</script>
+
+<style>
+    .error {
+        color: red;
+    }
+</style>
+
+<p class:error>Red text</p>
+----
+
+== Expressions ternaires
+
+* utiliser une expression ternaire pour afficher un élément conditionnellement
+* plus concis que `{#if}`
+
+[source,html]
+----
+<script>
+    let loggedIn = true;
+</script>
+
+{loggedIn ? <p>Welcome back!</p> : <p>Please log in</p>}
+----
+
+== Fonctions
+
+* définir des fonctions dans la balise `<script>`
+* appeler les fonctions dans le code HTML
+
+[source,html]
+----
+<script>
+    function greet(name) {
+        return `Hello, ${name}!`;
+    }
+</script>
+
+<p>{greet('Alice')}</p>
+----
+
+// tag::exercice[]
+
+== Exercice
+
+* Déclarer un tableau avec une liste de tâches, par exemple 
+
+```js
+`[
+    { done: false, text: 'Acheter du lait' }, 
+    { done: true, text: 'Faire du sport' }, 
+    { done: false, text: 'Lire un livre' }, 
+    { done: false, text: 'Préparer le dîner' }
+]`
+```
+
+* Afficher chaque tâche dans une liste `<ul>`
+* Appliquer un style différent pour les tâches terminées
+
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Svelte utilise une syntaxe simple et intuitive pour créer des composants
+* Les expressions JavaScript sont évaluées et affichées dans le DOM
+* Les styles sont encapsulés dans le composant
+* Les conditions, boucles et fonctions sont faciles à utiliser
+// end::conclusion[]

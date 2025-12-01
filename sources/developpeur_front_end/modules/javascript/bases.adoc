@@ -1,0 +1,434 @@
+:titre: Bases de JavaScript
+:module: JavaScript
+:duree: 75
+:description: Ce module permet de voir les bases de JavaScript, les variables, les types de données et les premières opérations.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" != "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre ce qu'est une variable
+* Découvrir les types de données
+* Manipuler les premières opérations en JavaScript
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Les outils
+
+Liste des outils dont on a besoin:
+
+* un navigateur
+* c'est tout...
+
+=== La console
+
+On y affiche ce qu'on veut :
+
+```js
+console.log('ce que je veux...');
+
+console.log('coucou', 'ça va ?');
+```
+
+Même des variables
+
+```js
+const text = 'Mon super texte de la mort !';
+
+console.log(text);
+```
+
+// tag::demo[]
+
+== Démonstration
+
+Premières manipulations de JavaScript
+
+[NOTE.speaker]
+====
+
+Utiliser la console du navigateur et tester d'afficher un message, puis déclarer une variable et afficher le contenu de cette variable
+
+====
+
+// end::demo[]
+
+== La syntaxe
+
+JavaScript est un langage de programmation qui suit une syntaxe précise.
+
+=== Les commentaires
+
+Les commentaires sont :
+
+- ignorés lors de l'exécution
+- un très bon moyen de commencer à `coder sans coder` !oO
+- **indispensables** 
+  - baliser un code, 
+  - laisser des explications
+  - annoter une intention, ...
+
+=== Exemple de commentaires
+
+```js
+// Commentaire sur une seule ligne
+
+/*
+  Commentaire
+  sur
+  plusieurs
+  lignes
+*/
+```
+
+=== Les variables
+
+* C'est ce qui va stocker l'information
+
+* Comme une boîte dans laquelle on vient ranger quelque chose
+
+=== Déclaration de variable
+
+Pour déclarer une variable, on utilise les mot clés `let` et `const`
+
+```js
+let age = 33;
+
+const userName = "John";
+```
+
+* On privilégiera `const` **autant que possible**.
+
+* On se servira de `let` **uniquement** lorsque la **valeur initiale** doit être **modifiée** au cours de l'exécution.
+
+=== Modification
+
+Pour modifier une variable existante
+
+```js
+let age = 33;
+
+// ...
+
+age = 34;
+```
+
+=== Les instructions
+
+Une instruction par ligne
+
+```js
+const age = 33;
+const taille = 185;
+```
+
+* Les `;` ne sont pas obligatoires en JS, si on passe à la ligne.
+* Mais nous, on les mettra **tout le temps** !
+* Ce qu'il ne faut pas faire :
+
+```
+age = 33
+taille = 185
+```
+
+// tag::demo[]
+
+== Démonstration
+
+Utilisation des commentaires et des variables
+
+[NOTE.speaker]
+====
+
+* **Afficher un commentaire simple :**
+
+```js
+// Ceci est un commentaire expliquant le code
+console.log("Hello, world !");
+```
+
+* **Déclarer une variable et l'utiliser :**
+
+```js
+// Déclaration d'une variable pour stocker l'âge
+const age = 30;
+console.log("L'âge initial est :", age);
+```
+
+* **Modifier la valeur de la variable :**
+
+```js
+// On transforme le const en let pour pouvoir modifier la valeur
+let age = 30;
+
+// Mise à jour de la variable âge
+age = 31;
+console.log("L'âge après un an est :", age);
+```
+
+* **Combiner commentaires et variables pour plus de clarté :**
+
+```js
+// Déclaration d'une variable pour stocker le nom de l'utilisateur
+let userName = "Alice";
+
+// Affichage du nom de l'utilisateur dans la console
+console.log("Nom de l'utilisateur :", userName);
+```
+
+====
+
+// end::demo[]
+
+== Quelques types de données
+
+Le type de données d'une variable est le type de valeur qu'elle peut stocker.
+
+=== Les nombres
+
+```js
+// Number
+
+14
+14.5
+```
+
+=== Les booléens
+
+```js
+// Boolean
+
+true
+false
+```
+
+=== Les chaînes de caractères
+
+```js
+// String
+
+'Coucou la promo avec des apostrophes (quotes)'
+
+"Un coucou avec des guillemets (double quotes)"
+
+// Oh un petit train : '  '+'  '+'  '
+'Un coucou avec' + ' de la ' + 'concaténation'
+
+const text = 'Un coucou avec' + ' de la ' + 'concaténation';
+
+```
+
+WARNING: Attention à la concaténation : le symbole `+` est utilisé pour une autre opération... l'addition
+
+```js
+'1' + '1'; // '11'
+1 + 1; // 2
+```
+
+== Quelques opérations de base
+
+Il est possible de faire des opérations sur les variables
+
+=== Les additions / soustractions
+
+```js
+const price = 100;
+const tax = 20;
+const total = price + tax;
+```
+
+```js
+const currentYear = 2019;
+const birthYear = 1983;
+const myAge = currentYear - birthYear;
+```
+
+=== Les multiplications / divisions
+
+```js
+const price = 50;
+const quantity = 4;
+const total = price * quantity;
+```
+
+```js
+const myCake = 1000;
+const friendsCount = 5;
+const gramsPerPerson = myCake / friendsCount;
+```
+
+// tag::demo[]
+
+== Démonstration
+
+Manipulation des types de données et des opérations
+
+[NOTE.speaker]
+====
+
+* **Créer un petit script avec des commentaires :**
+
+```js
+// Initialisation de la variable score
+let score = 0;
+
+// Ajout de points au score
+score += 10;
+console.log("Score après premier ajout :", score);
+
+// Réinitialisation du score
+score = 0;
+console.log("Score réinitialisé :", score);
+```
+
+* **Demander à l'IA de coder à l'aide des commentaires :**
+
+```js
+// Déclare une variable qui contient un score de 0, ajoute 10 points au score puis réinitialise le score. Affiche chaque étape dans la console
+```
+
+Analyser et commenter le code généré par l'IA.
+
+====
+
+// end::demo[]
+
+// tag::exercice[]
+
+== Exercice
+
+[cols="4,6", grid="none", ]
+|===
+a|
+image::https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnAyZ3NqMzY3djc4NHQ5dGQ4bWpzODFiaXA1NWxyYXk4ZHNndTQwaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYPDAGD2Z2McUuY/giphy.gif[]
+
+a|
+* Déclarer des variables pour stocker le prix de deux fruits différents
+** les pommes coûtent 0.4
+** les bananes coûtent 0.5
+* Calculer et afficher le coût total pour acheter 5 pommes et 4 bananes
+* Utiliser des commentaires pour expliquer chaque étape du code.
+* Utiliser l'IA pour générer le code de cet énoncé et comparer avec votre solution.
+|===
+
+// end::exercice[]
+
+== Premières interactions utilisateur
+
+On peut déjà interagir avec l'utilisateur via des boîtes de dialogue. Et c'est pas si compliqué !
+
+=== `alert`
+
+* Affiche une boîte de dialogue avec un message
+* Pas de retour possible
+
+```js
+alert('Hello, world !');
+```
+
+=== `prompt`
+
+* Affiche une boîte de dialogue avec un message et un champ de saisie
+* Retourne la valeur saisie par l'utilisateur
+
+```js
+const userName = prompt('Quel est votre nom ?');
+```
+
+=== `confirm`
+
+* Affiche une boîte de dialogue avec un message et deux boutons
+* Retourne `true` si l'utilisateur clique sur `OK`, `false` sinon
+
+```js
+const isOk = confirm('Voulez-vous continuer ?');
+```
+
+// tag::demo[]
+
+== Démonstration
+
+Premières interactions avec l'utilisateur
+
+[NOTE.speaker]
+====
+* **Afficher une alerte :**
+
+```js
+alert('Hello, world !');
+```
+
+* **Demander le nom de l'utilisateur :**
+
+```js
+const userName = prompt('Quel est votre nom ?');
+console.log('Nom de l\'utilisateur :', userName);
+```
+
+* **Demander confirmation à l'utilisateur :**
+
+```js
+const isOk = confirm('Voulez-vous continuer
+```
+
+====
+// end::demo[]
+
+== Les erreurs
+
+Il est possible de faire des erreurs en programmation. Heureusement on est guidé dans leur résolution.
+
+=== Les erreurs en console
+
+* message généré par le navigateur lorsque du code ne peut pas être exécuté correctement
+* souvent accompagné d'une indication sur la ligne de code concernée
+
+```js
+// Exemple : SyntaxError due à l'oubli d'une parenthèse
+console.log("Hello, world!";
+```
+
+=== Autres exemples
+
+```js
+// Exemple : ReferenceError due à l'absence de définition de la variable
+console.log(nonDefini);
+
+// Exemple : TypeError due à l'appel d'une méthode sur un type incorrect
+let nombre = 5;
+nombre.toUpperCase(); // Erreur, car nombre est un Number, pas une String
+```
+
+=== Comment utiliser la console ?
+
+* Ouvrir la console du navigateur (F12)
+* Consulter les messages d'erreur
+* Identifier la ligne de code concernée
+* Corriger l'erreur
+
+=== IA or not IA?
+
+* d'abord essayer de comprendre l'erreur et de la corriger soi-même
+* si besoin, demander à l'IA :
+** d'analyser la situation et donner des pistes de correction
+** si ça ne suffit toujours pas, de corriger le code pour vous
+
+* prenez toujours le temps de tester et relire la solution donnée par l'IA pour :
+** vérifier que la solution répond rééllement à la problématique
+** s'assurer que vous avez bien compris la correction
+
+// end::deroulement[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Les variables stockent des informations.
+* Les types de données définissent le contenu des variables.
+* Les opérations permettent de manipuler les variables.
+// end::conclusion[]

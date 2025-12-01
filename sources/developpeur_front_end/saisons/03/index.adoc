@@ -1,0 +1,51 @@
+:title: 🎨 Web Avancée
+:number: 03
+:duration: 35
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Perfectionnement des techniques d'intégration web à travers des ateliers pratiques, la gestion des formulaires, le responsive design, et l'optimisation pour l'accessibilité et le référencement. Les outils modernes comme GitHub Copilot sont utilisés pour accélérer le développement.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Maîtriser les techniques avancées d'intégration
+* Créer des formulaires accessibles
+* Développer en responsive design
+* Appliquer les standards A11Y et SEO
+* Utiliser les outils d'assistance au développement
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+* Validation des formulaires
+* Media queries et mobile-first
+* Standards WCAG et SEO
+* GitHub Copilot pour l'intégration
+// end::notions[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* HTML5/CSS3 avancés
+* Standards d'accessibilité
+* Responsive design
+* SEO technique
+* GitHub Copilot
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+Formation aux techniques avancées d'intégration web, de l'atelier pratique aux bonnes pratiques d'accessibilité et de référencement, en passant par le responsive design.
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue kanban]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

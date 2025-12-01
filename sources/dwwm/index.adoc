@@ -1,0 +1,42 @@
+:title: Expert JS
+include::../../adoc/libs/header-formation.adoc[]
+
+// tag::links[]
+* link:https://github.com/O-clock-Devops-Peda[GitHub]
+* link:https://oclock.io/formations/devops[Site O'Clock - DevOps]
+* link:https://github.com/O-clock-Devops-Peda/.github-private/blob/main/profile/REAC.pdf[REAC]
+// end::links[]
+
+---
+
+// tag::intro[]
+La formation Développeur Web et Web Mobile (DWWM) de **niveau 5** de chez O'clock est un programme intensif qui vise à former des développeurs polyvalents capables de créer des sites et des applications web modernes.
+// end::intro[]
+
+* link:./suivi.html[Référent de promo]
+* link:./modules/index.html[Glossaire des modules]
+
+== Objectifs
+
+// tag::objectifs[]
+.Au terme de la formation, les apprenants doivent au minimum savoir mettre en œuvre les compétences suivantes :
+
+* Pour l’activité type 1 « Développer la partie front-end d’une application web ou web mobile sécurisée »
+** Maquetter des interfaces utilisateur web ou web mobile
+** Réaliser des interfaces utilisateur statiques web ou web mobile
+** Développer la partie dynamique des interfaces utilisateur web ou web mobile
+
+* Pour l’activité type 2 « Développer la partie back-end d’une application web ou web mobile sécurisée »
+** Mettre en place une base de données relationnelle
+** Développer des composants d’accès aux données SQL et NoSQL
+** Développer des composants métier coté serveur
+// end::objectifs[]
+
+== Déroulement
+
+// tag::deroulement[]
+include::./saisons/*/index.adoc[opts=saisons]
+// end::deroulement[]
+
+
+

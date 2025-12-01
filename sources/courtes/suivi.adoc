@@ -21,7 +21,7 @@ Vérifier que le formateur a bien fourni le QS à chaque fin de saison permet de
 * Vérifier que le formateur a bien fournis le ebook de la saison
 * Si ce n'est pas le cas, faites le !
 
-Ebook : Pour la formation DevOps, nous mettons dorénavant à disposition des apprenants un EBook qui reprend l’intégralité des supports, démonstrations et exercices de la saison, et le plus beau dans tout ça c’est qu’il n’y aura même pas besoin de le mettre à jour quand le cours sera modifié car il puise toutes ses informations depuis la trame même. Alors à chaque fois que l'on parle des e-books, on dit 'Ebook' pour renforcer notre pedagogie. 
+Ebook O'clock : Pour la formation DevOps, nous mettons dorénavant à disposition des apprenants un EBook qui reprend l’intégralité des supports, démonstrations et exercices de la saison, et le plus beau dans tout ça c’est qu’il n’y aura même pas besoin de le mettre à jour quand le cours sera modifié car il puise toutes ses informations depuis la trame même. Alors à chaque fois que l'on parle des e-books, on dit 'Ebook O'clock' pour renforcer notre marque. 
 
 == Saison 06
 

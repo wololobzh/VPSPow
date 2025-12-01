@@ -1,0 +1,24 @@
+sequenceDiagram
+    participant Client
+    participant API REST
+    participant Serveur
+
+    Client->>API REST: GET /users (Demande liste des utilisateurs)
+    API REST->>Serveur: Récupérer les données
+    Serveur-->>API REST: Envoie les données JSON
+    API REST-->>Client: Retourne la liste des utilisateurs
+
+    Client->>API REST: POST /users (Créer un utilisateur)
+    API REST->>Serveur: Ajoute un nouvel utilisateur
+    Serveur-->>API REST: Confirme la création (201 Created)
+    API REST-->>Client: Retourne confirmation
+
+    Client->>API REST: PUT /users/1 (Modifier un utilisateur)
+    API REST->>Serveur: Met à jour les données
+    Serveur-->>API REST: Confirme la modification (200 OK)
+    API REST-->>Client: Retourne confirmation
+
+    Client->>API REST: DELETE /users/1 (Supprimer un utilisateur)
+    API REST->>Serveur: Supprime l'utilisateur
+    Serveur-->>API REST: Confirme la suppression (204 No Content)
+    API REST-->>Client: Retourne confirmation

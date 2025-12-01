@@ -1,0 +1,62 @@
+:title: Réseaux
+:number: 03
+:duration: 105
+include::../../../../adoc/libs/header-saison.adoc[]
+
+// tag::intro[]
+Cette saison est consacrée aux réseaux informatiques. Nous allons aborder les notions de base des réseaux, les protocoles, les topologies, les équipements, les adresses IP, les sous-réseaux, les VLANs, etc.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre et décrire les différents types de topologies réseau
+* Comprendre le fonctionnement de l'adressage IPv4
+* Décrire les caractéristiques et avantages de l'adressage IPv6 par rapport à IPv4
+* Différencier les protocoles de routage statique et dynamique
+* Assimiler les principes de la haute disponibilité et son importance dans les infrastructures réseau
+* Configurer et gérer les services DNS, DHCP et NTP pour assurer une gestion efficace du réseau
+// end::objectifs[]
+
+== Notions
+
+// tag::notions[]
+* Réseaux et Topologie
+* IPV4 / Adressage / Sous-Réseau
+* IPV6 / ICMP Communication
+* Routage Statique et Dynamique
+* HA (Haute disponibilité)
+* DNS et DHCP/NTP
+// end::notions[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* **Maîtrise des concepts réseaux** : Connaissance des réseaux informatiques, des protocoles de communication et des modèles OSI/TCP-IP.
+* **Expérience en administration réseau** : Savoir configurer et gérer des équipements réseaux tels que routeurs, switchs, et pare-feux (Cisco, Juniper, etc.).
+* **Connaissance approfondie de l’adressage IP et du subnetting** : Compétence en IPv4, IPv6, VLSM, et en techniques avancées de subnetting.
+* **Configuration des services réseaux** : Mise en place de serveurs DNS, DHCP, NTP, ainsi que leur configuration sur des environnements Linux/Windows.
+* **Sécurité réseau** : Maîtrise des mécanismes de sécurité comme les pare-feux, ACLs, VPN, et la gestion des services de sécurité réseau (IDS/IPS).
+* **Haute disponibilité et redondance** : Expérience pratique dans la mise en place de solutions de redondance (HSRP, VRRP) et de répartition de charge.
+* **Exercices pratiques** : Le formateur doit savoir utiliser des simulateurs de réseau (Packet Tracer, GNS3) ou en environnement réel.
+// end::prerequis[]
+
+== Résumé
+
+// tag::resume[]
+Dans cette saison dédiée à l'administration réseau, les apprenants explorent les fondamentaux essentiels pour concevoir, configurer et gérer des réseaux informatiques. La saison commence par une introduction aux réseaux et à leurs topologies, permettant aux participants de comprendre les différentes configurations possibles comme les topologies maillée, en étoile ou en anneau, et de déterminer la structure la plus adaptée selon les besoins spécifiques d'un réseau.
+
+Ensuite, l'attention se porte sur l'adressage IPv4, où les apprenants se familiarisent avec la conversion binaire-décimale et les techniques de sous-réseautage. Cette compréhension leur permet de segmenter un réseau en sous-réseaux plus petits, optimisant ainsi la gestion et la sécurité. Le passage à l'IPv6 est ensuite abordé, mettant en avant ses avantages par rapport à l'IPv4. Les participants apprennent à configurer des réseaux IPv6 et à tester la communication ICMP, assurant ainsi une connectivité efficace.
+
+La saison se poursuit avec l'étude des protocoles de routage, tant statiques que dynamiques, qui permettent de diriger le trafic de manière efficace dans un réseau. Les apprenants découvrent comment ces protocoles contribuent à l'optimisation du trafic. En parallèle, un focus sur la haute disponibilité permet de comprendre les mécanismes assurant la résilience et la continuité des services réseau, minimisant ainsi les interruptions.
+
+Enfin, la configuration et la gestion des services DNS, DHCP et NTP sont explorées. Ces services sont essentiels pour la résolution de noms de domaine, la distribution d'adresses IP et la synchronisation temporelle, garantissant ainsi une infrastructure réseau bien gérée et synchronisée. Tout au long de cette saison, un fort accent est mis sur la pratique, avec des exercices, des démonstrations et des défis quotidiens pour ancrer les compétences acquises. Ainsi, les apprenants sont préparés à concevoir et à gérer des réseaux robustes et efficaces.
+// end::resume[]
+
+== Déroulement
+
+link:./overview.html[Vue d'ensemble]
+
+// tag::deroulement[]
+include::episodes/*/*.adoc[opts=episodes]
+// end::deroulement[]

@@ -1,0 +1,228 @@
+:titre: Playbook
+:module: Ansible
+:duree: 60
+:description: Un playbook Ansible est un fichier écrit en YAML qui définit une série de tâches à exécuter sur des hôtes distants. Récapitulatif détaillé de la syntaxe d'un playbook Ansible.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* **Comprendre** la structure et les éléments d'un playbook Ansible
+* **Appliquer** la syntaxe correcte pour définir des tâches, variables et handlers
+* **Analyser** les conditions d'exécution des tâches via l'utilisation de `when`
+* **Créer** un playbook complet pour configurer un service sur des hôtes distants
+// end::objectifs[]
+
+// tag::deroulement[]
+== Structure générale d'un playbook Ansible
+
+* Un playbook est écrit en YAML et comporte une liste d'éléments définissant les hôtes, les tâches, et les configurations spécifiques.
+* Les sections principales incluent : `hosts`, `tasks`, `vars`, `handlers`, `roles`, et d'autres options spécifiques.
+
+[NOTE.speaker]
+--
+Un playbook permet d'automatiser des configurations sur des serveurs distants en utilisant une syntaxe claire et ordonnée. L'organisation en sections aide à rendre le fichier lisible et modulaire, facilitant la gestion et la réutilisation.
+--
+
+=== Eléments clés d'un playbook
+
+```yaml
+---
+- name: Nom du playbook
+  hosts: nom_des_hôtes_ou_groupes
+  become: yes                # Optionnel : Utiliser sudo pour les commandes
+  gather_facts: yes          # Collecter des informations système (fact gathering)
+  vars:                      # Définition des variables
+    var1: valeur0
+  
+  tasks:                     # Liste des tâches
+    - name: Tâche 1
+      module:                # Appel du module Ansible
+        parametre1: valeur1
+        parametre2: valeur2
+      when: condition         # Optionnel : Conditions d'exécution
+
+    - name: Tâche 2
+      module: 
+        parametre1: valeur1
+      notify: handler_name    # Appel d'un handler (optionnel)
+
+  handlers:                  # Définition des handlers (optionnel)
+    - name: handler_name
+      service:
+        name: nom_du_service
+        state: restarted
+```
+
+
+[NOTE.speaker]
+--
+* **`hosts`** : Définit les hôtes cibles pour l'exécution des tâches.
+* **`tasks`** : Liste ordonnée des actions à exécuter sur les hôtes.
+* **`vars`** : Déclaration de variables pour éviter les redondances.
+* **`handlers`** : Tâches spéciales déclenchées par d'autres tâches pour des actions spécifiques, comme redémarrer un service.
+* **`roles`** : Ensemble de tâches organisées pour gérer des configurations plus complexes.
+
+Chaque section d'un playbook a un rôle spécifique. Par exemple, la section `tasks` liste les actions, tandis que `handlers` permet d'effectuer des actions uniquement sur notification. Comprendre ces éléments est essentiel pour écrire des playbooks efficaces.
+--
+
+=== Exemple de syntaxe d'un playbook
+
+```yaml
+---
+- name: Exemple de playbook simple
+  hosts: webservers
+  become: yes
+  gather_facts: yes
+  tasks:
+    - name: Installer nginx
+      apt:
+        name: nginx
+        state: present
+    - name: Redémarrer nginx
+      service:
+        name: nginx
+        state: restarted
+```
+
+[NOTE.speaker]
+--
+Ce playbook simple installe Nginx sur des serveurs identifiés comme `webservers` et le redémarre si nécessaire. La clé `become` permet d'exécuter les tâches avec des privilèges administratifs, et `gather_facts` active la collecte d'informations système.
+--
+
+== Détails
+
+* **`hosts`** : Définissez les machines cibles.
+* **`tasks`** : Inclut des modules pour automatiser les tâches comme installer un paquet, copier un fichier, etc.
+* **`vars`** : Utilisez des variables pour simplifier et rendre le playbook plus maintenable.
+* **`when`** : Conditions pour contrôler l'exécution des tâches.
+* **`notify` et `handlers`** : Gestion des actions déclenchées, comme redémarrer un service après modification.
+
+[NOTE.speaker]
+--
+Chaque élément d'un playbook permet de structurer les actions à exécuter. Il est important de comprendre comment les tâches interagissent avec les sections `vars`, `when`, et `notify` pour écrire des playbooks robustes et modulaires.
+--
+
+=== `hosts`
+
+Définit la ou les machines sur lesquelles les tâches vont s'exécuter. Il peut s'agir d'un groupe d'hôtes défini dans le fichier d'inventaire ou d'un hôte spécifique.
+
+```yaml
+hosts: all                  # Appliquer à tous les hôtes
+hosts: webservers           # Appliquer au groupe 'webservers'
+```
+
+=== `tasks`
+
+La section `tasks` contient une liste ordonnée de tâches à exécuter. Chaque tâche utilise un module Ansible.
+
+```yaml
+tasks:
+  - name: Installer nginx    # Description de la tâche
+    apt:                     # Module utilisé (ici le module 'apt' pour la gestion des paquets)
+      name: nginx            # Paramètre du module : nom du paquet
+      state: present         # Action souhaitée : présent sur le système
+```
+
+=== `vars`
+
+Les variables sont définies sous la clé `vars`. Elles peuvent être utilisées dans le playbook pour éviter les redondances.
+
+```yaml
+vars:
+  package_name: nginx
+  service_name: nginx
+
+tasks:
+  - name: Installer le paquet
+    apt:
+      name: "{{ package_name }}"
+      state: present
+
+  - name: Redémarrer le service
+    service:
+      name: "{{ service_name }}"
+      state: restarted
+```
+
+=== `become`
+
+Permet d'exécuter les tâches avec des privilèges administratifs (`sudo`).
+
+```yaml
+become: yes                 # Utiliser sudo pour toutes les tâches
+```
+
+=== `gather_facts`
+
+Définit si Ansible doit collecter des informations sur le système cible avant d'exécuter les tâches. Ces informations (facts) sont des données sur le système, comme le type d'OS, l'adresse IP, etc.
+
+```yaml
+gather_facts: yes           # Collecte des informations système (par défaut)
+```
+
+=== `when`
+
+Permet d'exécuter une tâche uniquement si une condition est remplie.
+
+```yaml
+tasks:
+  - name: Installer Apache si sur Ubuntu
+    apt:
+      name: apache2
+      state: present
+    when: ansible_facts['os_family'] == "Debian"
+```
+
+=== `handlers`
+
+Les handlers sont des tâches spéciales qui ne sont exécutées que lorsqu’elles sont "notifiées" par d'autres tâches. Typiquement, elles sont utilisées pour redémarrer un service après une modification de configuration.
+
+```yaml
+handlers:
+  - name: Redémarrer nginx
+    service:
+      name: nginx
+      state: restarted
+```
+
+=== `notify`
+
+Permet à une tâche de notifier un handler.
+
+```yaml
+tasks:
+  - name: Copier le fichier de configuration
+    copy:
+      src: /local/path/nginx.conf
+      dest: /etc/nginx/nginx.conf
+    notify: Redémarrer nginx  # Notifier le handler "Redémarrer nginx"
+```
+
+=== `roles`
+
+Permet d'inclure des rôles dans le playbook. Les rôles sont des ensembles préorganisés de tâches, handlers, templates, variables, etc., qui permettent de structurer des playbooks complexes.
+
+```yaml
+roles:
+  - nginx
+  - postgresql
+```
+
+== Conclusion
+
+// tag::conclusion[]
+* Vue d'ensemble des éléments essentiels d'un playbook Ansible
+* Application pratique pour créer et structurer des tâches automatisées
+* Introduction aux concepts de modularité et de conditionnalité via `handlers` et `when`
+
+[NOTE.speaker]
+--
+La maîtrise des playbooks est cruciale pour utiliser efficacement Ansible. En comprenant comment structurer les tâches, utiliser des variables et configurer des conditions, vous pouvez automatiser la gestion des serveurs de manière efficace et sécurisée.
+--
+// end::conclusion[]

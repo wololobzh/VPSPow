@@ -1,0 +1,83 @@
+:title: Journées asynchrone DevOps
+:toclevels: 5
+include::../../adoc/libs/header-formation.adoc[]
+
+== N°01
+
+include::./saisons/01/episodes/05/index.adoc[tags=deroulement]
+
+== N°02
+
+include::./saisons/02/episodes/05/index.adoc[tags=deroulement]
+
+== N°03
+
+include::./saisons/03/episodes/05/index.adoc[tags=deroulement]
+
+== N°04
+
+include::./saisons/04/episodes/05/index.adoc[tags=deroulement]
+
+== N°05
+
+include::./saisons/04/episodes/10/index.adoc[tags=deroulement]
+
+== N°06
+
+include::./saisons/05/episodes/05/index.adoc[tags=deroulement]
+
+== N°07
+
+include::./saisons/06/episodes/05/index.adoc[tags=deroulement]
+
+== N°08
+
+include::./saisons/06/episodes/10/index.adoc[tags=deroulement]
+
+== N°09
+
+include::./saisons/07/episodes/05/index.adoc[tags=deroulement]
+
+== N°10
+
+include::./saisons/07/episodes/10/index.adoc[tags=deroulement]
+
+== N°11
+
+include::./saisons/08/episodes/05/index.adoc[tags=deroulement]
+
+== N°12
+
+include::./saisons/09/episodes/05/index.adoc[tags=deroulement]
+
+== N°13
+
+include::./saisons/09/episodes/10/index.adoc[tags=deroulement]
+
+== N°14
+
+include::./saisons/10/episodes/05/index.adoc[tags=deroulement]
+
+== N°15
+
+include::./saisons/11/episodes/05/index.adoc[tags=deroulement]
+
+== N°16
+
+include::./saisons/11/episodes/10/index.adoc[tags=deroulement]
+
+== N°17
+
+include::./saisons/12/episodes/05/index.adoc[tags=deroulement]
+
+== N°18
+
+include::./saisons/13/episodes/05/index.adoc[tags=deroulement]
+
+== N°19
+
+include::./saisons/14/episodes/05/index.adoc[tags=deroulement]
+
+== N°20
+
+include::./saisons/14/episodes/10/index.adoc[tags=deroulement]

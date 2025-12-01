@@ -1,0 +1,39 @@
+:title: Analyse SonarCube
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Bonnes pratiques basées sur les règles de SonarQube pour comprendre les vulnérabilités potentielles et à adopter des pratiques sécurisées lors de la création et du déploiement de conteneurs.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+- **Aanlyser** une image Docker
+// end::objectifs[]
+
+// tag::prerequis[]
+
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: 
+:temps: 60 minutes
+:description: 
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/docker/best-practice-vulnerabilities.adoc[options=modules]
+
+include::../../../../modules/docker/best-practice-bugs.adoc[options=modules]
+
+Finir le module code smell si le temps manque.
+
+include::../../../../modules/docker/best-practice-code-smell.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Devops-Peda/S13-Challenge
+:description: Monter un sonarqube et analyser le dockerfile d'un ancien projet. Appliquer les bonnes pratiques.
+:correction: https://github.com/O-clock-Devops-Peda/S13-Challenge/tree/correction
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+// end::deroulement[]

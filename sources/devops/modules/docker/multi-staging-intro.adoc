@@ -1,0 +1,133 @@
+:titre: Introduction au multi-staging Docker
+:module: Docker
+:duree: 60
+:description: Comprendre pourquoi le multi-staging existe et à quoi il sert.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre le concept de multi-staging dans Docker
+* Identifier les avantages du multi-staging
+* Apprendre à créer un Dockerfile multi-stage basique
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Introduction
+
+* technique pour optimiser les images Docker
+* permet de réduire la taille des images
+* sépare les étapes de construction et de production
+
+[NOTE.speaker]
+--
+Le multi-staging est utilisé pour créer des images Docker plus légères en séparant les étapes de développement et de production. Cela permet de réduire la taille des images finales en n'incluant que ce qui est nécessaire pour exécuter l'application.
+--
+
+== Concepts de base
+
+* plusieurs **FROM** dans un Dockerfile
+* chaque **FROM** démarre une nouvelle étape de construction
+* copie uniquement les artefacts nécessaires entre les étapes
+
+=== Avantages
+
+* **Réduction de la taille des images** : seules les parties nécessaires sont incluses dans l'image finale
+* **Sécurité** : les dépendances de développement ne sont pas exposées en production
+* **Efficacité** : améliore les temps de build et de déploiement
+
+[NOTE.speaker]
+--
+Un Dockerfile multi-stage utilise plusieurs instructions FROM pour créer différentes étapes dans un seul fichier. Cela permet de séparer les dépendances de développement et de production, ce qui conduit à des images plus petites et plus sécurisées.
+--
+
+== Démonstration
+
+=== Créer un Dockerfile multi-stage
+
+[NOTE.speaker]
+--
+1. Créer un fichier nommé `Dockerfile`.
+2. Ajouter un premier stage pour le build :
+   ```dockerfile
+   FROM node:14 AS builder
+   WORKDIR /app
+   COPY package.json ./
+   RUN npm install
+   COPY . .
+   RUN npm run build
+   ```
+3. Ajouter un second stage pour la production :
+   ```dockerfile
+   FROM nginx:alpine
+   COPY --from=builder /app/build /usr/share/nginx/html
+   ```
+4. Construire l'image avec la commande `docker build -t my-app .`.
+5. Expliquer que le premier stage installe les dépendances et construit l'application, tandis que le second stage copie uniquement les fichiers nécessaires pour exécuter l'application.
+--
+
+== Comparaison avec les Dockerfiles traditionnels
+
+* Dockerfile classique contient tout dans une seule étape
+* multi-staging sépare le processus en plusieurs étapes
+* réduit la taille de l'image finale
+
+[NOTE.speaker]
+--
+Dans un Dockerfile traditionnel, toutes les opérations sont effectuées dans un seul conteneur, ce qui peut entraîner des images volumineuses et complexes. Le multi-staging, en revanche, permet de diviser le processus de construction en étapes distinctes, optimisant ainsi l'image finale.
+--
+
+== Meilleures pratiques
+
+* **Minimiser les couches** : réduire le nombre d'instructions pour minimiser les couches
+* **Utiliser des images de base légères** : telles que `alpine`
+* **Nettoyer après l'installation** : supprimer les fichiers inutiles après l'installation
+
+[NOTE.speaker]
+--
+Pour tirer le meilleur parti du multi-staging, minimisez les couches dans chaque étape et utilisez des images de base légères. Assurez-vous également de nettoyer les fichiers temporaires et inutiles pour optimiser la taille de l'image.
+--
+
+// tag::exercice[]
+
+== Exercice
+
+Créer un Dockerfile multi-stage à partir du Dockerfile classique suivant :
+
+```dockerfile
+FROM node:14
+WORKDIR /app
+COPY package.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+FROM nginx:alpine
+COPY /app/build /usr/share/nginx/html
+```
+
+**Tâches :**
+
+1. Identifier les étapes qui peuvent être séparées.
+2. Réécrire le Dockerfile pour utiliser le multi-staging.
+
+[NOTE.speaker]
+--
+L'exercice consiste à réorganiser le Dockerfile existant pour utiliser le multi-staging. Identifiez les étapes de construction et de production, puis séparez-les en utilisant plusieurs instructions FROM. Vérifiez que la taille de l'image finale est réduite par rapport à la version classique.
+--
+
+// end::exercice[]
+
+== Conclusion
+// tag::conclusion[]
+* Le multi-staging dans Docker permet de créer des images plus légères et sécurisées.
+* En séparant les étapes de développement et de production, on optimise les images pour le déploiement.
+* C'est une approche efficace pour améliorer les performances et la sécurité des conteneurs Docker.
+// end::conclusion[]

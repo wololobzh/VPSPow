@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant Utilisateur
+    participant Système
+    participant BaseDeDonnees
+    
+    Utilisateur->>Système: Envoie requête de recherche
+    Système->>Système: Vérifie les paramètres
+    alt Paramètres valides
+        Système->>BaseDeDonnees: Interroger la base
+        BaseDeDonnees-->>Système: Renvoie résultats
+        Système-->>Utilisateur: Affiche résultats
+    else Paramètres invalides
+        Système-->>Utilisateur: Affiche message d'erreur
+    end

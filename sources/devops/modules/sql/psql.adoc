@@ -1,0 +1,265 @@
+:titre: Introduction à PostgreSQL et psql pour les DevOps
+:module: SQL
+:duree: 120
+:description: Découverte de PostgreSQL et de son interface en ligne de commande psql pour les professionnels DevOps.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+// tag::objectifs[]
+* *Comprendre* les concepts fondamentaux de PostgreSQL
+* *Expliquer* l'utilité de psql dans un contexte DevOps
+* *Appliquer* les commandes de base de psql pour interagir avec une base de données PostgreSQL
+* *Analyser* les besoins en gestion de bases de données dans un environnement DevOps
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== Introduction à psql
+
+psql est l'interface en ligne de commande interactive pour PostgreSQL. Elle permet aux administrateurs et développeurs d'interagir directement avec la base de données.
+
+=== Avantages de psql pour les DevOps
+
+1. Automatisation des tâches de gestion de base de données
+2. Intégration facile dans les scripts et pipelines CI/CD
+3. Accès rapide pour le dépannage et la maintenance
+4. Exécution de requêtes SQL et de commandes système
+
+== Connexion à PostgreSQL avec psql
+
+Pour se connecter à une base de données PostgreSQL avec psql :
+
+[source,bash]
+----
+psql -h hostname -p port -U username -d database
+----
+
+Par exemple :
+
+[source,bash]
+----
+psql -h localhost -p 5432 -U devops_user -d myapp_db
+----
+
+== Commandes psql essentielles
+
+. `\l` : Lister toutes les bases de données
+. `\c database_name` : Se connecter à une base de données
+. `\dt` : Lister les tables de la base de données courante
+. `\d table_name` : Décrire une table
+. `\du` : Lister les utilisateurs et leurs rôles
+. `\i filename` : Exécuter des commandes à partir d'un fichier
+. `\o filename` : Envoyer les résultats des requêtes dans un fichier
+. `\q` : Quitter psql
+
+=== Exécution de requêtes SQL
+
+Dans psql, vous pouvez exécuter directement des requêtes SQL. Par exemple :
+
+[source,sql]
+----
+SELECT * FROM users WHERE active = true;
+----
+
+== Gestion des bases de données avec psql
+
+=== Création d'une base de données
+
+[source,sql]
+----
+CREATE DATABASE devops_db;
+----
+
+=== Création d'une table
+
+[source,sql]
+----
+CREATE TABLE deployments (
+    id SERIAL PRIMARY KEY,
+    app_name VARCHAR(100) NOT NULL,
+    version VARCHAR(50) NOT NULL,
+    deploy_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+----
+
+=== Insertion de données
+
+[source,sql]
+----
+INSERT INTO deployments (app_name, version) 
+VALUES ('myapp', 'v1.2.3');
+----
+
+== Sauvegarde et restauration avec psql
+
+=== Sauvegarde d'une base de données
+
+Utilisez la commande `pg_dump` en dehors de psql :
+
+[source,bash]
+----
+pg_dump -h hostname -p port -U username -d database > backup.sql
+----
+
+=== Restauration d'une base de données
+
+Utilisez la commande `psql` pour restaurer :
+
+[source,bash]
+----
+psql -h hostname -p port -U username -d database < backup.sql
+----
+
+== Importance de PostgreSQL et psql dans le DevOps
+
+Dans le contexte DevOps, la maîtrise de PostgreSQL et psql est cruciale pour :
+
+1. Gestion des configurations d'application
+2. Stockage et analyse des logs
+3. Monitoring des performances de la base de données
+4. Automatisation des tâches de maintenance et de déploiement
+
+// end::deroulement[]
+
+// tag::demo[]
+== Démonstration 1 : Création et interrogation d'une table
+
+[NOTE.speaker]
+--
+Nous allons créer une table simple et effectuer quelques requêtes de base.
+
+1. Connexion à la base de données :
++
+[source,bash]
+----
+psql -h localhost -p 5432 -U devops_user -d devops_db
+----
+
+2. Créer une table :
++
+[source,sql]
+----
+CREATE TABLE servers (
+    id SERIAL PRIMARY KEY,
+    hostname VARCHAR(100) NOT NULL,
+    ip_address INET NOT NULL,
+    status VARCHAR(20) DEFAULT 'active'
+);
+----
+
+3. Insérer des données :
++
+[source,sql]
+----
+INSERT INTO servers (hostname, ip_address) VALUES
+('web-01', '192.168.1.10'),
+('db-01', '192.168.1.20'),
+('app-01', '192.168.1.30');
+----
+
+4. Sélectionner toutes les données :
++
+[source,sql]
+----
+SELECT * FROM servers;
+----
+
+5. Sélectionner avec une condition :
++
+[source,sql]
+----
+SELECT hostname, ip_address FROM servers WHERE status = 'active';
+----
+--
+
+== Démonstration 2 : Sauvegarde et restauration
+
+[NOTE.speaker]
+--
+Nous allons effectuer une sauvegarde de la base de données, puis la restaurer.
+
+1. Sauvegarde de la base de données (en dehors de psql) :
++
+[source,bash]
+----
+pg_dump -h localhost -p 5432 -U devops_user -d devops_db > devops_backup.sql
+----
+
+2. Suppression de la table servers (dans psql) :
++
+[source,sql]
+----
+DROP TABLE servers;
+----
+
+3. Vérification que la table n'existe plus :
++
+[source,sql]
+----
+\dt
+----
+
+4. Restauration de la base de données (en dehors de psql) :
++
+[source,bash]
+----
+psql -h localhost -p 5432 -U devops_user -d devops_db < devops_backup.sql
+----
+
+5. Vérification que la table a été restaurée (dans psql) :
++
+[source,sql]
+----
+\dt
+SELECT * FROM servers;
+----
+--
+
+// end::demo[]
+
+// tag::exercice[]
+== Exercice 1 : Création et interrogation d'une table
+
+1. Connectez-vous à la base de données `devops_db` avec psql.
+2. Créez une table `applications` avec les colonnes suivantes :
+   - id (entier, clé primaire)
+   - name (chaîne de caractères)
+   - version (chaîne de caractères)
+   - last_updated (timestamp)
+3. Insérez au moins 3 applications dans cette table.
+4. Écrivez une requête pour sélectionner toutes les applications dont la version commence par "v1".
+
+== Exercice 2 : Utilisation de variables et de scripts
+
+1. Créez un fichier SQL nommé `count_records.sql` avec le contenu suivant :
+   [source,sql]
+   ----
+   \echo 'Nombre d''enregistrements dans la table :name'
+   SELECT COUNT(*) FROM :name;
+   ----
+2. Dans psql, définissez une variable `name` avec le nom d'une de vos tables.
+3. Exécutez le script `count_records.sql` en utilisant la commande `\i`.
+4. Modifiez la valeur de la variable `name` et réexécutez le script.
+
+== Exercice 3 : Sauvegarde et restauration
+
+1. Effectuez une sauvegarde de la base de données `devops_db`.
+2. Créez une nouvelle base de données appelée `devops_db_test`.
+3. Restaurez la sauvegarde dans la nouvelle base de données `devops_db_test`.
+4. Vérifiez que les données ont été correctement restaurées en exécutant quelques requêtes SELECT.
+
+TIP: N'oubliez pas d'utiliser les commandes `\c` pour changer de base de données et `\dt` pour lister les tables.
+// end::exercice[]
+
+== Conclusion
+
+// tag::conclusion[]
+* Vous avez appris les bases de PostgreSQL et de son interface en ligne de commande psql.
+* Vous pouvez maintenant vous connecter à une base de données PostgreSQL, exécuter des requêtes SQL de base, et effectuer des opérations de sauvegarde et de restauration.
+* Ces compétences sont essentielles pour la gestion des bases de données dans un environnement DevOps, permettant l'automatisation des tâches, l'intégration dans les pipelines CI/CD et la maintenance efficace des données d'application.
+* Continuez à pratiquer et à explorer les fonctionnalités avancées de PostgreSQL pour améliorer vos compétences en gestion de bases de données dans le contexte DevOps.
+// end::conclusion[]

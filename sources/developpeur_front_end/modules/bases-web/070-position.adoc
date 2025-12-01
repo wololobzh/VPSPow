@@ -1,0 +1,312 @@
+:titre: Les positionnements en CSS
+:module: CSS
+:duree: 40
+:description: Comprendre les différentes valeurs de la propriété CSS `position` et leurs usages.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../../adoc/libs
+endif::[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre les différentes valeurs de la propriété `position`.
+* Savoir utiliser `top`, `right`, `bottom`, et `left` pour déplacer les éléments.
+* Apprendre le fonctionnement des contextes d'empilement.
+* Savoir quand et pourquoi utiliser `position: static`, `relative`, `absolute`, `fixed`, ou `sticky`.
+// end::objectifs[]
+
+// tag::deroulement[]
+
+== `position: static`
+
+Comportement par défaut d’un élément dans le flux.
+
+[NOTE.speaker]
+--
+`static` est la valeur par défaut pour tous les éléments HTML. Un élément positionné avec `static` reste dans le flux normal du document. Les propriétés `top`, `right`, `bottom`, et `left` ne s’appliquent pas.
+--
+
+[source,css]
+----
+.element {
+  position: static;
+}
+----
+
+== Démonstration
+
+ifeval::["{visible-on-html}" !=  "yes"]
+
+[.tips]
+--
+💡 Appuyer sur la touche "*s*" pour le mode speaker
+--
+
+endif::[] 
+
+== `position: static`
+
+HTML et CSS pour la démonstration :
+
+[source,html]
+----
+<div class="container">
+  <div class="element">Élément statique</div>
+</div>
+
+<style>
+.container {
+  border: 1px solid black;
+  padding: 20px;
+  height: 100px;
+}
+
+.element {
+  position: static;
+  background-color: lightblue;
+  padding: 10px;
+}
+</style>
+----
+
+== `position: relative`
+
+Un élément reste dans le flux normal mais peut être décalé par rapport à sa position initiale.
+
+[NOTE.speaker]
+--
+Avec `relative`, l’élément est déplacé par rapport à sa position normale dans le flux. Cependant, il laisse l’espace d’origine intact, ce qui signifie que d’autres éléments ne sont pas affectés par son déplacement.
+--
+
+[source,css]
+----
+.element {
+  position: relative;
+  top: 10px;
+  left: 20px;
+}
+----
+
+== Démonstration
+
+ifeval::["{visible-on-html}" !=  "yes"]
+
+[.tips]
+--
+💡 Appuyer sur la touche "*s*" pour le mode speaker
+--
+
+endif::[] 
+
+== `position: relative`
+
+HTML et CSS pour la démonstration :
+
+[source,html]
+----
+<div class="container">
+  <div class="element">Élément relatif</div>
+</div>
+
+<style>
+.container {
+  border: 1px solid black;
+  padding: 20px;
+  height: 100px;
+}
+</style>
+----
+
+[NOTE.speaker]
+--
+Cette démonstration montre comment utiliser la propriété `position: relative` en CSS. L'élément `.element` est positionné par rapport à son conteneur `.container`.
+--
+
+== `position: absolute`
+
+Un élément est retiré du flux normal et positionné par rapport à l'ancêtre positionné le plus proche.
+
+[NOTE.speaker]
+--
+Lorsqu’un élément est positionné `absolute`, il est déplacé par rapport à son conteneur positionné le plus proche. Si aucun ancêtre n’a de `position` autre que `static`, il sera positionné par rapport au `<html>` ou à l’élément contenant le document.
+--
+
+[source,css]
+----
+.container {
+  position: relative;
+}
+
+.element {
+  position: absolute;
+  top: 50px;
+  left: 30px;
+}
+----
+
+== Démonstration
+
+ifeval::["{visible-on-html}" !=  "yes"]
+
+[.tips]
+--
+💡 Appuyer sur la touche "*s*" pour le mode speaker
+--
+
+endif::[] 
+
+== `position: absolute`
+
+HTML et CSS pour la démonstration :
+
+[source,html]
+----
+<div class="container">
+  <div class="element">Élément absolu</div>
+</div>
+
+<style>
+.container {
+  position: relative;
+  border: 1px solid black;
+  padding: 20px;
+  height: 100px;
+}
+
+.element {
+  position: absolute;
+  background-color: lightgreen;
+  padding: 10px;
+  top: 30px;
+  left: 30px;
+}
+</style>
+----
+
+== `position: fixed`
+
+L’élément est retiré du flux et positionné par rapport à la fenêtre du navigateur.
+
+[NOTE.speaker]
+--
+Avec `fixed`, l’élément ne bouge pas lorsque la page défile. C’est idéal pour des éléments comme des barres de navigation ou des pop-ups.
+--
+
+[source,css]
+----
+.element {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+}
+----
+
+== Démonstration
+
+ifeval::["{visible-on-html}" !=  "yes"]
+
+[.tips]
+--
+💡 Appuyer sur la touche "*s*" pour le mode speaker
+--
+
+endif::[] 
+
+== `position: fixed`
+
+HTML et CSS pour la démonstration :
+
+[source,html]
+----
+<div class="container">
+  <div class="element">Élément fixe</div>
+</div>
+
+<style>
+.container {
+  height: 300px;
+  overflow: scroll;
+  border: 1px solid black;
+}
+
+.element {
+  position: fixed;
+  background-color: lightgoldenrodyellow;
+  padding: 10px;
+  top: 10px;
+  right: 20px;
+}
+</style>
+----
+
+== `position: sticky`
+
+Un élément reste dans le flux jusqu’à ce qu’une limite définie par `top`, `right`, `bottom`, ou `left` soit atteinte.
+
+[NOTE.speaker]
+--
+`sticky` combine les comportements de `relative` et de `fixed`. L’élément agit comme `relative` jusqu’à atteindre le défilement spécifié, où il devient alors `fixed`.
+--
+
+[source,css]
+----
+.element {
+  position: sticky;
+  top: 10px;
+}
+----
+
+== Démonstration
+
+ifeval::["{visible-on-html}" !=  "yes"]
+
+[.tips]
+--
+💡 Appuyer sur la touche "*s*" pour le mode speaker
+--
+
+endif::[] 
+
+== `position: sticky`
+
+HTML et CSS pour la démonstration :
+
+[source,html]
+----
+<div class="container">
+  <div class="element">Élément sticky</div>
+  <p>Défilez pour voir l'effet sticky.</p>
+  <p>Lorem ipsum dolor sit amet...</p>
+</div>
+
+<style>
+.container {
+  height: 300px;
+  overflow-y: scroll;
+  border: 1px solid black;
+}
+
+.element {
+  position: sticky;
+  background-color: lightpink;
+  padding: 10px;
+  top: 10px;
+}
+</style>
+----
+
+== Exercices
+
+1. Positionner un élément avec `absolute` dans un conteneur `relative`.
+2. Créer un élément `sticky` qui reste visible en haut de la page.
+3. Utiliser `fixed` pour positionner une barre latérale.
+
+== Conclusion
+
+* Vous comprenez les différentes valeurs de `position` et leurs effets sur les éléments.
+* Vous pouvez appliquer `top`, `right`, `bottom`, et `left` pour contrôler les déplacements.
+* Vous êtes capable de gérer des contextes d’empilement avec `z-index`.
+// end::deroulement[]

@@ -1,0 +1,29 @@
+classDiagram
+    Livre "1" --> "0..*" Exemplaire : contient
+    Livre "1" -- "0..*" Categorie : appartient à
+    Livre "0..*" -- "0..*" Auteur : écrit par
+    Utilisateur "1" --> "0..*" Emprunt : effectue
+    Emprunt "1" --> "1" Exemplaire : concerne
+    class Livre {
+        - titre : string
+        - isbn : string
+        + emprunter() : bool
+    }
+    class Exemplaire {
+        - id : int
+        - etat : string
+    }
+    class Auteur {
+        - nom : string
+    }
+    class Categorie {
+        - nom : string
+    }
+    class Emprunt {
+        - dateDebut : Date
+        - dateFin : Date
+    }
+    class Utilisateur {
+        - nom : string
+        + s'inscrire() : void
+    }
