@@ -1,5 +1,0 @@
-:title: Virtualisation – Cloud Computing – Stockage – Sauvegarde - Orchestration
-:number: 07
-include::../../../../adoc/libs/header-saison-overview.adoc[]
-
-include::episodes/*/*.adoc[opts=episodes-overview]

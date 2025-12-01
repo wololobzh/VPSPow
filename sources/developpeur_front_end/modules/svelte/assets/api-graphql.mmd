@@ -1,9 +1,0 @@
-sequenceDiagram
-    participant Client
-    participant API GraphQL
-    participant Serveur
-
-    Client->>API GraphQL: Query { user(id: 1) { name, email } }
-    API GraphQL->>Serveur: Récupérer name et email de user 1
-    Serveur-->>API GraphQL: Renvoie les données demandées
-    API GraphQL-->>Client: { "data": { "user": { "name": "Alice", "email": "alice@example.com" } } }

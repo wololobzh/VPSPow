@@ -1,9 +1,0 @@
-sequenceDiagram
-    participant Utilisateur
-    participant Système
-    Utilisateur->>Système: Authentification
-    alt Authentification réussie
-        Système-->>Utilisateur: Accès accordé
-    else Authentification échouée
-        Système-->>Utilisateur: Accès refusé
-    end

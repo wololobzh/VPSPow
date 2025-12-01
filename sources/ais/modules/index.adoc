@@ -1,4 +1,0 @@
-:title: Modules
-include::../../../adoc/libs/header-formation.adoc[]
-
-include::./*[opts=modules-toc]

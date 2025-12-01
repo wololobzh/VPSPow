@@ -1,5 +1,0 @@
-:title: Cloud - Azure / AWS – MS365 (sharepoint/tenant) / GWorkspace
-:number: 08
-include::../../../../adoc/libs/header-saison-overview.adoc[]
-
-include::episodes/*/*.adoc[opts=episodes-overview]
