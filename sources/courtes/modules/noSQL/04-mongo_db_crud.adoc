@@ -1,0 +1,283 @@
+:titre: CRUD et Agrégation avec MongoDB
+:module: NoSQL
+:duree: 60
+:description: Découvrir les opérations CRUD de base dans MongoDB ainsi que les pipelines d’agrégation pour manipuler et analyser les données efficacement.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== CRUD et Agrégation avec MongoDB
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* **Comprendre** les opérations CRUD dans MongoDB
+* **Créer** une collection et insérer des documents
+* **Lire, mettre à jour et supprimer** des données
+* **Découvrir** les pipelines d’agrégation
+* **Être capable** de manipuler les données à l’aide d’opérateurs simples et efficaces
+// end::objectifs[]
+
+// tag::deroulement[]
+== Créer une collection dans MongoDB
+
+MongoDB crée automatiquement une collection lors de la première insertion.
+Il est toutefois possible de la créer explicitement.
+
+Exemples :
+
+```
+// Création explicite
+db.createCollection("users")
+
+// Création implicite
+// La collection "products" est créée lors du premier insert
+db.products.insertOne({ name: "Laptop", price: 1200 })
+```
+
+[NOTE.speaker]
+--
+Créer une collection manuellement est utile lorsque l’on veut définir des options : validation de schéma, taille maximale, etc.
+Dans la majorité des cas, MongoDB crée les collections automatiquement.
+--
+
+== Le CRUD : rappel
+
+CRUD représente les 4 opérations fondamentales :
+
+* **C**reate
+* **R**ead
+* **U**pdate
+* **D**elete
+
+[NOTE.speaker]
+--
+
+MongoDB applique ces opérations directement sur les documents JSON-like à l’aide de méthodes simples.
+--
+
+== Create : insérer des documents
+
+MongoDB propose :
+
+* `insertOne()`
+* `insertMany()`
+
+Exemples :
+
+```
+db.users.insertOne({
+  name: "Alice",
+  age: 25,
+  role: "admin"
+})
+
+db.users.insertMany([
+  { name: "Bob", age: 32 },
+  { name: "Charlie", age: 28 }
+])
+```
+
+[NOTE.speaker]
+--
+
+Chaque document reçoit automatiquement un `_id`.
+Les documents peuvent avoir des structures différentes dans une même collection.
+--
+
+
+== Read : lire des documents
+
+Pour lire les données, on utilise principalement :
+
+* `findOne()`
+* `find()`
+
+Exemples :
+
+```
+// Lire un seul document
+db.users.findOne({ name: "Alice" })
+
+// Lire ceux dont l'âge est supérieur à 30
+db.users.find({ age: { $gt: 30 } })
+```
+
+[NOTE.speaker]
+--
+
+`find()` renvoie un curseur : on peut chaîner `.pretty()`, `.sort()`, `.limit()`, etc.
+--
+
+== Update : modifier des documents
+
+Méthodes disponibles :
+
+* `updateOne()`
+* `updateMany()`
+
+Avec des opérateurs comme : `$set`, `$inc`, `$push`.
+
+Exemples :
+
+```
+// Modifier une valeur
+db.users.updateOne(
+  { name: "Alice" },
+  { $set: { age: 26 } }
+)
+
+// Ajouter dans un tableau
+db.users.updateOne(
+  { name: "Alice" },
+  { $push: { hobbies: "coding" } }
+)
+```
+
+[NOTE.speaker]
+--
+
+Les updates ne remplacent pas tout le document (contrairement à SQL) : seuls les champs indiqués sont modifiés.
+--
+
+== Remplacer un document entier
+
+```
+db.users.replaceOne(
+  { name: "Alice" },
+  { name: "Alice", age: 30, role: "manager" }
+)
+```
+
+[NOTE.speaker]
+--
+
+`replaceOne` remplace tout le document : attention aux champs oubliés !
+--
+
+== Delete : supprimer des documents
+
+Méthodes disponibles :
+
+* `deleteOne()`
+* `deleteMany()`
+
+Exemples :
+
+```
+// Supprimer un utilisateur
+db.users.deleteOne({ name: "Bob" })
+
+// Supprimer tous les mineurs
+db.users.deleteMany({ age: { $lt: 18 } })
+```
+
+[NOTE.speaker]
+--
+
+Les suppressions sont définitives sauf dans le cadre d’une transaction ACID.
+--
+
+== L’agrégation : qu’est-ce que c’est ?
+
+Le pipeline d’agrégation permet :
+
+* de transformer
+* de filtrer
+* de regrouper
+* de projeter
+
+les documents d’une collection.
+
+MongoDB utilise des étapes successives comme `$match`, `$group`, `$sort`, etc.
+
+[NOTE.speaker]
+--
+
+L’agrégation est l’équivalent des fonctions analytiques SQL (GROUP BY, SUM, ORDER BY…) mais en mode pipeline JSON.
+--
+
+== Exemple simple d’agrégation
+
+Exemple : compter le nombre d’utilisateurs par rôle.
+
+```
+db.users.aggregate([
+  { $group: { _id: "$role", count: { $sum: 1 } } }
+])
+```
+
+Résultat :
+
+```
+[{ _id: "admin", count: 3 }, { _id: "user", count: 12 }]
+```
+
+[NOTE.speaker]
+--
+`$group` regroupe les documents par valeur, et `$sum: 1` ajoute +1 pour chaque document trouvé.
+--
+
+== Exemple : filtrer puis trier
+
+```
+db.users.aggregate([
+  { $match: { age: { $gte: 18 } } },
+  { $sort: { age: 1 } }
+])
+```
+
+[NOTE.speaker]
+--
+Le pipeline fonctionne étape par étape : d’abord filtrer (`$match`), puis trier (`$sort`).
+--
+
+== Exemple : projection
+
+```
+db.users.aggregate([
+  { $project: { name: 1, age: 1, _id: 0 } }
+])
+```
+
+[NOTE.speaker]
+--
+`$project` permet de choisir les champs à afficher. `1` = afficher, `0` = masquer.
+--
+
+== Bonnes pratiques CRUD + Agrégation
+
+* Toujours indexer les champs filtrés
+* Utiliser l’agrégation pour les analyses plutôt que des traitements en code
+* Préférer `updateOne` et `updateMany` plutôt que `replaceOne`
+* Éviter les agrégations coûteuses sur des collections non indexées
+* Éviter les DELETE ou UPDATE sans filtre `{}`
+
+[NOTE.speaker]
+--
+MongoDB est optimisé pour la lecture rapide et la transformation via pipeline.
+L’agrégation permet d'éviter des traitements lourds côté application.
+--
+
+== Démonstration
+// tag::demonstration[]
+Pokedex : https://github.com/wololobzh/NoSQL-Introduction-MongoDB
+// end::demonstration[]
+
+
+== Exercice
+// tag::exercice[]
+Manipulation de MongoDB dans le terminal avec mongosh : Pokedex
+// end::exercice[]
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Le CRUD de MongoDB est simple et naturel grâce au format JSON.
+* Les collections peuvent être créées explicitement ou automatiquement.
+* Les pipelines d’agrégation permettent de traiter les données efficacement.
+* Les bonnes pratiques garantissent performance et lisibilité.
+// end::conclusion[]

@@ -1,0 +1,184 @@
+:titre: Scalabilité en NoSQL
+:module: NoSQL
+:duree: 60
+:description: Scalabilité des bases de données NoSQL, avec un focus sur les techniques de sharding, réplication et gestion des performances dans MongoDB.
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* **Comprendre** les concepts fondamentaux de la scalabilité
+* **Distinguer** scalabilité verticale et horizontale
+* **Identifier** les mécanismes de scalabilité dans les systèmes NoSQL
+* **Comprendre** le rôle du sharding, de la réplication et de la distribution des données
+* **Savoir** pourquoi le NoSQL est souvent préféré pour les systèmes massivement distribués
+// end::objectifs[]
+
+// tag::deroulement[]
+== Qu’est-ce que la scalabilité ?
+
+La scalabilité désigne la capacité d’un système à absorber une charge croissante sans dégradation des performances.
+
+Il existe deux types :
+
+* **Scalabilité verticale** : augmenter la puissance d’un serveur
+* **Scalabilité horizontale** : ajouter plus de serveurs
+
+[NOTE.speaker]
+--
+Les systèmes modernes doivent gérer des millions d’utilisateurs, d’événements ou d’enregistrements. La scalabilité est donc indispensable. Le NoSQL a été créé en grande partie pour répondre à ces besoins.
+--
+
+== Scalabilité verticale
+
+La scalabilité verticale (scale-up) consiste à :
+
+* Ajouter plus de RAM
+* Ajouter plus de CPU
+* Ajouter plus de stockage
+
+[NOTE.speaker]
+--
+Solution simple mais limitée : un serveur ne peut pas grossir indéfiniment.
+De plus, le matériel haut de gamme coûte très cher et nécessite parfois des interruptions de service.
+--
+
+== Scalabilité horizontale
+
+La scalabilité horizontale (scale-out) consiste à ajouter plusieurs serveurs et à répartir les données entre eux.
+
+C’est le modèle privilégié par les bases NoSQL.
+
+[NOTE.speaker]
+--
+C’est généralement la solution la plus robuste pour les environnements distribués. Elle permet de gérer de vastes volumes de données tout en assurant haute disponibilité.
+--
+
+== Pourquoi le NoSQL facilite la scalabilité horizontale ?
+
+Les bases NoSQL sont conçues autour de plusieurs principes :
+
+* Données distribuées
+* Architecture sans schéma strict
+* Replication simple
+* Absence de JOIN complexes
+
+[NOTE.speaker]
+--
+Les relations SQL traditionnelles rendent très difficile la répartition des données sur plusieurs machines, surtout avec les contraintes d’intégrité. NoSQL simplifie cette tâche en stockant les données sous forme de documents plus indépendants.
+--
+
+== Le rôle du sharding
+
+Le sharding consiste à diviser une collection en « shards », c’est-à-dire en fragments répartis sur plusieurs serveurs.
+
+Exemple d’un sharding par ID :
+
+* Shard 1 : IDs de 0 à 1000
+* Shard 2 : IDs de 1001 à 2000
+* Shard 3 : IDs de 2001 à 3000
+
+[NOTE.speaker]
+--
+Le sharding permet de répartir les données et les requêtes sur plusieurs serveurs.
+C’est la brique essentielle de la scalabilité dans MongoDB, Cassandra, HBase, etc.
+--
+
+== Les stratégies de sharding
+
+On peut sharder les données selon :
+
+* **Un intervalle** (range-based sharding)
+* **Un hash** (hash-based sharding)
+* **Un attribut métier** (geo-sharding, user-based sharding…)
+
+[NOTE.speaker]
+--
+Le choix de la clé de shard détermine l’équilibrage du cluster. Un mauvais choix entraîne des « hotspots » : une machine saturée pendant que les autres sont sous-utilisées.
+--
+
+== Réplication et haute disponibilité
+
+La réplication crée plusieurs copies des données pour :
+
+* Assurer la tolérance aux pannes
+* Améliorer la lecture
+* Éviter la perte de données
+
+[NOTE.speaker]
+--
+La scalabilité n’est pas seulement une question de performance : elle concerne aussi la résilience. Les systèmes NoSQL utilisent généralement des clusters avec réplication automatique.
+--
+
+== Distribution des données dans un cluster
+
+Les systèmes NoSQL utilisent des architectures distribuées :
+
+* **Cluster** (ensemble de serveurs)
+* **Nodes** (nœuds du cluster)
+* **Partitions** ou shards
+
+[NOTE.speaker]
+--
+La distribution des données permet de gérer des volumes massifs, difficiles voire impossibles à stocker sur une seule machine.
+--
+
+== Scalabilité et modèle CAP
+
+Le théorème CAP dit qu'un système distribué ne peut garantir que deux éléments parmi :
+
+* **C**onsistency
+* **A**vailability
+* **P**artition tolerance
+
+Les bases NoSQL privilégient généralement :
+
+* **AP** (haute disponibilité + tolérance au partitionnement)
+* ou **CP** (cohérence + tolérance au partitionnement)
+
+[NOTE.speaker]
+--
+Selon le système NoSQL utilisé (MongoDB, Cassandra, Redis, etc.), le compromis CAP est différent.
+Comprendre CAP aide à choisir la base adaptée à son usage.
+--
+
+== Cas concrets de scalabilité NoSQL
+
+* Un réseau social : stockage distribué des publications
+* Un e-commerce : catalogue produit shardé par catégorie
+* Un jeu en ligne : données de joueurs réparties par région
+* Un système IoT : ingestion massive de données en temps réel
+
+[NOTE.speaker]
+--
+Dans tous ces cas, la scalabilité horizontale permet de gérer des milliards d’enregistrements et des millions d’utilisateurs simultanés.
+--
+
+== Bonnes pratiques de scalabilité NoSQL
+
+* Choisir une clé de shard pertinente
+* Éviter les hotspots
+* Minimiser les dépendances entre documents
+* Éviter les agrégations lourdes sur des données shardées
+* Préférer la dénormalisation quand elle accélère les lectures
+
+[NOTE.speaker]
+--
+Une bonne scalabilité repose sur une bonne modélisation.
+NoSQL n’est pas magique : les performances dépendent des choix architecturaux du développeur.
+--
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* La scalabilité est essentielle pour gérer des systèmes distribués modernes.
+* NoSQL facilite la scalabilité horizontale grâce au sharding et à la réplication.
+* Les compromis du théorème CAP influencent les choix de base.
+* Une scalabilité efficace dépend avant tout d’une modélisation adaptée.
+// end::conclusion[]

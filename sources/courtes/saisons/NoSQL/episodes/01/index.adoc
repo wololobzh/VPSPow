@@ -1,0 +1,58 @@
+:title: Bienvenue dans la formation NoSQL !
+:number: 01
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Cette première journée de formation vous permettra de découvrir le noSQL et ses concepts fondamentaux. Vous apprendrez les différences entre les bases de données relationnelles et NoSQL, ainsi que les différents types de bases NoSQL (documentaires, clé-valeur, colonnes larges, graphes). La formation couvrira également les cas d'utilisation appropriés pour chaque type de base de données NoSQL. Des exercices pratiques vous permettront de vous familiariser avec l'installation, la configuration et les opérations de base sur des bases de données NoSQL populaires telles que MongoDB et Cassandra.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre NoSQL et son positionnement face au SQL.
+* Installer MongoDB + MongoDB Compass.
+* Manipuler ses premières bases et collections.
+* Savoir rechercher, filtrer, limiter, projeter des données.
+* Modifier et supprimer des documents.
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Avoir une bonne connaissance des bases de données NoSQL et de leurs types.
+* Maîtriser les concepts fondamentaux des bases de données NoSQL.
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+
+include::../../../../modules/noSQL/01-introduction.adoc[options=modules]
+
+include::../../../../modules/noSQL/02-les_familles.adoc[options=modules]
+
+include::../../../../modules/noSQL/03-1-mongo_db.adoc[options=modules]
+
+include::../../../../modules/noSQL/03-2-projet_cles_en_main.adoc[options=modules]
+
+TIP: ☕ Pause café
+
+include::../../../../modules/noSQL/04-mongo_db_crud.adoc[options=modules]
+
+TIP: 🍕 Pause déjeuner
+
+include::../../../../modules/noSQL/05-mongo_express.adoc[options=modules]
+
+:challenge: https://github.com/wololobzh/NoSQL-TPJ1
+:description: CRUD Basique avec Express.js et MongoDB
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+* Veiller à la bonne compréhension des concepts NoSQL
+* S'assurer de la maîtrise des opérations CRUD de base
+* Accompagner dans l'installation et la configuration de MongoDB
+--
+// end::deroulement[]

@@ -1,0 +1,358 @@
+:titre: MongoDB Express
+:module: NoSQL
+:duree: 60
+:description: Comme pour PostgreSQL, on peut connecter notre app Express à une base de données MongoDB. Pour cela il faut utiliser le driver approprié et explorer la documentation pour comprendre la syntaxe de ce package.
+
+
+include::../../../../adoc/libs/header-module.adoc[]
+
+ifeval::["{visible-on-html}" !=  "yes"]
+:docinfo: shared
+:docinfodir: ../../../adoc/libs
+endif::[]
+
+== Introduction à MongoDB
+
+== Objectifs pédagogiques
+// tag::objectifs[]
+* **Comprendre** les avantages clés de MongoDB
+* **Identifier** la structure et le fonctionnement du format BSON
+* **Découvrir** les mécanismes de réplication et de sharding
+* **Distinguer** normalisation et dénormalisation dans MongoDB
+* **Comprendre** l'approche documentaire et ses implications sur le modèle de données
+// end::objectifs[]
+
+// tag::deroulement[]
+== Connexion à MongoDB depuis Express
+
+Comme pour PostgreSQL, on peut connecter notre app Express à une base de données MongoDB. Pour cela il faut utiliser le driver approprié et explorer la documentation pour comprendre la syntaxe de ce package.
+
+== Premier exemple
+
+```js
+import { MongoClient } from "mongodb";
+
+const uri = "mongodb://localhost:27017";
+export const client = new MongoClient(uri);
+
+export async function initDb() {
+  try {
+    await client.connect();
+    console.log("Connected to MongoDB");
+  } catch (err) {
+    console.error(err);
+  }
+}
+```
+
+[NOTE.speaker]
+--
+Plusieurs points à observer dans l'exemple ci-dessus :
+
+* on utilise une classe `MongoClient` qui provient du package `mongodb`
+* l'uri pour se connecter à la BDD commence par le protocole `mongodb://`
+* le port par défaut de MongoDB est `27017`
+* on utilise des méthodes asynchrones pour interagir avec la BDD
+* la méthode `connect()` de `MongoClient` permet de se connecter
+--
+
+== Opération CRUD
+
+```js
+import express from "express";
+const app = express();
+
+app.use(express.json());
+
+import { client, initDb } from "./config/db.js";
+import { ObjectId } from "mongodb";
+
+// On lance la connexion à l'instance MongoDB
+initDb();
+
+// On se positionne sur la bonne base de données
+const db = client.db("mongotests");
+
+app.post("/users", async (req, res) => {
+  const { email, password } = req.body;
+
+  // Ici on devrait hasher le mot de passe
+
+  const result = await db.collection("users").insertOne({ email, password });
+
+  console.log(result);
+
+  res.status(201).json(result);
+});
+
+app.get("/users", async (req, res) => {
+  // Ici on doit utiliser `toArray` pour formater la réponse de la BDD correctement
+  const users = await db.collection("users").find().toArray();
+
+  console.log(users);
+
+  res.status(200).json(users);
+});
+
+app.get("/users/:id", async (req, res) => {
+  const { id } = req.params;
+
+  // /!\ Subtilité : on doit passer par la classe `ObjectId` pour envoyer correctement l'id de l'élément recherché
+  const user = await db.collection("users").findOne({ _id: new ObjectId(id) });
+
+  console.log(user);
+
+  res.status(200).json(user);
+});
+
+app.put("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  const { email, password } = req.body;
+
+  const result = await db
+    .collection("users")
+    .updateOne({ _id: new ObjectId(id) }, { $set: { email, password } });
+
+  console.log(result);
+
+  res.status(200).json(result);
+});
+
+app.delete("/users/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const result = await db
+    .collection("users")
+    .deleteOne({ _id: new ObjectId(id) });
+
+  console.log(result);
+
+  res.status(200).json(result);
+});
+
+app.listen(3000, () => {
+  console.log("Listening on port 3000");
+});
+```
+
+
+[NOTE.speaker]
+--
+Dans cet exemple, on a mis en place une API RESTful complète avec les opérations CRUD (Create, Read, Update, Delete) pour gérer des utilisateurs dans une base de données MongoDB. Quelques points importants à noter :
+* On utilise la méthode `insertOne` pour créer un nouvel utilisateur.
+* Pour récupérer tous les utilisateurs, on utilise `find()` suivi de `toArray()` pour formater la réponse.
+* Pour récupérer un utilisateur par son ID, on utilise `findOne()` avec `new ObjectId(id)`.
+* La mise à jour d'un utilisateur se fait avec `updateOne()` et l'opérateur `$set`.
+* La suppression d'un utilisateur utilise `deleteOne()`.
+* Chaque opération est asynchrone et utilise `await` pour gérer les promesses retournées par les méthodes du driver MongoDB.
+* On n'oublie pas de parser le corps des requêtes JSON avec `express.json()`.
+* Enfin, on écoute les requêtes sur le port 3000.
+--
+
+==  Validation de données
+
+Librairie Joi
+
+[NOTE.speaker]
+--
+Vu que MongoDB ne vérifie pas les données qu'on lui envoie, il peut être intéressant de sécuriser cet aspect en utilisant la librairie Joi qui va nous permettre de mettre en place des schémas de validation des données saisies par l'utilisateur. Voici un exemple d'implémentation pour la route `POST /users` utilisée dans l'exemple précédent :
+--
+
+== Validation avec Joi
+
+```js
+/**
+ * On déclare un schéma qui comprend tous les critères à respecter
+ * On veut :
+ * - Un objet qui contient deux propriétés : email et password
+ * - email doit être une chaîne de caractères, un email conforme, avec des options paramétrables
+ * - password doit être une chaîne de caractères et doit respecter une expression régulière spécifiée
+ *
+ * Parcourir la doc pour voir toutes les options possibles : https://joi.dev/api/?v=17.13.0
+ */
+const schema = Joi.object({
+  email: Joi.string().email({
+    minDomainSegments: 2,
+    tlds: { allow: ["com", "fr"] },
+  }),
+  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+});
+
+// On vérifie la validité des données dans un bloc try/catch.
+try {
+  await schema.validateAsync({ email, password });
+} catch (err) {
+  return res.status(403).json(err);
+}
+```
+
+[NOTE.speaker]
+--
+Ici, on crée un schéma de validation avec Joi qui définit les règles pour les champs `email` et `password`. Avant d'insérer les données dans la base de données, on utilise `schema.validateAsync()` pour vérifier que les données respectent ces règles. Si la validation échoue, on renvoie une réponse avec le code 403 et les détails de l'erreur.
+--
+
+== Structure du projet
+
+```plaintext
+myapp/
+├── app.js
+├── package.json
+├── routes/
+│   └── index.js
+├── controllers/
+│   └── userController.js
+└── config/
+    └── db.js
+```
+
+[NOTE.speaker]
+--
+Pas de surprise, on peut reprendre le découpage habituel en routes / controllers. Il n'y a pas de model cependant, car MongoDB ne force pas l'utilisation de schémas. C'est par contre le cas quand on utilise un ODM tel que mongoose.
+--
+
+== Exercice
+// tag::exercice[]
+```md
+# Exercice : Gestion d'un parc d'attractions avec MongoDB
+
+## Contexte
+
+Vous travaillez sur une application de gestion de parc d'attractions en ligne. Vous devez créer et manipuler une base de données MongoDB pour gérer les informations sur les attractions et les tickets.
+
+## Tâches
+
+- Créer la base de données `amusementPark`.
+
+- Créer les collections `attractions` et `tickets`.
+
+- Insérer les documents suivants dans la collection `attractions` :
+
+  - Nom : "Roller Coaster", Type : "Thrill Ride", Capacité : 24, Durée (minutes) : 3
+  - Nom : "Ferris Wheel", Type : "Family Ride", Capacité : 60, Durée (minutes) : 10
+  - Nom : "Haunted House", Type : "Dark Ride", Capacité : 15, Durée (minutes) : 5
+
+- Insérer les documents suivants dans la collection `tickets` :
+
+  - attractionId correspondant à "Roller Coaster", userId : "user1", Date de visite : "2024-06-01", Utilisé : false
+  - attractionId correspondant à "Ferris Wheel", userId : "user2", Date de visite : "2024-06-05", Utilisé : true
+
+- Effectuer les opérations suivantes :
+  - Récupérer toutes les attractions disponibles dans la collection `attractions`.
+  - Récupérer tous les tickets non utilisés (où la propriété `utilisé` est false).
+  - Mettre à jour la capacité de l'attraction "Roller Coaster" pour corriger une erreur.
+  - Marquer le ticket de "user1" comme utilisé.
+  - Supprimer l'attraction "Haunted House" de la collection attractions.
+  - Supprimer tous les tickets de `user2`.
+  - Utiliser un opérateur logique pour trouver les attractions avec une capacité inférieure à 20 ou une durée supérieure à 8 minutes.
+  - Utiliser un opérateur de mise à jour pour augmenter la capacité d'une attraction.
+```
+// end::exercice[]
+
+== Correction de l'exercice
+
+```js
+# MongO'Coaster
+
+## Contexte
+
+Vous travaillez sur une application de gestion de parc d'attractions en ligne. Vous devez créer et manipuler une base de données MongoDB pour gérer les informations sur les attractions et les tickets.
+
+## Tâches
+
+- Créer la base de données `amusementPark`.  
+  ```bash
+  # si besoin, démarrer le serveur Mongo
+  sudo systemctl start mongod
+  # connexion à mongosh
+  mongosh
+  # création de la base de données : on indique que l'on sélectionne la base
+  use amusementPark
+  ```
+
+- Créer les collections `attractions` et `tickets`.  
+  ```bash
+  Les collections sont créées à la première insertion de données.
+  ```
+
+- Insérer les documents suivants dans la collection `attractions` :
+
+  - Nom : "Roller Coaster", Type : "Thrill Ride", Capacité : 24, Durée (minutes) : 3  
+    ```bash
+    db.attractions.insertOne({ Nom: "Roller Coaster", Type: "Thrill Ride", Capacité: 24, Durée: 3 })
+    ```
+
+  - Nom : "Ferris Wheel", Type : "Family Ride", Capacité : 60, Durée (minutes) : 10  
+    ```bash
+    db.attractions.insertOne({ Nom : "Ferris Wheel", Type : "Family Ride", Capacité : 60, Durée : 10 })
+    ```
+  - Nom : "Haunted House", Type : "Dark Ride", Capacité : 15, Durée (minutes) : 5  
+    ```bash
+    db.attractions.insertOne({ Nom : "Haunted House", Type : "Dark Ride", Capacité : 15, Durée : 5 })
+    ```
+
+- Insérer les documents suivants dans la collection `tickets` :
+
+  - attractionId correspondant à "Roller Coaster", userId : "user1", Date de visite : "2024-06-01", Utilisé : false
+  - attractionId correspondant à "Ferris Wheel", userId : "user2", Date de visite : "2024-06-05", Utilisé : true  
+    ```bash
+    # regarder les attractions pour avoir les id
+    db.attractions.find()
+    db.tickets.insertMany([
+      { attractionId: ObjectId('66e03e44ec24456dae5e739c'), userId : "user1", DateVisite : "2024-06-01", Utilisé : false },
+      { attractionId: ObjectId('66e03e92ec24456dae5e739d'), userId : "user2", DateVisite : "2024-06-05", Utilisé : true }
+    ])
+    ```
+
+- Effectuer les opérations suivantes :
+  - Récupérer toutes les attractions disponibles dans la collection `attractions`  
+    ```bash
+    db.attractions.find()
+    ```
+
+  - Récupérer tous les tickets non utilisés (où la propriété `utilisé` est false).  
+    ```bash
+    db.tickets.find({ Utilisé: false })
+    ```
+
+  - Mettre à jour la capacité de l'attraction "Roller Coaster" pour corriger une erreur.
+    ```bash
+    db.attraction.updateOne( { Nom: "Roller Coaster" }, { $set: { Capacité: 10 }} )
+    ```
+    
+  - Marquer le ticket de "user1" comme utilisé.  
+    ```bash
+    db.tickets.updateOne( { userId: "user1"}, { $set: { Utilisé: true}} )
+    ```
+
+  - Supprimer l'attraction "Haunted House" de la collection attractions.  
+    ```bash
+    db.attractions.deleteOne( { Nom: "Haunted House" } )
+    ```
+
+  - Supprimer tous les tickets de `user2`.  
+    ```bash
+    db.tickets.deleteMany( { userId: "user2" } )
+    ```
+
+  - Utiliser un opérateur logique pour trouver les attractions avec une capacité inférieure à 20 ou une durée supérieure à 8 minutes.  
+    ```bash
+    db.attractions.find( {
+      $or: [
+        { Capacité: { $lt: 20 } },
+        { Durée: { $gt: 8 }}
+      ]
+    })
+    ```
+
+  - Utiliser un opérateur de mise à jour pour augmenter la capacité d'une attraction.  
+    ```bash
+    db.attractions.updateOne({Nom: "Roller Coaster"}, { $inc: { Capacité: 2 } })
+    ```
+```
+
+// end::deroulement[]
+
+== Conclusion
+// tag::conclusion[]
+* Vous savez implémenter MongoDB dans un projet Express
+// end::conclusion[]

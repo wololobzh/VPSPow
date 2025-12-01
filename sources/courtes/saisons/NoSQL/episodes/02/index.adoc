@@ -1,0 +1,54 @@
+:title: Modélisation NoSQL et pipeline d’agrégation
+:number: 02
+include::../../../../../../adoc/libs/header-episode.adoc[]
+
+// tag::intro[]
+Journée sur la modélisation NoSQL et les pipelines d’agrégation. Les participants apprendront à concevoir des modèles de données adaptés aux bases de données NoSQL, en tenant compte des spécificités de chaque type de base (documentaire, clé-valeur, colonnes larges, graphes). La formation couvrira également les techniques avancées d’agrégation pour extraire et transformer les données efficacement. Des exercices pratiques permettront aux participants de mettre en œuvre ces concepts à l’aide de bases de données NoSQL populaires telles que MongoDB et Cassandra.
+// end::intro[]
+
+== Objectifs pédagogiques
+
+// tag::objectifs[]
+* Comprendre comment modéliser un projet NoSQL.
+* Utiliser les opérations avancées d’agrégation.
+// end::objectifs[]
+
+== Prérequis formateur
+
+// tag::prerequis[]
+* Avoir une bonne connaissance des bases de données NoSQL et de leurs types.
+* Maîtriser les concepts de modélisation des données et les techniques d’agrégation.
+* Être capable de guider les participants dans la conception de modèles NoSQL adaptés à différents cas d’utilisation.
+// end::prerequis[]
+
+== Déroulement
+
+// tag::deroulement[]
+:correction: https://github.com/wololobzh/NoSQL-TPJ1
+:temps: 60 minutes
+:description: Corriger le tp du dernier cours NoSQL
+include::../../../../../../adoc/libs/intro-correction.adoc[]
+
+include::../../../../modules/noSQL/05-mongo_express.adoc[options=modules]
+
+include::../../../../modules/noSQL/06-modelisation_no_sql.adoc[options=modules]
+
+include::../../../../modules/noSQL/07-agregation_no_sql.adoc[options=modules]
+
+include::../../../../modules/noSQL/08-scalabilite.adoc[options=modules]
+
+include::../../../../modules/noSQL/09-atelier_final.adoc[options=modules]
+
+:challenge: https://github.com/O-clock-Formations-courtes/GoChallenge
+:description: Création d'une application de quizz en Go
+:correction: 
+include::../../../../../../adoc/libs/intro-challenge.adoc[]
+
+.👨‍🏫 Référent de promo
+[.suivi]
+[sidebar]
+--
+
+
+--
+// end::deroulement[]
