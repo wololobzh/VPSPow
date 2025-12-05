@@ -24,5 +24,3 @@
 </style>
 <button class="saveBtn" onclick="window.print();">Télécharger PDF</button>
 ++++
-
-WARNING: Contenu O'clock, reproduction et partage interdits.

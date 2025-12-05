@@ -30,7 +30,7 @@ Avoir sur sa machine :
 - VsCode
 - Devcontainer
 - Docker
-- Penser à fournir le ebook O'clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

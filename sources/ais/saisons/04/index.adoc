@@ -41,7 +41,7 @@ Cette saison est dédiée à l'apprentissage approfondi de l'administration des 
 * Expérience pratique en administration de serveurs et Active Directory
 * Maîtrise des outils et des commandes PowerShell
 * Compétences en virtualisation (ex. : VMware Workstation)
-* Penser à fournir le ebook O'Clock
+* Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

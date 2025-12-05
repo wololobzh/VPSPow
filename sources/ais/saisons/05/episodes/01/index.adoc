@@ -27,7 +27,7 @@ Introduire les participants à Linux et à l’open source, leur apprendre à in
 
 // tag::deroulement[]
 
-WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook O'Clock]**
+WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook]**
 
 include::../../../../modules/systeme/introduction-linux.adoc[options=modules]
 

@@ -29,7 +29,7 @@ Sécuriser les flux entrants d'un serveur et gérer la répartition de charge.
 
 // tag::prerequis[]
 
-- Penser à fournir le ebook O'clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

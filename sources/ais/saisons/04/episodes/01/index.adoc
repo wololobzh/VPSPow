@@ -25,7 +25,7 @@ Dans ce premier épisode, nous abordons les bases de l’administration Windows 
 
 // tag::deroulement[]
 
-WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook O'Clock]**
+WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook]**
 
 include::../../../../modules/systeme/systeme-microsoft.adoc[options=modules]
 

@@ -28,7 +28,7 @@ Plongée dans le développement frontend moderne avec HTML et CSS, enrichie par 
 
 // tag::deroulement[]
 
-WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook O'Clock,window=_blank]**
+WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook,window=_blank]**
 
 :temps: 30 minutes
 :correction: https://github.com/O-clock-FS-JS/Presentation-markdown/tree/correction

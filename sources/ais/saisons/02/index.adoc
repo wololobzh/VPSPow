@@ -27,7 +27,7 @@ Cette saison est consacrée à la gestion des services IT. Nous allons voir comm
 == Prérequis formateur
 
 // tag::prerequis[]
-- Penser à fournir le ebook O'Clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

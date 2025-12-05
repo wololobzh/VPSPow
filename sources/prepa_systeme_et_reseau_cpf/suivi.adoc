@@ -38,7 +38,7 @@ Assure une meilleure transition entre les différentes saisons, en renforçant l
 * Vérifier que le formateur a bien fournis le ebook de la saison
 * Si ce n'est pas le cas, faites le !
 
-Ebook O'clock : Pour la formation DevOps, nous mettons dorénavant à disposition des apprenants un EBook qui reprend l’intégralité des supports, démonstrations et exercices de la saison, et le plus beau dans tout ça c’est qu’il n’y aura même pas besoin de le mettre à jour quand le cours sera modifié car il puise toutes ses informations depuis la trame même. Alors à chaque fois que l'on parle des e-books, on dit 'Ebook O'clock' pour renforcer notre marque. 
+Ebook : Pour la formation DevOps, nous mettons dorénavant à disposition des apprenants un EBook qui reprend l’intégralité des supports, démonstrations et exercices de la saison, et le plus beau dans tout ça c’est qu’il n’y aura même pas besoin de le mettre à jour quand le cours sera modifié car il puise toutes ses informations depuis la trame même. Alors à chaque fois que l'on parle des e-books, on dit 'Ebook' pour renforcer notre marque. 
 
 ==== ☑️ Checker la plateforme d'anglais
 
@@ -112,7 +112,7 @@ En bref, vérifier les présences dès le premier jour permet de prévenir des s
 * Vérifier que le formateur a bien fournis le ebook de la saison
 * Si ce n'est pas le cas, faites le !
 
-Ebook O'clock : Pour la formation DevOps, nous mettons dorénavant à disposition des apprenants un EBook qui reprend l’intégralité des supports, démonstrations et exercices de la saison, et le plus beau dans tout ça c’est qu’il n’y aura même pas besoin de le mettre à jour quand le cours sera modifié car il puise toutes ses informations depuis la trame même. Alors à chaque fois que l'on parle des e-books, on dit 'Ebook O'clock' pour renforcer notre marque. 
+Ebook : Pour la formation DevOps, nous mettons dorénavant à disposition des apprenants un EBook qui reprend l’intégralité des supports, démonstrations et exercices de la saison, et le plus beau dans tout ça c’est qu’il n’y aura même pas besoin de le mettre à jour quand le cours sera modifié car il puise toutes ses informations depuis la trame même. Alors à chaque fois que l'on parle des e-books, on dit 'Ebook' pour renforcer notre marque. 
 
 === E03
 

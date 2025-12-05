@@ -29,7 +29,7 @@ Cet épisode est consacré à la présentation d'ITIL. Nous allons voir les conc
 
 // tag::deroulement[]
 
-WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook O'Clock]**
+WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook]**
 
 include::../../../../modules/itil/presentation.adoc[options=modules]
 

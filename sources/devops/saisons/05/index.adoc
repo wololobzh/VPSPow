@@ -27,7 +27,7 @@ Utilisation de Docker comme brique fondamentale d'un DevOps.
 
 // tag::prerequis[]
 - Avoir docker d'installé sur sa machine.
-- Penser à fournir le ebook O'clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

@@ -28,6 +28,6 @@ endif::[]
 
 = {number} {title}
 
-📖 link:./pdf.html[Ebook O'clock]
+📖 link:./pdf.html[Ebook]
 
 ---

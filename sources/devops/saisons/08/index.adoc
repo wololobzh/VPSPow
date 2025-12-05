@@ -27,7 +27,7 @@ Déploiement automatisé de serveurs et mise en communication.
 // tag::prerequis[]
 * Avoir une VM kourou fonctionnelle
 * Bien connaître Docker et compose
-* Penser à fournir le ebook O'clock
+* Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

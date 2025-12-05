@@ -35,7 +35,7 @@ Cette saison est dédiée à l'apprentissage approfondi de l'administration des 
 * Expérience pratique en administration de serveurs Linux
 * Maîtrise des outils de diagnostic et de sécurisation réseau
 * Compétences en virtualisation (ex. : VirtualBox)
-* Penser à fournir le ebook O'Clock
+* Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

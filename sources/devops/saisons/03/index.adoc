@@ -40,7 +40,7 @@ Frontend dans une perspective DevOps, la programmation n'est pas l'objectif.
 - Connaissance de Svelte
 - Connaissance des pratiques DevOps pour le frontend
 - Expérience en déploiement d'applications web
-- Penser à fournir le ebook O'clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

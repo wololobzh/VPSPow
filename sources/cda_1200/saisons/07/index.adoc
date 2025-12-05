@@ -37,7 +37,7 @@ Cette saison permet aux apprenants de démarrer leur formation en douceur, en pr
 // tag::prerequis[]
 - Docker (manipulations de base)
 - Docker desktop installé
-- Penser à fournir le ebook O'clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

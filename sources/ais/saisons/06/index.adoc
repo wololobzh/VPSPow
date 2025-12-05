@@ -30,7 +30,7 @@ Cette saison est consacrée à l'apprentissage des scripts en Powershell, Python
 == Prérequis formateur
 
 // tag::prerequis[]
-- Penser à fournir le ebook O'Clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

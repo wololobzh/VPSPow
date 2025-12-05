@@ -38,7 +38,7 @@ WARNING: Le formateur dispensant cette saison doit être le référent de la pro
 // tag::prerequis[]
 - Docker (manipulations de base)
 - Docker desktop installé
-- Penser à fournir le ebook O'clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

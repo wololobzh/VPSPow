@@ -23,7 +23,7 @@ Automatiser le déploiement d'infrastructures avec Terraform.
 == Prérequis formateur
 
 // tag::prerequis[]
-- Penser à fournir le ebook O'clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 // tag::resume[]

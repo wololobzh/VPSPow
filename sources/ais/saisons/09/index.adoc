@@ -22,7 +22,7 @@ TODO
 == Prérequis formateur
 
 // tag::prerequis[]
-- Penser à fournir le ebook O'Clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

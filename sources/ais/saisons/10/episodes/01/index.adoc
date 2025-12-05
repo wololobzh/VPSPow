@@ -22,7 +22,7 @@ include::../../../../../../adoc/libs/header-episode.adoc[]
 
 // tag::deroulement[]
 
-WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook O'Clock]**
+WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook]**
 
 Ressource intéressante à placer dans la saison : https://hackropole.fr/fr/
 

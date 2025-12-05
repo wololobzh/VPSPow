@@ -23,7 +23,7 @@ Utilisation avancée des conteneurs pour déployer des applications.
 == Prérequis formateur
 
 // tag::prerequis[]
-- Penser à fournir le ebook O'clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

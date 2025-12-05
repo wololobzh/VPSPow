@@ -34,7 +34,7 @@ Backend et GDP dans une perspective DevOps, la programmation n'est pas l'objecti
 
 // tag::prerequis[]
 
-- Penser à fournir le ebook O'clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé

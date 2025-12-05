@@ -25,7 +25,7 @@ Cette journée est consacrée à la découverte de la programmation et de JavaSc
 
 // tag::deroulement[]
 
-WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook O'Clock,window=_blank]**
+WARNING: **Fournir l'ebook de la saison aux apprenants : link:./pdf.html[Ebook,window=_blank]**
 
 // include::../../../../modules/bases-web/010-introduction_au_web.adoc[options=modules]
 

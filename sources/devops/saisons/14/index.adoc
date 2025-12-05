@@ -30,7 +30,7 @@ Orchestrer et superviser des applications distribuées.
 
 // tag::prerequis[]
 
-- Penser à fournir le ebook O'clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 // tag::resume[]

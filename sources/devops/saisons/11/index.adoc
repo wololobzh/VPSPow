@@ -26,7 +26,7 @@ Gestion des fournisseurs de cloud et de leurs services pour préparer à la mise
 
 // tag::prerequis[]
 
-- Penser à fournir le ebook O'clock
+- Penser à fournir le Ebook
 // end::prerequis[]
 
 == Résumé
